@@ -1,0 +1,19 @@
+{
+  "profiles": {
+    "american_ephemeris_2000_2050_empirical_v1": {
+      "description": "Empirical short-range lunar calibration for matching JPL/American Ephemeris-style geocentric tropical Moon longitude over 2000-2050. Uses initial geocentric tangential velocity correction plus empirical geocentric tangential acceleration.",
+      "fit_start_date": "2000-01-01",
+      "fit_end_date": "2050-01-31",
+      "validation_start_date": "2000-01-01",
+      "validation_end_date": "2050-12-31",
+      "objective": "peak",
+      "model_notes": "Newtonian N-body + Sun 1PN GR + Earth J2 + empirical lunar along-track acceleration. Do not use this calibration for long-term stability studies.",
+      "moon_dv_t_mm_s": 0.039211803399,
+      "moon_a_t_1e_15_m_s2": 4.697879236139,
+      "lon_rms_arcsec": 0.269,
+      "lon_peak_abs_arcsec": 0.619,
+      "lat_rms_arcsec": 0.333,
+      "dist_rms_km": 0.061
+    }
+  }
+}
