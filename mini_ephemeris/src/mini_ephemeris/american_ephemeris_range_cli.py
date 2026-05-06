@@ -15,6 +15,7 @@ from .american_ephemeris import (
 )
 from .ephem import (
     EphemerisConfig,
+    apply_lunar_tangential_velocity_correction,
     initial_state_solar_system_barycentric_time,
     solar_system_body_list_earth_moon,
 )
@@ -109,6 +110,22 @@ def main() -> None:
 
     parser.add_argument("--gr-model", default="sun", choices=["none", "sun"])
     parser.add_argument("--earth-j2", action="store_true")
+    parser.add_argument(
+        "--moon-dv-t-mm-s",
+        type=float,
+        default=0.0,
+        help=(
+            "Relative geocentric lunar tangential velocity correction at the "
+            "2000-01-01 TT epoch, in mm/s. Positive is prograde; negative "
+            "slows the Moon along-track. The correction preserves Earth-Moon "
+            "barycenter momentum unless --no-preserve-emb-momentum is used."
+        ),
+    )
+    parser.add_argument(
+        "--no-preserve-emb-momentum",
+        action="store_true",
+        help="Apply --moon-dv-t-mm-s to the Moon only instead of preserving EMB momentum.",
+    )
     parser.add_argument("--include-pluto", action="store_true")
 
     parser.add_argument("--chunk-years", type=float, default=1.0)
@@ -153,6 +170,14 @@ def main() -> None:
     sun_index = bodies.index("sun")
     earth_index = bodies.index("earth")
     moon_index = bodies.index("moon")
+    if args.moon_dv_t_mm_s != 0.0:
+        state0 = apply_lunar_tangential_velocity_correction(
+            state0,
+            earth_index=earth_index,
+            moon_index=moon_index,
+            dv_t_m_s=args.moon_dv_t_mm_s * 1.0e-3,
+            preserve_emb_momentum=not args.no_preserve_emb_momentum,
+        )
 
     if args.gr_model == "none":
         if args.earth_j2:
@@ -189,6 +214,8 @@ def main() -> None:
     print(f"  bodies         : {bodies}")
     print(f"  gr_model       : {args.gr_model}")
     print(f"  earth_j2       : {args.earth_j2}")
+    print(f"  moon_dv_t_mm_s : {args.moon_dv_t_mm_s}")
+    print(f"  preserve_emb   : {not args.no_preserve_emb_momentum}")
     print(f"  max_step_days  : {args.max_step_days}")
     print(f"  chunk_years    : {args.chunk_years}")
     print(f"  rtol           : {args.rtol}")

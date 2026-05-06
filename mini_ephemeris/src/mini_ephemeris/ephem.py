@@ -420,3 +420,102 @@ def truth_positions_solar_system_barycentric(
         positions[:, j, :] = r
 
     return positions
+
+
+def _unit_vector(vec: np.ndarray, *, name: str = "vector") -> np.ndarray:
+    """Return vec / |vec| with a useful error if the norm is degenerate."""
+    vec = np.asarray(vec, dtype=float)
+    norm = float(np.linalg.norm(vec))
+    if not np.isfinite(norm) or norm == 0.0:
+        raise ValueError(f"Cannot normalize degenerate {name}.")
+    return vec / norm
+
+
+def lunar_geocentric_basis(
+    state: NBodyState,
+    earth_index: int,
+    moon_index: int,
+) -> dict[str, np.ndarray]:
+    """
+    Return the instantaneous geocentric lunar orbital basis at the state epoch.
+
+    The basis is built from the Moon's position and velocity relative to Earth:
+
+        r_hat : Earth -> Moon radial direction
+        h_hat : orbital angular-momentum direction
+        t_hat : prograde transverse/tangential direction in the orbital plane
+
+    Positive t_hat points in the direction of the Moon's instantaneous
+    geocentric transverse motion.
+    """
+    r_geo = state.positions[moon_index] - state.positions[earth_index]
+    v_geo = state.velocities[moon_index] - state.velocities[earth_index]
+
+    r_hat = _unit_vector(r_geo, name="geocentric lunar radius vector")
+    h_hat = _unit_vector(
+        np.cross(r_geo, v_geo),
+        name="geocentric lunar angular momentum",
+    )
+    t_hat = _unit_vector(
+        np.cross(h_hat, r_hat),
+        name="geocentric lunar tangential direction",
+    )
+
+    return {
+        "r_hat": r_hat,
+        "t_hat": t_hat,
+        "h_hat": h_hat,
+        "r_geo_m": r_geo,
+        "v_geo_m_s": v_geo,
+    }
+
+
+def apply_lunar_tangential_velocity_correction(
+    state: NBodyState,
+    earth_index: int,
+    moon_index: int,
+    dv_t_m_s: float,
+    *,
+    preserve_emb_momentum: bool = True,
+) -> NBodyState:
+    """
+    Apply a small lunar geocentric tangential velocity correction.
+
+    Parameters
+    ----------
+    state
+        Input NBodyState. It is not modified in-place.
+    earth_index, moon_index
+        Indices of the explicit Earth and Moon entries in ``state``.
+    dv_t_m_s
+        Desired change in the Moon's relative geocentric tangential velocity,
+        in m/s. Positive is prograde; negative slows the Moon along-track.
+    preserve_emb_momentum
+        If True, split the relative velocity correction between Earth and Moon
+        so that Earth-Moon barycenter linear momentum is unchanged:
+
+            v_moon  += m_earth / (m_earth + m_moon) * dv_rel
+            v_earth -= m_moon  / (m_earth + m_moon) * dv_rel
+
+        If False, only the Moon velocity is changed.
+
+    Returns
+    -------
+    NBodyState
+        A corrected copy of the input state.
+    """
+    corrected = state.copy()
+    basis = lunar_geocentric_basis(corrected, earth_index, moon_index)
+    dv_rel = float(dv_t_m_s) * basis["t_hat"]
+
+    if preserve_emb_momentum:
+        m_earth = float(corrected.masses[earth_index])
+        m_moon = float(corrected.masses[moon_index])
+        m_total = m_earth + m_moon
+
+        corrected.velocities[moon_index] += (m_earth / m_total) * dv_rel
+        corrected.velocities[earth_index] -= (m_moon / m_total) * dv_rel
+    else:
+        corrected.velocities[moon_index] += dv_rel
+
+    return corrected
