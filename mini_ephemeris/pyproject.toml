@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mini-ephemeris"
+version = "0.3.0"
+description = "Educational N-body ephemeris sandbox with Newtonian + GR Solar System model"
+authors = [{name = "ChatGPT (setup skeleton)"}]
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = ["numpy", "matplotlib", "skyfield"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.urls]
+homepage = "https://example.com/mini-ephemeris"
