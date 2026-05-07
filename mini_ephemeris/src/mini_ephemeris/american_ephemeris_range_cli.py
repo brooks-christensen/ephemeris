@@ -302,24 +302,24 @@ def main() -> None:
         default=None,
         help="JSON file containing named lunar calibration profiles.",
     )
-    parser.add_argument(
-        "--moon-lon-ylim-arcsec",
-        type=float,
-        default=None,
-        help=(
-            "Optional absolute y-limit for Moon longitude residual plot in arcsec. "
-            "If omitted, use automatic scaling based on the data."
-        ),
-    )
-    parser.add_argument(
-        "--moon-lat-ylim-arcsec",
-        type=float,
-        default=None,
-        help=(
-            "Optional absolute y-limit for Moon latitude residual plot in arcsec. "
-            "If omitted, use automatic scaling based on the data."
-        ),
-    )
+    # parser.add_argument(
+    #     "--moon-lon-ylim-arcsec",
+    #     type=float,
+    #     default=None,
+    #     help=(
+    #         "Optional absolute y-limit for Moon longitude residual plot in arcsec. "
+    #         "If omitted, use automatic scaling based on the data."
+    #     ),
+    # )
+    # parser.add_argument(
+    #     "--moon-lat-ylim-arcsec",
+    #     type=float,
+    #     default=None,
+    #     help=(
+    #         "Optional absolute y-limit for Moon latitude residual plot in arcsec. "
+    #         "If omitted, use automatic scaling based on the data."
+    #     ),
+    # )
 
     args = parser.parse_args()
 

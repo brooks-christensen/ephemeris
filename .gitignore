@@ -213,3 +213,4 @@ data/
 *.png
 *_original.py
 output/
+*.old
