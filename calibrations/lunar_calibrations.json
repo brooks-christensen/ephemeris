@@ -8,7 +8,9 @@
       "validation_end_date": "2050-12-31",
       "objective": "peak",
       "model_notes": "Newtonian N-body + Sun 1PN GR + Earth J2 + empirical lunar along-track acceleration. Do not use this calibration for long-term stability studies.",
+      "moon_dv_r_mm_s": 0.0,
       "moon_dv_t_mm_s": 0.039211803399,
+      "moon_dv_h_mm_s": 0.0,
       "moon_a_t_1e_15_m_s2": 4.697879236139,
       "lon_rms_arcsec": 0.269,
       "lon_peak_abs_arcsec": 0.619,
@@ -23,12 +25,32 @@
       "validation_end_date": "2050-12-31",
       "objective": "peak",
       "model_notes": "Newtonian N-body + Sun 1PN GR + Earth J2 + empirical lunar along-track acceleration. Do not use this calibration for long-term stability studies.",
+      "moon_dv_r_mm_s": 0.0,
       "moon_dv_t_mm_s": 0.039220792423,
+      "moon_dv_h_mm_s": 0.0,
       "moon_a_t_1e_15_m_s2": 4.744123111671,
       "lon_rms_arcsec": 0.276785160,
       "lon_peak_abs_arcsec": 0.561194445,
       "lat_rms_arcsec": 0.334635046,
       "dist_rms_km": 0.062751257
+    },
+    "american_ephemeris_2000_2050_full_book_4param_empirical_v3_peak": {
+      "description": "Full-book 2000-01-01 to 2050-12-31 four-parameter empirical lunar calibration. Best observed longitude peak from focused dual-annealing/Powell search.",
+      "fit_start_date": "2000-01-01",
+      "fit_end_date": "2050-12-31",
+      "validation_start_date": "2000-01-01",
+      "validation_end_date": "2050-12-31",
+      "objective": "lon_rms_plus_peak_plus_lat_rms",
+      "lat_weight": 0.5,
+      "model_notes": "Newtonian N-body + Sun 1PN GR + Earth J2 + empirical lunar radial/tangential/out-of-plane initial velocity correction + empirical lunar along-track acceleration. Do not use this calibration for long-term stability studies.",
+      "moon_dv_r_mm_s": -0.003673491156,
+      "moon_dv_t_mm_s": 0.039254769119,
+      "moon_dv_h_mm_s": -0.012434267591,
+      "moon_a_t_1e_15_m_s2": 4.892158075549,
+      "lon_rms_arcsec": 0.239273,
+      "lon_peak_abs_arcsec": 0.496638,
+      "lat_rms_arcsec": 0.332383,
+      "dist_rms_km": 0.060680
     }
   }
 }

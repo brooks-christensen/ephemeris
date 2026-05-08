@@ -98,6 +98,7 @@ src/mini_ephemeris/
   analyze_moon_residual.py
   fit_lunar_initial_velocity.py
   fit_lunar_dv_and_tangential_accel.py
+  fit_lunar_velocity_3d_and_accel.py
   lunar_calibration.py
 ```
 
@@ -115,6 +116,7 @@ High-level purpose of the major files:
 | `analyze_moon_residual.py` | Post-processes model-vs-JPL CSVs and fits linear/quadratic lunar residual trends. |
 | `fit_lunar_initial_velocity.py` | Fits a one-parameter lunar initial tangential velocity correction. |
 | `fit_lunar_dv_and_tangential_accel.py` | Fits a two-parameter empirical lunar correction: initial tangential velocity plus along-track acceleration. |
+| `fit_lunar_velocity_3d_and_accel.py` | Fits a four-parameter empirical lunar correction: initial radial/tangential/out-of-plane velocity plus along-track acceleration. |
 | `lunar_calibration.py` | Loads, resolves, and saves named empirical lunar calibration profiles. |
 
 ---
@@ -354,7 +356,9 @@ Current recommended profile:
       "validation_end_date": "2050-12-31",
       "objective": "peak",
       "model_notes": "Newtonian N-body + Sun 1PN GR + Earth J2 + empirical lunar along-track acceleration. Do not use this calibration for long-term stability studies.",
+      "moon_dv_r_mm_s": 0.0,
       "moon_dv_t_mm_s": 0.039220792423,
+      "moon_dv_h_mm_s": 0.0,
       "moon_a_t_1e_15_m_s2": 4.744123111671,
       "lon_rms_arcsec": 0.276785,
       "lon_peak_abs_arcsec": 0.561194,
@@ -609,6 +613,7 @@ Also smoke-test CLIs that use `argparse`, because duplicate argument definitions
 ```bash
 python -m mini_ephemeris.american_ephemeris_range_cli --help
 python -m mini_ephemeris.fit_lunar_dv_and_tangential_accel --help
+python -m mini_ephemeris.fit_lunar_velocity_3d_and_accel --help
 ```
 
 Recommended Git checkpoint:
@@ -624,31 +629,25 @@ git tag lunar-calibration-v2
 
 ---
 
-# Future enhancement: 3D lunar velocity correction
+# Four-parameter lunar velocity + acceleration fitting
 
-The next natural short-range ephemeris enhancement is to fit a full 3D correction to the Moon's initial geocentric velocity.
-
-Current fitted initial correction:
+The four-parameter optimizer fits the current natural extension of the empirical lunar calibration:
 
 ```text
-dv_t only:
-  tangential / along-track component
+dv_r_mm_s:
+  initial radial velocity correction, positive Earth -> Moon
+
+dv_t_mm_s:
+  initial tangential velocity correction, positive prograde
+
+dv_h_mm_s:
+  initial out-of-plane velocity correction, positive along lunar angular momentum
+
+a_t_1e_15_m_s2:
+  empirical geocentric along-track acceleration, in 1e-15 m/s^2
 ```
 
-Proposed enhancement:
-
-```text
-dv_r:
-  radial component along Earth -> Moon
-
-dv_t:
-  tangential component in the lunar orbital plane
-
-dv_h:
-  out-of-plane component along lunar angular momentum
-```
-
-The basis is already conceptually defined by:
+The initial velocity basis is:
 
 ```text
 r_geo = r_moon - r_earth
@@ -659,7 +658,7 @@ h_hat = normalize(cross(r_geo, v_geo))
 t_hat = normalize(cross(h_hat, r_hat))
 ```
 
-A 3D correction would apply:
+The correction applies:
 
 ```text
 dv_rel = dv_r * r_hat + dv_t * t_hat + dv_h * h_hat
@@ -672,53 +671,103 @@ v_moon  += m_earth / (m_earth + m_moon) * dv_rel
 v_earth -= m_moon  / (m_earth + m_moon) * dv_rel
 ```
 
-Possible fitter parameters:
+Example full-book run seeded from the current v2 profile:
 
-```text
-dv_r_mm_s
-dv_t_mm_s
-dv_h_mm_s
-a_t_1e_15_m_s2
+```bash
+bash src/mini_ephemeris/run_lunar_4param_full_book.sh
 ```
 
-Why this may help:
+Equivalent expanded command:
 
-- The remaining longitude residual has a small smooth trend and periodic structure.
-- The latitude residual suggests the orbital plane may have a small mismatch.
-- A `dv_h` term may reduce latitude error.
-- A `dv_r` term may help tune lunar distance/radial phase.
-- `dv_t` remains the dominant mean-longitude tuning parameter.
+```bash
+python -m mini_ephemeris.fit_lunar_velocity_3d_and_accel \
+  --kernel-path /home/peacelovephysics/ephemeris/data/de431_part-2.bsp \
+  --start-date 2000-01-01 \
+  --end-date 2050-12-31 \
+  --output /home/peacelovephysics/ephemeris/output/lunar_4param_full_book_trials.csv \
+  --gr-model sun \
+  --earth-j2 \
+  --chunk-years 1 \
+  --max-step-days 1.0 \
+  --rtol 1e-12 \
+  --atol 1e-15 \
+  --method powell \
+  --objective lon_rms_plus_peak_plus_lat_rms \
+  --lat-weight 0.5 \
+  --initial-dv-r-mm-s 0.0 \
+  --initial-dv-t-mm-s 0.039220792423 \
+  --initial-dv-h-mm-s 0.0 \
+  --initial-at-1e-15 4.744123111671 \
+  --dv-r-min-mm-s -0.05 \
+  --dv-r-max-mm-s 0.05 \
+  --dv-t-min-mm-s 0.038 \
+  --dv-t-max-mm-s 0.041 \
+  --dv-h-min-mm-s -0.05 \
+  --dv-h-max-mm-s 0.05 \
+  --at-min-1e-15 4.0 \
+  --at-max-1e-15 5.5 \
+  --opt-maxiter 40 \
+  --opt-xtol 1e-5 \
+  --opt-ftol 1e-5 \
+  --moon-lon-ylim-arcsec 1.0 \
+  --moon-lat-ylim-arcsec 1.0 \
+  --save-calibration-file calibrations/lunar_calibrations.json \
+  --save-calibration-name american_ephemeris_2000_2050_full_book_empirical_4param \
+  --save-calibration-description "Full-book four-parameter empirical lunar calibration."
+```
 
-Suggested development path:
+Default sidecar outputs are derived from `--output`:
 
-1. Add `apply_lunar_velocity_correction_3d(...)` to `ephem.py`.
-2. Keep the old `apply_lunar_tangential_velocity_correction(...)` as a convenience wrapper.
-3. Add a new fitter script:
-   ```bash
-   python -m mini_ephemeris.fit_lunar_3d_velocity
-   ```
-4. Use Powell or Nelder-Mead with scaled parameters.
-5. Start with a short range or coarser tolerances for exploration.
-6. Validate only after promising values are found.
-7. Avoid overfitting: keep a clear distinction between fitted ephemeris matching and physical long-term dynamics.
+```text
+lunar_4param_full_book_trials_summary.json
+lunar_4param_full_book_trials_best_moon_residuals.csv
+lunar_4param_full_book_trials_best_moon_longitude_residual.png
+lunar_4param_full_book_trials_best_moon_latitude_residual.png
+```
 
-Possible objectives:
+Supported objectives:
 
 ```text
 lon_peak
-lon_rms + lon_peak
-lon_rms + lat_rms
-lon_peak + 0.5 * lat_peak
-combined weighted position-angle objective
+lon_rms
+lon_rms_plus_peak
+lon_peak_plus_lat_rms
+lon_rms_plus_peak_plus_lat_rms
+slope_abs
 ```
 
-Potential parameter bounds:
+Supported local optimizer methods:
 
 ```text
-dv_r_mm_s: maybe [-0.05, 0.05]
-dv_t_mm_s: near current fitted value, e.g. [0.038, 0.041]
-dv_h_mm_s: maybe [-0.05, 0.05]
-a_t_1e_15_m_s2: around [4.5, 5.0]
+powell          default, backward-compatible behavior
+nelder-mead     uses a custom initial simplex scaled to the parameter bounds
+dual-annealing  uses scipy.optimize.dual_annealing over the parameter bounds
+```
+
+Dual annealing options:
+
+```text
+--anneal-maxiter <int>
+--anneal-initial-temp <float>
+--anneal-seed <int>
+--anneal-local-powell
+```
+
+Recommended search strategy:
+
+1. Use `lon_rms_plus_peak_plus_lat_rms` with `--lat-weight 0.5` as the default combined objective.
+2. Try `dual-annealing` for broad exploration, optionally with `--anneal-local-powell`.
+3. Use `powell` or `nelder-mead` for final local refinement.
+4. Validate the saved profile with `american_ephemeris_range_cli`.
+5. If the peak stalls above the target, inspect the best residual plot before adding new physics.
+
+Useful initial bounds:
+
+```text
+dv_r_mm_s: [-0.05, 0.05]
+dv_t_mm_s: [0.038, 0.041]
+dv_h_mm_s: [-0.05, 0.05]
+a_t_1e_15_m_s2: [4.0, 5.5]
 ```
 
 These are engineering starting points, not physical constants.
@@ -834,17 +883,18 @@ Stability mode:
 
 ## Current recommendation
 
-Freeze the current full-book empirical lunar calibration as `v2`. Then shift attention to one of two next milestones:
+Keep the current full-book empirical lunar calibration as the stable `v2` baseline. The next ephemeris-matching milestone is the four-parameter run:
 
-1. **Documentation / presentation milestone**
-   - Clean README.
-   - Save calibration profile.
-   - Add reproducible scripts.
-   - Generate final validation plots.
+1. Run `fit_lunar_velocity_3d_and_accel` over 2000-01-01 to 2050-12-31.
+2. Start with `lon_rms_plus_peak` for a smoother search, then refine with `lon_peak`.
+3. Save the successful profile as `american_ephemeris_2000_2050_full_book_empirical_4param`.
+4. Validate the saved profile with `american_ephemeris_range_cli` and compare the final residual plots against the `v2` baseline.
+5. If the longitude peak does not move below 0.5 arcsec, use the residual shape to choose the next physical refinement.
 
-2. **Long-term dynamics milestone**
-   - Build Earth-Moon barycenter model mode.
-   - Add long-term integrator diagnostics.
-   - Start with 10 kyr / 100 kyr tests before attempting million-year runs.
+The long-term dynamics milestone should remain separate:
 
-The project now has a strong short-range ephemeris-matching result and a clear path toward long-term dynamical experiments.
+1. Build Earth-Moon barycenter model mode.
+2. Add long-term integrator diagnostics.
+3. Start with 10 kyr / 100 kyr tests before attempting million-year runs.
+
+The project now has a strong short-range ephemeris-matching baseline, an implemented four-parameter lunar optimization path, and a clear separation between fitted ephemeris reproduction and long-term physical dynamics.

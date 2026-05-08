@@ -17,7 +17,7 @@ from .american_ephemeris import (
 )
 from .ephem import (
     EphemerisConfig,
-    apply_lunar_tangential_velocity_correction,
+    apply_lunar_velocity_correction,
     initial_state_solar_system_barycentric_time,
     solar_system_body_list_earth_moon,
 )
@@ -242,6 +242,17 @@ def main() -> None:
     parser.add_argument("--gr-model", default="sun", choices=["none", "sun"])
     parser.add_argument("--earth-j2", action="store_true")
     parser.add_argument(
+        "--moon-dv-r-mm-s",
+        type=float,
+        default=None,
+        help=(
+            "Relative geocentric lunar radial velocity correction at the "
+            "2000-01-01 TT epoch, in mm/s. Positive points from Earth toward "
+            "Moon. The correction preserves Earth-Moon barycenter momentum "
+            "unless --no-preserve-emb-momentum is used."
+        ),
+    )
+    parser.add_argument(
         "--moon-dv-t-mm-s",
         type=float,
         default=None,
@@ -250,6 +261,16 @@ def main() -> None:
             "2000-01-01 TT epoch, in mm/s. Positive is prograde; negative "
             "slows the Moon along-track. The correction preserves Earth-Moon "
             "barycenter momentum unless --no-preserve-emb-momentum is used."
+        ),
+    )
+    parser.add_argument(
+        "--moon-dv-h-mm-s",
+        type=float,
+        default=None,
+        help=(
+            "Relative geocentric lunar out-of-plane velocity correction at the "
+            "2000-01-01 TT epoch, in mm/s. Positive points along the Moon's "
+            "instantaneous geocentric angular momentum."
         ),
     )
     parser.add_argument(
@@ -357,18 +378,32 @@ def main() -> None:
     sun_index = bodies.index("sun")
     earth_index = bodies.index("earth")
     moon_index = bodies.index("moon")
-    moon_dv_t_mm_s, moon_a_t_1e_15_m_s2, lunar_profile = resolve_lunar_correction_values(
+    (
+        moon_dv_r_mm_s,
+        moon_dv_t_mm_s,
+        moon_dv_h_mm_s,
+        moon_a_t_1e_15_m_s2,
+        lunar_profile,
+    ) = resolve_lunar_correction_values(
         profile_name=args.lunar_calibration_profile,
         calibration_file=args.lunar_calibration_file,
+        moon_dv_r_mm_s=args.moon_dv_r_mm_s,
         moon_dv_t_mm_s=args.moon_dv_t_mm_s,
+        moon_dv_h_mm_s=args.moon_dv_h_mm_s,
         moon_a_t_1e_15_m_s2=args.moon_a_t_1e_15_m_s2,
     )
-    if moon_dv_t_mm_s != 0.0:
-        state0 = apply_lunar_tangential_velocity_correction(
+    if (
+        moon_dv_r_mm_s != 0.0
+        or moon_dv_t_mm_s != 0.0
+        or moon_dv_h_mm_s != 0.0
+    ):
+        state0 = apply_lunar_velocity_correction(
             state0,
             earth_index=earth_index,
             moon_index=moon_index,
+            dv_r_m_s=moon_dv_r_mm_s * 1.0e-3,
             dv_t_m_s=moon_dv_t_mm_s * 1.0e-3,
+            dv_h_m_s=moon_dv_h_mm_s * 1.0e-3,
             preserve_emb_momentum=not args.no_preserve_emb_momentum,
         )
 
@@ -414,7 +449,9 @@ def main() -> None:
         if lunar_profile.description:
             print(f"  profile_desc   : {lunar_profile.description}")
 
+    print(f"  moon_dv_r_mm_s : {moon_dv_r_mm_s}")
     print(f"  moon_dv_t_mm_s : {moon_dv_t_mm_s}")
+    print(f"  moon_dv_h_mm_s : {moon_dv_h_mm_s}")
     print(f"  moon_a_t_1e-15 : {moon_a_t_1e_15_m_s2}")
 
     print("[American Ephemeris Range Compare]")

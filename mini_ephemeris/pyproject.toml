@@ -9,7 +9,7 @@ description = "Educational N-body ephemeris sandbox with Newtonian + GR Solar Sy
 authors = [{name = "ChatGPT (setup skeleton)"}]
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = ["numpy", "matplotlib", "skyfield"]
+dependencies = ["numpy", "scipy", "matplotlib", "skyfield", "tqdm"]
 
 [project.optional-dependencies]
 dev = ["pytest"]

@@ -504,9 +504,46 @@ def apply_lunar_tangential_velocity_correction(
     NBodyState
         A corrected copy of the input state.
     """
+    return apply_lunar_velocity_correction(
+        state,
+        earth_index=earth_index,
+        moon_index=moon_index,
+        dv_r_m_s=0.0,
+        dv_t_m_s=dv_t_m_s,
+        dv_h_m_s=0.0,
+        preserve_emb_momentum=preserve_emb_momentum,
+    )
+
+
+def apply_lunar_velocity_correction(
+    state: NBodyState,
+    earth_index: int,
+    moon_index: int,
+    *,
+    dv_r_m_s: float = 0.0,
+    dv_t_m_s: float = 0.0,
+    dv_h_m_s: float = 0.0,
+    preserve_emb_momentum: bool = True,
+) -> NBodyState:
+    """
+    Apply a small 3D correction to the Moon's initial geocentric velocity.
+
+    The correction is expressed in the instantaneous lunar orbital basis:
+
+        dv_r : radial, positive from Earth toward Moon
+        dv_t : tangential, positive prograde in the orbital plane
+        dv_h : out-of-plane, positive along geocentric angular momentum
+
+    If ``preserve_emb_momentum`` is true, the relative velocity change is split
+    between Earth and Moon so the Earth-Moon barycenter momentum is unchanged.
+    """
     corrected = state.copy()
     basis = lunar_geocentric_basis(corrected, earth_index, moon_index)
-    dv_rel = float(dv_t_m_s) * basis["t_hat"]
+    dv_rel = (
+        float(dv_r_m_s) * basis["r_hat"]
+        + float(dv_t_m_s) * basis["t_hat"]
+        + float(dv_h_m_s) * basis["h_hat"]
+    )
 
     if preserve_emb_momentum:
         m_earth = float(corrected.masses[earth_index])
