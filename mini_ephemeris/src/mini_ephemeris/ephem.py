@@ -98,11 +98,6 @@ def load_kernel(config: EphemerisConfig = EphemerisConfig()):
     return ts, eph
 
 
-# def _to_timescale(ts, t0: dt.datetime, offsets_s: np.ndarray):
-#     dts = [t0 + dt.timedelta(seconds=float(s)) for s in offsets_s]
-#     return ts.utc(dts)
-
-
 def _to_timescale(ts, t0: dt.datetime, offsets_s: np.ndarray):
     """
     Convert an array of offsets in seconds since t0 into a Skyfield Time object.

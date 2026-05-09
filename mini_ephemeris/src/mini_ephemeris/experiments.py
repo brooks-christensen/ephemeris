@@ -735,11 +735,6 @@ def main(argv: list[str] | None = None) -> None:
         action="store_true",
         help="Print detailed progress information during experiments.",
     )
-    # parser.add_argument(
-    #     "--no-gr",
-    #     action="store_true",
-    #     help="Disable the current Sun-centered GR correction in solar_system_ephem.",
-    # )
     parser.add_argument(
         "--include-pluto",
         action="store_true",

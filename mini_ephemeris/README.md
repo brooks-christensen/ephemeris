@@ -15,11 +15,11 @@ These two goals should stay separate. The empirical lunar calibration is useful 
 
 The current model is already extremely accurate for the Sun and planets over the 2000-2050 book range. The Moon was the difficult case. The raw model had a dominant lunar longitude drift, but empirical calibration has reduced the Moon longitude residual to sub-arcsecond scale over the full printed book range.
 
-Current validated full-book lunar calibration profile:
+Current successful full-book lunar calibration profile:
 
 ```text
 Profile name:
-  american_ephemeris_2000_2050_full_book_empirical_v2
+  american_ephemeris_2000_2050_full_book_4param_empirical_v3_peak
 
 Fit / validation range:
   2000-01-01 to 2050-12-31
@@ -29,21 +29,23 @@ Model:
   + explicit Earth and Moon
   + Sun-centered 1PN GR
   + Earth J2
-  + empirical lunar initial tangential velocity correction
+  + empirical lunar radial/tangential/out-of-plane initial velocity correction
   + empirical lunar along-track acceleration
 
 Fitted lunar parameters:
-  moon_dv_t_mm_s        = 0.039220792423
-  moon_a_t_1e_15_m_s2   = 4.744123111671
+  moon_dv_r_mm_s        = -0.003673491156
+  moon_dv_t_mm_s        =  0.039254769119
+  moon_dv_h_mm_s        = -0.012434267591
+  moon_a_t_1e_15_m_s2   =  4.892158075549
 
 Validated full-book residuals:
-  Moon longitude RMS    ~= 0.277 arcsec
-  Moon longitude peak   ~= 0.561 arcsec
-  Moon latitude RMS     ~= 0.335 arcsec
-  Moon distance RMS     ~= 0.063 km
+  Moon longitude RMS    ~= 0.239 arcsec
+  Moon longitude peak   ~= 0.497 arcsec
+  Moon latitude RMS     ~= 0.332 arcsec
+  Moon distance RMS     ~= 0.061 km
 ```
 
-The remaining Moon longitude residual still contains some smooth curvature plus small periodic structure. After quadratic detrending, the residual is already around the few-tenths-of-an-arcsecond level. This suggests that future fitting of radial/tangential/out-of-plane lunar velocity components may reduce the residual further, but the current result is already good enough for practical comparison against a printed ephemeris rounded to the nearest arcsecond.
+The remaining Moon longitude residual still contains smooth curvature, while the Moon latitude residual shows a growing periodic envelope. The v4 exploratory path adds radial and out-of-plane empirical acceleration parameters to test whether those trends can be reduced without changing the force model, residual calculation, integrator, or time sampling.
 
 ---
 
@@ -107,7 +109,7 @@ High-level purpose of the major files:
 | File | Purpose |
 |---|---|
 | `nbody.py` | Core N-body state containers and basic mechanics utilities. |
-| `advanced_integrators.py` | DOP853 integration and acceleration models, including Newtonian gravity, Sun 1PN GR, Earth J2, and empirical lunar along-track acceleration wrapping. |
+| `advanced_integrators.py` | DOP853 integration and acceleration models, including Newtonian gravity, Sun 1PN GR, Earth J2, and empirical lunar basis-acceleration wrapping. |
 | `ephem.py` | JPL/Skyfield kernel loading, initial barycentric state construction, body list construction, Earth/Moon setup, and lunar initial velocity correction helpers. |
 | `american_ephemeris.py` | Converts JPL/model vectors into American-Ephemeris-style apparent/geocentric/tropical longitude comparison rows. |
 | `american_ephemeris_cli.py` | Generates JPL-only American-Ephemeris-style CSVs. |
@@ -116,7 +118,7 @@ High-level purpose of the major files:
 | `analyze_moon_residual.py` | Post-processes model-vs-JPL CSVs and fits linear/quadratic lunar residual trends. |
 | `fit_lunar_initial_velocity.py` | Fits a one-parameter lunar initial tangential velocity correction. |
 | `fit_lunar_dv_and_tangential_accel.py` | Fits a two-parameter empirical lunar correction: initial tangential velocity plus along-track acceleration. |
-| `fit_lunar_velocity_3d_and_accel.py` | Fits a four-parameter empirical lunar correction: initial radial/tangential/out-of-plane velocity plus along-track acceleration. |
+| `fit_lunar_velocity_3d_and_accel.py` | Fits empirical lunar radial/tangential/out-of-plane velocity corrections plus optional radial/tangential/out-of-plane accelerations. Defaults keep the older four-parameter behavior. |
 | `lunar_calibration.py` | Loads, resolves, and saves named empirical lunar calibration profiles. |
 
 ---
@@ -274,28 +276,22 @@ Useful options include:
 --no-preserve-emb-momentum
 ```
 
-If the acceleration correction is also available in this CLI after cleanup, it may support:
-
-```bash
---moon-a-t-1e-15-m-s2 <value>
-```
-
 The current calibration workflow has mainly focused on the full range CLI.
 
 ---
 
 ## Full-range model-vs-JPL comparison
 
-Run the full printed book range with the current named calibration profile:
+Run the full printed book range with the current successful named calibration profile:
 
 ```bash
 python -m mini_ephemeris.american_ephemeris_range_cli \
   --kernel-path /home/peacelovephysics/ephemeris/data/de431_part-2.bsp \
   --start-date 2000-01-01 \
   --end-date 2050-12-31 \
-  --output /home/peacelovephysics/ephemeris/output/model_vs_jpl_moon_profile_v2_full_book.csv \
-  --moon-lon-plot /home/peacelovephysics/ephemeris/output/moon_longitude_residual_profile_v2_full_book.png \
-  --moon-lat-plot /home/peacelovephysics/ephemeris/output/moon_latitude_residual_profile_v2_full_book.png \
+  --output /home/peacelovephysics/ephemeris/output/model_vs_jpl_moon_profile_v3_full_book.csv \
+  --moon-lon-plot /home/peacelovephysics/ephemeris/output/moon_longitude_residual_profile_v3_full_book.png \
+  --moon-lat-plot /home/peacelovephysics/ephemeris/output/moon_latitude_residual_profile_v3_full_book.png \
   --gr-model sun \
   --earth-j2 \
   --chunk-years 1 \
@@ -303,7 +299,7 @@ python -m mini_ephemeris.american_ephemeris_range_cli \
   --rtol 1e-12 \
   --atol 1e-15 \
   --lunar-calibration-file calibrations/lunar_calibrations.json \
-  --lunar-calibration-profile american_ephemeris_2000_2050_full_book_empirical_v2 \
+  --lunar-calibration-profile american_ephemeris_2000_2050_full_book_4param_empirical_v3_peak \
   --moon-lon-ylim-arcsec 1.0 \
   --moon-lat-ylim-arcsec 1.0
 ```
@@ -324,8 +320,8 @@ Important options:
 | `--chunk-years` | Chunk length for long DOP853 propagation. |
 | `--max-step-days` | Maximum DOP853 step size in days. |
 | `--rtol`, `--atol` | DOP853 tolerances. |
-| `--moon-dv-t-mm-s` | Manual initial lunar tangential velocity correction in mm/s. Overrides profile value if profile is used. |
-| `--moon-a-t-1e-15-m-s2` | Manual empirical lunar along-track acceleration in units of `1e-15 m/s^2`. Overrides profile value if profile is used. |
+| `--moon-dv-r-mm-s`, `--moon-dv-t-mm-s`, `--moon-dv-h-mm-s` | Manual initial lunar radial/tangential/out-of-plane velocity corrections in mm/s. Override profile values if a profile is used. |
+| `--moon-a-r-1e-15-m-s2`, `--moon-a-t-1e-15-m-s2`, `--moon-a-h-1e-15-m-s2` | Manual empirical lunar radial/tangential/out-of-plane accelerations in units of `1e-15 m/s^2`. Override profile values if a profile is used. |
 | `--lunar-calibration-file` | JSON file containing named lunar calibration profiles. |
 | `--lunar-calibration-profile` | Named calibration profile to load. |
 | `--moon-lon-ylim-arcsec` | Manual absolute y-limit for Moon longitude residual plot. |
@@ -343,27 +339,31 @@ Calibration profiles are stored in JSON, for example:
 calibrations/lunar_calibrations.json
 ```
 
-Current recommended profile:
+Current successful four-parameter profile:
 
 ```json
 {
   "profiles": {
-    "american_ephemeris_2000_2050_full_book_empirical_v2": {
-      "description": "Full-book 2000-01-01 to 2050-12-31 peak-optimized empirical lunar calibration.",
+    "american_ephemeris_2000_2050_full_book_4param_empirical_v3_peak": {
+      "description": "Full-book 2000-01-01 to 2050-12-31 four-parameter empirical lunar calibration. Best observed longitude peak from focused dual-annealing/Powell search.",
       "fit_start_date": "2000-01-01",
       "fit_end_date": "2050-12-31",
       "validation_start_date": "2000-01-01",
       "validation_end_date": "2050-12-31",
-      "objective": "peak",
-      "model_notes": "Newtonian N-body + Sun 1PN GR + Earth J2 + empirical lunar along-track acceleration. Do not use this calibration for long-term stability studies.",
-      "moon_dv_r_mm_s": 0.0,
-      "moon_dv_t_mm_s": 0.039220792423,
-      "moon_dv_h_mm_s": 0.0,
-      "moon_a_t_1e_15_m_s2": 4.744123111671,
-      "lon_rms_arcsec": 0.276785,
-      "lon_peak_abs_arcsec": 0.561194,
-      "lat_rms_arcsec": 0.334635,
-      "dist_rms_km": 0.062751
+      "objective": "lon_rms_plus_peak_plus_lat_rms",
+      "lat_weight": 0.5,
+      "lat_peak_weight": 0.0,
+      "model_notes": "Newtonian N-body + Sun 1PN GR + Earth J2 + empirical lunar radial/tangential/out-of-plane initial velocity correction + empirical lunar along-track acceleration. Do not use this calibration for long-term stability studies.",
+      "moon_dv_r_mm_s": -0.003673491156,
+      "moon_dv_t_mm_s": 0.039254769119,
+      "moon_dv_h_mm_s": -0.012434267591,
+      "moon_a_r_1e_15_m_s2": 0.0,
+      "moon_a_t_1e_15_m_s2": 4.892158075549,
+      "moon_a_h_1e_15_m_s2": 0.0,
+      "lon_rms_arcsec": 0.239273,
+      "lon_peak_abs_arcsec": 0.496638,
+      "lat_rms_arcsec": 0.332383,
+      "dist_rms_km": 0.060680
     }
   }
 }
@@ -392,9 +392,9 @@ After a full-range CSV is generated, run:
 
 ```bash
 python -m mini_ephemeris.analyze_moon_residual \
-  --csv-path /home/peacelovephysics/ephemeris/output/model_vs_jpl_moon_profile_v2_full_book.csv \
+  --csv-path /home/peacelovephysics/ephemeris/output/model_vs_jpl_moon_profile_v3_full_book.csv \
   --output-dir /home/peacelovephysics/ephemeris/output \
-  --tag moon_profile_v2_full_book
+  --tag moon_profile_v3_full_book
 ```
 
 This prints:
@@ -463,7 +463,7 @@ Interpretation:
 
 ## Two-parameter lunar fitting
 
-The current best calibration uses two parameters:
+The older v2 calibration used two parameters:
 
 1. Initial lunar tangential velocity correction.
 2. Empirical geocentric lunar along-track acceleration.
@@ -522,10 +522,10 @@ Some versions of the fitter also support saving directly:
 
 ## Current best results summary
 
-The current best full-book profile is:
+The current successful full-book profile is:
 
 ```text
-american_ephemeris_2000_2050_full_book_empirical_v2
+american_ephemeris_2000_2050_full_book_4param_empirical_v3_peak
 ```
 
 Validated command:
@@ -535,9 +535,9 @@ python -m mini_ephemeris.american_ephemeris_range_cli \
   --kernel-path /home/peacelovephysics/ephemeris/data/de431_part-2.bsp \
   --start-date 2000-01-01 \
   --end-date 2050-12-31 \
-  --output /home/peacelovephysics/ephemeris/output/model_vs_jpl_moon_profile_v2_full_book.csv \
-  --moon-lon-plot /home/peacelovephysics/ephemeris/output/moon_longitude_residual_profile_v2_full_book.png \
-  --moon-lat-plot /home/peacelovephysics/ephemeris/output/moon_latitude_residual_profile_v2_full_book.png \
+  --output /home/peacelovephysics/ephemeris/output/model_vs_jpl_moon_profile_v3_full_book.csv \
+  --moon-lon-plot /home/peacelovephysics/ephemeris/output/moon_longitude_residual_profile_v3_full_book.png \
+  --moon-lat-plot /home/peacelovephysics/ephemeris/output/moon_latitude_residual_profile_v3_full_book.png \
   --gr-model sun \
   --earth-j2 \
   --chunk-years 1 \
@@ -545,7 +545,7 @@ python -m mini_ephemeris.american_ephemeris_range_cli \
   --rtol 1e-12 \
   --atol 1e-15 \
   --lunar-calibration-file calibrations/lunar_calibrations.json \
-  --lunar-calibration-profile american_ephemeris_2000_2050_full_book_empirical_v2 \
+  --lunar-calibration-profile american_ephemeris_2000_2050_full_book_4param_empirical_v3_peak \
   --moon-lon-ylim-arcsec 1.0 \
   --moon-lat-ylim-arcsec 1.0
 ```
@@ -554,34 +554,21 @@ Validated output:
 
 ```text
 Moon longitude:
-  mean      ~= -0.184 arcsec
-  RMS       ~=  0.277 arcsec
-  max       ~=  0.553 arcsec
-  min       ~= -0.561 arcsec
-  peak abs  ~=  0.561 arcsec
+  RMS       ~=  0.239 arcsec
+  peak abs  ~=  0.497 arcsec
 
 Moon latitude:
-  RMS       ~= 0.335 arcsec
+  RMS       ~= 0.332 arcsec
 
 Moon distance:
-  RMS       ~= 0.063 km
+  RMS       ~= 0.061 km
 ```
 
-Diagnostic fit:
+The v3 residuals still show a longitude quadratic trend and a growing
+latitude envelope. The v4 six-parameter run below is intended to explore
+those remaining structures.
 
-```text
-Linear residual slope:
-  ~= 0.007156 arcsec/year
-
-Quadratic coefficient:
-  ~= 0.000828763 arcsec/year^2
-
-After quadratic detrending:
-  RMS       ~= 0.077 arcsec
-  peak abs  ~= 0.237 arcsec
-```
-
-This is good enough for the current printed American Ephemeris matching milestone.
+This is good enough for the current printed American Ephemeris matching milestone, and it is the seed for the exploratory v4 run.
 
 ---
 
@@ -623,15 +610,15 @@ git status
 git diff -- src/mini_ephemeris calibrations/lunar_calibrations.json
 
 git add src/mini_ephemeris calibrations/lunar_calibrations.json
-git commit -m "Add empirical lunar calibration profiles and zoomable residual plots"
-git tag lunar-calibration-v2
+git commit -m "Add six-parameter lunar calibration exploration"
+git tag lunar-calibration-v4-exploration
 ```
 
 ---
 
-# Four-parameter lunar velocity + acceleration fitting
+## Four-/six-parameter lunar velocity + acceleration fitting
 
-The four-parameter optimizer fits the current natural extension of the empirical lunar calibration:
+The current multi-parameter optimizer fits the empirical lunar calibration in the instantaneous geocentric orbital basis. By default, radial and out-of-plane acceleration bounds are fixed at zero, which preserves the older four-parameter behavior. Opening those bounds enables the v4 six-parameter exploration.
 
 ```text
 dv_r_mm_s:
@@ -645,6 +632,12 @@ dv_h_mm_s:
 
 a_t_1e_15_m_s2:
   empirical geocentric along-track acceleration, in 1e-15 m/s^2
+
+a_r_1e_15_m_s2:
+  optional empirical geocentric radial acceleration, in 1e-15 m/s^2
+
+a_h_1e_15_m_s2:
+  optional empirical geocentric out-of-plane acceleration, in 1e-15 m/s^2
 ```
 
 The initial velocity basis is:
@@ -662,6 +655,7 @@ The correction applies:
 
 ```text
 dv_rel = dv_r * r_hat + dv_t * t_hat + dv_h * h_hat
+a_rel  = a_r  * r_hat + a_t  * t_hat + a_h  * h_hat
 ```
 
 To preserve Earth-Moon barycenter momentum:
@@ -671,7 +665,7 @@ v_moon  += m_earth / (m_earth + m_moon) * dv_rel
 v_earth -= m_moon  / (m_earth + m_moon) * dv_rel
 ```
 
-Example full-book run seeded from the current v2 profile:
+Example four-parameter full-book run seeded from the v2 profile:
 
 ```bash
 bash src/mini_ephemeris/run_lunar_4param_full_book.sh
@@ -725,6 +719,63 @@ lunar_4param_full_book_trials_best_moon_longitude_residual.png
 lunar_4param_full_book_trials_best_moon_latitude_residual.png
 ```
 
+The trial CSV named by `--output` is also an incremental trial journal. It is
+reset at run start, then one row is appended after each completed objective
+evaluation for Powell, Nelder-Mead, dual annealing, and grid scans. This makes
+interrupted long annealing runs inspectable. Each row includes:
+
+```text
+trial number and status
+trial start/end UTC timestamps
+trial runtime in seconds
+optimizer mode and method label
+parameter values
+objective name and weights
+objective value
+longitude RMS, peak, mean, max, min
+latitude RMS, peak, mean, max, min
+distance RMS and extrema
+trend diagnostics
+```
+
+Exploratory v4 six-parameter dual-annealing run:
+
+```bash
+bash src/mini_ephemeris/run_lunar_6param_v4_dual_annealing_full_book.sh
+```
+
+The v4 script uses:
+
+```text
+method:
+  dual-annealing with Powell local search enabled
+
+objective:
+  lon_peak_plus_half_lon_rms_plus_trend_peaks_plus_lat_rms
+  = lon_peak
+    + 0.5 * lon_rms
+    + 0.25 * linear_detrended_peak
+    + 0.25 * quadratic_detrended_peak
+    + 0.5 * lat_rms
+
+initial values:
+  moon_dv_r_mm_s      = -0.00471691895885988
+  moon_dv_t_mm_s      =  0.039254442719099995
+  moon_dv_h_mm_s      = -0.022806504495004626
+  moon_a_r_1e_15_m_s2 =  0.6112252505297777
+  moon_a_t_1e_15_m_s2 =  4.956823663287823
+  moon_a_h_1e_15_m_s2 = -0.9546894580125809
+```
+
+Long-running annealing settings can be overridden from the environment:
+
+```bash
+ANNEAL_MAXITER=1000 \
+ANNEAL_INITIAL_TEMP=7000 \
+ANNEAL_SEED=12345 \
+bash src/mini_ephemeris/run_lunar_6param_v4_dual_annealing_full_book.sh
+```
+
 Supported objectives:
 
 ```text
@@ -733,10 +784,12 @@ lon_rms
 lon_rms_plus_peak
 lon_peak_plus_lat_rms
 lon_rms_plus_peak_plus_lat_rms
+lon_rms_plus_peak_plus_lat_rms_plus_lat_peak
+lon_peak_plus_half_lon_rms_plus_trend_peaks_plus_lat_rms
 slope_abs
 ```
 
-Supported local optimizer methods:
+Supported optimizer methods:
 
 ```text
 powell          default, backward-compatible behavior
@@ -755,19 +808,29 @@ Dual annealing options:
 
 Recommended search strategy:
 
-1. Use `lon_rms_plus_peak_plus_lat_rms` with `--lat-weight 0.5` as the default combined objective.
-2. Try `dual-annealing` for broad exploration, optionally with `--anneal-local-powell`.
-3. Use `powell` or `nelder-mead` for final local refinement.
-4. Validate the saved profile with `american_ephemeris_range_cli`.
-5. If the peak stalls above the target, inspect the best residual plot before adding new physics.
+1. Use `lon_rms_plus_peak_plus_lat_rms` with `--lat-weight 0.5` for four-parameter compatibility runs.
+2. Use `lon_peak_plus_half_lon_rms_plus_trend_peaks_plus_lat_rms` with `--lat-weight 0.5` for the trend-aware v4 six-parameter exploration.
+3. Try `dual-annealing` for broad exploration, optionally with `--anneal-local-powell`.
+4. Use `powell` or `nelder-mead` for final local refinement.
+5. Validate the saved profile with `american_ephemeris_range_cli`.
+6. If the peak stalls above the target, inspect the best residual plot before adding new physics.
 
 Useful initial bounds:
 
 ```text
-dv_r_mm_s: [-0.05, 0.05]
-dv_t_mm_s: [0.038, 0.041]
-dv_h_mm_s: [-0.05, 0.05]
-a_t_1e_15_m_s2: [4.0, 5.5]
+v2/v3 broad bounds:
+  dv_r_mm_s: [-0.05, 0.05]
+  dv_t_mm_s: [0.038, 0.041]
+  dv_h_mm_s: [-0.05, 0.05]
+  a_t_1e_15_m_s2: [4.0, 5.5]
+
+v4 exploratory bounds:
+  dv_r_mm_s: [-0.0058, -0.0038]
+  dv_t_mm_s: [0.039244, 0.039260]
+  dv_h_mm_s: [-0.0340, -0.0170]
+  a_r_1e_15_m_s2: [0.15, 0.70]
+  a_t_1e_15_m_s2: [4.92, 5.00]
+  a_h_1e_15_m_s2: [-1.08, -0.86]
 ```
 
 These are engineering starting points, not physical constants.
@@ -883,13 +946,13 @@ Stability mode:
 
 ## Current recommendation
 
-Keep the current full-book empirical lunar calibration as the stable `v2` baseline. The next ephemeris-matching milestone is the four-parameter run:
+Keep the successful v3 full-book empirical lunar calibration as the stable short-range baseline. The next ephemeris-matching milestone is the v4 six-parameter run:
 
-1. Run `fit_lunar_velocity_3d_and_accel` over 2000-01-01 to 2050-12-31.
-2. Start with `lon_rms_plus_peak` for a smoother search, then refine with `lon_peak`.
-3. Save the successful profile as `american_ephemeris_2000_2050_full_book_empirical_4param`.
-4. Validate the saved profile with `american_ephemeris_range_cli` and compare the final residual plots against the `v2` baseline.
-5. If the longitude peak does not move below 0.5 arcsec, use the residual shape to choose the next physical refinement.
+1. Run `src/mini_ephemeris/run_lunar_6param_v4_dual_annealing_full_book.sh`.
+2. Let dual annealing explore the six-dimensional bounded space with Powell local search enabled.
+3. Save the successful profile as `american_ephemeris_2000_2050_full_book_6param_empirical_v4_dual_annealing`.
+4. Validate the saved profile with `american_ephemeris_range_cli` and compare the final residual plots against the v3 baseline.
+5. If the longitude peak or latitude envelope does not improve meaningfully, use the residual shape to choose the next physical refinement.
 
 The long-term dynamics milestone should remain separate:
 
@@ -897,4 +960,4 @@ The long-term dynamics milestone should remain separate:
 2. Add long-term integrator diagnostics.
 3. Start with 10 kyr / 100 kyr tests before attempting million-year runs.
 
-The project now has a strong short-range ephemeris-matching baseline, an implemented four-parameter lunar optimization path, and a clear separation between fitted ephemeris reproduction and long-term physical dynamics.
+The project now has a strong short-range ephemeris-matching baseline, implemented four- and six-parameter lunar optimization paths, and a clear separation between fitted ephemeris reproduction and long-term physical dynamics.

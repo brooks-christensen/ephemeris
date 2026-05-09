@@ -210,16 +210,24 @@ def _unit_vector_for_lunar_accel(vec: np.ndarray, *, name: str = "vector") -> np
     return vec / norm
 
 
-def lunar_geocentric_tangential_direction_from_state(
+def lunar_geocentric_basis_from_state(
     state: NBodyState,
     earth_index: int,
     moon_index: int,
-) -> np.ndarray:
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     """
-    Return the Moon's instantaneous prograde geocentric tangential direction.
+    Return the Moon's instantaneous geocentric orbital basis.
 
-    This is the same direction used for the initial dv_t correction, but computed
-    at each integration RHS evaluation from the current Earth-Moon state.
+    The basis is the same one used for the initial lunar velocity correction,
+    but computed at each integration RHS evaluation from the current
+    Earth-Moon state.
+
+    Returns
+    -------
+    tuple[np.ndarray, np.ndarray, np.ndarray]
+        ``(r_hat, t_hat, h_hat)`` where ``r_hat`` points from Earth to Moon,
+        ``t_hat`` is the prograde tangential direction in the instantaneous
+        orbital plane, and ``h_hat`` points along geocentric angular momentum.
     """
     r_geo = state.positions[moon_index] - state.positions[earth_index]
     v_geo = state.velocities[moon_index] - state.velocities[earth_index]
@@ -236,7 +244,76 @@ def lunar_geocentric_tangential_direction_from_state(
         np.cross(h_hat, r_hat),
         name="geocentric lunar tangential direction",
     )
+    return r_hat, t_hat, h_hat
+
+
+def lunar_geocentric_tangential_direction_from_state(
+    state: NBodyState,
+    earth_index: int,
+    moon_index: int,
+) -> np.ndarray:
+    """
+    Return the Moon's instantaneous prograde geocentric tangential direction.
+
+    Kept as a compatibility helper for the earlier tangential-only empirical
+    acceleration term.
+    """
+    _, t_hat, _ = lunar_geocentric_basis_from_state(
+        state,
+        earth_index=earth_index,
+        moon_index=moon_index,
+    )
     return t_hat
+
+
+def add_earth_moon_empirical_acceleration(
+    acc: np.ndarray,
+    state: NBodyState,
+    *,
+    a_r_m_s2: float = 0.0,
+    a_t_m_s2: float = 0.0,
+    a_h_m_s2: float = 0.0,
+    earth_index: int,
+    moon_index: int,
+) -> np.ndarray:
+    """
+    Add tiny empirical lunar accelerations in the geocentric orbital basis.
+
+    The parameters are the desired change in relative Earth->Moon acceleration:
+
+        a_rel = a_r * r_hat + a_t * t_hat + a_h * h_hat
+
+    The acceleration is split between Earth and Moon to preserve Earth-Moon
+    barycenter linear momentum:
+
+        a_moon  += m_earth / (m_earth + m_moon) * a_rel
+        a_earth -= m_moon  / (m_earth + m_moon) * a_rel
+
+    Positive ``a_r`` points from Earth to Moon, positive ``a_t`` is prograde,
+    and positive ``a_h`` points along geocentric angular momentum.
+    """
+    acc = acc.copy()
+
+    r_hat, t_hat, h_hat = lunar_geocentric_basis_from_state(
+        state,
+        earth_index=earth_index,
+        moon_index=moon_index,
+    )
+
+    a_rel = (
+        float(a_r_m_s2) * r_hat
+        + float(a_t_m_s2) * t_hat
+        + float(a_h_m_s2) * h_hat
+    )
+
+    m_earth = float(state.masses[earth_index])
+    m_moon = float(state.masses[moon_index])
+    m_total = m_earth + m_moon
+
+    acc[moon_index] += (m_earth / m_total) * a_rel
+    acc[earth_index] -= (m_moon / m_total) * a_rel
+
+    return acc
 
 
 def add_earth_moon_tangential_acceleration(
@@ -250,37 +327,53 @@ def add_earth_moon_tangential_acceleration(
     """
     Add a tiny empirical geocentric lunar along-track acceleration.
 
-    a_t_m_s2 is the desired change in relative Earth->Moon tangential
-    acceleration:
-
-        a_rel = a_moon - a_earth = a_t_m_s2 * t_hat
-
-    The acceleration is split between Earth and Moon to preserve Earth-Moon
-    barycenter linear momentum:
-
-        a_moon  += m_earth / (m_earth + m_moon) * a_rel
-        a_earth -= m_moon  / (m_earth + m_moon) * a_rel
-
-    Positive a_t_m_s2 is prograde.
+    Compatibility wrapper around ``add_earth_moon_empirical_acceleration`` for
+    the original one-dimensional acceleration calibration.
     """
-    acc = acc.copy()
-
-    t_hat = lunar_geocentric_tangential_direction_from_state(
+    return add_earth_moon_empirical_acceleration(
+        acc,
         state,
+        a_t_m_s2=a_t_m_s2,
         earth_index=earth_index,
         moon_index=moon_index,
     )
 
-    a_rel = float(a_t_m_s2) * t_hat
 
-    m_earth = float(state.masses[earth_index])
-    m_moon = float(state.masses[moon_index])
-    m_total = m_earth + m_moon
+def make_acceleration_with_earth_moon_empirical_term(
+    base_accel_func,
+    *,
+    earth_index: int,
+    moon_index: int,
+    a_r_m_s2: float = 0.0,
+    a_t_m_s2: float = 0.0,
+    a_h_m_s2: float = 0.0,
+    base_accel_kwargs: dict | None = None,
+):
+    """
+    Wrap an acceleration model with empirical Earth-Moon basis accelerations.
 
-    acc[moon_index] += (m_earth / m_total) * a_rel
-    acc[earth_index] -= (m_moon / m_total) * a_rel
+    This leaves the Newtonian / GR / J2 machinery untouched and adds only the
+    requested short-range lunar calibration term.
+    """
+    base_accel_kwargs = dict(base_accel_kwargs or {})
 
-    return acc
+    def accel_with_lunar_empirical_term(
+        state: NBodyState,
+        G: float = G_SI,
+        **_ignored_kwargs,
+    ) -> np.ndarray:
+        acc = base_accel_func(state, G=G, **base_accel_kwargs)
+        return add_earth_moon_empirical_acceleration(
+            acc,
+            state,
+            a_r_m_s2=a_r_m_s2,
+            a_t_m_s2=a_t_m_s2,
+            a_h_m_s2=a_h_m_s2,
+            earth_index=earth_index,
+            moon_index=moon_index,
+        )
+
+    return accel_with_lunar_empirical_term
 
 
 def make_acceleration_with_earth_moon_tangential_term(
@@ -295,26 +388,16 @@ def make_acceleration_with_earth_moon_tangential_term(
     Wrap an existing acceleration model with a tiny empirical Earth-Moon
     tangential acceleration term.
 
-    This keeps the existing Newtonian / GR / J2 machinery untouched and lets
-    scripts turn the empirical curvature correction on or off cleanly.
+    Compatibility wrapper for the original one-dimensional acceleration
+    calibration.
     """
-    base_accel_kwargs = dict(base_accel_kwargs or {})
-
-    def accel_with_lunar_tangent_term(
-        state: NBodyState,
-        G: float = G_SI,
-        **_ignored_kwargs,
-    ) -> np.ndarray:
-        acc = base_accel_func(state, G=G, **base_accel_kwargs)
-        return add_earth_moon_tangential_acceleration(
-            acc,
-            state,
-            a_t_m_s2=a_t_m_s2,
-            earth_index=earth_index,
-            moon_index=moon_index,
-        )
-
-    return accel_with_lunar_tangent_term
+    return make_acceleration_with_earth_moon_empirical_term(
+        base_accel_func,
+        earth_index=earth_index,
+        moon_index=moon_index,
+        a_t_m_s2=a_t_m_s2,
+        base_accel_kwargs=base_accel_kwargs,
+    )
 
 
 def integrate_with_accel(state0: NBodyState,

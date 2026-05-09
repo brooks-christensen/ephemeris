@@ -20,7 +20,9 @@ class LunarCalibration:
     moon_dv_t_mm_s: float
     moon_dv_r_mm_s: float = 0.0
     moon_dv_h_mm_s: float = 0.0
+    moon_a_r_1e_15_m_s2: float = 0.0
     moon_a_t_1e_15_m_s2: float = 0.0
+    moon_a_h_1e_15_m_s2: float = 0.0
 
     description: str = ""
     fit_start_date: str | None = None
@@ -28,6 +30,8 @@ class LunarCalibration:
     validation_start_date: str | None = None
     validation_end_date: str | None = None
     objective: str | None = None
+    lat_weight: float | None = None
+    lat_peak_weight: float | None = None
     model_notes: str | None = None
 
     lon_rms_arcsec: float | None = None
@@ -42,13 +46,17 @@ class LunarCalibration:
             moon_dv_t_mm_s=float(data["moon_dv_t_mm_s"]),
             moon_dv_r_mm_s=float(data.get("moon_dv_r_mm_s", 0.0)),
             moon_dv_h_mm_s=float(data.get("moon_dv_h_mm_s", 0.0)),
+            moon_a_r_1e_15_m_s2=float(data.get("moon_a_r_1e_15_m_s2", 0.0)),
             moon_a_t_1e_15_m_s2=float(data.get("moon_a_t_1e_15_m_s2", 0.0)),
+            moon_a_h_1e_15_m_s2=float(data.get("moon_a_h_1e_15_m_s2", 0.0)),
             description=str(data.get("description", "")),
             fit_start_date=data.get("fit_start_date"),
             fit_end_date=data.get("fit_end_date"),
             validation_start_date=data.get("validation_start_date"),
             validation_end_date=data.get("validation_end_date"),
             objective=data.get("objective"),
+            lat_weight=_optional_float(data.get("lat_weight")),
+            lat_peak_weight=_optional_float(data.get("lat_peak_weight")),
             model_notes=data.get("model_notes"),
             lon_rms_arcsec=_optional_float(data.get("lon_rms_arcsec")),
             lon_peak_abs_arcsec=_optional_float(data.get("lon_peak_abs_arcsec")),
@@ -120,8 +128,10 @@ def resolve_lunar_correction_values(
     moon_dv_r_mm_s: float | None = None,
     moon_dv_t_mm_s: float | None = None,
     moon_dv_h_mm_s: float | None = None,
+    moon_a_r_1e_15_m_s2: float | None = None,
     moon_a_t_1e_15_m_s2: float | None = None,
-) -> tuple[float, float, float, float, LunarCalibration | None]:
+    moon_a_h_1e_15_m_s2: float | None = None,
+) -> tuple[float, float, float, float, float, float, LunarCalibration | None]:
     """
     Resolve final lunar correction values from optional profile + CLI overrides.
 
@@ -142,10 +152,20 @@ def resolve_lunar_correction_values(
         resolved_dv_r = 0.0 if moon_dv_r_mm_s is None else float(moon_dv_r_mm_s)
         resolved_dv = 0.0 if moon_dv_t_mm_s is None else float(moon_dv_t_mm_s)
         resolved_dv_h = 0.0 if moon_dv_h_mm_s is None else float(moon_dv_h_mm_s)
+        resolved_ar = (
+            0.0
+            if moon_a_r_1e_15_m_s2 is None
+            else float(moon_a_r_1e_15_m_s2)
+        )
         resolved_at = (
             0.0
             if moon_a_t_1e_15_m_s2 is None
             else float(moon_a_t_1e_15_m_s2)
+        )
+        resolved_ah = (
+            0.0
+            if moon_a_h_1e_15_m_s2 is None
+            else float(moon_a_h_1e_15_m_s2)
         )
     else:
         resolved_dv_r = (
@@ -163,13 +183,31 @@ def resolve_lunar_correction_values(
             if moon_dv_h_mm_s is None
             else float(moon_dv_h_mm_s)
         )
+        resolved_ar = (
+            profile.moon_a_r_1e_15_m_s2
+            if moon_a_r_1e_15_m_s2 is None
+            else float(moon_a_r_1e_15_m_s2)
+        )
         resolved_at = (
             profile.moon_a_t_1e_15_m_s2
             if moon_a_t_1e_15_m_s2 is None
             else float(moon_a_t_1e_15_m_s2)
         )
+        resolved_ah = (
+            profile.moon_a_h_1e_15_m_s2
+            if moon_a_h_1e_15_m_s2 is None
+            else float(moon_a_h_1e_15_m_s2)
+        )
 
-    return resolved_dv_r, resolved_dv, resolved_dv_h, resolved_at, profile
+    return (
+        resolved_dv_r,
+        resolved_dv,
+        resolved_dv_h,
+        resolved_ar,
+        resolved_at,
+        resolved_ah,
+        profile,
+    )
 
 
 def save_lunar_calibration_profile(

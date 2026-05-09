@@ -4,6 +4,7 @@ import argparse
 import csv
 import datetime as dt
 import json
+import time
 from pathlib import Path
 from typing import Any
 
@@ -18,7 +19,7 @@ from .advanced_integrators import (
     acceleration_newtonian_gr_sun,
     acceleration_newtonian_gr_sun_earth_j2,
     integrate_dop853_with_accel,
-    make_acceleration_with_earth_moon_tangential_term,
+    make_acceleration_with_earth_moon_empirical_term,
 )
 from .american_ephemeris import (
     circular_angle_diff_deg,
@@ -41,8 +42,19 @@ PARAMETER_NAMES = (
     "dv_r_mm_s",
     "dv_t_mm_s",
     "dv_h_mm_s",
+    "a_r_1e_15_m_s2",
     "a_t_1e_15_m_s2",
+    "a_h_1e_15_m_s2",
 )
+
+PARAMETER_UNITS = {
+    "dv_r_mm_s": "mm/s",
+    "dv_t_mm_s": "mm/s",
+    "dv_h_mm_s": "mm/s",
+    "a_r_1e_15_m_s2": "1e-15 m/s^2",
+    "a_t_1e_15_m_s2": "1e-15 m/s^2",
+    "a_h_1e_15_m_s2": "1e-15 m/s^2",
+}
 
 OPTIMIZER_METHOD_LABELS = {
     "powell": "Powell",
@@ -129,6 +141,7 @@ def objective_from_row(
     objective: str,
     *,
     lat_weight: float,
+    lat_peak_weight: float,
 ) -> float:
     if objective == "lon_rms":
         return row["lon_rms_arcsec"]
@@ -144,9 +157,36 @@ def objective_from_row(
             + row["lon_peak_abs_arcsec"]
             + lat_weight * row["lat_rms_arcsec"]
         )
+    if objective == "lon_rms_plus_peak_plus_lat_rms_plus_lat_peak":
+        return (
+            row["lon_rms_arcsec"]
+            + row["lon_peak_abs_arcsec"]
+            + lat_weight * row["lat_rms_arcsec"]
+            + lat_peak_weight * row["lat_peak_abs_arcsec"]
+        )
+    if objective == "lon_peak_plus_half_lon_rms_plus_trend_peaks_plus_lat_rms":
+        return (
+            row["lon_peak_abs_arcsec"]
+            + 0.5 * row["lon_rms_arcsec"]
+            + 0.25 * row["linear_detrended_peak_abs_arcsec"]
+            + 0.25 * row["quadratic_detrended_peak_abs_arcsec"]
+            + lat_weight * row["lat_rms_arcsec"]
+        )
     if objective == "slope_abs":
         return abs(row["linear_slope_arcsec_per_year"])
     raise ValueError(f"Unsupported objective: {objective!r}")
+
+
+def expand_active_parameters(
+    active_params: np.ndarray,
+    *,
+    template: np.ndarray,
+    active_mask: np.ndarray,
+) -> np.ndarray:
+    """Expand an optimizer vector over active parameters to the full vector."""
+    full_params = np.asarray(template, dtype=float).copy()
+    full_params[active_mask] = np.asarray(active_params, dtype=float)
+    return full_params
 
 
 def evaluate_params(
@@ -165,7 +205,14 @@ def evaluate_params(
     args,
     keep_series: bool = False,
 ) -> tuple[dict[str, float], dict[str, Any] | None]:
-    dv_r_mm_s, dv_t_mm_s, dv_h_mm_s, a_t_1e_15_m_s2 = [
+    (
+        dv_r_mm_s,
+        dv_t_mm_s,
+        dv_h_mm_s,
+        a_r_1e_15_m_s2,
+        a_t_1e_15_m_s2,
+        a_h_1e_15_m_s2,
+    ) = [
         float(x) for x in params
     ]
 
@@ -182,12 +229,18 @@ def evaluate_params(
     accel_func = base_accel_func
     accel_kwargs = dict(base_accel_kwargs)
 
-    if a_t_1e_15_m_s2 != 0.0:
-        accel_func = make_acceleration_with_earth_moon_tangential_term(
+    if (
+        a_r_1e_15_m_s2 != 0.0
+        or a_t_1e_15_m_s2 != 0.0
+        or a_h_1e_15_m_s2 != 0.0
+    ):
+        accel_func = make_acceleration_with_earth_moon_empirical_term(
             base_accel_func,
             earth_index=earth_index,
             moon_index=moon_index,
+            a_r_m_s2=a_r_1e_15_m_s2 * 1.0e-15,
             a_t_m_s2=a_t_1e_15_m_s2 * 1.0e-15,
+            a_h_m_s2=a_h_1e_15_m_s2 * 1.0e-15,
             base_accel_kwargs=base_accel_kwargs,
         )
         accel_kwargs = {}
@@ -234,7 +287,9 @@ def evaluate_params(
         "dv_r_mm_s": dv_r_mm_s,
         "dv_t_mm_s": dv_t_mm_s,
         "dv_h_mm_s": dv_h_mm_s,
+        "a_r_1e_15_m_s2": a_r_1e_15_m_s2,
         "a_t_1e_15_m_s2": a_t_1e_15_m_s2,
+        "a_h_1e_15_m_s2": a_h_1e_15_m_s2,
         "lon_rms_arcsec": rms(lon_err_arcsec),
         "lon_mean_arcsec": float(np.mean(lon_err_arcsec)),
         "lon_max_arcsec": float(np.max(lon_err_arcsec)),
@@ -281,6 +336,30 @@ def write_rows_csv(rows: list[dict[str, Any]], path: str | Path) -> None:
         writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
         writer.writeheader()
         writer.writerows(rows)
+
+
+def reset_incremental_csv(path: str | Path) -> None:
+    """Start a fresh per-trial journal at the normal trial CSV path."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text("")
+
+
+def append_row_csv(
+    row: dict[str, Any],
+    path: str | Path,
+    fieldnames: list[str],
+) -> None:
+    """Append one trial row immediately so interrupted optimizer runs leave a record."""
+    out = Path(path)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    write_header = out.stat().st_size == 0 if out.exists() else True
+
+    with out.open("a", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
+        if write_header:
+            writer.writeheader()
+        writer.writerow(row)
 
 
 def write_best_residual_csv(series: dict[str, Any], path: str | Path) -> None:
@@ -364,6 +443,7 @@ def build_nelder_mead_initial_simplex(
     x0: np.ndarray,
     lower: np.ndarray,
     upper: np.ndarray,
+    parameter_names: tuple[str, ...],
     step_fraction: float = 0.10,
 ) -> np.ndarray:
     """
@@ -387,7 +467,7 @@ def build_nelder_mead_initial_simplex(
         if spans[i] <= 0.0:
             raise ValueError(
                 "Nelder-Mead requires nonzero bounds for each parameter so "
-                f"the initial simplex is non-degenerate; {PARAMETER_NAMES[i]} "
+                f"the initial simplex is non-degenerate; {parameter_names[i]} "
                 f"has bounds [{lower[i]}, {upper[i]}]."
             )
 
@@ -404,7 +484,7 @@ def build_nelder_mead_initial_simplex(
         if vertex[i] == x0[i]:
             raise ValueError(
                 f"Could not build a distinct Nelder-Mead simplex vertex for "
-                f"{PARAMETER_NAMES[i]}."
+                f"{parameter_names[i]}."
             )
 
         simplex[i + 1] = vertex
@@ -415,8 +495,9 @@ def build_nelder_mead_initial_simplex(
 def make_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description=(
-            "Fit a four-parameter empirical lunar correction: initial radial, "
-            "tangential, and out-of-plane velocity plus along-track acceleration."
+            "Fit empirical lunar corrections: initial radial, tangential, and "
+            "out-of-plane velocity plus optional radial, tangential, and "
+            "out-of-plane basis accelerations."
         )
     )
     parser.add_argument("--kernel-path", required=True)
@@ -446,7 +527,9 @@ def make_parser() -> argparse.ArgumentParser:
     parser.add_argument("--initial-dv-r-mm-s", type=float, default=0.0)
     parser.add_argument("--initial-dv-t-mm-s", type=float, default=0.039220792423)
     parser.add_argument("--initial-dv-h-mm-s", type=float, default=0.0)
+    parser.add_argument("--initial-ar-1e-15", type=float, default=0.0)
     parser.add_argument("--initial-at-1e-15", type=float, default=4.744123111671)
+    parser.add_argument("--initial-ah-1e-15", type=float, default=0.0)
 
     parser.add_argument("--dv-r-min-mm-s", type=float, default=-0.05)
     parser.add_argument("--dv-r-max-mm-s", type=float, default=0.05)
@@ -454,8 +537,12 @@ def make_parser() -> argparse.ArgumentParser:
     parser.add_argument("--dv-t-max-mm-s", type=float, default=0.041)
     parser.add_argument("--dv-h-min-mm-s", type=float, default=-0.05)
     parser.add_argument("--dv-h-max-mm-s", type=float, default=0.05)
+    parser.add_argument("--ar-min-1e-15", type=float, default=0.0)
+    parser.add_argument("--ar-max-1e-15", type=float, default=0.0)
     parser.add_argument("--at-min-1e-15", type=float, default=4.0)
     parser.add_argument("--at-max-1e-15", type=float, default=5.5)
+    parser.add_argument("--ah-min-1e-15", type=float, default=0.0)
+    parser.add_argument("--ah-max-1e-15", type=float, default=0.0)
 
     parser.add_argument(
         "--objective",
@@ -465,11 +552,14 @@ def make_parser() -> argparse.ArgumentParser:
             "lon_rms_plus_peak",
             "lon_peak_plus_lat_rms",
             "lon_rms_plus_peak_plus_lat_rms",
+            "lon_rms_plus_peak_plus_lat_rms_plus_lat_peak",
+            "lon_peak_plus_half_lon_rms_plus_trend_peaks_plus_lat_rms",
             "slope_abs",
         ],
         default="lon_rms_plus_peak_plus_lat_rms",
     )
     parser.add_argument("--lat-weight", type=float, default=0.5)
+    parser.add_argument("--lat-peak-weight", type=float, default=0.1)
     parser.add_argument("--target-lon-peak-arcsec", type=float, default=0.5)
     parser.add_argument(
         "--method",
@@ -497,7 +587,9 @@ def make_parser() -> argparse.ArgumentParser:
     parser.add_argument("--grid-dv-r-count", type=int, default=3)
     parser.add_argument("--grid-dv-t-count", type=int, default=5)
     parser.add_argument("--grid-dv-h-count", type=int, default=3)
+    parser.add_argument("--grid-ar-count", type=int, default=1)
     parser.add_argument("--grid-at-count", type=int, default=5)
+    parser.add_argument("--grid-ah-count", type=int, default=1)
 
     parser.add_argument("--quiet-trials", action="store_true")
     parser.add_argument("--skip-best-artifacts", action="store_true")
@@ -576,7 +668,9 @@ def main() -> None:
             args.initial_dv_r_mm_s,
             args.initial_dv_t_mm_s,
             args.initial_dv_h_mm_s,
+            args.initial_ar_1e_15,
             args.initial_at_1e_15,
+            args.initial_ah_1e_15,
         ],
         dtype=float,
     )
@@ -585,7 +679,9 @@ def main() -> None:
             args.dv_r_min_mm_s,
             args.dv_t_min_mm_s,
             args.dv_h_min_mm_s,
+            args.ar_min_1e_15,
             args.at_min_1e_15,
+            args.ah_min_1e_15,
         ],
         dtype=float,
     )
@@ -594,14 +690,31 @@ def main() -> None:
             args.dv_r_max_mm_s,
             args.dv_t_max_mm_s,
             args.dv_h_max_mm_s,
+            args.ar_max_1e_15,
             args.at_max_1e_15,
+            args.ah_max_1e_15,
         ],
         dtype=float,
     )
+    if np.any(upper < lower):
+        raise ValueError(f"Parameter upper bounds must be >= lower bounds. bounds=({lower}, {upper})")
     if np.any(x0 < lower) or np.any(x0 > upper):
         raise ValueError(f"Initial parameters must lie inside bounds. x0={x0}, bounds=({lower}, {upper})")
 
-    print("[Four-Parameter Lunar Velocity + Acceleration Fit]")
+    # Equal min/max bounds mark a parameter as fixed. This keeps historical
+    # four-parameter runs compatible while allowing the v4 six-parameter search
+    # to open the radial and out-of-plane acceleration dimensions explicitly.
+    active_mask = upper > lower
+    active_names = tuple(
+        name for name, is_active in zip(PARAMETER_NAMES, active_mask) if is_active
+    )
+    if not np.any(active_mask) and not args.grid_only:
+        raise ValueError("At least one parameter bound must be open for optimizer runs.")
+
+    optimizer_mode = "grid" if args.grid_only else args.method
+    optimizer_label = "Grid" if args.grid_only else OPTIMIZER_METHOD_LABELS[args.method]
+
+    print("[Empirical Lunar Velocity + Acceleration Fit]")
     print("  Target convention")
     print("    comparison     : Moon geocentric ecliptic-of-date longitude vs JPL geometry")
     print("    book range     : American Ephemeris 2000-01-01 through 2050-12-31")
@@ -619,14 +732,16 @@ def main() -> None:
     print(f"    rtol / atol    : {args.rtol} / {args.atol}")
     print("  Parameters")
     for name, initial, lo, hi in zip(PARAMETER_NAMES, x0, lower, upper):
-        print(f"    {name:17s}: initial={initial:.12f}, bounds=[{lo:.12f}, {hi:.12f}]")
+        status = "active" if hi > lo else "fixed"
+        print(
+            f"    {name:17s}: initial={initial:.12f}, "
+            f"bounds=[{lo:.12f}, {hi:.12f}], {status}"
+        )
     print("  Optimizer")
-    print(
-        "    mode           : "
-        f"{'grid' if args.grid_only else OPTIMIZER_METHOD_LABELS[args.method]}"
-    )
+    print(f"    mode           : {optimizer_label}")
     print(f"    objective      : {args.objective}")
     print(f"    lat_weight     : {args.lat_weight}")
+    print(f"    lat_peak_weight: {args.lat_peak_weight}")
     print(f"    maxiter        : {args.opt_maxiter}")
     print(f"    xtol / ftol    : {args.opt_xtol} / {args.opt_ftol}")
     if not args.grid_only and args.method == "dual-annealing":
@@ -636,12 +751,15 @@ def main() -> None:
         print(f"    local_powell   : {args.anneal_local_powell}")
     print("  Outputs")
     print(f"    trial_csv      : {args.output}")
+    print("    trial_journal  : append one completed trial row immediately")
     print(f"    summary_json   : {summary_output}")
     if not args.skip_best_artifacts:
         print(f"    residual_csv   : {best_residual_output}")
         print(f"    lon_plot       : {moon_lon_plot}")
         print(f"    lat_plot       : {moon_lat_plot}")
     print()
+
+    reset_incremental_csv(args.output)
 
     print("Precomputing JPL Moon geometric reference...")
     jpl_moon = jpl_geometric_and_apparent_ecliptic(
@@ -651,53 +769,99 @@ def main() -> None:
     )["moon"]
 
     rows: list[dict[str, Any]] = []
-    cache: dict[tuple[float, float, float, float], dict[str, float]] = {}
+    cache: dict[tuple[float, ...], dict[str, Any]] = {}
+    trial_csv_fieldnames: list[str] | None = None
 
-    def eval_cached(x: np.ndarray) -> dict[str, float]:
+    def eval_cached(x: np.ndarray) -> dict[str, Any]:
+        nonlocal trial_csv_fieldnames
+
         x = np.asarray(x, dtype=float)
         key = tuple(round(float(v), 12) for v in x)
         if key not in cache:
             trial_no = len(rows) + 1
+            trial_start = dt.datetime.now(dt.timezone.utc)
+            trial_start_perf = time.perf_counter()
             if not args.quiet_trials:
                 print(
                     "Trial %04d: dv_r=%.12f, dv_t=%.12f, dv_h=%.12f mm/s, "
-                    "a_t=%.12f x 1e-15 m/s^2"
-                    % (trial_no, x[0], x[1], x[2], x[3])
+                    "a_r=%.12f, a_t=%.12f, a_h=%.12f x 1e-15 m/s^2"
+                    % (trial_no, x[0], x[1], x[2], x[3], x[4], x[5])
                 )
 
-            row, _ = evaluate_params(
-                params=x,
-                base_state=base_state,
-                earth_index=earth_index,
-                moon_index=moon_index,
-                times=times,
-                offsets_s=offsets_s,
-                years_since_start=years_since_start,
-                date_strings=date_strings,
-                jpl_moon=jpl_moon,
-                base_accel_func=base_accel_func,
-                base_accel_kwargs=base_accel_kwargs,
-                args=args,
-            )
-            row["trial"] = trial_no
-            row["objective"] = args.objective
-            row["lat_weight"] = args.lat_weight
-            row["objective_value"] = objective_from_row(
-                row,
+            trial_metadata = {
+                "trial": trial_no,
+                "trial_status": "success",
+                "trial_error": "",
+                "trial_start_timestamp_utc": trial_start.isoformat(),
+                "optimizer_mode": optimizer_mode,
+                "optimizer_method": "grid" if args.grid_only else args.method,
+                "optimizer_method_label": optimizer_label,
+                "anneal_local_powell": bool(args.anneal_local_powell)
+                if args.method == "dual-annealing"
+                else False,
+                "objective": args.objective,
+                "lat_weight": args.lat_weight,
+                "lat_peak_weight": args.lat_peak_weight,
+                "target_lon_peak_arcsec": args.target_lon_peak_arcsec,
+            }
+
+            try:
+                metrics_row, _ = evaluate_params(
+                    params=x,
+                    base_state=base_state,
+                    earth_index=earth_index,
+                    moon_index=moon_index,
+                    times=times,
+                    offsets_s=offsets_s,
+                    years_since_start=years_since_start,
+                    date_strings=date_strings,
+                    jpl_moon=jpl_moon,
+                    base_accel_func=base_accel_func,
+                    base_accel_kwargs=base_accel_kwargs,
+                    args=args,
+                )
+            except Exception as exc:
+                failure_row = {
+                    **trial_metadata,
+                    "trial_status": "error",
+                    "trial_error": repr(exc),
+                    "trial_end_timestamp_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+                    "trial_runtime_s": time.perf_counter() - trial_start_perf,
+                    **dict(zip(PARAMETER_NAMES, [float(v) for v in x])),
+                }
+                if trial_csv_fieldnames is None:
+                    trial_csv_fieldnames = list(failure_row.keys())
+                append_row_csv(failure_row, args.output, trial_csv_fieldnames)
+                raise
+
+            objective_value = objective_from_row(
+                metrics_row,
                 args.objective,
                 lat_weight=args.lat_weight,
+                lat_peak_weight=args.lat_peak_weight,
             )
-            row["target_lon_peak_arcsec"] = args.target_lon_peak_arcsec
-            row["target_met"] = row["lon_peak_abs_arcsec"] <= args.target_lon_peak_arcsec
+            row = {
+                **trial_metadata,
+                "trial_end_timestamp_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+                "trial_runtime_s": time.perf_counter() - trial_start_perf,
+                **metrics_row,
+                "objective_value": objective_value,
+                "target_met": metrics_row["lon_peak_abs_arcsec"]
+                <= args.target_lon_peak_arcsec,
+            }
 
             cache[key] = row
             rows.append(row)
+            if trial_csv_fieldnames is None:
+                trial_csv_fieldnames = list(row.keys())
+            append_row_csv(row, args.output, trial_csv_fieldnames)
 
             if not args.quiet_trials:
                 print(
                     "  objective=%.9f, lon_rms=%.6f, lon_peak=%.6f, "
                     "lon_mean=%.6f, lon_max=%.6f, lon_min=%.6f, "
-                    "lat_rms=%.6f, dist_rms=%.6f"
+                    "lat_rms=%.6f, lat_peak=%.6f, dist_rms=%.6f, "
+                    "runtime=%.2fs"
                     % (
                         row["objective_value"],
                         row["lon_rms_arcsec"],
@@ -706,7 +870,9 @@ def main() -> None:
                         row["lon_max_arcsec"],
                         row["lon_min_arcsec"],
                         row["lat_rms_arcsec"],
+                        row["lat_peak_abs_arcsec"],
                         row["dist_rms_km"],
+                        row["trial_runtime_s"],
                     )
                 )
 
@@ -717,13 +883,26 @@ def main() -> None:
         return row["objective_value"]
 
     initial_simplex = None
+    opt_x0 = x0[active_mask]
+    opt_lower = lower[active_mask]
+    opt_upper = upper[active_mask]
+
+    def scalar_objective_active(active_params: np.ndarray) -> float:
+        full_params = expand_active_parameters(
+            active_params,
+            template=x0,
+            active_mask=active_mask,
+        )
+        return scalar_objective(full_params)
 
     if args.grid_only:
         values = [
             np.linspace(args.dv_r_min_mm_s, args.dv_r_max_mm_s, args.grid_dv_r_count),
             np.linspace(args.dv_t_min_mm_s, args.dv_t_max_mm_s, args.grid_dv_t_count),
             np.linspace(args.dv_h_min_mm_s, args.dv_h_max_mm_s, args.grid_dv_h_count),
+            np.linspace(args.ar_min_1e_15, args.ar_max_1e_15, args.grid_ar_count),
             np.linspace(args.at_min_1e_15, args.at_max_1e_15, args.grid_at_count),
+            np.linspace(args.ah_min_1e_15, args.ah_max_1e_15, args.grid_ah_count),
         ]
         total_trials = int(np.prod([len(v) for v in values]))
         print()
@@ -733,8 +912,15 @@ def main() -> None:
         for dv_r in values[0]:
             for dv_t in values[1]:
                 for dv_h in values[2]:
-                    for a_t in values[3]:
-                        eval_cached(np.array([dv_r, dv_t, dv_h, a_t], dtype=float))
+                    for a_r in values[3]:
+                        for a_t in values[4]:
+                            for a_h in values[5]:
+                                eval_cached(
+                                    np.array(
+                                        [dv_r, dv_t, dv_h, a_r, a_t, a_h],
+                                        dtype=float,
+                                    )
+                                )
 
         best_row = min(rows, key=lambda r: r["objective_value"])
 
@@ -750,10 +936,10 @@ def main() -> None:
     else:
         if args.method == "powell":
             result = minimize(
-                scalar_objective,
-                x0=x0,
+                scalar_objective_active,
+                x0=opt_x0,
                 method="Powell",
-                bounds=Bounds(lower, upper),
+                bounds=Bounds(opt_lower, opt_upper),
                 options={
                     "maxiter": args.opt_maxiter,
                     "xtol": args.opt_xtol,
@@ -763,9 +949,10 @@ def main() -> None:
             )
         elif args.method == "nelder-mead":
             initial_simplex = build_nelder_mead_initial_simplex(
-                x0=x0,
-                lower=lower,
-                upper=upper,
+                x0=opt_x0,
+                lower=opt_lower,
+                upper=opt_upper,
+                parameter_names=active_names,
             )
 
             print()
@@ -773,25 +960,25 @@ def main() -> None:
             for vertex_index, vertex in enumerate(initial_simplex):
                 formatted = ", ".join(
                     f"{name}={value:.12f}"
-                    for name, value in zip(PARAMETER_NAMES, vertex)
+                    for name, value in zip(active_names, vertex)
                 )
                 print(f"  vertex {vertex_index}: {formatted}")
             print()
 
             def bounded_scalar_objective(x: np.ndarray) -> float:
                 x = np.asarray(x, dtype=float)
-                lower_violation = np.maximum(lower - x, 0.0)
-                upper_violation = np.maximum(x - upper, 0.0)
+                lower_violation = np.maximum(opt_lower - x, 0.0)
+                upper_violation = np.maximum(x - opt_upper, 0.0)
                 violation = lower_violation + upper_violation
                 if np.any(violation > 0.0):
                     return 1.0e9 + float(np.sum(violation * violation))
-                return scalar_objective(x)
+                return scalar_objective_active(x)
 
             result = minimize(
                 bounded_scalar_objective,
-                x0=x0,
+                x0=opt_x0,
                 method="Nelder-Mead",
-                bounds=Bounds(lower, upper),
+                bounds=Bounds(opt_lower, opt_upper),
                 options={
                     "maxiter": args.opt_maxiter,
                     "xatol": args.opt_xtol,
@@ -801,12 +988,12 @@ def main() -> None:
                 },
             )
         elif args.method == "dual-annealing":
-            anneal_bounds = list(zip(lower, upper))
+            anneal_bounds = list(zip(opt_lower, opt_upper))
             minimizer_kwargs = None
             if args.anneal_local_powell:
                 minimizer_kwargs = {
                     "method": "Powell",
-                    "bounds": Bounds(lower, upper),
+                    "bounds": Bounds(opt_lower, opt_upper),
                     "options": {
                         "maxiter": args.opt_maxiter,
                         "xtol": args.opt_xtol,
@@ -816,7 +1003,7 @@ def main() -> None:
                 }
 
             result = dual_annealing(
-                scalar_objective,
+                scalar_objective_active,
                 bounds=anneal_bounds,
                 maxiter=args.anneal_maxiter,
                 initial_temp=args.anneal_initial_temp,
@@ -827,10 +1014,12 @@ def main() -> None:
         else:
             raise ValueError(f"Unsupported optimizer method: {args.method!r}")
 
-        best_row = eval_cached(np.clip(result.x, lower, upper))
-
-    rows_sorted = sorted(rows, key=lambda r: int(r["trial"]))
-    write_rows_csv(rows_sorted, args.output)
+        best_params_from_optimizer = expand_active_parameters(
+            np.clip(result.x, opt_lower, opt_upper),
+            template=x0,
+            active_mask=active_mask,
+        )
+        best_row = eval_cached(best_params_from_optimizer)
 
     best_params = np.array([best_row[name] for name in PARAMETER_NAMES], dtype=float)
     best_series = None
@@ -855,10 +1044,12 @@ def main() -> None:
         )
         best_row["objective"] = args.objective
         best_row["lat_weight"] = args.lat_weight
+        best_row["lat_peak_weight"] = args.lat_peak_weight
         best_row["objective_value"] = objective_from_row(
             best_row,
             args.objective,
             lat_weight=args.lat_weight,
+            lat_peak_weight=args.lat_peak_weight,
         )
         best_row["target_lon_peak_arcsec"] = args.target_lon_peak_arcsec
         best_row["target_met"] = best_row["lon_peak_abs_arcsec"] <= args.target_lon_peak_arcsec
@@ -868,7 +1059,7 @@ def main() -> None:
             dates=best_series["date"],
             values=best_series["lon_error_arcsec"],
             output_path=moon_lon_plot,
-            title="Moon Longitude Residual - Four-Parameter Lunar Calibration",
+            title="Moon Longitude Residual - Empirical Lunar Calibration",
             ylabel="Longitude error [arcsec]",
             y_limit_arcsec=args.moon_lon_ylim_arcsec,
             target_peak_arcsec=args.target_lon_peak_arcsec,
@@ -877,7 +1068,7 @@ def main() -> None:
             dates=best_series["date"],
             values=best_series["lat_error_arcsec"],
             output_path=moon_lat_plot,
-            title="Moon Latitude Residual - Four-Parameter Lunar Calibration",
+            title="Moon Latitude Residual - Empirical Lunar Calibration",
             ylabel="Latitude error [arcsec]",
             y_limit_arcsec=args.moon_lat_ylim_arcsec,
             target_peak_arcsec=None,
@@ -890,12 +1081,15 @@ def main() -> None:
     print(f"  method                        : {'grid' if args.grid_only else OPTIMIZER_METHOD_LABELS[args.method]}")
     print(f"  objective                     : {args.objective}")
     print(f"  lat_weight                    : {args.lat_weight:.9f}")
+    print(f"  lat_peak_weight               : {args.lat_peak_weight:.9f}")
     print(f"  target_lon_peak_arcsec        : {args.target_lon_peak_arcsec:.9f}")
     print(f"  target_met                    : {best_row['target_met']}")
     print(f"  dv_r_mm_s                     : {best_row['dv_r_mm_s']:.12f}")
     print(f"  dv_t_mm_s                     : {best_row['dv_t_mm_s']:.12f}")
     print(f"  dv_h_mm_s                     : {best_row['dv_h_mm_s']:.12f}")
+    print(f"  a_r_1e_15_m_s2                : {best_row['a_r_1e_15_m_s2']:.12f}")
     print(f"  a_t_1e_15_m_s2                : {best_row['a_t_1e_15_m_s2']:.12f}")
+    print(f"  a_h_1e_15_m_s2                : {best_row['a_h_1e_15_m_s2']:.12f}")
     print(f"  objective_value               : {best_row['objective_value']:.9f}")
     print(f"  lon_rms_arcsec                : {best_row['lon_rms_arcsec']:.9f}")
     print(f"  lon_peak_abs_arcsec           : {best_row['lon_peak_abs_arcsec']:.9f}")
@@ -922,18 +1116,23 @@ def main() -> None:
             moon_dv_r_mm_s=best_row["dv_r_mm_s"],
             moon_dv_t_mm_s=best_row["dv_t_mm_s"],
             moon_dv_h_mm_s=best_row["dv_h_mm_s"],
+            moon_a_r_1e_15_m_s2=best_row["a_r_1e_15_m_s2"],
             moon_a_t_1e_15_m_s2=best_row["a_t_1e_15_m_s2"],
+            moon_a_h_1e_15_m_s2=best_row["a_h_1e_15_m_s2"],
             description=args.save_calibration_description,
             fit_start_date=args.start_date,
             fit_end_date=args.end_date,
             validation_start_date=args.start_date,
             validation_end_date=args.end_date,
             objective=args.objective,
+            lat_weight=args.lat_weight,
+            lat_peak_weight=args.lat_peak_weight,
             model_notes=(
                 "Newtonian N-body + optional Sun 1PN GR + optional Earth J2 + "
                 "empirical 3D lunar initial velocity correction + empirical "
-                "lunar along-track acceleration. Short-range ephemeris matching "
-                "profile; do not use for long-term stability studies."
+                "lunar radial/tangential/out-of-plane acceleration. Short-range "
+                "ephemeris matching profile; do not use for long-term stability "
+                "studies."
             ),
             lon_rms_arcsec=best_row["lon_rms_arcsec"],
             lon_peak_abs_arcsec=best_row["lon_peak_abs_arcsec"],
@@ -967,18 +1166,15 @@ def main() -> None:
             "initial": dict(zip(PARAMETER_NAMES, x0)),
             "lower_bounds": dict(zip(PARAMETER_NAMES, lower)),
             "upper_bounds": dict(zip(PARAMETER_NAMES, upper)),
-            "units": {
-                "dv_r_mm_s": "mm/s",
-                "dv_t_mm_s": "mm/s",
-                "dv_h_mm_s": "mm/s",
-                "a_t_1e_15_m_s2": "1e-15 m/s^2",
-            },
+            "active": dict(zip(PARAMETER_NAMES, active_mask)),
+            "units": PARAMETER_UNITS,
         },
         "optimizer": {
             "mode": "grid" if args.grid_only else OPTIMIZER_METHOD_LABELS[args.method],
             "method": None if args.grid_only else args.method,
             "objective": args.objective,
             "lat_weight": args.lat_weight,
+            "lat_peak_weight": args.lat_peak_weight,
             "success": bool(result.success),
             "message": str(result.message),
             "nfev": getattr(result, "nfev", None),
@@ -990,6 +1186,7 @@ def main() -> None:
             "anneal_initial_temp": args.anneal_initial_temp,
             "anneal_seed": args.anneal_seed,
             "anneal_local_powell": args.anneal_local_powell,
+            "active_parameter_names": active_names,
             "initial_simplex": None if initial_simplex is None else initial_simplex,
             "target_lon_peak_arcsec": args.target_lon_peak_arcsec,
         },

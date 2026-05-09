@@ -27,7 +27,7 @@ from .advanced_integrators import (
     acceleration_newtonian_gr_sun,
     acceleration_newtonian_earth_j2,
     acceleration_newtonian_gr_sun_earth_j2,
-    make_acceleration_with_earth_moon_tangential_term,
+    make_acceleration_with_earth_moon_empirical_term,
 )
 
 
@@ -35,7 +35,7 @@ DAY_S = 86400.0
 YEAR_S = 365.25 * DAY_S
 
 
-def rms(values):
+def rms(values: list[float] | np.ndarray) -> float:
     arr = np.asarray(values, dtype=float)
     return float(np.sqrt(np.mean(arr * arr)))
 
@@ -56,62 +56,6 @@ def make_tt_times_for_dates(ts, dates: list[dt.date]):
     months = np.array([d.month for d in dates], dtype=int)
     days = np.array([d.day for d in dates], dtype=int)
     return ts.tt(years, months, days, 0, 0, 0)
-
-
-# def plot_moon_longitude_residual(rows: list[dict], output_path: str) -> None:
-#     moon_rows = [r for r in rows if r["body"] == "Moon"]
-
-#     dates = [dt.date.fromisoformat(r["date"]) for r in moon_rows]
-#     lon_err = np.array([float(r["lon_error_arcsec"]) for r in moon_rows])
-
-#     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-
-#     plt.figure(figsize=(12, 5))
-#     plt.plot(dates, lon_err, linewidth=0.8)
-#     plt.axhline(0.0, linestyle="--", linewidth=0.8)
-#     plt.axhline(60.0, linestyle=":", linewidth=0.8)
-#     plt.axhline(-60.0, linestyle=":", linewidth=0.8)
-#     plt.title("Moon longitude residual vs JPL / American Ephemeris convention")
-#     plt.xlabel("Date")
-#     plt.ylabel("Longitude error [arcsec]")
-#     plt.grid(True, alpha=0.3)
-#     plt.tight_layout()
-#     plt.savefig(output_path, dpi=200)
-#     plt.close()
-
-
-# def plot_moon_longitude_residual(
-#     rows: list[dict],
-#     output_path: str,
-#     y_limit_arcsec: float | None = None,
-# ) -> None:
-#     moon_rows = [r for r in rows if r["body"] == "Moon"]
-
-#     dates = [dt.date.fromisoformat(r["date"]) for r in moon_rows]
-#     lon_err = np.array([float(r["lon_error_arcsec"]) for r in moon_rows])
-
-#     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-
-#     peak_abs = float(np.max(np.abs(lon_err)))
-
-#     # If no explicit zoom is requested, choose a sensible automatic scale.
-#     # Keep at least +/-1 arcsec so the plot is not too cramped.
-#     if y_limit_arcsec is None:
-#         y_limit_arcsec = max(1.0, 1.15 * peak_abs)
-
-#     plt.figure(figsize=(12, 5))
-#     plt.plot(dates, lon_err, linewidth=0.8)
-#     plt.axhline(0.0, linestyle="--", linewidth=0.8)
-#     plt.axhline(y_limit_arcsec, linestyle=":", linewidth=0.8)
-#     plt.axhline(-y_limit_arcsec, linestyle=":", linewidth=0.8)
-#     plt.ylim(-y_limit_arcsec, y_limit_arcsec)
-#     plt.title("Moon longitude residual vs JPL / American Ephemeris convention")
-#     plt.xlabel("Date")
-#     plt.ylabel("Longitude error [arcsec]")
-#     plt.grid(True, alpha=0.3)
-#     plt.tight_layout()
-#     plt.savefig(output_path, dpi=200)
-#     plt.close()
 
 
 def plot_moon_longitude_residual(
@@ -143,58 +87,6 @@ def plot_moon_longitude_residual(
     plt.tight_layout()
     plt.savefig(output_path, dpi=200)
     plt.close()
-
-
-# def plot_moon_latitude_residual(rows: list[dict], output_path: str) -> None:
-#     moon_rows = [r for r in rows if r["body"] == "Moon"]
-
-#     dates = [dt.date.fromisoformat(r["date"]) for r in moon_rows]
-#     lat_err = np.array([float(r["lat_error_arcsec"]) for r in moon_rows])
-
-#     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-
-#     plt.figure(figsize=(12, 5))
-#     plt.plot(dates, lat_err, linewidth=0.8)
-#     plt.axhline(0.0, linestyle="--", linewidth=0.8)
-#     plt.title("Moon latitude residual vs JPL")
-#     plt.xlabel("Date")
-#     plt.ylabel("Latitude error [arcsec]")
-#     plt.grid(True, alpha=0.3)
-#     plt.tight_layout()
-#     plt.savefig(output_path, dpi=200)
-#     plt.close()
-
-
-# def plot_moon_latitude_residual(
-#     rows: list[dict],
-#     output_path: str,
-#     y_limit_arcsec: float | None = None,
-# ) -> None:
-#     moon_rows = [r for r in rows if r["body"] == "Moon"]
-
-#     dates = [dt.date.fromisoformat(r["date"]) for r in moon_rows]
-#     lat_err = np.array([float(r["lat_error_arcsec"]) for r in moon_rows])
-
-#     Path(output_path).parent.mkdir(parents=True, exist_ok=True)
-
-#     peak_abs = float(np.max(np.abs(lat_err)))
-
-#     if y_limit_arcsec is None:
-#         y_limit_arcsec = max(1.0, 1.15 * peak_abs)
-
-#     plt.figure(figsize=(12, 5))
-#     plt.plot(dates, lat_err, linewidth=0.8)
-#     plt.axhline(0.0, linestyle="--", linewidth=0.8)
-#     plt.axhline(y_limit_arcsec, linestyle=":", linewidth=0.8)
-#     plt.axhline(-y_limit_arcsec, linestyle=":", linewidth=0.8)
-#     plt.ylim(-y_limit_arcsec, y_limit_arcsec)
-#     plt.title("Moon latitude residual vs JPL")
-#     plt.xlabel("Date")
-#     plt.ylabel("Latitude error [arcsec]")
-#     plt.grid(True, alpha=0.3)
-#     plt.tight_layout()
-#     plt.savefig(output_path, dpi=200)
-#     plt.close()
 
 
 def plot_moon_latitude_residual(
@@ -274,6 +166,15 @@ def main() -> None:
         ),
     )
     parser.add_argument(
+        "--moon-a-r-1e-15-m-s2",
+        type=float,
+        default=None,
+        help=(
+            "Empirical relative geocentric lunar radial acceleration in units "
+            "of 1e-15 m/s^2. Positive points from Earth toward Moon."
+        ),
+    )
+    parser.add_argument(
         "--moon-a-t-1e-15-m-s2",
         type=float,
         default=None,
@@ -284,9 +185,19 @@ def main() -> None:
         ),
     )
     parser.add_argument(
+        "--moon-a-h-1e-15-m-s2",
+        type=float,
+        default=None,
+        help=(
+            "Empirical relative geocentric lunar out-of-plane acceleration in "
+            "units of 1e-15 m/s^2. Positive points along the Moon's "
+            "instantaneous geocentric angular momentum."
+        ),
+    )
+    parser.add_argument(
         "--no-preserve-emb-momentum",
         action="store_true",
-        help="Apply --moon-dv-t-mm-s to the Moon only instead of preserving EMB momentum.",
+        help="Apply lunar velocity corrections to the Moon only instead of preserving EMB momentum.",
     )
     parser.add_argument("--include-pluto", action="store_true")
 
@@ -323,25 +234,6 @@ def main() -> None:
         default=None,
         help="JSON file containing named lunar calibration profiles.",
     )
-    # parser.add_argument(
-    #     "--moon-lon-ylim-arcsec",
-    #     type=float,
-    #     default=None,
-    #     help=(
-    #         "Optional absolute y-limit for Moon longitude residual plot in arcsec. "
-    #         "If omitted, use automatic scaling based on the data."
-    #     ),
-    # )
-    # parser.add_argument(
-    #     "--moon-lat-ylim-arcsec",
-    #     type=float,
-    #     default=None,
-    #     help=(
-    #         "Optional absolute y-limit for Moon latitude residual plot in arcsec. "
-    #         "If omitted, use automatic scaling based on the data."
-    #     ),
-    # )
-
     args = parser.parse_args()
 
     start = parse_date(args.start_date)
@@ -382,7 +274,9 @@ def main() -> None:
         moon_dv_r_mm_s,
         moon_dv_t_mm_s,
         moon_dv_h_mm_s,
+        moon_a_r_1e_15_m_s2,
         moon_a_t_1e_15_m_s2,
+        moon_a_h_1e_15_m_s2,
         lunar_profile,
     ) = resolve_lunar_correction_values(
         profile_name=args.lunar_calibration_profile,
@@ -390,7 +284,9 @@ def main() -> None:
         moon_dv_r_mm_s=args.moon_dv_r_mm_s,
         moon_dv_t_mm_s=args.moon_dv_t_mm_s,
         moon_dv_h_mm_s=args.moon_dv_h_mm_s,
+        moon_a_r_1e_15_m_s2=args.moon_a_r_1e_15_m_s2,
         moon_a_t_1e_15_m_s2=args.moon_a_t_1e_15_m_s2,
+        moon_a_h_1e_15_m_s2=args.moon_a_h_1e_15_m_s2,
     )
     if (
         moon_dv_r_mm_s != 0.0
@@ -433,13 +329,19 @@ def main() -> None:
             }
     else:
         raise ValueError(f"Unsupported gr_model: {args.gr_model!r}")
-    
-    if moon_a_t_1e_15_m_s2 != 0.0:
-        accel_func = make_acceleration_with_earth_moon_tangential_term(
+
+    if (
+        moon_a_r_1e_15_m_s2 != 0.0
+        or moon_a_t_1e_15_m_s2 != 0.0
+        or moon_a_h_1e_15_m_s2 != 0.0
+    ):
+        accel_func = make_acceleration_with_earth_moon_empirical_term(
             accel_func,
             earth_index=earth_index,
             moon_index=moon_index,
+            a_r_m_s2=moon_a_r_1e_15_m_s2 * 1.0e-15,
             a_t_m_s2=moon_a_t_1e_15_m_s2 * 1.0e-15,
+            a_h_m_s2=moon_a_h_1e_15_m_s2 * 1.0e-15,
             base_accel_kwargs=accel_kwargs,
         )
         accel_kwargs = {}
@@ -452,7 +354,9 @@ def main() -> None:
     print(f"  moon_dv_r_mm_s : {moon_dv_r_mm_s}")
     print(f"  moon_dv_t_mm_s : {moon_dv_t_mm_s}")
     print(f"  moon_dv_h_mm_s : {moon_dv_h_mm_s}")
+    print(f"  moon_a_r_1e-15 : {moon_a_r_1e_15_m_s2}")
     print(f"  moon_a_t_1e-15 : {moon_a_t_1e_15_m_s2}")
+    print(f"  moon_a_h_1e-15 : {moon_a_h_1e_15_m_s2}")
 
     print("[American Ephemeris Range Compare]")
     print(f"  start_date     : {args.start_date}")
@@ -462,8 +366,6 @@ def main() -> None:
     print(f"  bodies         : {bodies}")
     print(f"  gr_model       : {args.gr_model}")
     print(f"  earth_j2       : {args.earth_j2}")
-    # print(f"  moon_dv_t_mm_s : {moon_dv_t_mm_s}")
-    # print(f"  moon_a_t_1e-15 : {moon_a_t_1e_15_m_s2}")
     print(f"  preserve_emb   : {not args.no_preserve_emb_momentum}")
     print(f"  max_step_days  : {args.max_step_days}")
     print(f"  chunk_years    : {args.chunk_years}")
@@ -504,10 +406,6 @@ def main() -> None:
     )
 
     write_rows_csv(rows, args.output)
-    # plot_moon_longitude_residual(rows, args.moon_lon_plot)
-
-    # if args.moon_lat_plot:
-    #     plot_moon_latitude_residual(rows, args.moon_lat_plot)
     plot_moon_longitude_residual(
         rows,
         args.moon_lon_plot,

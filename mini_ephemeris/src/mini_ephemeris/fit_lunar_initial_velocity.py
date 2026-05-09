@@ -409,9 +409,7 @@ def main() -> None:
     best = min(rows_sorted, key=lambda r: objective_from_row(r, args.objective))
 
     print()
-    # print("Best trial by Moon longitude RMS")
     print(f"Best trial by objective: {args.objective}")
-    # print(f"  dv_t_mm_s                    : {best['dv_t_mm_s']:.9f}")
     print(f"  dv_t_mm_s                    : {best['dv_t_mm_s']:.12f}")
     print(f"  objective_value              : {objective_from_row(best, args.objective):.9f}")
     print(f"  lon_rms_arcsec               : {best['lon_rms_arcsec']:.6f}")
