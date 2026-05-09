@@ -5,7 +5,7 @@
 The project currently has two distinct modes of use:
 
 1. **Short-range ephemeris matching** over 2000-2050, using explicit Earth and Moon bodies and optional empirical lunar calibration.
-2. **Future long-term stability studies**, which should use a cleaner dynamical model, likely with the Earth-Moon barycenter rather than a fitted explicit Moon model.
+2. **Long-term stability studies**, using a cleaner physical reduced model with the Earth-Moon barycenter rather than a fitted explicit Moon model.
 
 These two goals should stay separate. The empirical lunar calibration is useful for reproducing a JPL/book-style ephemeris over a defined date range. It should not be treated as general-purpose lunar physics for million-year integrations.
 
@@ -90,7 +90,11 @@ src/mini_ephemeris/
   plotting.py
   error_metrics.py
   analysis_tools.py
+  orbital_elements.py
+  stability_diagnostics.py
+  chaos_diagnostics.py
   experiments.py
+  long_term_stability_cli.py
 
   american_ephemeris.py
   american_ephemeris_cli.py
@@ -111,6 +115,10 @@ High-level purpose of the major files:
 | `nbody.py` | Core N-body state containers and basic mechanics utilities. |
 | `advanced_integrators.py` | DOP853 integration and acceleration models, including Newtonian gravity, Sun 1PN GR, Earth J2, and empirical lunar basis-acceleration wrapping. |
 | `ephem.py` | JPL/Skyfield kernel loading, initial barycentric state construction, body list construction, Earth/Moon setup, and lunar initial velocity correction helpers. |
+| `orbital_elements.py` | Heliocentric osculating orbital elements for long-term stability diagnostics. |
+| `stability_diagnostics.py` | Energy, angular momentum, center-of-mass, and pairwise separation diagnostics for stability runs. |
+| `chaos_diagnostics.py` | Small phase-space separation and finite-time Lyapunov helper functions for future ensemble work. |
+| `long_term_stability_cli.py` | Physical reduced-model stability CLI with streamed CSV diagnostics. |
 | `american_ephemeris.py` | Converts JPL/model vectors into American-Ephemeris-style apparent/geocentric/tropical longitude comparison rows. |
 | `american_ephemeris_cli.py` | Generates JPL-only American-Ephemeris-style CSVs. |
 | `american_ephemeris_model_cli.py` | Compares one target month of integrated model output against JPL/book-style positions. |
@@ -601,6 +609,21 @@ Also smoke-test CLIs that use `argparse`, because duplicate argument definitions
 python -m mini_ephemeris.american_ephemeris_range_cli --help
 python -m mini_ephemeris.fit_lunar_dv_and_tangential_accel --help
 python -m mini_ephemeris.fit_lunar_velocity_3d_and_accel --help
+python -m mini_ephemeris.long_term_stability_cli --help
+```
+
+Small long-term stability smoke test:
+
+```bash
+python -m mini_ephemeris.long_term_stability_cli \
+  --kernel-path /home/peacelovephysics/ephemeris/data/de431_part-2.bsp \
+  --start-date 2000-01-01 \
+  --duration-years 0.02 \
+  --step-days 4 \
+  --record-every-years 0.01 \
+  --output-dir /home/peacelovephysics/ephemeris/output \
+  --tag smoke_stability \
+  --no-progress-bar
 ```
 
 Recommended Git checkpoint:
@@ -856,26 +879,25 @@ The recommended order is:
 
 ---
 
-# Future mode: long-term stability experiments
+# Long-term stability experiments
 
 Long-term stability studies should be treated as a separate mode from the short-range ephemeris-matching mode.
 
 For million-year integrations, do **not** use the empirical lunar calibration profile. It is fitted to JPL/book agreement over 2000-2050 and is not a general physical law.
 
-Recommended long-term model:
+Implemented reduced model:
 
 ```text
 Sun
-Mercury
-Venus
+Mercury barycenter
+Venus barycenter
 Earth-Moon barycenter
-Mars
-Jupiter
-Saturn
-Uranus
-Neptune
-optional Pluto
-optional major asteroids
+Mars barycenter
+Jupiter barycenter
+Saturn barycenter
+Uranus barycenter
+Neptune barycenter
+optional Pluto barycenter
 ```
 
 Why use the Earth-Moon barycenter?
@@ -887,7 +909,8 @@ Why use the Earth-Moon barycenter?
 
 Recommended numerical direction:
 
-- Add or use a symplectic integrator for long-term work.
+- Use the fixed-step leapfrog / velocity-Verlet integrator for long-term Newtonian work.
+- Use DOP853 only for short validation/comparison runs.
 - Use fixed timesteps appropriate to the shortest modeled orbital period.
 - Track energy error and angular momentum error.
 - Run ensembles of nearby initial conditions.
@@ -895,42 +918,50 @@ Recommended numerical direction:
 - Include Sun 1PN GR for Mercury-sensitive experiments.
 - Treat exact planetary phase after very long times cautiously because the solar system is chaotic.
 
-Possible long-term experiment CLI:
+Run the stability CLI:
 
 ```bash
 python -m mini_ephemeris.long_term_stability_cli \
   --kernel-path /home/peacelovephysics/ephemeris/data/de431_part-2.bsp \
   --start-date 2000-01-01 \
-  --duration-years 1000000 \
-  --model emb \
-  --integrator symplectic \
+  --duration-years 10000 \
   --step-days 4 \
-  --include-gr \
-  --output /home/peacelovephysics/ephemeris/output/stability_1Myr_emb.csv
+  --record-every-years 10 \
+  --gr-model none \
+  --integrator leapfrog \
+  --output-dir /home/peacelovephysics/ephemeris/output \
+  --tag stability_10kyr_emb
 ```
 
-Possible diagnostics:
+Optional Pluto and Sun 1PN GR:
+
+```bash
+--include-pluto
+--gr-model sun
+```
+
+If `--gr-model sun` is used with `--integrator leapfrog`, the CLI prints that
+the Sun 1PN GR perturbation is included through the acceleration callback and
+the method is no longer exactly symplectic.
+
+The stability CLI writes streamed numerical outputs:
 
 ```text
-semi-major axis vs time
-eccentricity vs time
-inclination vs time
-perihelion precession
-minimum planet-planet separation
-energy drift
-angular momentum drift
-Lyapunov-style divergence between nearby initial conditions
-ensemble statistics
+stability_timeseries_<tag>.csv
+orbital_elements_<tag>.csv
+invariants_<tag>.csv
+min_separations_<tag>.csv
+summary_<tag>.json
 ```
 
-A long-term stability mode should have its own configuration and should explicitly disable:
+Diagnostics include Newtonian energy drift, total angular momentum drift,
+center-of-mass position/velocity drift, pairwise minimum separations, and
+J2000-ecliptic heliocentric osculating elements for each non-Sun body.
 
-```text
-empirical lunar initial correction
-empirical lunar acceleration
-apparent geocentric output machinery
-American Ephemeris formatting
-```
+The stability mode explicitly rejects empirical lunar calibration flags such as
+`--moon-dv-t-mm-s`, `--moon-a-t-1e-15-m-s2`, and
+`--lunar-calibration-profile`. It also does not import or use American
+Ephemeris apparent/geocentric/tropical output machinery.
 
 That separation keeps the project scientifically honest:
 
@@ -954,10 +985,10 @@ Keep the successful v3 full-book empirical lunar calibration as the stable short
 4. Validate the saved profile with `american_ephemeris_range_cli` and compare the final residual plots against the v3 baseline.
 5. If the longitude peak or latitude envelope does not improve meaningfully, use the residual shape to choose the next physical refinement.
 
-The long-term dynamics milestone should remain separate:
+The long-term dynamics milestone remains separate:
 
-1. Build Earth-Moon barycenter model mode.
-2. Add long-term integrator diagnostics.
-3. Start with 10 kyr / 100 kyr tests before attempting million-year runs.
+1. Start with short smoke tests.
+2. Inspect energy, angular momentum, center-of-mass, and minimum-separation diagnostics before scaling up.
+3. Scale through 10 kyr / 100 kyr reduced-model runs before attempting million-year runs.
 
 The project now has a strong short-range ephemeris-matching baseline, implemented four- and six-parameter lunar optimization paths, and a clear separation between fitted ephemeris reproduction and long-term physical dynamics.
