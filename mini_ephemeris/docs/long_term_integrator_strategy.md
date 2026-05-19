@@ -412,11 +412,25 @@ larger compute jobs:
    `python -m mini_ephemeris.secular_frequency_summary` on orbital-elements
    CSVs to compare FFT-lite / NAFF-lite frequency drift across Newtonian, GR
    trajectory, timestep, and duration outputs. This is not full Laskar NAFF.
-4. Reporting and packaging. Use
+4. Literature-style shadow divergence. Run
+   `python -m mini_ephemeris.rebound_shadow_lyapunov_cli` for two-trajectory
+   finite-time divergence windows. The 100 Myr full and full+Pluto wrappers are
+   intentionally scripts, not automatic tests:
+   `mini_ephemeris/scripts/run_rebound_full_newtonian_shadow_100myr.sh` and
+   `mini_ephemeris/scripts/run_rebound_full_with_pluto_shadow_100myr.sh`.
+   Shadow fits must be checked for saturation and non-exponential windows.
+   `--resume` only skips a completed final summary. Mid-run restart requires
+   `--resume-from-checkpoint latest`. The 100 Myr scripts write independent
+   checkpoint bundles every 1 Myr and keep the last 5 valid bundles. A power
+   outage can lose progress since the most recent checkpoint, but it should not
+   force a restart from zero. Checkpoints can be inspected with
+   `--inspect-checkpoints --checkpoint-dir PATH`.
+5. Reporting and packaging. Use
    `python -m mini_ephemeris.stability_research_report` for cautious Markdown
    summaries and `python -m mini_ephemeris.pack_stability_batch` to create
    uploadable zip bundles with manifests, commit hashes, logs, summaries,
-   plots, and CSV outputs.
+   plots, and CSV outputs. SimulationArchive `.bin` checkpoint files are
+   excluded from packages by default unless explicitly included.
 
 Interpretation discipline:
 

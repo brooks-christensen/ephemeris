@@ -1689,6 +1689,19 @@ reproducible and falsifiable:
 - Use `python -m mini_ephemeris.secular_frequency_summary` to compare
   FFT-lite / NAFF-lite secular frequency drift across Newtonian, GR trajectory,
   timestep, and duration runs. This is not full Laskar NAFF.
+- Use `python -m mini_ephemeris.rebound_shadow_lyapunov_cli` for
+  two-trajectory shadow-divergence experiments aimed at literature-style
+  finite-time Lyapunov windows. The 100 Myr wrappers are created but should be
+  launched outside Codex:
+  `mini_ephemeris/scripts/run_rebound_full_newtonian_shadow_100myr.sh` and
+  `mini_ephemeris/scripts/run_rebound_full_with_pluto_shadow_100myr.sh`.
+  `--resume` only skips a completed final summary. For power-loss recovery use
+  `--resume-from-checkpoint latest` with `--checkpoint-every-years`,
+  `--checkpoint-dir`, and `--write-partial-every-record`. The 100 Myr scripts
+  use 1 Myr checkpoint bundles and keep the last 5 valid checkpoints, so an
+  interruption loses at most progress since the latest checkpoint, not the
+  whole run. Inspect checkpoint bundles with
+  `python -m mini_ephemeris.rebound_shadow_lyapunov_cli --inspect-checkpoints --checkpoint-dir PATH`.
 - Use `python -m mini_ephemeris.stability_research_report` for cautious
   Markdown summaries and `python -m mini_ephemeris.pack_stability_batch` for
   uploadable artifact zips with manifests.
@@ -1698,6 +1711,8 @@ reproducible and falsifiable:
 - REBOUNDx `gr_potential` is useful for GR trajectory studies, but GR MEGNO is
   not validated in the current REBOUNDx path because variational particles are
   not evolved self-consistently there.
+- SimulationArchive checkpoint `.bin` files are excluded from artifact upload
+  packages by default unless `--include-archives` is explicitly passed.
 
 The stability mode explicitly rejects empirical lunar calibration flags such as
 `--moon-dv-t-mm-s`, `--moon-a-t-1e-15-m-s2`, and

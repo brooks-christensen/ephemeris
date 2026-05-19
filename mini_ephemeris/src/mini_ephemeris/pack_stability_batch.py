@@ -16,6 +16,12 @@ INCLUDE_PATTERNS = (
     "*.log",
     "summary_*.json",
     "megno_summary_*.json",
+    "shadow_lyapunov_summary_*.json",
+    "shadow_separation_*.csv",
+    "shadow_growth_*.png",
+    "shadow_fit_diagnostics_*.csv",
+    "shadow_fit_diagnostics_*.json",
+    "shadow_fit_window_comparison_*.png",
     "rebound_megno*.json",
     "rebound_megno*.csv",
     "rebound_megno*.md",
@@ -35,7 +41,17 @@ INCLUDE_PATTERNS = (
 )
 
 ARCHIVE_PATTERNS = ("*.bin", "*.sa", "*.simarchive")
-EXPECTED_PATTERNS = ("summary_*.json", "invariants_*.csv", "orbital_elements_*.csv", "min_separations_*.csv")
+STANDARD_EXPECTED_PATTERNS = (
+    "summary_*.json",
+    "invariants_*.csv",
+    "orbital_elements_*.csv",
+    "min_separations_*.csv",
+)
+SHADOW_EXPECTED_PATTERNS = (
+    "shadow_lyapunov_summary_*.json",
+    "shadow_separation_*.csv",
+    "shadow_growth_*.png",
+)
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -100,6 +116,15 @@ def should_include(path: Path, *, tag: str | None, include_archives: bool, inclu
     return matches_any(path, INCLUDE_PATTERNS)
 
 
+def detect_shadow_mode(*, roots: list[Path], tag: str | None, included: list[dict], excluded: list[dict]) -> bool:
+    if tag and "shadow" in tag.lower():
+        return True
+    if any("shadow" in root.name.lower() for root in roots):
+        return True
+    candidates = included + excluded
+    return any(Path(item["path"]).name.startswith("shadow_") for item in candidates)
+
+
 def main(argv: list[str] | None = None) -> None:
     parser = build_parser()
     args = parser.parse_args(argv)
@@ -143,8 +168,16 @@ def main(argv: list[str] | None = None) -> None:
         else:
             excluded.append(entry)
 
+    shadow_mode = detect_shadow_mode(
+        roots=roots,
+        tag=args.tag,
+        included=included,
+        excluded=excluded,
+    )
+    expected_patterns = SHADOW_EXPECTED_PATTERNS if shadow_mode else STANDARD_EXPECTED_PATTERNS
+
     warnings: list[str] = []
-    for pattern in EXPECTED_PATTERNS:
+    for pattern in expected_patterns:
         if not any(fnmatch.fnmatch(Path(item["path"]).name, pattern) for item in included):
             warnings.append(f"missing expected artifact pattern: {pattern}")
 
@@ -165,6 +198,8 @@ def main(argv: list[str] | None = None) -> None:
         "output_zip": str(output_zip),
         "git_commit": git_commit_hash(Path.cwd()),
         "python": sys.version,
+        "detected_mode": "shadow" if shadow_mode else "standard",
+        "expected_patterns": list(expected_patterns),
         "include_archives": args.include_archives,
         "include_large_csv": args.include_large_csv,
         "max_file_mb": args.max_file_mb,
