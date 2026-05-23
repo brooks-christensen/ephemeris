@@ -31,8 +31,13 @@ BODY_CHOICES = {
     "earth": "earth barycenter",
     "mars": "mars barycenter",
     "jupiter": "jupiter barycenter",
+    "saturn": "saturn barycenter",
+    "uranus": "uranus barycenter",
+    "neptune": "neptune barycenter",
+    "pluto": "pluto barycenter",
 }
-ELEMENT_BODIES = ("mercury", "venus", "earth", "mars", "jupiter")
+ELEMENT_BODIES = ("mercury", "venus", "earth", "mars", "jupiter", "saturn", "uranus", "neptune", "pluto")
+LEGACY_ELEMENT_BODIES = ("mercury", "venus", "earth", "mars", "jupiter")
 
 
 def parse_start_datetime(text: str) -> dt.datetime:
@@ -57,7 +62,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--duration-years", type=float, default=1000.0)
     parser.add_argument("--step-days", type=float, default=1.0)
     parser.add_argument("--record-every-years", type=float, default=10.0)
-    parser.add_argument("--perturb-body", choices=["mercury", "jupiter", "all"], default="mercury")
+    parser.add_argument("--perturb-body", choices=[*BODY_CHOICES.keys(), "all"], default="mercury")
     parser.add_argument("--perturbation-m", type=float, default=1.0)
     parser.add_argument(
         "--perturbation-mode",
@@ -320,6 +325,38 @@ def element_map(state: NBodyState, body_names: tuple[str, ...], sun_index: int) 
     }
 
 
+def body_metric_slug(body_name: str) -> str:
+    return body_name.replace(" ", "_")
+
+
+def short_body_slug(body_name: str) -> str:
+    return body_name.replace(" barycenter", "").replace(" ", "_")
+
+
+def wrapped_angle_delta(shadow_angle: float, reference_angle: float) -> float:
+    if not (math.isfinite(shadow_angle) and math.isfinite(reference_angle)):
+        return math.nan
+    return (shadow_angle - reference_angle + math.pi) % (2.0 * math.pi) - math.pi
+
+
+def eccentricity_vector_separation(ref, shadow) -> float:
+    ref_x = ref.eccentricity * math.cos(ref.longitude_perihelion_rad)
+    ref_y = ref.eccentricity * math.sin(ref.longitude_perihelion_rad)
+    shadow_x = shadow.eccentricity * math.cos(shadow.longitude_perihelion_rad)
+    shadow_y = shadow.eccentricity * math.sin(shadow.longitude_perihelion_rad)
+    return math.hypot(shadow_x - ref_x, shadow_y - ref_y)
+
+
+def inclination_vector_separation(ref, shadow) -> float:
+    ref_amp = math.sin(0.5 * ref.inclination_rad)
+    shadow_amp = math.sin(0.5 * shadow.inclination_rad)
+    ref_x = ref_amp * math.cos(ref.longitude_ascending_node_rad)
+    ref_y = ref_amp * math.sin(ref.longitude_ascending_node_rad)
+    shadow_x = shadow_amp * math.cos(shadow.longitude_ascending_node_rad)
+    shadow_y = shadow_amp * math.sin(shadow.longitude_ascending_node_rad)
+    return math.hypot(shadow_x - ref_x, shadow_y - ref_y)
+
+
 def shadow_csv_fields(body_names: tuple[str, ...], sun_index: int) -> list[str]:
     base_fields = [
         "time_years",
@@ -333,10 +370,10 @@ def shadow_csv_fields(body_names: tuple[str, ...], sun_index: int) -> list[str]:
     for index, name in enumerate(body_names):
         if index == sun_index:
             continue
-        slug = name.replace(" barycenter", "").replace(" ", "_")
+        slug = short_body_slug(name)
         body_fields.append(f"sep_{slug}_au")
     element_fields = []
-    for short_name in ELEMENT_BODIES:
+    for short_name in LEGACY_ELEMENT_BODIES:
         if BODY_CHOICES[short_name] in body_names:
             element_fields.extend(
                 [
@@ -345,6 +382,23 @@ def shadow_csv_fields(body_names: tuple[str, ...], sun_index: int) -> list[str]:
                     f"delta_{short_name}_varpi_arcsec",
                 ]
             )
+    for short_name in ELEMENT_BODIES:
+        body = BODY_CHOICES[short_name]
+        if body not in body_names:
+            continue
+        slug = body_metric_slug(body)
+        element_fields.extend(
+            [
+                f"{slug}_delta_a_au",
+                f"{slug}_delta_e",
+                f"{slug}_delta_i",
+                f"{slug}_delta_Omega_wrapped",
+                f"{slug}_delta_varpi_wrapped",
+                f"{slug}_delta_lambda_wrapped",
+                f"{slug}_eccentricity_vector_separation",
+                f"{slug}_inclination_vector_separation",
+            ]
+        )
     return base_fields + body_fields + element_fields
 
 
@@ -530,7 +584,7 @@ def add_scheduled_events(schedule: dict[float, set[str]], name: str, times: list
 def angular_delta_arcsec(a: float, b: float) -> float:
     if not (math.isfinite(a) and math.isfinite(b)):
         return math.nan
-    return ((a - b + math.pi) % (2.0 * math.pi) - math.pi) * 206_264.80624709636
+    return wrapped_angle_delta(a, b) * 206_264.80624709636
 
 
 def separation_row(
@@ -556,11 +610,11 @@ def separation_row(
     for index, name in enumerate(body_names):
         if index == sun_index:
             continue
-        slug = name.replace(" barycenter", "").replace(" ", "_")
+        slug = short_body_slug(name)
         row[f"sep_{slug}_au"] = float(np.linalg.norm(delta_r[index]) / AU_M)
     ref_elements = element_map(ref_state, body_names, sun_index)
     shadow_elements = element_map(shadow_state, body_names, sun_index)
-    for short_name in ELEMENT_BODIES:
+    for short_name in LEGACY_ELEMENT_BODIES:
         body = BODY_CHOICES[short_name]
         if body not in ref_elements or body not in shadow_elements:
             continue
@@ -572,6 +626,30 @@ def separation_row(
             shadow.longitude_perihelion_rad,
             ref.longitude_perihelion_rad,
         )
+    for short_name in ELEMENT_BODIES:
+        body = BODY_CHOICES[short_name]
+        if body not in ref_elements or body not in shadow_elements:
+            continue
+        ref = ref_elements[body]
+        shadow = shadow_elements[body]
+        slug = body_metric_slug(body)
+        row[f"{slug}_delta_a_au"] = (shadow.semi_major_axis_m - ref.semi_major_axis_m) / AU_M
+        row[f"{slug}_delta_e"] = shadow.eccentricity - ref.eccentricity
+        row[f"{slug}_delta_i"] = shadow.inclination_rad - ref.inclination_rad
+        row[f"{slug}_delta_Omega_wrapped"] = wrapped_angle_delta(
+            shadow.longitude_ascending_node_rad,
+            ref.longitude_ascending_node_rad,
+        )
+        row[f"{slug}_delta_varpi_wrapped"] = wrapped_angle_delta(
+            shadow.longitude_perihelion_rad,
+            ref.longitude_perihelion_rad,
+        )
+        row[f"{slug}_delta_lambda_wrapped"] = wrapped_angle_delta(
+            shadow.mean_longitude_rad,
+            ref.mean_longitude_rad,
+        )
+        row[f"{slug}_eccentricity_vector_separation"] = eccentricity_vector_separation(ref, shadow)
+        row[f"{slug}_inclination_vector_separation"] = inclination_vector_separation(ref, shadow)
     return row
 
 

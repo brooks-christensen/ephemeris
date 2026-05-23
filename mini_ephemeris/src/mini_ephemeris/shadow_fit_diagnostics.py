@@ -17,6 +17,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--tag", required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument(
+        "--metric",
+        default="raw_position_separation_au",
+        help="Shadow CSV column to fit. Values are fit using log(abs(metric)).",
+    )
+    parser.add_argument(
         "--windows",
         default="1e6:1e7,1e6:2e7,2e6:2e7,5e6:3e7,1e7:4e7,1e6:5e7",
         help="Comma-separated start:end year windows.",
@@ -81,7 +86,11 @@ def classify_window(
     return "saturated_or_ambiguous"
 
 
-def plot_window_comparison(rows: list[dict[str, object]], path: Path) -> None:
+def saturation_applies_to_metric(metric: str) -> bool:
+    return metric == "raw_position_separation_au" or (metric.startswith("sep_") and metric.endswith("_au"))
+
+
+def plot_window_comparison(rows: list[dict[str, object]], path: Path, metric: str) -> None:
     if not rows:
         return
     import matplotlib
@@ -108,6 +117,7 @@ def plot_window_comparison(rows: list[dict[str, object]], path: Path) -> None:
     ax2.set_xlabel("fit window")
     ax2.grid(True, alpha=0.3)
     ax2.set_xticks(x_values, labels, rotation=35, ha="right")
+    fig.suptitle(f"Shadow fit comparison: {metric}", y=0.995)
 
     fig.tight_layout()
     fig.savefig(path, dpi=150)
@@ -126,22 +136,33 @@ def main(argv: list[str] | None = None) -> None:
     json_out = output_dir / f"shadow_fit_diagnostics_{tag}.json"
     plot_out = output_dir / f"shadow_fit_window_comparison_{tag}.png"
 
+    metric = args.metric
+    saturation_metric = saturation_applies_to_metric(metric)
     samples: list[dict[str, float]] = []
     with args.shadow_csv.open(newline="") as file_obj:
-        for row in csv.DictReader(file_obj):
+        reader = csv.DictReader(file_obj)
+        if reader.fieldnames is None or metric not in reader.fieldnames:
+            available = ", ".join(reader.fieldnames or [])
+            raise SystemExit(f"Metric column '{metric}' not found in {args.shadow_csv}. Available columns: {available}")
+        for row in reader:
             time_years = f(row.get("time_years"))
-            separation = f(row.get("raw_position_separation_au"))
-            log_separation = f(row.get("log_separation"))
-            if math.isfinite(time_years) and math.isfinite(separation) and math.isfinite(log_separation):
+            metric_value = f(row.get(metric))
+            metric_magnitude = abs(metric_value)
+            if (
+                math.isfinite(time_years)
+                and math.isfinite(metric_value)
+                and metric_magnitude > 0.0
+            ):
                 samples.append(
                     {
                         "time_years": time_years,
-                        "raw_position_separation_au": separation,
-                        "log_separation": log_separation,
+                        "metric_value": metric_value,
+                        "metric_magnitude": metric_magnitude,
+                        "log_metric": math.log(max(metric_magnitude, 1.0e-300)),
                     }
                 )
     if not samples:
-        raise SystemExit("No finite shadow-separation rows were found.")
+        raise SystemExit(f"No finite nonzero rows were found for metric '{metric}'.")
 
     rows: list[dict[str, object]] = []
     for start, end in windows:
@@ -159,6 +180,11 @@ def main(argv: list[str] | None = None) -> None:
                     "r_squared_exponential": math.nan,
                     "r_squared_powerlaw": math.nan,
                     "number_of_samples": sample_count,
+                    "metric": metric,
+                    "start_metric_value": math.nan,
+                    "end_metric_value": math.nan,
+                    "start_metric_magnitude": math.nan,
+                    "end_metric_magnitude": math.nan,
                     "start_separation_au": math.nan,
                     "end_separation_au": math.nan,
                     "exceeded_saturation_threshold": False,
@@ -169,7 +195,7 @@ def main(argv: list[str] | None = None) -> None:
             continue
 
         xs = np.array([sample["time_years"] for sample in window_samples], dtype=float)
-        ys = np.array([sample["log_separation"] for sample in window_samples], dtype=float)
+        ys = np.array([sample["log_metric"] for sample in window_samples], dtype=float)
         exp_slope, _, exp_r2 = linear_fit(xs, ys)
 
         positive_samples = [sample for sample in window_samples if sample["time_years"] > 0.0]
@@ -177,18 +203,21 @@ def main(argv: list[str] | None = None) -> None:
         power_slope = math.nan
         if len(positive_samples) >= 3:
             power_xs = np.log(np.array([sample["time_years"] for sample in positive_samples], dtype=float))
-            power_ys = np.array([sample["log_separation"] for sample in positive_samples], dtype=float)
+            power_ys = np.array([sample["log_metric"] for sample in positive_samples], dtype=float)
             power_slope, _, power_r2 = linear_fit(power_xs, power_ys)
 
-        start_sep = float(window_samples[0]["raw_position_separation_au"])
-        end_sep = float(window_samples[-1]["raw_position_separation_au"])
-        saturated = any(
-            sample["raw_position_separation_au"] >= args.saturation_threshold_au
-            for sample in window_samples
+        start_metric_value = float(window_samples[0]["metric_value"])
+        end_metric_value = float(window_samples[-1]["metric_value"])
+        start_metric_magnitude = float(window_samples[0]["metric_magnitude"])
+        end_metric_magnitude = float(window_samples[-1]["metric_magnitude"])
+        saturated = (
+            any(sample["metric_magnitude"] >= args.saturation_threshold_au for sample in window_samples)
+            if saturation_metric
+            else False
         )
         classification = classify_window(
             sample_count=sample_count,
-            end_sep_au=end_sep,
+            end_sep_au=end_metric_magnitude,
             saturated=saturated,
             exp_r2=exp_r2,
             power_r2=power_r2,
@@ -214,8 +243,13 @@ def main(argv: list[str] | None = None) -> None:
                 "r_squared_powerlaw": power_r2,
                 "powerlaw_exponent": power_slope,
                 "number_of_samples": sample_count,
-                "start_separation_au": start_sep,
-                "end_separation_au": end_sep,
+                "metric": metric,
+                "start_metric_value": start_metric_value,
+                "end_metric_value": end_metric_value,
+                "start_metric_magnitude": start_metric_magnitude,
+                "end_metric_magnitude": end_metric_magnitude,
+                "start_separation_au": start_metric_magnitude,
+                "end_separation_au": end_metric_magnitude,
                 "exceeded_saturation_threshold": saturated,
                 "classification": classification,
                 "recommendation": recommendation,
@@ -232,6 +266,11 @@ def main(argv: list[str] | None = None) -> None:
         "r_squared_powerlaw",
         "powerlaw_exponent",
         "number_of_samples",
+        "metric",
+        "start_metric_value",
+        "end_metric_value",
+        "start_metric_magnitude",
+        "end_metric_magnitude",
         "start_separation_au",
         "end_separation_au",
         "exceeded_saturation_threshold",
@@ -278,7 +317,9 @@ def main(argv: list[str] | None = None) -> None:
         "finite_time_only": True,
         "not_asymptotic_lyapunov_exponent": True,
         "shadow_csv": str(args.shadow_csv),
+        "metric": metric,
         "saturation_threshold_au": args.saturation_threshold_au,
+        "saturation_threshold_applied": saturation_metric,
         "windows": rows,
         "best_exponential_candidate": best_exp,
         "best_powerlaw_or_shear_candidate": best_power,
@@ -293,7 +334,7 @@ def main(argv: list[str] | None = None) -> None:
         },
     }
     json_out.write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n")
-    plot_window_comparison(rows, plot_out)
+    plot_window_comparison(rows, plot_out, metric)
 
     print(f"wrote csv: {csv_out}")
     print(f"wrote json: {json_out}")
