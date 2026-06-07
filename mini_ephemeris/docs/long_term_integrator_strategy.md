@@ -411,7 +411,10 @@ larger compute jobs:
 3. Secular frequency diagnostics. Run
    `python -m mini_ephemeris.secular_frequency_summary` on orbital-elements
    CSVs to compare FFT-lite / NAFF-lite frequency drift across Newtonian, GR
-   trajectory, timestep, and duration outputs. This is not full Laskar NAFF.
+   trajectory, timestep, and duration outputs. For peak-switch checks, use
+   `python -m mini_ephemeris.secular_mode_tracker` followed by
+   `python -m mini_ephemeris.compare_secular_modes`. This is not full Laskar
+   NAFF.
 4. Literature-style shadow divergence. Run
    `python -m mini_ephemeris.rebound_shadow_lyapunov_cli` for two-trajectory
    finite-time divergence windows. The 100 Myr full and full+Pluto wrappers are

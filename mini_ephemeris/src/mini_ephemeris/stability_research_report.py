@@ -51,6 +51,13 @@ def collect_shadow_summaries(root: Path, tag: str | None) -> list[Path]:
     return paths
 
 
+def collect_shadow_metric_scans(root: Path, tag: str | None) -> list[Path]:
+    paths = sorted(root.glob("shadow_metric_scan_*.json"))
+    if tag:
+        paths = [path for path in paths if tag in path.name]
+    return paths
+
+
 def orbital_extrema(path: Path) -> dict[str, dict[str, float]]:
     extrema: dict[str, dict[str, float]] = {}
     if not path.exists():
@@ -105,11 +112,14 @@ def main(argv: list[str] | None = None) -> None:
 
     summary_paths: list[Path] = []
     shadow_paths: list[Path] = []
+    shadow_metric_scan_paths: list[Path] = []
     for root in roots:
         summary_paths.extend(collect_summaries(root, args.tag))
         shadow_paths.extend(collect_shadow_summaries(root, args.tag))
+        shadow_metric_scan_paths.extend(collect_shadow_metric_scans(root, args.tag))
     summary_paths = sorted(set(summary_paths))
     shadow_paths = sorted(set(shadow_paths))
+    shadow_metric_scan_paths = sorted(set(shadow_metric_scan_paths))
 
     lines: list[str] = []
     lines.append(f"# Stability Research Report: {label}")
@@ -236,6 +246,36 @@ def main(argv: list[str] | None = None) -> None:
                 lines.append(
                     f"- Recommended interpretation: {diagnostics.get('recommended_interpretation', 'finite-time shadow divergence only').rstrip('.')}."
                 )
+
+    if shadow_metric_scan_paths:
+        lines.append("")
+        lines.append("## Shadow Metric Scan")
+        lines.append("")
+        lines.append("Shadow metric ranking is finite-time only and not an asymptotic Lyapunov exponent. Power-law/shear competition must be treated as a serious alternative.")
+        for path in shadow_metric_scan_paths:
+            payload = load_json(path)
+            ranked = payload.get("ranked_metrics", [])
+            lines.append("")
+            lines.append(f"### {path.stem.replace('shadow_metric_scan_', '')}")
+            lines.append("")
+            lines.append("| rank | metric | exp r^2 | exp-power r^2 | lyap-time rel std | mercury priority | recommendation |")
+            lines.append("| ---: | --- | ---: | ---: | ---: | ---: | --- |")
+            for index, row in enumerate(ranked[:8], start=1):
+                lines.append(
+                    f"| {index} | {row.get('metric', '')} | {fmt(row.get('ranking_exp_r_squared'))} | "
+                    f"{fmt(row.get('ranking_exp_minus_power_r_squared'))} | {fmt(row.get('lyapunov_time_relative_std'))} | "
+                    f"{fmt(row.get('mercury_priority'))} | {row.get('recommendation', '')} |"
+                )
+            if ranked:
+                best = ranked[0]
+                lines.append("")
+                lines.append(
+                    f"Best metric candidate: `{best.get('metric', '')}` with exp r^2 `{fmt(best.get('ranking_exp_r_squared'))}`, "
+                    f"exp-power margin `{fmt(best.get('ranking_exp_minus_power_r_squared'))}`, lyap-time rel std `{fmt(best.get('lyapunov_time_relative_std'))}`."
+                )
+            else:
+                lines.append("")
+                lines.append("No ranked metric rows were found in this scan JSON.")
 
     lines.append("")
     lines.append("## Eccentricity / Inclination Extrema")

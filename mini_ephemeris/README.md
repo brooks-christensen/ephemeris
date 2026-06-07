@@ -1689,6 +1689,10 @@ reproducible and falsifiable:
 - Use `python -m mini_ephemeris.secular_frequency_summary` to compare
   FFT-lite / NAFF-lite secular frequency drift across Newtonian, GR trajectory,
   timestep, and duration runs. This is not full Laskar NAFF.
+- Use `python -m mini_ephemeris.secular_mode_tracker` and
+  `python -m mini_ephemeris.compare_secular_modes` when you need top-peak
+  tracking and mode-switch diagnostics rather than a single dominant
+  frequency. This is still FFT-lite / NAFF-lite, not full Laskar NAFF.
 - Use `python -m mini_ephemeris.rebound_shadow_lyapunov_cli` for
   two-trajectory shadow-divergence experiments aimed at literature-style
   finite-time Lyapunov windows. The 100 Myr wrappers are created but should be

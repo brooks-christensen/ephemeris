@@ -91,6 +91,26 @@ def metric_body(metric: str) -> str:
     return ""
 
 
+def mercury_priority(metric: str) -> int:
+    return 1 if metric.startswith("mercury_barycenter_") else 0
+
+
+def lyapunov_time_stability(lambdas: list[float]) -> tuple[float, float, float]:
+    if len(lambdas) < 2:
+        return math.nan, math.nan, 0.0
+    lyap_times = [1.0 / value for value in lambdas if value > 0.0 and math.isfinite(value)]
+    if len(lyap_times) < 2:
+        return math.nan, math.nan, 0.0
+    mean = float(np.mean(lyap_times))
+    std = float(np.std(lyap_times))
+    if mean <= 0.0 or not math.isfinite(mean):
+        return mean, std, 0.0
+    rel_std = abs(std / mean) if math.isfinite(std) else math.nan
+    if not math.isfinite(rel_std):
+        return mean, rel_std, 0.0
+    return mean, rel_std, 1.0 / (1.0 + rel_std)
+
+
 def load_rows(path: Path) -> tuple[list[str], list[dict[str, str]]]:
     raw = path.read_bytes()
     if b"\0" in raw:
@@ -204,12 +224,22 @@ def aggregate_metric(metric: str, window_results: list[dict[str, object]]) -> di
         and math.isfinite(float(row["r_squared_powerlaw"]))
     ]
     exp_candidates = [row for row in valid if row["classification"] == "exponential_candidate"]
-    best_by_margin = max(
+    best_exp = max(
         valid,
-        key=lambda row: float(row.get("r2_exponential_minus_powerlaw", math.nan)),
+        key=lambda row: (
+            float(row["r_squared_exponential"]),
+            float(row.get("r2_exponential_minus_powerlaw", math.nan)),
+        ),
         default=None,
     )
-    best_exp = max(valid, key=lambda row: float(row["r_squared_exponential"]), default=None)
+    best_by_margin = max(
+        valid,
+        key=lambda row: (
+            float(row.get("r2_exponential_minus_powerlaw", math.nan)),
+            float(row["r_squared_exponential"]),
+        ),
+        default=None,
+    )
     lambdas = [
         float(row["lambda_1_per_year"])
         for row in valid
@@ -218,13 +248,17 @@ def aggregate_metric(metric: str, window_results: list[dict[str, object]]) -> di
     lambda_mean = float(np.mean(lambdas)) if lambdas else math.nan
     lambda_std = float(np.std(lambdas)) if lambdas else math.nan
     lambda_relative_std = abs(lambda_std / lambda_mean) if lambdas and lambda_mean != 0.0 else math.nan
-    best_row = best_by_margin or best_exp
+    lyap_time_mean, lyap_time_relative_std, lyap_time_stability_score = lyapunov_time_stability(lambdas)
+    best_row = best_exp or best_by_margin
     if exp_candidates:
         recommendation = "exponential_candidate_windows_exist; still finite-time and needs duration/timestep/seed checks"
     elif best_row and float(best_row.get("r2_exponential_minus_powerlaw", math.nan)) <= 0.0:
         recommendation = "powerlaw_or_shear_competes_or_wins"
     else:
         recommendation = "ambiguous_or_insufficient"
+    best_exp_r2 = float(best_row["r_squared_exponential"]) if best_row else math.nan
+    best_margin = float(best_by_margin.get("r2_exponential_minus_powerlaw", math.nan)) if best_by_margin else math.nan
+    priority = mercury_priority(metric)
     return {
         "metric": metric,
         "body": metric_body(metric),
@@ -243,6 +277,12 @@ def aggregate_metric(metric: str, window_results: list[dict[str, object]]) -> di
         "lambda_mean": lambda_mean,
         "lambda_std": lambda_std,
         "lambda_relative_std": lambda_relative_std,
+        "lyapunov_time_mean_years": lyap_time_mean,
+        "lyapunov_time_relative_std": lyap_time_relative_std,
+        "lyapunov_time_stability_score": lyap_time_stability_score,
+        "mercury_priority": priority,
+        "ranking_exp_r_squared": best_exp_r2,
+        "ranking_exp_minus_power_r_squared": best_margin,
         "recommendation": recommendation,
     }
 
@@ -253,23 +293,28 @@ def write_markdown(path: Path, aggregates: list[dict[str, object]], tag: str) ->
         "",
         "Finite-time orbital/secular shadow divergence scan. This is not an asymptotic Lyapunov exponent.",
         "",
-        "| metric | best window | exp r^2 | power r^2 | exp-power | lambda [1/yr] | recommendation |",
-        "|---|---:|---:|---:|---:|---:|---|",
+        "## Best Metric Table",
+        "",
+        "| rank | metric | body | exp r^2 | exp-power r^2 | lyap-time rel std | mercury priority | recommendation |",
+        "|---:|---|---|---:|---:|---:|---:|---|",
     ]
-    for row in aggregates[:20]:
+    for rank, row in enumerate(aggregates[:12], start=1):
         lines.append(
-            "| {metric} | {best_window} | {exp:.4g} | {power:.4g} | {margin:.4g} | {lam:.4g} | {rec} |".format(
+            "| {rank} | {metric} | {body} | {exp:.4g} | {margin:.4g} | {stability:.4g} | {priority} | {rec} |".format(
+                rank=rank,
                 metric=row["metric"],
-                best_window=row["best_window"],
-                exp=float(row["best_exponential_r_squared"]),
-                power=float(row["best_powerlaw_r_squared"]),
-                margin=float(row["best_exp_minus_power_r_squared"]),
-                lam=float(row["best_lambda_1_per_year"]),
+                body=row["body"],
+                exp=float(row["ranking_exp_r_squared"]),
+                margin=float(row["ranking_exp_minus_power_r_squared"]),
+                stability=float(row["lyapunov_time_relative_std"]),
+                priority=int(row["mercury_priority"]),
                 rec=row["recommendation"],
             )
         )
     lines.extend(
         [
+            "",
+            "Ranking criteria: higher exp r^2, higher exp-power r^2 margin, more stable Lyapunov time across windows (lower relative std), and Mercury-specific priority as a final tie-break.",
             "",
             "Interpretation rule of thumb: an exponential-looking metric is only a candidate if it beats a power-law/shear fit in unsaturated windows and survives duration, timestep, seed, perturbation, and metric checks.",
         ]
@@ -300,8 +345,10 @@ def main(argv: list[str] | None = None) -> None:
 
     aggregates.sort(
         key=lambda row: (
-            float(row["best_exp_minus_power_r_squared"]) if math.isfinite(float(row["best_exp_minus_power_r_squared"])) else -math.inf,
-            float(row["best_exponential_r_squared"]) if math.isfinite(float(row["best_exponential_r_squared"])) else -math.inf,
+            float(row["ranking_exp_r_squared"]) if math.isfinite(float(row["ranking_exp_r_squared"])) else -math.inf,
+            float(row["ranking_exp_minus_power_r_squared"]) if math.isfinite(float(row["ranking_exp_minus_power_r_squared"])) else -math.inf,
+            -float(row["lyapunov_time_relative_std"]) if math.isfinite(float(row["lyapunov_time_relative_std"])) else -math.inf,
+            int(row["mercury_priority"]),
             int(row["valid_window_count"]),
         ),
         reverse=True,
@@ -326,6 +373,12 @@ def main(argv: list[str] | None = None) -> None:
         "lambda_mean",
         "lambda_std",
         "lambda_relative_std",
+        "lyapunov_time_mean_years",
+        "lyapunov_time_relative_std",
+        "lyapunov_time_stability_score",
+        "mercury_priority",
+        "ranking_exp_r_squared",
+        "ranking_exp_minus_power_r_squared",
         "recommendation",
     ]
     with csv_out.open("w", newline="") as file_obj:
@@ -340,6 +393,12 @@ def main(argv: list[str] | None = None) -> None:
         "shadow_csv": str(args.shadow_csv),
         "bodies": args.bodies,
         "windows": [f"{start:.12g}:{end:.12g}" for start, end in windows],
+        "ranking_criteria": [
+            "ranking_exp_r_squared (higher is better)",
+            "ranking_exp_minus_power_r_squared (higher is better)",
+            "lyapunov_time_relative_std (lower is better)",
+            "mercury_priority (higher as final tie-break)",
+        ],
         "metrics_scanned": metrics,
         "ranked_metrics": aggregates,
         "window_results": detail_results,

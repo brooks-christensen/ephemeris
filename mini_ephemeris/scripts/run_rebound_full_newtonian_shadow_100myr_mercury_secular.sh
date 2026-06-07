@@ -10,6 +10,15 @@ TAG="${TAG:-full_newtonian_shadow_100myr_mercury_secular}"
 CHECKPOINT_DIR="${CHECKPOINT_DIR:-/home/peacelovephysics/ephemeris/output/stability/shadow_checkpoints/${TAG}}"
 LOG_PATH="${OUTPUT_DIR}/${TAG}_$(date -u +%Y%m%dT%H%M%SZ).log"
 RESUME="${RESUME:-1}"
+SEED="${SEED:-12345}"
+PERTURB_BODY="${PERTURB_BODY:-mercury}"
+PERTURBATION_M="${PERTURBATION_M:-1}"
+PERTURBATION_MODE="${PERTURBATION_MODE:-radial}"
+DURATION_YEARS="${DURATION_YEARS:-100000000}"
+STEP_DAYS="${STEP_DAYS:-1}"
+RECORD_EVERY_YEARS="${RECORD_EVERY_YEARS:-10000}"
+FIT_START_YEARS="${FIT_START_YEARS:-1000000}"
+FIT_END_YEARS="${FIT_END_YEARS:-50000000}"
 
 cd "${PROJECT_ROOT}"
 mkdir -p "${OUTPUT_DIR}"
@@ -24,14 +33,15 @@ fi
   --model-scope full \
   --integrator whfast \
   --gr-model none \
-  --duration-years 100000000 \
-  --step-days 1 \
-  --record-every-years 10000 \
-  --perturb-body mercury \
-  --perturbation-m 1 \
-  --perturbation-mode radial \
-  --fit-start-years 1000000 \
-  --fit-end-years 50000000 \
+  --duration-years "${DURATION_YEARS}" \
+  --step-days "${STEP_DAYS}" \
+  --record-every-years "${RECORD_EVERY_YEARS}" \
+  --perturb-body "${PERTURB_BODY}" \
+  --perturbation-m "${PERTURBATION_M}" \
+  --perturbation-mode "${PERTURBATION_MODE}" \
+  --seed "${SEED}" \
+  --fit-start-years "${FIT_START_YEARS}" \
+  --fit-end-years "${FIT_END_YEARS}" \
   --checkpoint-every-years 1000000 \
   --checkpoint-dir "${CHECKPOINT_DIR}" \
   --resume-from-checkpoint latest \
