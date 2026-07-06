@@ -47,6 +47,95 @@ def lyap_time(lambda_1_per_year: float) -> float:
     return 1.0 / lambda_1_per_year if math.isfinite(lambda_1_per_year) and lambda_1_per_year > 0.0 else math.nan
 
 
+def linear_fit(xs: list[float], ys: list[float]) -> tuple[float, float]:
+    if len(xs) < 3:
+        return math.nan, math.nan
+    x_mean = sum(xs) / len(xs)
+    y_mean = sum(ys) / len(ys)
+    ss_xx = sum((x - x_mean) ** 2 for x in xs)
+    if ss_xx <= 0.0:
+        return math.nan, math.nan
+    slope = sum((x - x_mean) * (y - y_mean) for x, y in zip(xs, ys)) / ss_xx
+    intercept = y_mean - slope * x_mean
+    ss_res = sum((y - (slope * x + intercept)) ** 2 for x, y in zip(xs, ys))
+    ss_tot = sum((y - y_mean) ** 2 for y in ys)
+    r_squared = 1.0 - ss_res / ss_tot if ss_tot > 0.0 else math.nan
+    return slope, r_squared
+
+
+def megno_slope_fallback_from_csv(csv_path: Path, duration_years: float) -> list[dict]:
+    if not csv_path.exists():
+        return []
+    samples = []
+    for row in load_csv(csv_path):
+        time_years = f(row.get("time_years"))
+        megno = f(row.get("megno"))
+        if math.isfinite(time_years) and math.isfinite(megno):
+            samples.append((time_years, megno))
+    estimates = []
+    for start_years in (0.0, 100_000_000.0, 200_000_000.0, 300_000_000.0):
+        if duration_years <= start_years:
+            continue
+        selected = [(t, y) for t, y in samples if start_years <= t <= duration_years]
+        if len(selected) < 3:
+            continue
+        slope, r_squared = linear_fit([t for t, _ in selected], [y for _, y in selected])
+        if not math.isfinite(slope):
+            continue
+        estimates.append(
+            {
+                "window_start_years": start_years,
+                "window_end_years": duration_years,
+                "n_samples": len(selected),
+                "megno_slope_per_year": slope,
+                "lyapunov_proxy_1_per_year": max(0.0, slope) * 0.5,
+                "r_squared": r_squared,
+                "warning": "LCN accessor unavailable after resume; MEGNO slope fallback used.",
+            }
+        )
+    return estimates
+
+
+def last_finite_lcn_from_csv(csv_path: Path) -> tuple[float | None, float | None]:
+    if not csv_path.exists():
+        return None, None
+    last_lcn: float | None = None
+    last_time: float | None = None
+    for row in load_csv(csv_path):
+        time_years = f(row.get("time_years"))
+        lcn = f(row.get("finite_time_lyapunov_estimate"))
+        if math.isfinite(time_years) and math.isfinite(lcn):
+            last_lcn = lcn
+            last_time = time_years
+    return last_lcn, last_time
+
+
+def classify_megno_with_fallback(
+    *,
+    final_megno,
+    final_lcn,
+    duration_years,
+    existing,
+    slope_estimates: list[dict],
+) -> str:
+    final_megno_f = f(final_megno)
+    final_lcn_f = f(final_lcn)
+    duration_f = f(duration_years)
+    if math.isfinite(final_lcn_f):
+        return str(existing or "")
+    best_proxy = max((f(row.get("lyapunov_proxy_1_per_year")) for row in slope_estimates), default=math.nan)
+    if (
+        math.isfinite(final_megno_f)
+        and final_megno_f > 10.0
+        and math.isfinite(best_proxy)
+        and best_proxy > 0.0
+        and math.isfinite(duration_f)
+        and best_proxy * duration_f > 1.0
+    ):
+        return "chaotic_candidate"
+    return str(existing or "")
+
+
 def summarize_megno_ladder(output_dir: Path) -> dict:
     csv_path = output_dir / "rebound_full_newtonian_megno_research_ladder" / "rebound_full_newtonian_megno_research_ladder.csv"
     rows = load_csv(csv_path)
@@ -78,6 +167,57 @@ def summarize_megno_ladder(output_dir: Path) -> dict:
         "all_regular_likely": classes == ["regular_likely"],
         "durations": durations,
     }
+
+
+def summarize_extended_megno(output_dir: Path) -> list[dict]:
+    rows = []
+    for summary_path in sorted(output_dir.rglob("megno_summary_*.json")):
+        data = load_json(summary_path)
+        duration_years = f(data.get("duration_years"))
+        if not math.isfinite(duration_years) or duration_years < 100_000_000.0:
+            continue
+        csv_text = data.get("outputs", {}).get("megno_csv")
+        csv_path = Path(csv_text) if csv_text else summary_path.with_name(
+            summary_path.name.replace("megno_summary_", "megno_").replace(".json", ".csv")
+        )
+        slope_estimates = data.get("megno_slope_window_estimates") or megno_slope_fallback_from_csv(
+            csv_path,
+            duration_years,
+        )
+        final_lcn = data.get("estimated_lyapunov_if_available")
+        classification = classify_megno_with_fallback(
+            final_megno=data.get("final_megno"),
+            final_lcn=final_lcn,
+            duration_years=duration_years,
+            existing=data.get("classification_hint"),
+            slope_estimates=slope_estimates,
+        )
+        best_proxy = max((f(row.get("lyapunov_proxy_1_per_year")) for row in slope_estimates), default=math.nan)
+        last_lcn = data.get("last_finite_lcn")
+        last_lcn_time = data.get("last_finite_lcn_time_years")
+        if last_lcn is None or last_lcn_time is None:
+            last_lcn, last_lcn_time = last_finite_lcn_from_csv(csv_path)
+        rows.append(
+            {
+                "summary_path": str(summary_path),
+                "megno_csv": str(csv_path),
+                "duration_years": duration_years,
+                "step_days": data.get("timestep_days"),
+                "final_megno": data.get("final_megno"),
+                "final_lcn_raw": data.get("final_lcn_raw", final_lcn),
+                "last_finite_lcn": last_lcn,
+                "last_finite_lcn_time_years": last_lcn_time,
+                "best_megno_slope_fallback_1_per_year": best_proxy,
+                "megno_slope_window_estimates": slope_estimates,
+                "classification_hint": classification,
+                "classification_note": (
+                    "LCN accessor unavailable after resume; MEGNO slope fallback used."
+                    if classification != data.get("classification_hint")
+                    else ""
+                ),
+            }
+        )
+    return sorted(rows, key=lambda row: (f(row.get("duration_years")), str(row.get("summary_path"))))
 
 
 def shadow_case(output_dir: Path, name: str) -> dict:
@@ -154,6 +294,7 @@ def summarize_mode_comparison(output_dir: Path, folder: str, filename: str) -> d
 
 def build_summary(output_dir: Path) -> dict:
     megno = summarize_megno_ladder(output_dir)
+    extended_megno = summarize_extended_megno(output_dir)
     raw_shadow = shadow_case(output_dir, "full_newtonian_shadow_100myr")
     mercury_radial = shadow_case(output_dir, "full_newtonian_shadow_100myr_mercury_secular")
     mercury_tangential = shadow_case(output_dir, "full_newtonian_shadow_100myr_mercury_secular_tangential")
@@ -180,8 +321,10 @@ def build_summary(output_dir: Path) -> dict:
     ]
 
     interpretation = (
-        "The Newtonian full-system MEGNO ladder remains regular-looking through 10 Myr, while the 100 Myr raw shadow-divergence fit is still better explained by phase shear than by a clean asymptotic exponential. "
-        "Mercury secular shadow variants do show few-Myr-scale finite-time exponential-looking fits in some metrics, but the top-ranked metrics remain ambiguous or shear-competitive. "
+        "The Newtonian full-system MEGNO ladder remains regular-looking through 10 Myr, but the extended Newtonian MEGNO runs now provide a stronger finite-time weak-chaos candidate: the 200 Myr 1-day seed 12345 and seed 67890 runs classify as `chaotic_candidate`, while the 200 Myr 0.5-day seed 12345 run is positive but remains `ambiguous`. "
+        "The 500 Myr 1-day seed 12345 extension reaches final MEGNO 41.4233; because the final raw LCN accessor is unavailable after resume, the report uses the MEGNO slope fallback, about 5.97e-8 1/yr, and classifies the run as `chaotic_candidate`. "
+        "Taken together, this is best described as a robust reduced-model finite-time weak chaos candidate, not a literature-grade few-Myr Lyapunov-time reproduction. "
+        "The 100 Myr raw Cartesian shadow-divergence fit is still better explained by phase shear than by a clean asymptotic exponential, while Mercury secular shadow variants show few-Myr-scale finite-time exponential-looking fits in some metrics but remain metric- and window-sensitive. "
         "The Newtonian-vs-GR frequency products show a clear Mercury eccentricity shift, but the 10 Myr and 40 Myr multi-peak mode tracking indicates that Mercury inclination and Venus inclination are affected by dominant-peak switching, so the present evidence does not yet justify a clean 'GR detunes the Newtonian secular shadow-divergence mode' claim."
     )
 
@@ -195,6 +338,7 @@ def build_summary(output_dir: Path) -> dict:
         "report_kind": "stability_research_master",
         "output_dir": str(output_dir),
         "newtonian_megno_ladder": megno,
+        "extended_newtonian_megno": extended_megno,
         "raw_shadow_divergence": raw_shadow,
         "mercury_secular_rtn": {
             "radial": mercury_radial,
@@ -216,6 +360,7 @@ def build_summary(output_dir: Path) -> dict:
 
 def write_report(path: Path, summary: dict) -> None:
     megno = summary["newtonian_megno_ladder"]
+    extended_megno = summary.get("extended_newtonian_megno", [])
     raw_shadow = summary["raw_shadow_divergence"]
     rtn = summary["mercury_secular_rtn"]
     gr_compare = summary["gr_potential_shadow_comparison"]
@@ -240,6 +385,23 @@ def write_report(path: Path, summary: dict) -> None:
         lines.append(
             f"| {duration} | {row['count']} | {', '.join(row['step_days'])} | "
             f"{fmt(row['megno_min'])} to {fmt(row['megno_max'])} | {fmt(row['lcn_min'])} to {fmt(row['lcn_max'])} |"
+        )
+
+    lines.extend(
+        [
+            "",
+            "### Extended Newtonian MEGNO Runs",
+            "",
+            "| duration yr | step days | final MEGNO | raw final LCN [1/yr] | last finite LCN [1/yr] | MEGNO slope fallback [1/yr] | classification | note |",
+            "| ---: | ---: | ---: | ---: | ---: | ---: | --- | --- |",
+        ]
+    )
+    for row in extended_megno:
+        lines.append(
+            f"| {fmt(row.get('duration_years'))} | {row.get('step_days', '')} | "
+            f"{fmt(row.get('final_megno'))} | {fmt(row.get('final_lcn_raw'))} | "
+            f"{fmt(row.get('last_finite_lcn'))} | {fmt(row.get('best_megno_slope_fallback_1_per_year'))} | "
+            f"{row.get('classification_hint', '')} | {row.get('classification_note', '')} |"
         )
 
     lines.extend(

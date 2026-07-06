@@ -381,9 +381,23 @@ class ReboundMegnoResult:
     final_megno: float
     final_mean_megno: float
     estimated_lyapunov_if_available: float
+    final_lcn_raw: float
+    last_finite_lcn: float | None
+    last_finite_lcn_time_years: float | None
+    megno_slope_window_estimates: list[dict[str, float | int | str | None]]
     classification_hint: str
     caveats: list[str]
     lcn_available: bool
+
+
+@dataclass
+class ReboundResumeInfo:
+    requested: str | None
+    archive_path: str | None
+    resumed_from_time_years: float
+    megno_state_validated: bool
+    duplicate_rows_removed: dict[str, int]
+    warnings: list[str]
 
 
 @dataclass
@@ -759,6 +773,7 @@ class IntegrationResult:
     poincare_samples: list[PoincareSample] | None = None
     runtime_warnings: list[str] | None = None
     rebound_megno_result: ReboundMegnoResult | None = None
+    rebound_resume_info: ReboundResumeInfo | None = None
 
 
 def parse_start_datetime(text: str) -> dt.datetime:
@@ -899,6 +914,15 @@ def build_parser() -> argparse.ArgumentParser:
         type=float,
         default=None,
         help="Cadence for REBOUND SimulationArchive snapshots in Julian years.",
+    )
+    parser.add_argument(
+        "--rebound-resume",
+        default=None,
+        help=(
+            "Resume a REBOUND backend run from a SimulationArchive. Use 'latest' "
+            "to load the latest snapshot from --rebound-simulationarchive, or pass "
+            "a specific archive path."
+        ),
     )
     parser.add_argument(
         "--output-dir",
@@ -1160,6 +1184,7 @@ def validate_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
     if args.backend == "inhouse" and (
         args.rebound_simulationarchive is not None
         or args.rebound_archive_interval_years is not None
+        or args.rebound_resume is not None
     ):
         parser.error("REBOUND SimulationArchive options require --backend rebound.")
     if args.backend == "rebound":
@@ -1181,6 +1206,10 @@ def validate_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
             parser.error("Use --rebound-gr-model for --backend rebound; keep --gr-model none.")
         if args.rebound_simulationarchive is not None and args.rebound_archive_interval_years is None:
             parser.error("--rebound-simulationarchive requires --rebound-archive-interval-years.")
+        if args.rebound_resume is not None and args.rebound_simulationarchive is None:
+            parser.error("--rebound-resume requires --rebound-simulationarchive.")
+        if args.rebound_resume is not None and args.rebound_archive_interval_years is None:
+            parser.error("--rebound-resume requires --rebound-archive-interval-years.")
     if args.with_megno and args.backend != "rebound":
         parser.error("--with-megno is REBOUND-native and requires --backend rebound.")
     if args.with_rebound_lyapunov and not args.with_megno:
@@ -1292,8 +1321,15 @@ def output_paths(
     return paths
 
 
+def _csv_needs_header(path: Path, *, append: bool) -> bool:
+    return (not append) or (not path.exists()) or path.stat().st_size == 0
+
+
 def open_csv_outputs(paths: dict[str, Path], *, append: bool = False) -> CsvOutputs:
     mode = "a" if append else "w"
+    stability_needs_header = _csv_needs_header(paths["stability_timeseries"], append=append)
+    elements_needs_header = _csv_needs_header(paths["orbital_elements"], append=append)
+    invariants_needs_header = _csv_needs_header(paths["invariants"], append=append)
     stability_file = paths["stability_timeseries"].open(mode, newline="")
     elements_file = paths["orbital_elements"].open(mode, newline="")
     invariants_file = paths["invariants"].open(mode, newline="")
@@ -1311,9 +1347,11 @@ def open_csv_outputs(paths: dict[str, Path], *, append: bool = False) -> CsvOutp
         fieldnames=INVARIANT_FIELDS,
     )
 
-    if not append:
+    if stability_needs_header:
         stability_writer.writeheader()
+    if elements_needs_header:
         elements_writer.writeheader()
+    if invariants_needs_header:
         invariants_writer.writeheader()
 
     return CsvOutputs(
@@ -1352,10 +1390,12 @@ def open_poincare_outputs(paths: dict[str, Path]) -> PoincareOutputs:
     )
 
 
-def open_rebound_megno_outputs(paths: dict[str, Path]) -> ReboundMegnoOutputs:
-    file_obj = paths["megno"].open("w", newline="")
+def open_rebound_megno_outputs(paths: dict[str, Path], *, append: bool = False) -> ReboundMegnoOutputs:
+    needs_header = _csv_needs_header(paths["megno"], append=append)
+    file_obj = paths["megno"].open("a" if append else "w", newline="")
     writer = csv.DictWriter(file_obj, fieldnames=MEGNO_FIELDS)
-    writer.writeheader()
+    if needs_header:
+        writer.writeheader()
     return ReboundMegnoOutputs(
         writer=writer,
         file=file_obj,
@@ -1446,17 +1486,189 @@ def configure_rebound_simulationarchive(
     path: Path,
     *,
     interval_s: float,
+    delete_existing: bool = True,
 ) -> str:
     path.parent.mkdir(parents=True, exist_ok=True)
     if hasattr(sim, "save_to_file"):
-        sim.save_to_file(str(path), interval=interval_s, delete_file=True)
+        sim.save_to_file(str(path), interval=interval_s, delete_file=delete_existing)
         return "save_to_file"
     if hasattr(sim, "automateSimulationArchive"):
-        sim.automateSimulationArchive(str(path), interval=interval_s, deletefile=True)
+        sim.automateSimulationArchive(str(path), interval=interval_s, deletefile=delete_existing)
         return "automateSimulationArchive"
     raise RuntimeError(
         "This REBOUND version does not expose save_to_file or automateSimulationArchive."
     )
+
+
+def load_rebound_archive_snapshot(rebound, archive_path: Path):
+    if not archive_path.exists():
+        raise RuntimeError(f"REBOUND SimulationArchive does not exist: {archive_path}")
+    if archive_path.stat().st_size == 0:
+        raise RuntimeError(f"REBOUND SimulationArchive is empty: {archive_path}")
+    errors: list[str] = []
+    try:
+        sim = rebound.Simulation(str(archive_path))
+        if getattr(sim, "N", 0) > 0:
+            return sim
+        errors.append("Simulation(path): loaded zero particles")
+    except Exception as exc:  # pragma: no cover - depends on REBOUND internals.
+        errors.append(f"Simulation(path): {exc}")
+    loaders = (
+        getattr(rebound.Simulation, "from_file", None),
+        getattr(rebound.Simulation, "from_simulationarchive", None),
+    )
+    for loader in loaders:
+        if loader is None:
+            continue
+        try:
+            sim = loader(str(archive_path))
+            if getattr(sim, "N", 0) > 0:
+                return sim
+            errors.append(f"{getattr(loader, '__name__', 'loader')}: loaded zero particles")
+        except Exception as exc:  # pragma: no cover - depends on REBOUND internals.
+            errors.append(f"{getattr(loader, '__name__', 'loader')}: {exc}")
+    joined = "; ".join(errors) if errors else "no archive loader was available"
+    raise RuntimeError(f"Could not load REBOUND SimulationArchive {archive_path}: {joined}")
+
+
+def _csv_has_nul(path: Path) -> bool:
+    if not path.exists():
+        return False
+    with path.open("rb") as file_obj:
+        while True:
+            chunk = file_obj.read(1024 * 1024)
+            if not chunk:
+                return False
+            if b"\x00" in chunk:
+                return True
+
+
+def truncate_csv_after_time(
+    path: Path,
+    *,
+    time_column: str,
+    max_time_years: float,
+    tolerance_years: float = 1.0e-9,
+) -> int:
+    if not path.exists():
+        return 0
+    if _csv_has_nul(path):
+        raise RuntimeError(f"NUL bytes detected in CSV output: {path}")
+    with path.open(newline="") as file_obj:
+        reader = csv.DictReader(file_obj)
+        fieldnames = reader.fieldnames
+        if not fieldnames or time_column not in fieldnames:
+            raise RuntimeError(f"CSV lacks required {time_column!r} column: {path}")
+        kept: list[dict[str, str]] = []
+        removed = 0
+        for row_number, row in enumerate(reader, start=2):
+            if None in row:
+                raise RuntimeError(f"Malformed CSV row {row_number} in {path}")
+            try:
+                time_years = float(row[time_column])
+            except (TypeError, ValueError) as exc:
+                raise RuntimeError(
+                    f"Could not parse {time_column!r} on row {row_number} in {path}"
+                ) from exc
+            if time_years <= max_time_years + tolerance_years:
+                kept.append(row)
+            else:
+                removed += 1
+    if removed:
+        temp_path = path.with_name(f"{path.name}.tmp")
+        with temp_path.open("w", newline="") as file_obj:
+            writer = csv.DictWriter(file_obj, fieldnames=fieldnames, extrasaction="ignore")
+            writer.writeheader()
+            writer.writerows(kept)
+            file_obj.flush()
+            os.fsync(file_obj.fileno())
+        os.replace(temp_path, path)
+    return removed
+
+
+def count_csv_data_rows(path: Path) -> int:
+    if not path.exists() or path.stat().st_size == 0:
+        return 0
+    if _csv_has_nul(path):
+        raise RuntimeError(f"NUL bytes detected in CSV output: {path}")
+    with path.open(newline="") as file_obj:
+        return sum(1 for _ in csv.DictReader(file_obj))
+
+
+def extrema_from_invariants_csv(path: Path) -> dict[str, float]:
+    extrema = initial_extrema()
+    if not path.exists() or path.stat().st_size == 0:
+        return extrema
+    if _csv_has_nul(path):
+        raise RuntimeError(f"NUL bytes detected in CSV output: {path}")
+    with path.open(newline="") as file_obj:
+        for row in csv.DictReader(file_obj):
+            update_extrema(extrema, row)
+    return extrema
+
+
+def min_tracker_from_csv(path: Path, body_names: tuple[str, ...]) -> PairwiseMinimumTracker:
+    tracker = PairwiseMinimumTracker.create(body_names)
+    if not path.exists() or path.stat().st_size == 0:
+        return tracker
+    if _csv_has_nul(path):
+        raise RuntimeError(f"NUL bytes detected in CSV output: {path}")
+    pair_lookup = {
+        (body_names[i], body_names[j]): pair_index
+        for pair_index, (i, j) in enumerate(tracker.pair_indices)
+    }
+    with path.open(newline="") as file_obj:
+        for row in csv.DictReader(file_obj):
+            key = (row.get("body_i", ""), row.get("body_j", ""))
+            pair_index = pair_lookup.get(key)
+            if pair_index is None:
+                continue
+            try:
+                tracker.min_distance_m[pair_index] = float(row["min_separation_au"]) * AU_M
+                tracker.min_time_s[pair_index] = float(row["time_years"]) * JULIAN_YEAR_S
+            except (KeyError, TypeError, ValueError):
+                continue
+    return tracker
+
+
+def read_rebound_megno_samples(path: Path) -> list[ReboundMegnoSample]:
+    samples: list[ReboundMegnoSample] = []
+    if not path.exists() or path.stat().st_size == 0:
+        return samples
+    if _csv_has_nul(path):
+        raise RuntimeError(f"NUL bytes detected in CSV output: {path}")
+    with path.open(newline="") as file_obj:
+        for row in csv.DictReader(file_obj):
+            try:
+                samples.append(
+                    ReboundMegnoSample(
+                        time_years=float(row["time_years"]),
+                        megno=float(row["megno"]) if row.get("megno") not in {"", None} else math.nan,
+                        mean_megno=(
+                            float(row["mean_megno"])
+                            if row.get("mean_megno") not in {"", None}
+                            else math.nan
+                        ),
+                        finite_time_lyapunov_estimate=(
+                            float(row["finite_time_lyapunov_estimate"])
+                            if row.get("finite_time_lyapunov_estimate") not in {"", None}
+                            else math.nan
+                        ),
+                        warnings=row.get("warnings", ""),
+                    )
+                )
+            except (KeyError, TypeError, ValueError):
+                continue
+    return samples
+
+
+def resolve_rebound_resume_archive(args: argparse.Namespace) -> Path | None:
+    requested = getattr(args, "rebound_resume", None)
+    if requested is None:
+        return None
+    if requested == "latest":
+        return Path(args.rebound_simulationarchive)
+    return Path(requested)
 
 
 def stability_body_list(model_scope: str, *, include_pluto: bool = False) -> tuple[str, ...]:
@@ -2097,6 +2309,7 @@ def classify_megno_result(
     estimated_lyapunov_per_year: float,
     duration_years: float,
     model_scope: str,
+    fallback_megno_slope_per_year: float | None = None,
 ) -> str:
     if not math.isfinite(final_megno):
         return "ambiguous"
@@ -2107,12 +2320,126 @@ def classify_megno_result(
             and estimated_lyapunov_per_year * duration_years > 1.0
         ):
             return "chaotic_candidate"
+        if (
+            fallback_megno_slope_per_year is not None
+            and math.isfinite(fallback_megno_slope_per_year)
+            and fallback_megno_slope_per_year > 0.0
+            and fallback_megno_slope_per_year * duration_years > 1.0
+        ):
+            return "chaotic_candidate"
         return "ambiguous"
     if abs(final_megno - 2.0) <= 3.0:
         return "regular_likely"
     if model_scope in TWO_BODY_MODEL_SCOPES and final_megno < 8.0:
         return "regular_likely"
     return "ambiguous"
+
+
+def _linear_fit_xy(xs: list[float], ys: list[float]) -> tuple[float, float, float]:
+    if len(xs) < 2:
+        return math.nan, math.nan, math.nan
+    x_arr = np.asarray(xs, dtype=float)
+    y_arr = np.asarray(ys, dtype=float)
+    x_mean = float(np.mean(x_arr))
+    y_mean = float(np.mean(y_arr))
+    ss_xx = float(np.sum((x_arr - x_mean) ** 2))
+    if ss_xx <= 0.0:
+        return math.nan, math.nan, math.nan
+    slope = float(np.sum((x_arr - x_mean) * (y_arr - y_mean)) / ss_xx)
+    intercept = y_mean - slope * x_mean
+    predicted = slope * x_arr + intercept
+    ss_res = float(np.sum((y_arr - predicted) ** 2))
+    ss_tot = float(np.sum((y_arr - y_mean) ** 2))
+    r_squared = 1.0 - ss_res / ss_tot if ss_tot > 0.0 else math.nan
+    return slope, intercept, r_squared
+
+
+def last_finite_lcn_sample(
+    samples: list[ReboundMegnoSample],
+) -> tuple[float | None, float | None]:
+    for sample in reversed(samples):
+        value = sample.finite_time_lyapunov_estimate
+        if math.isfinite(value):
+            return value, sample.time_years
+    return None, None
+
+
+def megno_slope_window_estimates(
+    samples: list[ReboundMegnoSample],
+    *,
+    duration_years: float,
+) -> list[dict[str, float | int | str | None]]:
+    windows = [0.0, 100_000_000.0, 200_000_000.0, 300_000_000.0]
+    finite = [
+        sample
+        for sample in samples
+        if math.isfinite(sample.time_years) and math.isfinite(sample.megno)
+    ]
+    results: list[dict[str, float | int | str | None]] = []
+    for start_years in windows:
+        if duration_years <= start_years:
+            continue
+        selected = [
+            sample
+            for sample in finite
+            if start_years <= sample.time_years <= duration_years
+        ]
+        if len(selected) < 3:
+            results.append(
+                {
+                    "window_start_years": start_years,
+                    "window_end_years": duration_years,
+                    "n_samples": len(selected),
+                    "megno_slope_per_year": None,
+                    "megno_intercept": None,
+                    "r_squared": None,
+                    "delta_megno": None,
+                    "lyapunov_proxy_1_per_year": None,
+                    "warning": "insufficient finite MEGNO samples",
+                }
+            )
+            continue
+        xs = [sample.time_years for sample in selected]
+        ys = [sample.megno for sample in selected]
+        slope, intercept, r_squared = _linear_fit_xy(xs, ys)
+        results.append(
+            {
+                "window_start_years": start_years,
+                "window_end_years": duration_years,
+                "n_samples": len(selected),
+                "megno_slope_per_year": _finite_or_none(slope),
+                "megno_intercept": _finite_or_none(intercept),
+                "r_squared": _finite_or_none(r_squared),
+                "delta_megno": _finite_or_none(ys[-1] - ys[0]),
+                "lyapunov_proxy_1_per_year": (
+                    _finite_or_none(max(0.0, slope) * 0.5)
+                    if math.isfinite(slope)
+                    else None
+                ),
+                "warning": (
+                    "MEGNO slope fallback; not a direct Simulation.lyapunov() accessor value"
+                    if math.isfinite(slope)
+                    else "fit failed"
+                ),
+            }
+        )
+    return results
+
+
+def best_megno_slope_fallback(
+    estimates: list[dict[str, float | int | str | None]],
+) -> float | None:
+    finite: list[float] = []
+    for row in estimates:
+        value = row.get("lyapunov_proxy_1_per_year")
+        if value is None:
+            continue
+        value_f = float(value)
+        if math.isfinite(value_f):
+            finite.append(value_f)
+    if not finite:
+        return None
+    return max(finite)
 
 
 def write_rebound_megno_sample(
@@ -2172,12 +2499,17 @@ def rebound_megno_summary_dict(
     result: ReboundMegnoResult,
     outputs: ReboundMegnoOutputs,
     runtime_s: float,
+    resume_info: ReboundResumeInfo | None = None,
 ) -> dict:
     return {
         "mode": MODE_DESCRIPTION,
         "diagnostic": "REBOUND-native finite-time MEGNO",
         "final_megno": _finite_or_none(result.final_megno),
         "final_mean_megno": _finite_or_none(result.final_mean_megno),
+        "final_lcn_raw": _finite_or_none(result.final_lcn_raw),
+        "last_finite_lcn": _finite_or_none(result.last_finite_lcn),
+        "last_finite_lcn_time_years": _finite_or_none(result.last_finite_lcn_time_years),
+        "megno_slope_window_estimates": result.megno_slope_window_estimates,
         "estimated_lyapunov_if_available": _finite_or_none(result.estimated_lyapunov_if_available),
         "duration_years": args.duration_years,
         "timestep_days": args.step_days,
@@ -2187,6 +2519,21 @@ def rebound_megno_summary_dict(
         "classification_hint": result.classification_hint,
         "lcn_available": result.lcn_available,
         "caveats": result.caveats,
+        "rebound_resume": (
+            {
+                "requested": resume_info.requested,
+                "archive_path": resume_info.archive_path,
+                "resumed_from_time_years": resume_info.resumed_from_time_years,
+                "megno_state_validated": resume_info.megno_state_validated,
+                "duplicate_rows_removed": resume_info.duplicate_rows_removed,
+                "warnings": resume_info.warnings,
+            }
+            if resume_info is not None
+            else {
+                "requested": getattr(args, "rebound_resume", None),
+                "resumed_from_time_years": None,
+            }
+        ),
         "runtime_seconds": runtime_s,
         "outputs": {
             "megno_csv": str(outputs.csv_path),
@@ -3065,19 +3412,57 @@ def integrate_rebound_streaming(
     megno_seed: int | None = None,
     megno_duration_scaling_mode: bool = False,
     model_scope: str = "full",
+    rebound_resume_path: Path | None = None,
+    rebound_resume_requested: str | None = None,
+    resume_duplicate_rows_removed: dict[str, int] | None = None,
+    resume_min_tracker: PairwiseMinimumTracker | None = None,
+    resume_extrema: dict[str, float] | None = None,
+    resume_n_records: int = 0,
+    resume_megno_samples: list[ReboundMegnoSample] | None = None,
 ) -> IntegrationResult:
     rebound = optional_import_module("rebound")
     if rebound is None:
         raise RuntimeError("REBOUND is not installed. Install rebound or use --backend inhouse.")
 
-    sim = build_rebound_simulation(
-        rebound,
-        state0,
-        integrator=rebound_integrator,
-        step_s=dt_s,
-        ias15_epsilon=rebound_ias15_epsilon,
-    )
     runtime_warnings: list[str] = []
+    rebound_resume_info: ReboundResumeInfo | None = None
+    resumed_from_time_s = 0.0
+    megno_state_validated = False
+
+    if rebound_resume_path is not None:
+        sim = load_rebound_archive_snapshot(rebound, rebound_resume_path)
+        resumed_from_time_s = float(sim.t)
+        if resumed_from_time_s <= 0.0:
+            raise RuntimeError(
+                f"REBOUND resume archive did not contain a nonzero-time snapshot: {rebound_resume_path}"
+            )
+        if resumed_from_time_s >= duration_s - 1.0e-6:
+            raise RuntimeError(
+                "REBOUND resume archive is already at or beyond the requested final duration. "
+                "Use the completed outputs or request a longer --duration-years."
+            )
+        if int(getattr(sim, "N_real", len(body_names)) or len(body_names)) != len(body_names):
+            raise RuntimeError(
+                "Loaded REBOUND archive has an unexpected real-particle count; refusing resume."
+            )
+        runtime_warnings.append(
+            "REBOUND resume loaded SimulationArchive snapshot at "
+            f"t={seconds_to_years(resumed_from_time_s):.12g} years: {rebound_resume_path}"
+        )
+        if megno_outputs is not None and rebound_gr_model != "none":
+            raise RuntimeError(
+                "REBOUNDx GR MEGNO resume is not validated in this workflow. "
+                "Use Newtonian REBOUND MEGNO for checkpoint-safe LCN runs."
+            )
+    else:
+        sim = build_rebound_simulation(
+            rebound,
+            state0,
+            integrator=rebound_integrator,
+            step_s=dt_s,
+            ias15_epsilon=rebound_ias15_epsilon,
+        )
+
     if rebound_integrator == "whfast" and rebound_gr_model in {"gr", "gr_full"}:
         runtime_warnings.append(
             "REBOUNDx velocity-dependent GR with WHFast requires operator-style validation; "
@@ -3088,32 +3473,56 @@ def integrate_rebound_streaming(
             "Invariant energy diagnostics remain Newtonian bookkeeping; GR production runs "
             "should be interpreted with perihelion and conservation validation."
         )
-    try:
-        add_reboundx_gr_force(sim, rebound_gr_model)
-    except RuntimeError as exc:
-        raise RuntimeError(str(exc)) from exc
+    if rebound_resume_path is None:
+        try:
+            add_reboundx_gr_force(sim, rebound_gr_model)
+        except RuntimeError as exc:
+            raise RuntimeError(str(exc)) from exc
+    elif rebound_gr_model != "none":
+        runtime_warnings.append(
+            "REBOUNDx force state after SimulationArchive resume is not independently "
+            "validated here; use Newtonian MEGNO for production Lyapunov diagnostics."
+        )
 
-    megno_samples: list[ReboundMegnoSample] = []
+    megno_samples: list[ReboundMegnoSample] = list(resume_megno_samples or [])
     megno_caveats: list[str] = []
     lcn_available = False
     if megno_outputs is not None:
-        if not hasattr(sim, "init_megno") or not hasattr(sim, "megno"):
+        if rebound_resume_path is None and (
+            not hasattr(sim, "init_megno") or not hasattr(sim, "megno")
+        ):
             raise RuntimeError(
                 "Installed REBOUND does not expose init_megno()/megno(); "
                 "cannot run --with-megno."
+            )
+        if rebound_resume_path is not None and not hasattr(sim, "megno"):
+            raise RuntimeError(
+                "Loaded REBOUND archive does not expose megno(); cannot safely resume MEGNO."
             )
         if with_rebound_lyapunov and not hasattr(sim, "lyapunov"):
             raise RuntimeError(
                 "Installed REBOUND does not expose lyapunov() after MEGNO init; "
                 "omit --with-rebound-lyapunov."
             )
-        try:
-            sim.init_megno(seed=megno_seed)
-        except Exception as exc:
-            raise RuntimeError(
-                "REBOUND MEGNO initialization failed for this backend/integrator combination: "
-                f"{exc}"
-            ) from exc
+        if rebound_resume_path is None:
+            try:
+                sim.init_megno(seed=megno_seed)
+            except Exception as exc:
+                raise RuntimeError(
+                    "REBOUND MEGNO initialization failed for this backend/integrator combination: "
+                    f"{exc}"
+                ) from exc
+        else:
+            try:
+                float(sim.megno())
+                if with_rebound_lyapunov:
+                    float(sim.lyapunov())
+                megno_state_validated = True
+            except Exception as exc:
+                raise RuntimeError(
+                    "Loaded REBOUND SimulationArchive did not preserve usable MEGNO/LCN state; "
+                    "cannot safely resume this run."
+                ) from exc
         lcn_available = bool(with_rebound_lyapunov and hasattr(sim, "lyapunov"))
         megno_caveats.append(
             "REBOUND-native MEGNO is a finite-time variational chaos diagnostic; "
@@ -3140,17 +3549,38 @@ def integrate_rebound_streaming(
             sim,
             simulationarchive_path,
             interval_s=simulationarchive_interval_s,
+            delete_existing=rebound_resume_path is None,
         )
         runtime_warnings.append(
             f"REBOUND SimulationArchive enabled via {archive_method}: {simulationarchive_path}"
         )
 
     reference = invariant_reference(state0, G=G_SI)
-    min_tracker = PairwiseMinimumTracker.create(body_names)
-    min_tracker.update(0.0, state0.positions)
-    extrema = initial_extrema()
-    write_snapshot(0.0, state0, body_names, outputs, reference, extrema, sun_index=sun_index)
-    n_records = 1
+    if rebound_resume_path is not None:
+        final_state = rebound_state_from_sim(sim, state0.masses)
+        min_tracker = resume_min_tracker or PairwiseMinimumTracker.create(body_names)
+        if resume_min_tracker is None:
+            min_tracker.update(resumed_from_time_s, final_state.positions)
+        extrema = dict(resume_extrema or initial_extrema())
+        n_records = int(resume_n_records)
+        if n_records <= 0:
+            write_snapshot(
+                resumed_from_time_s,
+                final_state,
+                body_names,
+                outputs,
+                reference,
+                extrema,
+                sun_index=sun_index,
+            )
+            n_records = 1
+    else:
+        final_state = state0
+        min_tracker = PairwiseMinimumTracker.create(body_names)
+        min_tracker.update(0.0, state0.positions)
+        extrema = initial_extrema()
+        write_snapshot(0.0, state0, body_names, outputs, reference, extrema, sun_index=sun_index)
+        n_records = 1
     two_body_tracker = (
         TwoBodyValidationTracker.create(state0, body_names, sun_index=sun_index)
         if len(body_names) == 2 and body_names[sun_index] == "sun"
@@ -3161,20 +3591,24 @@ def integrate_rebound_streaming(
         schedule: dict[float, set[str]],
         event_name: str,
         interval_s: float,
+        start_s: float,
     ) -> None:
-        next_t = interval_s
+        next_t = (math.floor(start_s / interval_s) + 1) * interval_s
+        while next_t <= start_s + 1.0e-6:
+            next_t += interval_s
         while next_t < duration_s - 1.0e-9:
             schedule.setdefault(round(next_t, 6), set()).add(event_name)
             next_t += interval_s
         schedule.setdefault(round(duration_s, 6), set()).add(event_name)
 
     event_schedule: dict[float, set[str]] = {}
-    add_scheduled_events(event_schedule, "record", record_interval_s)
+    add_scheduled_events(event_schedule, "record", record_interval_s, resumed_from_time_s)
     if megno_outputs is not None:
         add_scheduled_events(
             event_schedule,
             "megno",
             megno_record_interval_s if megno_record_interval_s is not None else record_interval_s,
+            resumed_from_time_s,
         )
         initial_megno_warning = ""
         try:
@@ -3197,30 +3631,33 @@ def integrate_rebound_streaming(
                     )
                 )
         initial_sample = ReboundMegnoSample(
-            time_years=0.0,
+            time_years=seconds_to_years(resumed_from_time_s),
             megno=initial_megno,
             mean_megno=math.nan,
             finite_time_lyapunov_estimate=initial_lcn,
             warnings=initial_megno_warning,
         )
-        megno_samples.append(initial_sample)
-        write_rebound_megno_sample(
-            megno_outputs,
-            initial_sample,
-            backend="rebound",
-            integrator=rebound_integrator,
-            gr_model=rebound_gr_model,
-        )
+        if (
+            not megno_samples
+            or abs(megno_samples[-1].time_years - initial_sample.time_years) > 1.0e-9
+        ):
+            megno_samples.append(initial_sample)
+            write_rebound_megno_sample(
+                megno_outputs,
+                initial_sample,
+                backend="rebound",
+                integrator=rebound_integrator,
+                gr_model=rebound_gr_model,
+            )
 
     event_times = sorted(event_schedule)
 
     progress = tqdm(
-        total=seconds_to_years(duration_s),
+        total=seconds_to_years(max(0.0, duration_s - resumed_from_time_s)),
         desc=f"REBOUND {rebound_integrator}",
         disable=not show_progress,
     )
-    current_t = 0.0
-    final_state = state0
+    current_t = resumed_from_time_s
     try:
         for target_t in event_times:
             previous_t = current_t
@@ -3303,11 +3740,25 @@ def integrate_rebound_streaming(
         if megno_samples
         else math.nan
     )
+    last_finite_lcn, last_finite_lcn_time = last_finite_lcn_sample(megno_samples)
+    slope_estimates = megno_slope_window_estimates(
+        megno_samples,
+        duration_years=seconds_to_years(current_t),
+    )
+    slope_fallback = best_megno_slope_fallback(slope_estimates)
+    if (
+        megno_outputs is not None
+        and math.isfinite(final_megno)
+        and not math.isfinite(final_lcn)
+        and slope_fallback is not None
+    ):
+        megno_caveats.append("LCN accessor unavailable after resume; MEGNO slope fallback used.")
     rebound_megno_classification = classify_megno_result(
         final_megno=final_megno,
         estimated_lyapunov_per_year=final_lcn,
         duration_years=seconds_to_years(current_t),
         model_scope=model_scope,
+        fallback_megno_slope_per_year=slope_fallback,
     )
     if megno_outputs is not None and rebound_gr_model != "none":
         rebound_megno_classification = "ambiguous"
@@ -3322,6 +3773,10 @@ def integrate_rebound_streaming(
             final_megno=final_megno,
             final_mean_megno=final_mean_megno,
             estimated_lyapunov_if_available=final_lcn,
+            final_lcn_raw=final_lcn,
+            last_finite_lcn=last_finite_lcn,
+            last_finite_lcn_time_years=last_finite_lcn_time,
+            megno_slope_window_estimates=slope_estimates,
             classification_hint=rebound_megno_classification,
             caveats=megno_caveats,
             lcn_available=lcn_available,
@@ -3329,6 +3784,19 @@ def integrate_rebound_streaming(
         if megno_outputs is not None
         else None
     )
+    if rebound_resume_path is not None:
+        rebound_resume_info = ReboundResumeInfo(
+            requested=rebound_resume_requested,
+            archive_path=str(rebound_resume_path),
+            resumed_from_time_years=seconds_to_years(resumed_from_time_s),
+            megno_state_validated=megno_state_validated,
+            duplicate_rows_removed=dict(resume_duplicate_rows_removed or {}),
+            warnings=[
+                message
+                for message in runtime_warnings
+                if "resume" in message.lower() or "SimulationArchive" in message
+            ],
+        )
 
     return IntegrationResult(
         final_state=final_state,
@@ -3354,6 +3822,7 @@ def integrate_rebound_streaming(
         ),
         runtime_warnings=runtime_warnings,
         rebound_megno_result=rebound_megno_result,
+        rebound_resume_info=rebound_resume_info,
     )
 
 
@@ -4073,6 +4542,7 @@ def make_summary(
             "rebound_ias15_epsilon": getattr(args, "rebound_ias15_epsilon", None),
             "rebound_simulationarchive": getattr(args, "rebound_simulationarchive", None),
             "rebound_archive_interval_years": getattr(args, "rebound_archive_interval_years", None),
+            "rebound_resume": getattr(args, "rebound_resume", None),
             "model_scope": args.model_scope,
             "tag": tag,
             "body_names": body_names,
@@ -4100,6 +4570,21 @@ def make_summary(
             "wall_clock_minutes": runtime_s / 60.0,
         },
         "warnings": list(result.runtime_warnings or []),
+        "rebound_resume": (
+            {
+                "requested": result.rebound_resume_info.requested,
+                "archive_path": result.rebound_resume_info.archive_path,
+                "resumed_from_time_years": result.rebound_resume_info.resumed_from_time_years,
+                "megno_state_validated": result.rebound_resume_info.megno_state_validated,
+                "duplicate_rows_removed": result.rebound_resume_info.duplicate_rows_removed,
+                "warnings": result.rebound_resume_info.warnings,
+            }
+            if result.rebound_resume_info is not None
+            else {
+                "requested": getattr(args, "rebound_resume", None),
+                "resumed_from_time_years": None,
+            }
+        ),
         "diagnostic_extrema_over_records": result.extrema,
         "min_separation_sampling": result.min_separation_sampling,
         "min_separations": result.min_tracker.rows(),
@@ -4163,6 +4648,18 @@ def make_summary(
                 "final_megno": _finite_or_none(result.rebound_megno_result.final_megno),
                 "final_mean_megno": _finite_or_none(
                     result.rebound_megno_result.final_mean_megno
+                ),
+                "final_lcn_raw": _finite_or_none(
+                    result.rebound_megno_result.final_lcn_raw
+                ),
+                "last_finite_lcn": _finite_or_none(
+                    result.rebound_megno_result.last_finite_lcn
+                ),
+                "last_finite_lcn_time_years": _finite_or_none(
+                    result.rebound_megno_result.last_finite_lcn_time_years
+                ),
+                "megno_slope_window_estimates": (
+                    result.rebound_megno_result.megno_slope_window_estimates
                 ),
                 "estimated_lyapunov_if_available": _finite_or_none(
                     result.rebound_megno_result.estimated_lyapunov_if_available
@@ -4231,6 +4728,12 @@ def main(argv: list[str] | None = None) -> None:
     sun_index = bodies.index("sun")
     config_hash = stability_config_hash(args, bodies)
     checkpoint_data = None
+    rebound_resume_path = resolve_rebound_resume_archive(args)
+    rebound_resume_removed: dict[str, int] = {}
+    rebound_resume_n_records = 0
+    rebound_resume_extrema: dict[str, float] | None = None
+    rebound_resume_min_tracker: PairwiseMinimumTracker | None = None
+    rebound_resume_megno_samples: list[ReboundMegnoSample] = []
     if args.resume_from_checkpoint is not None:
         try:
             checkpoint_data = load_checkpoint(Path(args.resume_from_checkpoint))
@@ -4250,6 +4753,44 @@ def main(argv: list[str] | None = None) -> None:
             parser.error(
                 f"--resume-from-checkpoint requires existing Lyapunov CSV output for append: {paths['lyapunov']}"
             )
+    if rebound_resume_path is not None:
+        rebound_module = optional_import_module("rebound")
+        if rebound_module is None:
+            parser.error("REBOUND is not installed; cannot use --rebound-resume.")
+        try:
+            probe_sim = load_rebound_archive_snapshot(rebound_module, rebound_resume_path)
+            rebound_resume_time_s = float(probe_sim.t)
+        except RuntimeError as exc:
+            parser.error(str(exc))
+        if rebound_resume_time_s <= 0.0:
+            parser.error(
+                "--rebound-resume requested, but the archive latest snapshot is not at nonzero time."
+            )
+        if rebound_resume_time_s >= args.duration_years * JULIAN_YEAR_S - 1.0e-6:
+            parser.error(
+                "--rebound-resume archive is already at or beyond --duration-years; "
+                "request a longer duration or use the completed outputs."
+            )
+        try:
+            for key in ("stability_timeseries", "orbital_elements", "invariants"):
+                rebound_resume_removed[key] = truncate_csv_after_time(
+                    paths[key],
+                    time_column="time_years",
+                    max_time_years=seconds_to_years(rebound_resume_time_s),
+                )
+            if args.with_megno and "megno" in paths:
+                rebound_resume_removed["megno"] = truncate_csv_after_time(
+                    paths["megno"],
+                    time_column="time_years",
+                    max_time_years=seconds_to_years(rebound_resume_time_s),
+                )
+            rebound_resume_n_records = count_csv_data_rows(paths["stability_timeseries"])
+            rebound_resume_extrema = extrema_from_invariants_csv(paths["invariants"])
+            rebound_resume_min_tracker = min_tracker_from_csv(paths["min_separations"], bodies)
+            if args.with_megno and "megno" in paths:
+                rebound_resume_megno_samples = read_rebound_megno_samples(paths["megno"])
+        except RuntimeError as exc:
+            parser.error(f"Could not prepare CSV outputs for REBOUND resume: {exc}")
     try:
         poincare_config = build_poincare_config(args, bodies) if args.with_poincare else None
         if args.with_frequency_map:
@@ -4282,6 +4823,13 @@ def main(argv: list[str] | None = None) -> None:
         print(
             f"[Stability] Resuming from checkpoint {checkpoint_data.path} "
             f"at t={seconds_to_years(checkpoint_data.time_s):g} years.",
+            flush=True,
+        )
+    if rebound_resume_path is not None:
+        removed_total = sum(rebound_resume_removed.values())
+        print(
+            f"[Stability] REBOUND resume requested from {rebound_resume_path}; "
+            f"prepared CSV outputs and removed {removed_total} duplicate/future rows.",
             flush=True,
         )
 
@@ -4361,8 +4909,16 @@ def main(argv: list[str] | None = None) -> None:
             "[Stability] REBOUND-native MEGNO enabled: finite-time variational diagnostic.",
             flush=True,
         )
-        if args.with_rebound_lyapunov:
+        if args.rebound_chaos_method == "megno":
+            print(
+                "[Stability] REBOUND-native LCN recording enabled via Simulation.lyapunov() "
+                "for --rebound-chaos-method megno.",
+                flush=True,
+            )
+        elif args.with_rebound_lyapunov:
             print("[Stability] REBOUND-native LCN output requested via Simulation.lyapunov().")
+        else:
+            print("[Stability] REBOUND-native LCN recording disabled.")
 
     duration_s = args.duration_years * JULIAN_YEAR_S
     step_s = args.step_days * DAY_S
@@ -4381,7 +4937,7 @@ def main(argv: list[str] | None = None) -> None:
             print(f"[Stability] REBOUND SimulationArchive: {args.rebound_simulationarchive}")
     print(f"[Stability] output directory: {output_dir}")
 
-    append_outputs = checkpoint_data is not None
+    append_outputs = checkpoint_data is not None or rebound_resume_path is not None
     checkpoint_dir = (
         Path(args.checkpoint_dir)
         if args.checkpoint_dir is not None
@@ -4399,7 +4955,11 @@ def main(argv: list[str] | None = None) -> None:
     outputs = open_csv_outputs(paths, append=append_outputs)
     lyapunov_outputs = open_lyapunov_outputs(paths, append=append_outputs) if args.with_lyapunov else None
     poincare_outputs = open_poincare_outputs(paths) if args.with_poincare else None
-    megno_outputs = open_rebound_megno_outputs(paths) if args.with_megno else None
+    megno_outputs = open_rebound_megno_outputs(paths, append=append_outputs) if args.with_megno else None
+    effective_with_rebound_lyapunov = bool(
+        args.with_rebound_lyapunov
+        or (args.with_megno and args.rebound_chaos_method == "megno")
+    )
     start_wall = time.perf_counter()
     try:
         if args.backend == "rebound":
@@ -4431,10 +4991,17 @@ def main(argv: list[str] | None = None) -> None:
                     if args.megno_record_every_years is not None
                     else record_interval_s
                 ),
-                with_rebound_lyapunov=args.with_rebound_lyapunov,
+                with_rebound_lyapunov=effective_with_rebound_lyapunov,
                 megno_seed=args.megno_seed,
                 megno_duration_scaling_mode=args.megno_duration_scaling_mode,
                 model_scope=args.model_scope,
+                rebound_resume_path=rebound_resume_path,
+                rebound_resume_requested=args.rebound_resume,
+                resume_duplicate_rows_removed=rebound_resume_removed,
+                resume_min_tracker=rebound_resume_min_tracker,
+                resume_extrema=rebound_resume_extrema,
+                resume_n_records=rebound_resume_n_records,
+                resume_megno_samples=rebound_resume_megno_samples,
             )
         elif args.integrator == "leapfrog":
             result = integrate_leapfrog_streaming(
@@ -4533,6 +5100,7 @@ def main(argv: list[str] | None = None) -> None:
             result=result.rebound_megno_result,
             outputs=megno_outputs,
             runtime_s=runtime_s,
+            resume_info=result.rebound_resume_info,
         )
         write_summary(megno_outputs.summary_path, megno_summary)
 

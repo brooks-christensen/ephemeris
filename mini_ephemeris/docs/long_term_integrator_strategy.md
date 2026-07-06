@@ -446,3 +446,44 @@ Interpretation discipline:
 - Use REBOUND WHFast for production trajectories, REBOUND IAS15 for short
   high-accuracy checks, and the in-house backend for older tangent/checkpoint
   experiments.
+
+## REBOUND MEGNO Checkpoint/Resume
+
+The in-house checkpoint flags (`--checkpoint-every-years`,
+`--checkpoint-dir`, `--resume-from-checkpoint`) apply to the leapfrog `.npz`
+checkpoint path. They are not the REBOUND MEGNO restart mechanism.
+
+For REBOUND-native Newtonian MEGNO/LCN runs, use
+`--rebound-simulationarchive PATH`, `--rebound-archive-interval-years`, and
+`--rebound-resume latest` or `--rebound-resume PATH`. The CLI now loads the
+archive snapshot, verifies that the real-particle count still matches the
+reduced physical model, checks that MEGNO/LCN accessors work after load, drops
+CSV rows later than the archive time, and appends new output rows. The normal
+trajectory, orbital-element, invariant, and minimum-separation outputs are
+built from `sim.N_real` particles so MEGNO variational particles are excluded
+from physical diagnostics.
+
+If `--rebound-resume` is requested and the archive is missing, empty, already
+past the requested final duration, or cannot provide MEGNO/LCN state, the run
+fails clearly. It does not silently restart from zero. The smoke test is:
+
+```bash
+bash mini_ephemeris/scripts/run_rebound_megno_checkpoint_resume_smoke.sh
+```
+
+The next production Newtonian MEGNO script is:
+
+```bash
+bash mini_ephemeris/scripts/run_rebound_full_newtonian_100myr_megno.sh
+```
+
+The convergence wrapper adds a 0.5-day 100 Myr case and leaves the 200 Myr case
+commented out until the 100 Myr results are inspected:
+
+```bash
+bash mini_ephemeris/scripts/run_rebound_full_newtonian_megno_convergence.sh
+```
+
+REBOUNDx GR MEGNO remains unvalidated in this workflow. GR-compatible Lyapunov
+work should use a separately validated finite-difference Benettin method rather
+than treating REBOUNDx variational output as production-ready.

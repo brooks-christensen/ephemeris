@@ -1718,6 +1718,30 @@ reproducible and falsifiable:
 - SimulationArchive checkpoint `.bin` files are excluded from artifact upload
   packages by default unless `--include-archives` is explicitly passed.
 
+### REBOUND MEGNO checkpoint/resume
+
+For REBOUND-native Newtonian MEGNO/LCN, `--rebound-simulationarchive` writes
+SimulationArchive snapshots and `--rebound-resume latest` resumes from the
+latest snapshot in that archive. This is separate from the in-house
+`--resume-from-checkpoint` `.npz` path.
+
+On resume, the CLI loads the archive, verifies the snapshot time is nonzero,
+checks that REBOUND can still report MEGNO/LCN from the loaded simulation, drops
+CSV rows beyond the archive time, and appends new records. It does not silently
+restart from zero when `--rebound-resume` is requested.
+
+Use:
+
+```bash
+bash mini_ephemeris/scripts/run_rebound_full_newtonian_100myr_megno.sh
+```
+
+for the next checkpoint-safe Newtonian WHFast MEGNO run. Use
+`mini_ephemeris/scripts/run_rebound_full_newtonian_megno_convergence.sh` only
+after the 1-day 100 Myr case has been inspected. GR MEGNO through REBOUNDx
+remains unvalidated; a future GR-compatible Lyapunov estimate should use a
+validated finite-difference Benettin workflow.
+
 The stability mode explicitly rejects empirical lunar calibration flags such as
 `--moon-dv-t-mm-s`, `--moon-a-t-1e-15-m-s2`, and
 `--lunar-calibration-profile`. It also does not import or use American
