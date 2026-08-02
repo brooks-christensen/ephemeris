@@ -1,0 +1,356 @@
+{
+  "apsidal_drift_definition": {
+    "comparison_required_for_gr_excess": "paired GR-minus-Newtonian integration",
+    "is_isolated_gr_excess": false,
+    "kind": "full_system_total"
+  },
+  "diagnostic_definitions": {
+    "angular_momentum_rel_drift": {
+      "description": "Relative change of the total angular-momentum norm diagnostic."
+    },
+    "newtonian_energy_component_rel_change": {
+      "description": "Relative change of the Newtonian invariant diagnostic computed from the Newtonian kinetic plus pair-potential component only. It is useful for consistency checks of the recorded trajectory but excludes the custom gr_potential potential-energy term.",
+      "includes_custom_gr_potential_energy": false,
+      "may_be_interpreted_as_total_conserved_energy_error": false
+    }
+  },
+  "diagnostic_semantics_notes": [
+    "The Newtonian energy component excludes the custom gr_potential potential-energy term and is not total conserved GR energy error.",
+    "The full-system Mercury apsidal drift is not the isolated relativistic excess; a paired GR-minus-Newtonian integration is required for that comparison.",
+    "variation_api_smoke_metadata is standalone API-smoke metadata; production_metadata is authoritative for production particle counts."
+  ],
+  "expected_stage_count": 11,
+  "failed_stages": [],
+  "interpretation": "READY_FOR_C_PORT means the Python implementation is accepted as the reference oracle for a compiled-C port, not approval for a long Python production run.",
+  "missing_stages": [],
+  "next_authorized_action": "compiled-C port and C-versus-Python validation only",
+  "observed_stage_count": 11,
+  "outputs": {
+    "markdown_report": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_tangent_validation_matrix_report_v2.md",
+    "summary_json": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_tangent_validation_matrix_summary_v2.json"
+  },
+  "passed_stages": [
+    "existing_1myr_smoke_audit",
+    "monitor_process_tree_audit",
+    "dynamic_gr_tangent_oracle",
+    "newtonian_zero_limit_100kyr",
+    "gr_100kyr_1d_seed12345",
+    "gr_100kyr_1d_seed67890",
+    "seed_comparison",
+    "gr_100kyr_0p5d_seed12345",
+    "timestep_comparison",
+    "physical_gr_trajectory_comparison_100kyr",
+    "gr_checkpoint_resume_equivalence_20kyr"
+  ],
+  "provenance": {
+    "command_line": [
+      "gr_tangent_validation_matrix.py",
+      "--output-root",
+      "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1",
+      "--kernel-path",
+      "/home/peacelovephysics/ephemeris/data/de431_part-2.bsp",
+      "final-report"
+    ],
+    "created_utc": "2026-08-02T17:40:15.265164Z",
+    "dirty_working_tree": false,
+    "git_commit_hash": "d5611b25d78b71a9caca0c440e3a1c942bcb76a2",
+    "git_metadata_error": null,
+    "hostname": "DESKTOP-D6CRLL9",
+    "kernel_path": "/home/peacelovephysics/ephemeris/data/de431_part-2.bsp",
+    "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+    "manifest_path": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/07_gr_tangent_validation_matrix.json",
+    "manifest_sha256": "ad02c4ff8ecc985b6bd113b188f44b96a75a60329feb9b036f31dbd98d682ff3",
+    "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]"
+  },
+  "report_schema_version": 2,
+  "source_result_paths": {
+    "dynamic_gr_tangent_oracle": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/dynamic_gr_tangent_oracle/dynamic_gr_tangent_oracle_summary.json",
+    "existing_1myr_smoke_audit": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/existing_1myr_smoke_audit.json",
+    "gr_100kyr_0p5d_seed12345": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_100kyr_0p5d_seed12345/gr_tangent_summary_gr_100kyr_0p5d_seed12345.json",
+    "gr_100kyr_1d_seed12345": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json",
+    "gr_100kyr_1d_seed67890": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_100kyr_1d_seed67890/gr_tangent_summary_gr_100kyr_1d_seed67890.json",
+    "gr_checkpoint_resume_equivalence_20kyr": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_checkpoint_resume_equivalence_20kyr/gr_checkpoint_resume_equivalence_20kyr_summary.json",
+    "monitor_process_tree_audit": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/monitor_process_tree_audit/monitor_process_tree_audit.json",
+    "newtonian_zero_limit_100kyr": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/newtonian_zero_limit_100kyr/newtonian_zero_limit_100kyr_summary.json",
+    "physical_gr_trajectory_comparison_100kyr": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/physical_gr_trajectory_comparison_100kyr/physical_gr_trajectory_comparison_100kyr_summary.json",
+    "seed_comparison": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/seed_comparison/gr_100kyr_1d_seed_comparison.json",
+    "timestep_comparison": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/timestep_comparison/gr_100kyr_timestep_comparison.json"
+  },
+  "stage_count": 11,
+  "stage_results": [
+    {
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/existing_1myr_smoke_audit.json",
+      "metrics": {
+        "archive_snapshot_count": 11,
+        "final_time_years": 1000000.0,
+        "production_n_real": 10,
+        "production_variation_particle_count": 10,
+        "row_count": 101
+      },
+      "passed": true,
+      "source_stage": "existing_1myr_smoke_audit",
+      "stage": "existing_1myr_smoke_audit",
+      "status": "passed",
+      "title": "Existing 1 Myr Smoke Audit"
+    },
+    {
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/monitor_process_tree_audit/monitor_process_tree_audit.json",
+      "metrics": {
+        "max_descendant_count": null,
+        "sample_count": 18
+      },
+      "passed": true,
+      "source_stage": "monitor_process_tree_audit",
+      "stage": "monitor_process_tree_audit",
+      "status": "passed",
+      "title": "Process-Tree Monitor Audit"
+    },
+    {
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/dynamic_gr_tangent_oracle/dynamic_gr_tangent_oracle_summary.json",
+      "metrics": {
+        "best_direction_cosine": 0.9999999999998841,
+        "best_relative_norm_error": 7.043044860791619e-07,
+        "group_count": 9
+      },
+      "passed": true,
+      "source_stage": "dynamic_gr_tangent_oracle",
+      "stage": "dynamic_gr_tangent_oracle",
+      "status": "passed",
+      "title": "Dynamic GR Tangent Oracle"
+    },
+    {
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/newtonian_zero_limit_100kyr/newtonian_zero_limit_100kyr_summary.json",
+      "metrics": {
+        "max_lcn_difference": 0.0,
+        "max_megno_difference": 0.0,
+        "max_variation_norm_relative_difference": 0.0,
+        "min_variation_direction_cosine": 0.9999999999999998
+      },
+      "passed": true,
+      "source_stage": "newtonian_zero_limit_100kyr",
+      "stage": "newtonian_zero_limit_100kyr",
+      "status": "passed",
+      "title": "Newtonian Zero-Limit 100 kyr"
+    },
+    {
+      "derived_from": "gr_tangent_summary diagnostics",
+      "diagnostics": {
+        "actual_time_years": 100000.0,
+        "classification_hint": "regular_likely",
+        "final_lcn_1_per_year": -9.908687698336094e-15,
+        "final_megno": 2.010749965482442,
+        "lcn_trends_toward_zero": true,
+        "max_angular_momentum_rel_drift": 6.223931883253886e-12,
+        "max_newtonian_energy_component_rel_change": 2.037940105522925e-09,
+        "mercury_total_apsidal_drift_arcsec_per_century": 564.5449523622858,
+        "rows_written": 101,
+        "runtime_seconds": 1709.5135484312195,
+        "stable_positive_lcn_plateau": false
+      },
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json",
+      "passed": true,
+      "production_metadata": {
+        "callback_stats": {
+          "callback_invocations": 36525000,
+          "real_gr_accel_norm_max": 1.2165714224731342e-08,
+          "real_gr_accel_norm_mean": 8.705418043943805e-10,
+          "tangent_gr_accel_norm_max": 9.281193116567128e-07,
+          "tangent_gr_accel_norm_mean": 2.4001294140211543e-08
+        },
+        "n_real": 10,
+        "n_total": 20,
+        "n_var": 10,
+        "n_var_config": 1,
+        "variation_particle_count": 10,
+        "variation_particle_ranges": [
+          {
+            "count": 10,
+            "end_index_exclusive": 20,
+            "start_index": 10
+          }
+        ],
+        "worker_pid": 878
+      },
+      "production_metadata_is_authoritative": true,
+      "source_stage": "gr_100kyr_1d_seed12345",
+      "stage": "gr_100kyr_1d_seed12345",
+      "status": "passed",
+      "title": "GR 100 kyr, 1 day, seed 12345",
+      "variation_api_smoke_metadata": {
+        "arbitrary_cartesian_assignment_supported": true,
+        "n_real": 2,
+        "n_total_after_variation": 4,
+        "n_variation_particles": 2,
+        "readback_exact": true,
+        "rebound_version": "4.6.0"
+      }
+    },
+    {
+      "derived_from": "gr_tangent_summary diagnostics",
+      "diagnostics": {
+        "actual_time_years": 100000.0,
+        "classification_hint": "regular_likely",
+        "final_lcn_1_per_year": 2.0213823929502503e-15,
+        "final_megno": 1.9818958182637114,
+        "lcn_trends_toward_zero": true,
+        "max_angular_momentum_rel_drift": 6.223931883253886e-12,
+        "max_newtonian_energy_component_rel_change": 2.037940105522925e-09,
+        "mercury_total_apsidal_drift_arcsec_per_century": 564.5449523622858,
+        "rows_written": 101,
+        "runtime_seconds": 1648.4267402368132,
+        "stable_positive_lcn_plateau": false
+      },
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_100kyr_1d_seed67890/gr_tangent_summary_gr_100kyr_1d_seed67890.json",
+      "passed": true,
+      "production_metadata": {
+        "callback_stats": {
+          "callback_invocations": 36525000,
+          "real_gr_accel_norm_max": 1.2165714224731342e-08,
+          "real_gr_accel_norm_mean": 8.705418043943805e-10,
+          "tangent_gr_accel_norm_max": 1.2803531261803374e-06,
+          "tangent_gr_accel_norm_mean": 3.666255356090993e-08
+        },
+        "n_real": 10,
+        "n_total": 20,
+        "n_var": 10,
+        "n_var_config": 1,
+        "variation_particle_count": 10,
+        "variation_particle_ranges": [
+          {
+            "count": 10,
+            "end_index_exclusive": 20,
+            "start_index": 10
+          }
+        ],
+        "worker_pid": 11440
+      },
+      "production_metadata_is_authoritative": true,
+      "source_stage": "gr_100kyr_1d_seed67890",
+      "stage": "gr_100kyr_1d_seed67890",
+      "status": "passed",
+      "title": "GR 100 kyr, 1 day, seed 67890",
+      "variation_api_smoke_metadata": {
+        "arbitrary_cartesian_assignment_supported": true,
+        "n_real": 2,
+        "n_total_after_variation": 4,
+        "n_variation_particles": 2,
+        "readback_exact": true,
+        "rebound_version": "4.6.0"
+      }
+    },
+    {
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/seed_comparison/gr_100kyr_1d_seed_comparison.json",
+      "metrics": {
+        "left_classification": "regular_likely",
+        "left_final_lcn": -9.908687698336094e-15,
+        "left_final_megno": 2.010749965482442,
+        "right_classification": "regular_likely",
+        "right_final_lcn": 2.0213823929502503e-15,
+        "right_final_megno": 1.9818958182637114
+      },
+      "passed": true,
+      "source_stage": "seed",
+      "stage": "seed_comparison",
+      "status": "passed",
+      "title": "Seed Comparison"
+    },
+    {
+      "derived_from": "gr_tangent_summary diagnostics",
+      "diagnostics": {
+        "actual_time_years": 100000.0,
+        "classification_hint": "regular_likely",
+        "final_lcn_1_per_year": -9.908477548935301e-15,
+        "final_megno": 2.0107497879915,
+        "lcn_trends_toward_zero": true,
+        "max_angular_momentum_rel_drift": 1.2152051612316971e-11,
+        "max_newtonian_energy_component_rel_change": 2.0127846744443518e-09,
+        "mercury_total_apsidal_drift_arcsec_per_century": 564.5449540504023,
+        "rows_written": 101,
+        "runtime_seconds": 3241.8524465269875,
+        "stable_positive_lcn_plateau": false
+      },
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_100kyr_0p5d_seed12345/gr_tangent_summary_gr_100kyr_0p5d_seed12345.json",
+      "passed": true,
+      "production_metadata": {
+        "callback_stats": {
+          "callback_invocations": 73050000,
+          "real_gr_accel_norm_max": 1.2165836650958177e-08,
+          "real_gr_accel_norm_mean": 8.705418039456053e-10,
+          "tangent_gr_accel_norm_max": 9.282048721733761e-07,
+          "tangent_gr_accel_norm_mean": 2.4001274797535855e-08
+        },
+        "n_real": 10,
+        "n_total": 20,
+        "n_var": 10,
+        "n_var_config": 1,
+        "variation_particle_count": 10,
+        "variation_particle_ranges": [
+          {
+            "count": 10,
+            "end_index_exclusive": 20,
+            "start_index": 10
+          }
+        ],
+        "worker_pid": 21647
+      },
+      "production_metadata_is_authoritative": true,
+      "source_stage": "gr_100kyr_0p5d_seed12345",
+      "stage": "gr_100kyr_0p5d_seed12345",
+      "status": "passed",
+      "title": "GR 100 kyr, 0.5 day, seed 12345",
+      "variation_api_smoke_metadata": {
+        "arbitrary_cartesian_assignment_supported": true,
+        "n_real": 2,
+        "n_total_after_variation": 4,
+        "n_variation_particles": 2,
+        "readback_exact": true,
+        "rebound_version": "4.6.0"
+      }
+    },
+    {
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/timestep_comparison/gr_100kyr_timestep_comparison.json",
+      "metrics": {
+        "left_classification": "regular_likely",
+        "right_classification": "regular_likely",
+        "right_final_lcn": -9.908477548935301e-15,
+        "throughput_runtime_ratio_right_over_left": 1.8963596103125122
+      },
+      "passed": true,
+      "source_stage": "timestep",
+      "stage": "timestep_comparison",
+      "status": "passed",
+      "title": "Timestep Comparison"
+    },
+    {
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/physical_gr_trajectory_comparison_100kyr/physical_gr_trajectory_comparison_100kyr_summary.json",
+      "metrics": {
+        "max_custom_vs_reboundx_scaled_phase_difference": 5.7800460588446894e-05,
+        "max_paired_gr_minus_newtonian_difference": 5.284857568277346e-05,
+        "max_paired_gr_minus_newtonian_relative_difference": 6.046925216292129e-06,
+        "warning_count": 0
+      },
+      "passed": true,
+      "source_stage": "physical_gr_trajectory_comparison_100kyr",
+      "stage": "physical_gr_trajectory_comparison_100kyr",
+      "status": "passed",
+      "title": "Physical GR Trajectory Comparison 100 kyr"
+    },
+    {
+      "expected_path": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1/gr_checkpoint_resume_equivalence_20kyr/gr_checkpoint_resume_equivalence_20kyr_summary.json",
+      "metrics": {
+        "callback_invocations_after_restart": 3652500,
+        "physical_scaled_phase_difference": 0.0,
+        "tangent_direction_cosine": 1.0000000000000002,
+        "tangent_scaled_phase_difference": 0.0
+      },
+      "passed": true,
+      "source_stage": "gr_checkpoint_resume_equivalence_20kyr",
+      "stage": "gr_checkpoint_resume_equivalence_20kyr",
+      "status": "passed",
+      "title": "GR Checkpoint/Resume Equivalence 20 kyr"
+    }
+  ],
+  "status": "READY_FOR_C_PORT",
+  "unreadable_stages": []
+}
