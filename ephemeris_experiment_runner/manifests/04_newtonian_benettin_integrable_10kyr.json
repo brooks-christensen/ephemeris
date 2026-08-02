@@ -1,0 +1,70 @@
+{
+  "experiment_id": "newtonian_benettin_integrable_10kyr_v2",
+  "title": "Newtonian two-body Mercury Benettin integrable control (10 kyr, v2)",
+  "description": "Short integrable Sun-Mercury control for the repaired two-trajectory Benettin worker. This manifest uses fresh v2 output directories and must pass before any GR-compatible production Benettin stage is interpreted.",
+  "variables": {
+    "PROJECT_ROOT": "/home/peacelovephysics/ephemeris",
+    "OUTPUT_ROOT": "${PROJECT_ROOT}/output/stability/final_benettin_v2/integrable_mercury_10kyr",
+    "PYTHON": "/home/peacelovephysics/ephemeris/.venv/bin/python"
+  },
+  "state_dir": "${OUTPUT_ROOT}/runner_state/newtonian_benettin_integrable_10kyr_v2",
+  "stages": [
+    {
+      "id": "mercury_10kyr_matrix",
+      "title": "Sun-Mercury Newtonian 10 kyr Benettin matrix",
+      "objective": "Run renormalization intervals 1, 10, and 100 yr with perturbations 0.01 m and 1 m, requiring the finite-time LCN to trend toward zero and prohibiting a stable positive plateau.",
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}",
+      "target_years": 10000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 3600,
+      "command": [
+        "bash",
+        "scripts/run_newtonian_benettin_integrable_10kyr_control.sh"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/integrable_mercury_10kyr_control.csv",
+            "${OUTPUT_ROOT}/*/benettin_progress_*.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "control summary exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/integrable_mercury_10kyr_control.json",
+            "${OUTPUT_ROOT}/integrable_mercury_10kyr_control.csv"
+          ],
+          "min_count": 2
+        },
+        {
+          "kind": "json_metrics",
+          "name": "control passed",
+          "patterns": [
+            "${OUTPUT_ROOT}/integrable_mercury_10kyr_control.json"
+          ],
+          "checks": [
+            {
+              "path": "passed",
+              "allowed": [
+                true
+              ]
+            },
+            {
+              "path": "case_count",
+              "min": 6
+            },
+            {
+              "path": "failure_count",
+              "max": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

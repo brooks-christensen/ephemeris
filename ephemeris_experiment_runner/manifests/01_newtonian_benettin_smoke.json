@@ -1,0 +1,387 @@
+{
+  "experiment_id": "newtonian_benettin_smoke_v1_v2",
+  "title": "Newtonian two-trajectory Benettin smoke and false-positive controls (v2 repaired Benettin)",
+  "description": "Fast controls that must pass before any long GR-compatible Benettin experiment. Two-body Mercury should remain regular-looking, and the full model should not produce a strong false-positive over only 10 Myr.",
+  "variables": {
+    "PROJECT_ROOT": "/home/peacelovephysics/ephemeris",
+    "OUTPUT_ROOT": "${PROJECT_ROOT}/output/stability/final_benettin_v2",
+    "KERNEL": "${PROJECT_ROOT}/data/de431_part-2.bsp",
+    "PYTHON": "python"
+  },
+  "state_dir": "${OUTPUT_ROOT}/runner_state/newtonian_benettin_smoke_v1_v2",
+  "stages": [
+    {
+      "id": "two_body_mercury_seed12345",
+      "title": "Integrable Mercury control, seed 12345",
+      "objective": "Verify that the two-trajectory implementation does not manufacture a positive long-term exponent in a nearly integrable Sun-Mercury model.",
+      "cwd": "${PROJECT_ROOT}",
+      "output_dir": "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345",
+      "target_years": 100000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 3600,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_benettin_cli",
+        "--kernel-path",
+        "${KERNEL}",
+        "--start-date",
+        "2000-01-01",
+        "--duration-years",
+        "100000",
+        "--step-days",
+        "0.125",
+        "--record-every-years",
+        "100",
+        "--model-scope",
+        "two_body_mercury",
+        "--backend",
+        "rebound",
+        "--rebound-integrator",
+        "whfast",
+        "--rebound-gr-model",
+        "none",
+        "--gr-model",
+        "none",
+        "--with-lyapunov",
+        "--lyapunov-body",
+        "mercury",
+        "--lyapunov-perturbation-m",
+        "1",
+        "--lyapunov-renorm-years",
+        "1000",
+        "--lyapunov-fit-start-years",
+        "10000",
+        "--lyapunov-fit-end-years",
+        "100000",
+        "--lyapunov-seed",
+        "12345",
+        "--lyapunov-method",
+        "two_trajectory",
+        "--rebound-simulationarchive",
+        "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/two_body_mercury_100kyr_seed12345.bin",
+        "--rebound-archive-interval-years",
+        "1000",
+        "--output-dir",
+        "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345",
+        "--tag",
+        "two_body_mercury_newtonian_benettin_100kyr_seed12345",
+        "--no-progress-bar",
+        "--checkpoint-every-years",
+        "1000",
+        "--checkpoint-dir",
+        "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/dual_checkpoints",
+        "--resume-latest",
+        "--progress-file-every-renorm",
+        "--status-every-renorm",
+        "--progress-line-every-seconds",
+        "120",
+        "--status-file-every-seconds",
+        "120",
+        "--with-standalone-reference-check"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/benettin_progress_*.csv"
+          ]
+        },
+        {
+          "kind": "archive",
+          "path_glob": "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/*.bin",
+          "archive_time_unit": "auto"
+        },
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/stability_timeseries_*.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "summary exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/benettin_summary_two_body_mercury_newtonian_benettin_100kyr_seed12345.json"
+          ],
+          "min_count": 1
+        },
+        {
+          "kind": "required_glob",
+          "name": "diagnostic CSV exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/stability_timeseries_*.csv"
+          ],
+          "min_count": 1
+        },
+        {
+          "kind": "csv_integrity",
+          "name": "time series complete",
+          "patterns": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/stability_timeseries_*.csv"
+          ],
+          "target_years": 100000,
+          "min_rows": 2,
+          "final_time_tolerance_fraction": 0.002
+        },
+        {
+          "kind": "benettin_scientific_control",
+          "name": "Benettin scientific control",
+          "patterns": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed12345/benettin_summary_two_body_mercury_newtonian_benettin_100kyr_seed12345.json"
+          ],
+          "target_years": 100000,
+          "allowed_classifications": [
+            "regular_likely"
+          ],
+          "max_abs_lcn_1_per_year": 1e-05,
+          "max_reference_relative_energy_error": 1e-08,
+          "max_reference_relative_angular_momentum_error": 1e-10,
+          "require_standalone_reference_agreement": true,
+          "max_reference_standalone_position_delta_m": 1.0,
+          "max_reference_standalone_velocity_delta_m_s": 1e-06
+        }
+      ]
+    },
+    {
+      "id": "two_body_mercury_seed67890",
+      "title": "Integrable Mercury control, seed 67890",
+      "objective": "Repeat the integrable control with a different perturbation direction to expose seed-sensitive numerical artifacts.",
+      "depends_on": [
+        "two_body_mercury_seed12345"
+      ],
+      "cwd": "${PROJECT_ROOT}",
+      "output_dir": "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890",
+      "target_years": 100000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 3600,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_benettin_cli",
+        "--kernel-path",
+        "${KERNEL}",
+        "--start-date",
+        "2000-01-01",
+        "--duration-years",
+        "100000",
+        "--step-days",
+        "0.125",
+        "--record-every-years",
+        "100",
+        "--model-scope",
+        "two_body_mercury",
+        "--backend",
+        "rebound",
+        "--rebound-integrator",
+        "whfast",
+        "--rebound-gr-model",
+        "none",
+        "--gr-model",
+        "none",
+        "--with-lyapunov",
+        "--lyapunov-body",
+        "mercury",
+        "--lyapunov-perturbation-m",
+        "1",
+        "--lyapunov-renorm-years",
+        "1000",
+        "--lyapunov-fit-start-years",
+        "10000",
+        "--lyapunov-fit-end-years",
+        "100000",
+        "--lyapunov-seed",
+        "67890",
+        "--lyapunov-method",
+        "two_trajectory",
+        "--rebound-simulationarchive",
+        "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/two_body_mercury_100kyr_seed67890.bin",
+        "--rebound-archive-interval-years",
+        "1000",
+        "--output-dir",
+        "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890",
+        "--tag",
+        "two_body_mercury_newtonian_benettin_100kyr_seed67890",
+        "--no-progress-bar",
+        "--checkpoint-every-years",
+        "1000",
+        "--checkpoint-dir",
+        "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/dual_checkpoints",
+        "--resume-latest",
+        "--progress-file-every-renorm",
+        "--status-every-renorm",
+        "--progress-line-every-seconds",
+        "120",
+        "--status-file-every-seconds",
+        "120"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/benettin_progress_*.csv"
+          ]
+        },
+        {
+          "kind": "archive",
+          "path_glob": "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/*.bin",
+          "archive_time_unit": "auto"
+        },
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/*benettin*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/stability_timeseries_*.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "summary exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/benettin_summary_two_body_mercury_newtonian_benettin_100kyr_seed67890.json"
+          ],
+          "min_count": 1
+        },
+        {
+          "kind": "csv_integrity",
+          "name": "time series complete",
+          "patterns": [
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/*benettin*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/two_body_mercury_100kyr_seed67890/stability_timeseries_*.csv"
+          ],
+          "target_years": 100000,
+          "min_rows": 2,
+          "final_time_tolerance_fraction": 0.002
+        }
+      ]
+    },
+    {
+      "id": "full_pluto_10myr_seed12345",
+      "title": "Full-with-Pluto 10 Myr false-positive control",
+      "objective": "Confirm that the Benettin path remains regular-looking during the same short interval in which native Newtonian MEGNO stayed near two.",
+      "depends_on": [
+        "two_body_mercury_seed67890"
+      ],
+      "cwd": "${PROJECT_ROOT}",
+      "output_dir": "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345",
+      "target_years": 10000000,
+      "status_interval_seconds": 300,
+      "stall_warning_seconds": 7200,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_benettin_cli",
+        "--kernel-path",
+        "${KERNEL}",
+        "--start-date",
+        "2000-01-01",
+        "--duration-years",
+        "10000000",
+        "--step-days",
+        "1",
+        "--record-every-years",
+        "1000",
+        "--model-scope",
+        "full_with_pluto",
+        "--backend",
+        "rebound",
+        "--rebound-integrator",
+        "whfast",
+        "--rebound-gr-model",
+        "none",
+        "--gr-model",
+        "none",
+        "--with-lyapunov",
+        "--lyapunov-body",
+        "mercury",
+        "--lyapunov-perturbation-m",
+        "1",
+        "--lyapunov-renorm-years",
+        "1000",
+        "--lyapunov-fit-start-years",
+        "1000000",
+        "--lyapunov-fit-end-years",
+        "10000000",
+        "--lyapunov-seed",
+        "12345",
+        "--lyapunov-method",
+        "two_trajectory",
+        "--rebound-simulationarchive",
+        "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/full_with_pluto_newtonian_10myr_seed12345.bin",
+        "--rebound-archive-interval-years",
+        "100000",
+        "--output-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345",
+        "--tag",
+        "full_with_pluto_newtonian_benettin_10myr_seed12345",
+        "--no-progress-bar",
+        "--checkpoint-every-years",
+        "100000",
+        "--checkpoint-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/dual_checkpoints",
+        "--resume-latest",
+        "--progress-file-every-renorm",
+        "--status-every-renorm",
+        "--progress-line-every-seconds",
+        "300",
+        "--status-file-every-seconds",
+        "300"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/benettin_progress_*.csv"
+          ]
+        },
+        {
+          "kind": "archive",
+          "path_glob": "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/*.bin",
+          "archive_time_unit": "auto"
+        },
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/stability_timeseries_*.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "summary exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/benettin_summary_full_with_pluto_newtonian_benettin_10myr_seed12345.json"
+          ],
+          "min_count": 1
+        },
+        {
+          "kind": "csv_integrity",
+          "name": "time series complete",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_newtonian_10myr_seed12345/stability_timeseries_*.csv"
+          ],
+          "target_years": 10000000,
+          "min_rows": 2,
+          "final_time_tolerance_fraction": 0.002
+        }
+      ]
+    }
+  ]
+}

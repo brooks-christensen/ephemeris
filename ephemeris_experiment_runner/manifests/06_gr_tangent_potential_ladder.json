@@ -1,0 +1,234 @@
+{
+  "experiment_id": "gr_tangent_potential_ladder_v1",
+  "title": "Tangent-aware gr_potential validation ladder",
+  "description": "Fresh validation lane for a REBOUND native-variation, tangent-aware gr_potential implementation. The failed two-trajectory finite-difference Benettin outputs remain documented but do not unlock this ladder.",
+  "variables": {
+    "PROJECT_ROOT": "/home/peacelovephysics/ephemeris",
+    "OUTPUT_ROOT": "${PROJECT_ROOT}/output/stability/gr_tangent_v1",
+    "PYTHON": "/home/peacelovephysics/ephemeris/.venv/bin/python"
+  },
+  "state_dir": "${OUTPUT_ROOT}/runner_state/gr_tangent_potential_ladder_v1",
+  "stages": [
+    {
+      "id": "variation_api_smoke",
+      "title": "REBOUND variation API smoke",
+      "objective": "Confirm arbitrary Cartesian first-order variation components can be assigned and read back in REBOUND 4.6.0.",
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/unit_tests",
+      "target_years": 0,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "unittest",
+        "tests.test_gr_potential_tangent.ReboundVariationApiTests"
+      ],
+      "gates": [
+        {
+          "kind": "command",
+          "name": "variation API unit test",
+          "command": [
+            "${PYTHON}",
+            "-m",
+            "unittest",
+            "tests.test_gr_potential_tangent.ReboundVariationApiTests"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gr_jacobian_unit_tests",
+      "title": "Analytic gr_potential Jacobian tests",
+      "objective": "Validate analytic J_gr delta_x against finite differences, translations, rotations, central response, and zero-GR limit.",
+      "depends_on": [
+        "variation_api_smoke"
+      ],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/unit_tests",
+      "target_years": 0,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "unittest",
+        "tests.test_gr_potential_tangent.GrPotentialJacobianTests"
+      ],
+      "gates": [
+        {
+          "kind": "command",
+          "name": "GR Jacobian unit tests",
+          "command": [
+            "${PYTHON}",
+            "-m",
+            "unittest",
+            "tests.test_gr_potential_tangent.GrPotentialJacobianTests"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "newtonian_zero_limit",
+      "title": "Newtonian zero-limit tangent comparison",
+      "objective": "Set the custom GR coefficient to zero and require native REBOUND variational dynamics to match the tangent-aware path.",
+      "depends_on": [
+        "gr_jacobian_unit_tests"
+      ],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/unit_tests",
+      "target_years": 10,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "unittest",
+        "tests.test_gr_potential_tangent.NewtonianZeroLimitTests"
+      ],
+      "gates": [
+        {
+          "kind": "command",
+          "name": "Newtonian zero-limit unit test",
+          "command": [
+            "${PYTHON}",
+            "-m",
+            "unittest",
+            "tests.test_gr_potential_tangent.NewtonianZeroLimitTests"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mercury_relativistic_null_control",
+      "title": "Relativistic Sun-Mercury null control",
+      "objective": "Require Mercury precession and no persistent positive finite-time Lyapunov plateau across two MEGNO seeds.",
+      "depends_on": [
+        "newtonian_zero_limit"
+      ],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/mercury_null_control",
+      "target_years": 1000,
+      "command": [
+        "env",
+        "OUTPUT_DIR=${OUTPUT_ROOT}/mercury_null_control",
+        "bash",
+        "scripts/run_gr_tangent_mercury_null_control.sh"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/mercury_null_control/gr_tangent_mercury_null_control.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "Mercury null control passed",
+          "patterns": [
+            "${OUTPUT_ROOT}/mercury_null_control/gr_tangent_mercury_null_control.json"
+          ],
+          "checks": [
+            {
+              "path": "passed",
+              "allowed": [
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "mercury_trajectory_comparison",
+      "title": "Custom gr_potential trajectory comparison",
+      "objective": "Compare custom tangent-aware gr_potential real trajectory against REBOUNDx gr_potential WHFast and REBOUNDx gr IAS15 over a short timestep ladder.",
+      "depends_on": [
+        "mercury_relativistic_null_control"
+      ],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/trajectory_comparison",
+      "target_years": 100,
+      "command": [
+        "env",
+        "OUTPUT_DIR=${OUTPUT_ROOT}/trajectory_comparison",
+        "bash",
+        "scripts/run_gr_tangent_trajectory_comparison.sh"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/trajectory_comparison/gr_tangent_trajectory_comparison.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "trajectory comparison passed",
+          "patterns": [
+            "${OUTPUT_ROOT}/trajectory_comparison/gr_tangent_trajectory_comparison.json"
+          ],
+          "checks": [
+            {
+              "path": "passed",
+              "allowed": [
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "full_gr_tangent_1myr_smoke",
+      "title": "1 Myr full-system GR tangent smoke",
+      "objective": "First full-system smoke for the tangent-aware gr_potential path. This is finite-time validation plumbing, not a production chaos claim.",
+      "depends_on": [
+        "mercury_trajectory_comparison"
+      ],
+      "approval_required_before": true,
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/full_1myr_smoke",
+      "target_years": 1000000,
+      "status_interval_seconds": 300,
+      "stall_warning_seconds": 7200,
+      "command": [
+        "env",
+        "OUTPUT_DIR=${OUTPUT_ROOT}/full_1myr_smoke",
+        "bash",
+        "scripts/run_gr_tangent_full_1myr_smoke.sh"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_1myr_smoke/gr_tangent_progress_*.csv"
+          ]
+        },
+        {
+          "kind": "archive",
+          "path_glob": "${OUTPUT_ROOT}/full_1myr_smoke/*.bin",
+          "archive_time_unit": "auto"
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "full GR tangent summary exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_1myr_smoke/gr_tangent_summary_*.json"
+          ],
+          "min_count": 1
+        },
+        {
+          "kind": "csv_integrity",
+          "name": "full GR tangent progress complete",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_1myr_smoke/gr_tangent_progress_*.csv"
+          ],
+          "target_years": 1000000,
+          "min_rows": 2,
+          "final_time_tolerance_fraction": 0.002
+        }
+      ]
+    }
+  ]
+}

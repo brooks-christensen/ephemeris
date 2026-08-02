@@ -1,0 +1,13 @@
+{
+  "configuration_hash": "dd394d8b94f92cdb1d5caeb46df3bad75e059cbc48933e1ce3bd72374bf1dc90",
+  "current_time_years": 1.0,
+  "elapsed_wall_seconds": 0.010787487030029297,
+  "eta_seconds": 0.010787487030029297,
+  "latest_checkpoint": null,
+  "latest_lcn_1_per_year": 0.3819642057689618,
+  "mode": "GR-compatible two-trajectory Benettin mode: independent REBOUND simulations, no native REBOUND variational particles",
+  "percent_complete": 50.0,
+  "recent_simulated_years_per_wall_second": 92.69999557971975,
+  "tag": "two_body_jupiter_smoke",
+  "warnings": []
+}

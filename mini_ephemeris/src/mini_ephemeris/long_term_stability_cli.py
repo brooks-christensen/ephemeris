@@ -860,12 +860,20 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--model-scope",
-        choices=["full", "inner", "two_body_mercury", "two_body_jupiter", "two_body_saturn"],
+        choices=[
+            "full",
+            "full_with_pluto",
+            "inner",
+            "two_body_mercury",
+            "two_body_jupiter",
+            "two_body_saturn",
+        ],
         default="full",
         help=(
-            "Reduced model scope. two_body_jupiter and two_body_saturn are "
-            "clean near-integrable validation cases; two_body_mercury is a "
-            "hard inner-planet stress test."
+            "Reduced model scope. full excludes Pluto unless --include-pluto is "
+            "also passed; full_with_pluto always includes Pluto barycenter. "
+            "two_body_jupiter and two_body_saturn are clean near-integrable "
+            "validation cases; two_body_mercury is a hard inner-planet stress test."
         ),
     )
     parser.add_argument(
@@ -1674,6 +1682,8 @@ def resolve_rebound_resume_archive(args: argparse.Namespace) -> Path | None:
 def stability_body_list(model_scope: str, *, include_pluto: bool = False) -> tuple[str, ...]:
     if model_scope == "full":
         return tuple(solar_system_body_list(include_pluto=include_pluto))
+    if model_scope == "full_with_pluto":
+        return tuple(solar_system_body_list(include_pluto=True))
     if model_scope in MODEL_SCOPES:
         return MODEL_SCOPES[model_scope]
     raise ValueError(f"Unsupported model_scope: {model_scope!r}")

@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ephemeris-experiment-runner"
+version = "0.1.0"
+description = "Gated, resumable orchestration and progress monitoring for long ephemeris experiments"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{name = "Brooks Christensen project support"}]
+license = {text = "MIT"}
+dependencies = []
+
+[project.optional-dependencies]
+monitor = ["psutil>=5.9"]
+
+[project.scripts]
+ephem-exp = "ephemeris_experiments.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

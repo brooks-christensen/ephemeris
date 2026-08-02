@@ -1,0 +1,368 @@
+{
+  "experiment_id": "gr_tangent_validation_matrix_v1",
+  "title": "Serial tangent-aware gr_potential validation matrix",
+  "description": "Validation matrix for the Python tangent-aware gr_potential implementation. The retired two-trajectory finite-difference Benettin diagnostic is preserved for documentation but is not used to unlock these stages.",
+  "variables": {
+    "PROJECT_ROOT": "/home/peacelovephysics/ephemeris",
+    "OUTPUT_ROOT": "/home/peacelovephysics/ephemeris/output/stability/gr_tangent_validation_matrix_v1",
+    "KERNEL": "/home/peacelovephysics/ephemeris/data/de431_part-2.bsp",
+    "PYTHON": "/home/peacelovephysics/ephemeris/.venv/bin/python",
+    "PYTHONPATH": "/home/peacelovephysics/ephemeris/mini_ephemeris/src:/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/src"
+  },
+  "state_dir": "${OUTPUT_ROOT}/runner_state/gr_tangent_validation_matrix_v1",
+  "stages": [
+    {
+      "id": "existing_1myr_smoke_audit",
+      "title": "Existing 1 Myr smoke audit",
+      "objective": "Audit existing 1 Myr tangent-aware gr_potential CSV, summary, and SimulationArchive without modifying original files.",
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}",
+      "target_years": 1000000,
+      "command": [
+        "env",
+        "PYTHONPATH=${PYTHONPATH}",
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_tangent_validation_matrix",
+        "--output-root",
+        "${OUTPUT_ROOT}",
+        "--kernel-path",
+        "${KERNEL}",
+        "audit-existing-smoke"
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "existing 1 Myr audit passed",
+          "patterns": [
+            "${OUTPUT_ROOT}/existing_1myr_smoke_audit.json"
+          ],
+          "checks": [
+            {"path": "passed", "allowed": [true]},
+            {"path": "row_count", "min": 101, "max": 101},
+            {"path": "production_archive_audit.n_real", "min": 10},
+            {"path": "production_archive_audit.variation_particle_count", "min": 10}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "monitor_process_tree_audit",
+      "title": "Process-tree monitor audit",
+      "objective": "Validate descendant-process discovery and aggregate CPU/RSS monitoring.",
+      "depends_on": ["existing_1myr_smoke_audit"],
+      "cwd": "${PROJECT_ROOT}",
+      "output_dir": "${OUTPUT_ROOT}/monitor_process_tree_audit",
+      "target_years": 0,
+      "command": [
+        "env",
+        "PYTHONPATH=${PYTHONPATH}",
+        "${PYTHON}",
+        "-m",
+        "ephemeris_experiments.monitor_process_tree_audit",
+        "--output-dir",
+        "${OUTPUT_ROOT}/monitor_process_tree_audit"
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "monitor audit passed",
+          "patterns": ["${OUTPUT_ROOT}/monitor_process_tree_audit/monitor_process_tree_audit.json"],
+          "checks": [
+            {"path": "passed", "allowed": [true]},
+            {"path": "sample_count", "min": 2}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "dynamic_gr_tangent_oracle",
+      "title": "Dynamic GR tangent oracle",
+      "objective": "Compare the integrated tangent map against centered finite differences of the physical GR flow at existing 1 Myr archive snapshots.",
+      "depends_on": ["monitor_process_tree_audit"],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/dynamic_gr_tangent_oracle",
+      "target_years": 100,
+      "status_interval_seconds": 60,
+      "stall_warning_seconds": 600,
+      "command": [
+        "env",
+        "PYTHONPATH=${PYTHONPATH}",
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_tangent_validation_matrix",
+        "--output-root",
+        "${OUTPUT_ROOT}/dynamic_gr_tangent_oracle",
+        "--kernel-path",
+        "${KERNEL}",
+        "dynamic-oracle"
+      ],
+      "progress_sources": [
+        {"kind": "csv", "path_globs": ["${OUTPUT_ROOT}/dynamic_gr_tangent_oracle/dynamic_gr_tangent_oracle.csv"]}
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "dynamic oracle passed",
+          "patterns": ["${OUTPUT_ROOT}/dynamic_gr_tangent_oracle/dynamic_gr_tangent_oracle_summary.json"],
+          "checks": [{"path": "passed", "allowed": [true]}]
+        }
+      ]
+    },
+    {
+      "id": "newtonian_zero_limit_100kyr",
+      "title": "Newtonian zero-limit 100 kyr comparison",
+      "objective": "Compare native Newtonian variation/MEGNO with custom tangent path at gr_scale=0 using identical arbitrary variation vectors.",
+      "depends_on": ["dynamic_gr_tangent_oracle"],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/newtonian_zero_limit_100kyr",
+      "target_years": 100000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 1200,
+      "command": [
+        "env",
+        "PYTHONPATH=${PYTHONPATH}",
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_tangent_validation_matrix",
+        "--output-root",
+        "${OUTPUT_ROOT}/newtonian_zero_limit_100kyr",
+        "--kernel-path",
+        "${KERNEL}",
+        "zero-limit-100kyr"
+      ],
+      "progress_sources": [
+        {"kind": "csv", "path_globs": ["${OUTPUT_ROOT}/newtonian_zero_limit_100kyr/newtonian_zero_limit_100kyr_comparison.csv"]}
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "zero-limit comparison passed",
+          "patterns": ["${OUTPUT_ROOT}/newtonian_zero_limit_100kyr/newtonian_zero_limit_100kyr_summary.json"],
+          "checks": [{"path": "passed", "allowed": [true]}]
+        }
+      ]
+    },
+    {
+      "id": "gr_100kyr_1d_seed12345",
+      "title": "GR 100 kyr, 1 day, seed 12345",
+      "objective": "Run full-with-Pluto tangent-aware gr_potential validation with production metadata, archive snapshots, and finite-time regularity gates.",
+      "depends_on": ["newtonian_zero_limit_100kyr"],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/gr_100kyr_1d_seed12345",
+      "target_years": 100000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 1200,
+      "command": [
+        "env",
+        "PYTHONPATH=${PYTHONPATH}",
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.rebound_gr_tangent_cli",
+        "--kernel-path",
+        "${KERNEL}",
+        "--start-date",
+        "2000-01-01",
+        "--model-scope",
+        "full_with_pluto",
+        "--duration-years",
+        "100000",
+        "--step-days",
+        "1",
+        "--record-every-years",
+        "1000",
+        "--megno-seed",
+        "12345",
+        "--gr-scale",
+        "1",
+        "--simulationarchive",
+        "${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_100kyr_1d_seed12345.bin",
+        "--archive-interval-years",
+        "10000",
+        "--output-dir",
+        "${OUTPUT_ROOT}/gr_100kyr_1d_seed12345",
+        "--tag",
+        "gr_100kyr_1d_seed12345",
+        "--status-every-record",
+        "--no-progress-bar"
+      ],
+      "progress_sources": [
+        {"kind": "csv", "path_globs": ["${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_progress_*.csv"]},
+        {"kind": "archive", "path_glob": "${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/*.bin", "archive_time_unit": "auto"}
+      ],
+      "gates": [
+        {
+          "kind": "csv_integrity",
+          "name": "GR seed12345 progress complete",
+          "patterns": ["${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_progress_*.csv"],
+          "target_years": 100000,
+          "min_rows": 101,
+          "finite_columns": ["megno", "lcn_1_per_year", "energy_rel_drift", "angular_momentum_rel_drift", "callback_invocations"]
+        },
+        {
+          "kind": "json_metrics",
+          "name": "GR seed12345 summary passed",
+          "patterns": ["${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json"],
+          "checks": [
+            {"path": "diagnostics.actual_time_years", "min": 100000, "max": 100000},
+            {"path": "diagnostics.classification_hint", "allowed": ["regular_likely"]},
+            {"path": "diagnostics.final_megno", "max": 8},
+            {"path": "diagnostics.lcn_trends_toward_zero", "allowed": [true]},
+            {"path": "diagnostics.stable_positive_lcn_plateau", "allowed": [false]},
+            {"path": "production_metadata.n_real", "min": 10},
+            {"path": "production_metadata.variation_particle_count", "min": 10},
+            {"path": "production_metadata.callback_stats.callback_invocations", "min": 1}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gr_100kyr_1d_seed67890",
+      "title": "GR 100 kyr, 1 day, seed 67890 and seed comparison",
+      "objective": "Repeat the 1-day GR tangent run with seed 67890 and compare seed-dependent tangent behavior against seed 12345.",
+      "depends_on": ["gr_100kyr_1d_seed12345"],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/gr_100kyr_1d_seed67890",
+      "target_years": 100000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 1200,
+      "command": [
+        "bash",
+        "-lc",
+        "set -euo pipefail; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.rebound_gr_tangent_cli --kernel-path ${KERNEL} --start-date 2000-01-01 --model-scope full_with_pluto --duration-years 100000 --step-days 1 --record-every-years 1000 --megno-seed 67890 --gr-scale 1 --simulationarchive ${OUTPUT_ROOT}/gr_100kyr_1d_seed67890/gr_100kyr_1d_seed67890.bin --archive-interval-years 10000 --output-dir ${OUTPUT_ROOT}/gr_100kyr_1d_seed67890 --tag gr_100kyr_1d_seed67890 --status-every-record --no-progress-bar; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.gr_tangent_validation_matrix --output-root ${OUTPUT_ROOT}/seed_comparison --kernel-path ${KERNEL} compare-summaries --kind seed --left-summary ${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json --right-summary ${OUTPUT_ROOT}/gr_100kyr_1d_seed67890/gr_tangent_summary_gr_100kyr_1d_seed67890.json"
+      ],
+      "progress_sources": [
+        {"kind": "csv", "path_globs": ["${OUTPUT_ROOT}/gr_100kyr_1d_seed67890/gr_tangent_progress_*.csv"]}
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "seed comparison passed",
+          "patterns": ["${OUTPUT_ROOT}/seed_comparison/gr_100kyr_1d_seed_comparison.json"],
+          "checks": [{"path": "passed", "allowed": [true]}]
+        }
+      ]
+    },
+    {
+      "id": "gr_100kyr_0p5d_seed12345",
+      "title": "GR 100 kyr, 0.5 day, seed 12345 and timestep comparison",
+      "objective": "Repeat seed 12345 at 0.5 day and compare late-window finite-time diagnostics and invariant behavior against the 1-day run.",
+      "depends_on": ["gr_100kyr_1d_seed67890"],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345",
+      "target_years": 100000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 1200,
+      "command": [
+        "bash",
+        "-lc",
+        "set -euo pipefail; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.rebound_gr_tangent_cli --kernel-path ${KERNEL} --start-date 2000-01-01 --model-scope full_with_pluto --duration-years 100000 --step-days 0.5 --record-every-years 1000 --megno-seed 12345 --gr-scale 1 --simulationarchive ${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345/gr_100kyr_0p5d_seed12345.bin --archive-interval-years 10000 --output-dir ${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345 --tag gr_100kyr_0p5d_seed12345 --status-every-record --no-progress-bar; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.gr_tangent_validation_matrix --output-root ${OUTPUT_ROOT}/timestep_comparison --kernel-path ${KERNEL} compare-summaries --kind timestep --left-summary ${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json --right-summary ${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345/gr_tangent_summary_gr_100kyr_0p5d_seed12345.json"
+      ],
+      "progress_sources": [
+        {"kind": "csv", "path_globs": ["${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345/gr_tangent_progress_*.csv"]}
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "timestep comparison passed",
+          "patterns": ["${OUTPUT_ROOT}/timestep_comparison/gr_100kyr_timestep_comparison.json"],
+          "checks": [{"path": "passed", "allowed": [true]}]
+        }
+      ]
+    },
+    {
+      "id": "physical_gr_trajectory_comparison_100kyr",
+      "title": "Physical GR trajectory comparison, 100 kyr",
+      "objective": "Compare custom tangent-aware gr_potential real trajectory, ordinary REBOUNDx gr_potential WHFast, and Newtonian WHFast control.",
+      "depends_on": ["gr_100kyr_0p5d_seed12345"],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/physical_gr_trajectory_comparison_100kyr",
+      "target_years": 100000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 1200,
+      "command": [
+        "env",
+        "PYTHONPATH=${PYTHONPATH}",
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_tangent_validation_matrix",
+        "--output-root",
+        "${OUTPUT_ROOT}/physical_gr_trajectory_comparison_100kyr",
+        "--kernel-path",
+        "${KERNEL}",
+        "physical-compare-100kyr"
+      ],
+      "progress_sources": [
+        {"kind": "csv", "path_globs": ["${OUTPUT_ROOT}/physical_gr_trajectory_comparison_100kyr/physical_gr_trajectory_comparison_100kyr.csv"]}
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "physical trajectory comparison passed",
+          "patterns": ["${OUTPUT_ROOT}/physical_gr_trajectory_comparison_100kyr/physical_gr_trajectory_comparison_100kyr_summary.json"],
+          "checks": [{"path": "passed", "allowed": [true]}]
+        }
+      ]
+    },
+    {
+      "id": "gr_checkpoint_resume_equivalence_20kyr",
+      "title": "GR checkpoint/resume equivalence, 20 kyr",
+      "objective": "Compare uninterrupted and checkpoint/reloaded tangent-aware GR runs through 20 kyr.",
+      "depends_on": ["physical_gr_trajectory_comparison_100kyr"],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/gr_checkpoint_resume_equivalence_20kyr",
+      "target_years": 20000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 1200,
+      "command": [
+        "env",
+        "PYTHONPATH=${PYTHONPATH}",
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_tangent_validation_matrix",
+        "--output-root",
+        "${OUTPUT_ROOT}/gr_checkpoint_resume_equivalence_20kyr",
+        "--kernel-path",
+        "${KERNEL}",
+        "checkpoint-resume-20kyr"
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "checkpoint resume passed",
+          "patterns": ["${OUTPUT_ROOT}/gr_checkpoint_resume_equivalence_20kyr/gr_checkpoint_resume_equivalence_20kyr_summary.json"],
+          "checks": [{"path": "passed", "allowed": [true]}]
+        }
+      ]
+    },
+    {
+      "id": "gr_validation_matrix_report",
+      "title": "GR tangent validation matrix report",
+      "objective": "Synthesize all prior matrix outputs and determine whether the Python implementation is ready to be the oracle for a compiled-C port.",
+      "depends_on": ["gr_checkpoint_resume_equivalence_20kyr"],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}",
+      "target_years": 0,
+      "command": [
+        "env",
+        "PYTHONPATH=${PYTHONPATH}",
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_tangent_validation_matrix",
+        "--output-root",
+        "${OUTPUT_ROOT}",
+        "--kernel-path",
+        "${KERNEL}",
+        "final-report"
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "matrix ready for C port",
+          "patterns": ["${OUTPUT_ROOT}/gr_tangent_validation_matrix_summary.json"],
+          "checks": [{"path": "status", "allowed": ["READY_FOR_C_PORT"]}]
+        }
+      ]
+    }
+  ]
+}

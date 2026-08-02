@@ -1,0 +1,59 @@
+{
+  "experiment_id": "benettin_checkpoint_oracle_100kyr_v2",
+  "title": "Checkpoint-based Newtonian Benettin oracle validation (100 kyr, v2)",
+  "description": "Load a physical snapshot from the successful Newtonian 500 Myr REBOUND SimulationArchive and compare the repaired two-trajectory Benettin worker with REBOUND-native Newtonian MEGNO/LCN over 100 kyr. Exact arbitrary native variational-vector injection is reported as unavailable in the current REBOUND 4.6.0 Python path.",
+  "variables": {
+    "PROJECT_ROOT": "/home/peacelovephysics/ephemeris",
+    "OUTPUT_ROOT": "${PROJECT_ROOT}/output/stability/final_benettin_v2/checkpoint_oracle_100kyr",
+    "PYTHON": "/home/peacelovephysics/ephemeris/.venv/bin/python"
+  },
+  "state_dir": "${OUTPUT_ROOT}/runner_state/benettin_checkpoint_oracle_100kyr_v2",
+  "stages": [
+    {
+      "id": "checkpoint_oracle_100kyr_seed12345",
+      "title": "300 Myr snapshot, 100 kyr Newtonian oracle",
+      "objective": "Compare per-interval two-trajectory growth with native Newtonian MEGNO/LCN from the same archived physical state.",
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}",
+      "target_years": 100000,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 3600,
+      "command": [
+        "bash",
+        "scripts/run_benettin_checkpoint_oracle_100kyr.sh"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/benettin_checkpoint_oracle_*.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "oracle outputs exist",
+          "patterns": [
+            "${OUTPUT_ROOT}/benettin_checkpoint_oracle_checkpoint_oracle_100kyr_seed12345.csv",
+            "${OUTPUT_ROOT}/benettin_checkpoint_oracle_summary_checkpoint_oracle_100kyr_seed12345.json"
+          ],
+          "min_count": 2
+        },
+        {
+          "kind": "csv_integrity",
+          "name": "oracle CSV complete",
+          "patterns": [
+            "${OUTPUT_ROOT}/benettin_checkpoint_oracle_checkpoint_oracle_100kyr_seed12345.csv"
+          ],
+          "target_years": 100000,
+          "min_rows": 2,
+          "time_columns": [
+            "time_years"
+          ],
+          "final_time_tolerance_fraction": 0.002
+        }
+      ]
+    }
+  ]
+}

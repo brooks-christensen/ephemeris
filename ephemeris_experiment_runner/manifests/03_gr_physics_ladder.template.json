@@ -1,0 +1,570 @@
+{
+  "experiment_id": "gr_benettin_ladder_v1_v2",
+  "title": "GR-compatible Benettin validation and production ladder (v2 repaired Benettin)",
+  "description": "Template for the final relativistic phase. Do not approve the first stage until the two-trajectory implementation has passed the Newtonian smoke and calibration manifests and GR has been attached independently and identically to both trajectories.",
+  "variables": {
+    "PROJECT_ROOT": "/home/peacelovephysics/ephemeris",
+    "OUTPUT_ROOT": "${PROJECT_ROOT}/output/stability/final_gr_benettin_v2",
+    "KERNEL": "${PROJECT_ROOT}/data/de431_part-2.bsp",
+    "PYTHON": "python"
+  },
+  "state_dir": "${OUTPUT_ROOT}/runner_state/gr_benettin_ladder_v1_v2",
+  "stages": [
+    {
+      "id": "mercury_gr_precession_gate",
+      "title": "Mercury GR perihelion-precession gate",
+      "objective": "Confirm the available REBOUNDx GR options reproduce the expected Mercury perihelion-precession scale before any GR Benettin production stage is allowed.",
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/mercury_gr_precession_gate",
+      "target_years": 100,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 1800,
+      "command": [
+        "env",
+        "OUTPUT_DIR=${OUTPUT_ROOT}/mercury_gr_precession_gate",
+        "bash",
+        "scripts/validate_mercury_gr_precession.sh"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/mercury_gr_precession_gate/mercury_gr_precession_validation.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "Mercury precession validation exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/mercury_gr_precession_gate/mercury_gr_precession_validation.csv"
+          ],
+          "min_count": 1
+        }
+      ]
+    },
+    {
+      "id": "short_gr_trajectory_comparison_gate",
+      "title": "Short WHFast gr_potential versus IAS15 gr trajectory gate",
+      "objective": "Compare short inner Solar System GR trajectories before using WHFast gr_potential for GR-compatible Benettin production runs.",
+      "depends_on": [
+        "mercury_gr_precession_gate"
+      ],
+      "cwd": "${PROJECT_ROOT}/mini_ephemeris",
+      "output_dir": "${OUTPUT_ROOT}/gr_short_trajectory_comparison",
+      "target_years": 100,
+      "status_interval_seconds": 120,
+      "stall_warning_seconds": 1800,
+      "command": [
+        "env",
+        "OUTPUT_DIR=${OUTPUT_ROOT}/gr_short_trajectory_comparison",
+        "bash",
+        "scripts/run_gr_short_trajectory_comparison.sh"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/gr_short_trajectory_comparison/gr_short_trajectory_comparison.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "json_metrics",
+          "name": "short GR comparison passed",
+          "patterns": [
+            "${OUTPUT_ROOT}/gr_short_trajectory_comparison/gr_short_trajectory_comparison.json"
+          ],
+          "checks": [
+            {
+              "path": "passed",
+              "allowed": [
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "gr_full_pluto_1myr_seed12345",
+      "title": "GR 1 Myr smoke",
+      "objective": "Verify full-system execution, finite diagnostics, checkpoint continuity, and reasonable invariant behavior before a longer run.",
+      "depends_on": [
+        "short_gr_trajectory_comparison_gate"
+      ],
+      "approval_required_before": true,
+      "cwd": "${PROJECT_ROOT}",
+      "output_dir": "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345",
+      "target_years": 1000000,
+      "status_interval_seconds": 300,
+      "stall_warning_seconds": 7200,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_benettin_cli",
+        "--kernel-path",
+        "${KERNEL}",
+        "--start-date",
+        "2000-01-01",
+        "--duration-years",
+        "1000000",
+        "--step-days",
+        "1",
+        "--record-every-years",
+        "1000",
+        "--model-scope",
+        "full_with_pluto",
+        "--backend",
+        "rebound",
+        "--rebound-integrator",
+        "whfast",
+        "--rebound-gr-model",
+        "gr_potential",
+        "--gr-model",
+        "gr_potential",
+        "--with-lyapunov",
+        "--lyapunov-body",
+        "mercury",
+        "--lyapunov-perturbation-m",
+        "1",
+        "--lyapunov-renorm-years",
+        "1000",
+        "--lyapunov-fit-start-years",
+        "100000",
+        "--lyapunov-fit-end-years",
+        "1000000",
+        "--lyapunov-seed",
+        "12345",
+        "--lyapunov-method",
+        "two_trajectory",
+        "--rebound-simulationarchive",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/full_with_pluto_gr_potential_1myr_seed12345.bin",
+        "--rebound-archive-interval-years",
+        "10000",
+        "--output-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345",
+        "--tag",
+        "full_with_pluto_gr_potential_benettin_1myr_seed12345",
+        "--no-progress-bar",
+        "--checkpoint-every-years",
+        "10000",
+        "--checkpoint-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/dual_checkpoints",
+        "--resume-latest",
+        "--progress-file-every-renorm",
+        "--status-every-renorm",
+        "--progress-line-every-seconds",
+        "300",
+        "--status-file-every-seconds",
+        "300",
+        "--with-standalone-reference-check"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/benettin_progress_*.csv"
+          ]
+        },
+        {
+          "kind": "archive",
+          "path_glob": "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/*.bin",
+          "archive_time_unit": "auto"
+        },
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/stability_timeseries_*.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "summary exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/benettin_summary_full_with_pluto_gr_potential_benettin_1myr_seed12345.json"
+          ],
+          "min_count": 1
+        },
+        {
+          "kind": "csv_integrity",
+          "name": "time series complete",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/stability_timeseries_*.csv"
+          ],
+          "target_years": 1000000,
+          "min_rows": 2,
+          "final_time_tolerance_fraction": 0.002
+        },
+        {
+          "kind": "benettin_scientific_control",
+          "name": "Benettin scientific control",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_1myr_seed12345/benettin_summary_full_with_pluto_gr_potential_benettin_1myr_seed12345.json"
+          ],
+          "target_years": 1000000,
+          "allowed_classifications": [
+            "regular_likely"
+          ],
+          "max_abs_lcn_1_per_year": 1e-05,
+          "max_reference_relative_energy_error": 1e-08,
+          "max_reference_relative_angular_momentum_error": 1e-10,
+          "require_standalone_reference_agreement": true,
+          "max_reference_standalone_position_delta_m": 1.0,
+          "max_reference_standalone_velocity_delta_m_s": 1e-06
+        }
+      ]
+    },
+    {
+      "id": "gr_full_pluto_10myr_seed12345",
+      "title": "GR 10 Myr numerical consistency run",
+      "objective": "Check that the relativistic Benettin estimator remains stable over a duration where the Newtonian native-MEGNO reference is still regular-looking.",
+      "depends_on": [
+        "gr_full_pluto_1myr_seed12345"
+      ],
+      "approval_required_before": true,
+      "cwd": "${PROJECT_ROOT}",
+      "output_dir": "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345",
+      "target_years": 10000000,
+      "status_interval_seconds": 300,
+      "stall_warning_seconds": 7200,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_benettin_cli",
+        "--kernel-path",
+        "${KERNEL}",
+        "--start-date",
+        "2000-01-01",
+        "--duration-years",
+        "10000000",
+        "--step-days",
+        "1",
+        "--record-every-years",
+        "1000",
+        "--model-scope",
+        "full_with_pluto",
+        "--backend",
+        "rebound",
+        "--rebound-integrator",
+        "whfast",
+        "--rebound-gr-model",
+        "gr_potential",
+        "--gr-model",
+        "gr_potential",
+        "--with-lyapunov",
+        "--lyapunov-body",
+        "mercury",
+        "--lyapunov-perturbation-m",
+        "1",
+        "--lyapunov-renorm-years",
+        "1000",
+        "--lyapunov-fit-start-years",
+        "1000000",
+        "--lyapunov-fit-end-years",
+        "10000000",
+        "--lyapunov-seed",
+        "12345",
+        "--lyapunov-method",
+        "two_trajectory",
+        "--rebound-simulationarchive",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/full_with_pluto_gr_potential_10myr_seed12345.bin",
+        "--rebound-archive-interval-years",
+        "100000",
+        "--output-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345",
+        "--tag",
+        "full_with_pluto_gr_potential_benettin_10myr_seed12345",
+        "--no-progress-bar",
+        "--checkpoint-every-years",
+        "100000",
+        "--checkpoint-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/dual_checkpoints",
+        "--resume-latest",
+        "--progress-file-every-renorm",
+        "--status-every-renorm",
+        "--progress-line-every-seconds",
+        "300",
+        "--status-file-every-seconds",
+        "300"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/benettin_progress_*.csv"
+          ]
+        },
+        {
+          "kind": "archive",
+          "path_glob": "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/*.bin",
+          "archive_time_unit": "auto"
+        },
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/stability_timeseries_*.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "summary exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/benettin_summary_full_with_pluto_gr_potential_benettin_10myr_seed12345.json"
+          ],
+          "min_count": 1
+        },
+        {
+          "kind": "csv_integrity",
+          "name": "time series complete",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_10myr_seed12345/stability_timeseries_*.csv"
+          ],
+          "target_years": 10000000,
+          "min_rows": 2,
+          "final_time_tolerance_fraction": 0.002
+        }
+      ]
+    },
+    {
+      "id": "gr_full_pluto_100myr_seed12345",
+      "title": "GR 100 Myr production gate",
+      "objective": "First scientifically useful relativistic finite-time chaos comparison. Stop here for analysis before any 200 Myr commitment.",
+      "depends_on": [
+        "gr_full_pluto_10myr_seed12345"
+      ],
+      "approval_required_before": true,
+      "cwd": "${PROJECT_ROOT}",
+      "output_dir": "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345",
+      "target_years": 100000000,
+      "status_interval_seconds": 300,
+      "stall_warning_seconds": 10800,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_benettin_cli",
+        "--kernel-path",
+        "${KERNEL}",
+        "--start-date",
+        "2000-01-01",
+        "--duration-years",
+        "100000000",
+        "--step-days",
+        "1",
+        "--record-every-years",
+        "10000",
+        "--model-scope",
+        "full_with_pluto",
+        "--backend",
+        "rebound",
+        "--rebound-integrator",
+        "whfast",
+        "--rebound-gr-model",
+        "gr_potential",
+        "--gr-model",
+        "gr_potential",
+        "--with-lyapunov",
+        "--lyapunov-body",
+        "mercury",
+        "--lyapunov-perturbation-m",
+        "1",
+        "--lyapunov-renorm-years",
+        "1000",
+        "--lyapunov-fit-start-years",
+        "10000000",
+        "--lyapunov-fit-end-years",
+        "100000000",
+        "--lyapunov-seed",
+        "12345",
+        "--lyapunov-method",
+        "two_trajectory",
+        "--rebound-simulationarchive",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/full_with_pluto_gr_potential_100myr_seed12345.bin",
+        "--rebound-archive-interval-years",
+        "1000000",
+        "--output-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345",
+        "--tag",
+        "full_with_pluto_gr_potential_benettin_100myr_seed12345",
+        "--no-progress-bar",
+        "--checkpoint-every-years",
+        "1000000",
+        "--checkpoint-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/dual_checkpoints",
+        "--resume-latest",
+        "--progress-file-every-renorm",
+        "--status-every-renorm",
+        "--progress-line-every-seconds",
+        "300",
+        "--status-file-every-seconds",
+        "300"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/benettin_progress_*.csv"
+          ]
+        },
+        {
+          "kind": "archive",
+          "path_glob": "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/*.bin",
+          "archive_time_unit": "auto"
+        },
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/stability_timeseries_*.csv"
+          ]
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "summary exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/benettin_summary_full_with_pluto_gr_potential_benettin_100myr_seed12345.json"
+          ],
+          "min_count": 1
+        },
+        {
+          "kind": "csv_integrity",
+          "name": "time series complete",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/*benettin*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed12345/stability_timeseries_*.csv"
+          ],
+          "target_years": 100000000,
+          "min_rows": 2,
+          "final_time_tolerance_fraction": 0.002
+        }
+      ]
+    },
+    {
+      "id": "gr_full_pluto_100myr_seed67890",
+      "title": "GR 100 Myr conditional repeat, seed 67890",
+      "objective": "Manual repeat of the 100 Myr GR finite-time Benettin run with an alternate seed. This stage is conditional and must not launch automatically before the seed 12345 result is reviewed.",
+      "depends_on": [
+        "gr_full_pluto_100myr_seed12345"
+      ],
+      "approval_required_before": true,
+      "cwd": "${PROJECT_ROOT}",
+      "output_dir": "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890",
+      "target_years": 100000000,
+      "status_interval_seconds": 300,
+      "stall_warning_seconds": 10800,
+      "command": [
+        "${PYTHON}",
+        "-m",
+        "mini_ephemeris.gr_benettin_cli",
+        "--kernel-path",
+        "${KERNEL}",
+        "--start-date",
+        "2000-01-01",
+        "--duration-years",
+        "100000000",
+        "--step-days",
+        "1",
+        "--record-every-years",
+        "10000",
+        "--model-scope",
+        "full_with_pluto",
+        "--backend",
+        "rebound",
+        "--rebound-integrator",
+        "whfast",
+        "--rebound-gr-model",
+        "gr_potential",
+        "--gr-model",
+        "gr_potential",
+        "--with-lyapunov",
+        "--lyapunov-body",
+        "mercury",
+        "--lyapunov-perturbation-m",
+        "1",
+        "--lyapunov-renorm-years",
+        "1000",
+        "--lyapunov-fit-start-years",
+        "10000000",
+        "--lyapunov-fit-end-years",
+        "100000000",
+        "--lyapunov-seed",
+        "67890",
+        "--lyapunov-method",
+        "two_trajectory",
+        "--rebound-simulationarchive",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890/full_with_pluto_gr_potential_100myr_seed67890.bin",
+        "--rebound-archive-interval-years",
+        "1000000",
+        "--output-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890",
+        "--tag",
+        "full_with_pluto_gr_potential_benettin_100myr_seed67890",
+        "--no-progress-bar",
+        "--checkpoint-every-years",
+        "1000000",
+        "--checkpoint-dir",
+        "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890/dual_checkpoints",
+        "--resume-latest",
+        "--progress-file-every-renorm",
+        "--status-every-renorm",
+        "--progress-line-every-seconds",
+        "300",
+        "--status-file-every-seconds",
+        "300"
+      ],
+      "progress_sources": [
+        {
+          "kind": "csv",
+          "path_globs": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890/benettin_progress_*.csv"
+          ]
+        },
+        {
+          "kind": "archive",
+          "path_glob": "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890/*.bin",
+          "archive_time_unit": "auto"
+        }
+      ],
+      "gates": [
+        {
+          "kind": "required_glob",
+          "name": "summary exists",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890/benettin_summary_full_with_pluto_gr_potential_benettin_100myr_seed67890.json"
+          ],
+          "min_count": 1
+        },
+        {
+          "kind": "csv_integrity",
+          "name": "time series complete",
+          "patterns": [
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890/*benettin*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890/*lyapunov*.csv",
+            "${OUTPUT_ROOT}/full_with_pluto_gr_potential_100myr_seed67890/stability_timeseries_*.csv"
+          ],
+          "target_years": 100000000,
+          "min_rows": 2,
+          "final_time_tolerance_fraction": 0.002
+        }
+      ]
+    }
+  ]
+}
