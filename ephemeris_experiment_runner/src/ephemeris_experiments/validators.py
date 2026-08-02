@@ -61,6 +61,7 @@ def csv_integrity(gate: dict[str, Any]) -> GateResult:
 
     time_candidates = gate.get("time_columns", ["time_years", "t_years", "time_yr"])
     finite_columns = gate.get("finite_columns", [])
+    finite_column_aliases = gate.get("finite_column_aliases", {})
     times: list[float] = []
     missing_finite: dict[str, int] = {name: 0 for name in finite_columns}
     rows = 0
@@ -80,7 +81,9 @@ def csv_integrity(gate: dict[str, Any]) -> GateResult:
                 return GateResult(False, gate.get("name", "csv_integrity"), f"non-finite time on row {rows}")
             times.append(value)
             for column in finite_columns:
-                raw = row.get(column)
+                aliases = finite_column_aliases.get(column, [])
+                candidates = [column, *aliases]
+                raw = next((row.get(name) for name in candidates if name in row), None)
                 try:
                     parsed = float(raw) if raw not in (None, "") else math.nan
                 except ValueError:

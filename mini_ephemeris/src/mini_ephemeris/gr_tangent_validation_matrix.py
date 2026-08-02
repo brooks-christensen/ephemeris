@@ -7,9 +7,12 @@ import hashlib
 import json
 import math
 import os
+import platform
 from pathlib import Path
 import random
 import shutil
+import socket
+import subprocess
 import sys
 import time
 from typing import Any
@@ -18,6 +21,7 @@ import numpy as np
 
 from .ephem import EphemerisConfig, initial_state_solar_system_barycentric
 from .gr_potential_tangent import attach_gr_potential_tangent_force
+from .rebound_gr_tangent_cli import APSIDAL_DRIFT_DEFINITION, DIAGNOSTIC_DEFINITIONS
 from .long_term_stability_cli import (
     add_reboundx_gr_force,
     build_rebound_simulation,
@@ -36,6 +40,76 @@ EXISTING_SMOKE_DIR = Path("/home/peacelovephysics/ephemeris/output/stability/gr_
 EXISTING_PROGRESS = EXISTING_SMOKE_DIR / "gr_tangent_progress_full_with_pluto_gr_tangent_1myr_seed12345.csv"
 EXISTING_SUMMARY = EXISTING_SMOKE_DIR / "gr_tangent_summary_full_with_pluto_gr_tangent_1myr_seed12345.json"
 EXISTING_ARCHIVE = EXISTING_SMOKE_DIR / "full_with_pluto_gr_tangent_1myr_seed12345.bin"
+DEFAULT_MANIFEST = Path("/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/07_gr_tangent_validation_matrix.json")
+
+EXPECTED_REQUIRED_STAGES = (
+    {
+        "stage": "existing_1myr_smoke_audit",
+        "title": "Existing 1 Myr Smoke Audit",
+        "path": "existing_1myr_smoke_audit.json",
+        "kind": "passed_json",
+    },
+    {
+        "stage": "monitor_process_tree_audit",
+        "title": "Process-Tree Monitor Audit",
+        "path": "monitor_process_tree_audit/monitor_process_tree_audit.json",
+        "kind": "passed_json",
+    },
+    {
+        "stage": "dynamic_gr_tangent_oracle",
+        "title": "Dynamic GR Tangent Oracle",
+        "path": "dynamic_gr_tangent_oracle/dynamic_gr_tangent_oracle_summary.json",
+        "kind": "passed_json",
+    },
+    {
+        "stage": "newtonian_zero_limit_100kyr",
+        "title": "Newtonian Zero-Limit 100 kyr",
+        "path": "newtonian_zero_limit_100kyr/newtonian_zero_limit_100kyr_summary.json",
+        "kind": "passed_json",
+    },
+    {
+        "stage": "gr_100kyr_1d_seed12345",
+        "title": "GR 100 kyr, 1 day, seed 12345",
+        "path": "gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json",
+        "kind": "gr_tangent_summary",
+    },
+    {
+        "stage": "gr_100kyr_1d_seed67890",
+        "title": "GR 100 kyr, 1 day, seed 67890",
+        "path": "gr_100kyr_1d_seed67890/gr_tangent_summary_gr_100kyr_1d_seed67890.json",
+        "kind": "gr_tangent_summary",
+    },
+    {
+        "stage": "seed_comparison",
+        "title": "Seed Comparison",
+        "path": "seed_comparison/gr_100kyr_1d_seed_comparison.json",
+        "kind": "passed_json",
+    },
+    {
+        "stage": "gr_100kyr_0p5d_seed12345",
+        "title": "GR 100 kyr, 0.5 day, seed 12345",
+        "path": "gr_100kyr_0p5d_seed12345/gr_tangent_summary_gr_100kyr_0p5d_seed12345.json",
+        "kind": "gr_tangent_summary",
+    },
+    {
+        "stage": "timestep_comparison",
+        "title": "Timestep Comparison",
+        "path": "timestep_comparison/gr_100kyr_timestep_comparison.json",
+        "kind": "passed_json",
+    },
+    {
+        "stage": "physical_gr_trajectory_comparison_100kyr",
+        "title": "Physical GR Trajectory Comparison 100 kyr",
+        "path": "physical_gr_trajectory_comparison_100kyr/physical_gr_trajectory_comparison_100kyr_summary.json",
+        "kind": "passed_json",
+    },
+    {
+        "stage": "gr_checkpoint_resume_equivalence_20kyr",
+        "title": "GR Checkpoint/Resume Equivalence 20 kyr",
+        "path": "gr_checkpoint_resume_equivalence_20kyr/gr_checkpoint_resume_equivalence_20kyr_summary.json",
+        "kind": "passed_json",
+    },
+)
 
 
 def atomic_write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -66,6 +140,355 @@ def finite(value: Any) -> float:
 
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text())
+
+
+
+def row_first_value(row: dict[str, Any], *names: str) -> Any:
+    for name in names:
+        if name in row:
+            return row.get(name)
+    return None
+
+
+def diagnostic_first_value(diagnostics: dict[str, Any], canonical: str, *legacy: str) -> Any:
+    for name in (canonical, *legacy):
+        if name in diagnostics:
+            return diagnostics.get(name)
+    return None
+
+
+def canonicalize_gr_tangent_summary(data: dict[str, Any]) -> dict[str, Any]:
+    diagnostics = dict(data.get("diagnostics", {}))
+    energy_value = diagnostic_first_value(
+        diagnostics,
+        "max_newtonian_energy_component_rel_change",
+        "max_energy_rel_drift",
+    )
+    apsidal_value = diagnostic_first_value(
+        diagnostics,
+        "mercury_total_apsidal_drift_arcsec_per_century",
+        "mercury_perihelion_drift_arcsec_per_century",
+    )
+    diagnostics.pop("max_energy_rel_drift", None)
+    diagnostics.pop("mercury_perihelion_drift_arcsec_per_century", None)
+    if energy_value is not None:
+        diagnostics["max_newtonian_energy_component_rel_change"] = energy_value
+    if apsidal_value is not None:
+        diagnostics["mercury_total_apsidal_drift_arcsec_per_century"] = apsidal_value
+    production_metadata = dict(data.get("production_metadata", {}))
+    return {
+        "tag": data.get("tag"),
+        "configuration": dict(data.get("configuration", {})),
+        "diagnostics": diagnostics,
+        "production_metadata": production_metadata,
+        "production_metadata_is_authoritative": True,
+        "variation_api_smoke_metadata": data.get("variation_api_smoke_metadata", data.get("variation_api")),
+        "diagnostic_definitions": DIAGNOSTIC_DEFINITIONS,
+        "apsidal_drift_definition": APSIDAL_DRIFT_DEFINITION,
+        "caveats": list(data.get("caveats", [])),
+        "outputs": dict(data.get("outputs", {})),
+        "provenance": data.get("provenance"),
+    }
+
+
+def gr_tangent_summary_passed(summary: dict[str, Any]) -> bool:
+    diagnostics = summary["diagnostics"]
+    config = summary["configuration"]
+    try:
+        actual = float(diagnostics.get("actual_time_years", -1.0))
+        duration = float(config.get("duration_years", 0.0))
+        rows = int(diagnostics.get("rows_written", 0))
+    except (TypeError, ValueError):
+        return False
+    return (
+        abs(actual - duration) <= 1.0e-6
+        and diagnostics.get("classification_hint") == "regular_likely"
+        and bool(diagnostics.get("lcn_trends_toward_zero"))
+        and not bool(diagnostics.get("stable_positive_lcn_plateau"))
+        and rows > 0
+    )
+
+
+def summarize_stage_metrics(stage_name: str, data: dict[str, Any]) -> dict[str, Any]:
+    if stage_name == "existing_1myr_smoke_audit":
+        audit = data.get("production_archive_audit", {})
+        return {
+            "row_count": data.get("row_count"),
+            "final_time_years": data.get("final_time_years"),
+            "archive_snapshot_count": audit.get("snapshot_count"),
+            "production_n_real": audit.get("n_real"),
+            "production_variation_particle_count": audit.get("variation_particle_count"),
+        }
+    if stage_name == "monitor_process_tree_audit":
+        return {"sample_count": data.get("sample_count"), "max_descendant_count": data.get("max_descendant_count")}
+    if stage_name == "dynamic_gr_tangent_oracle":
+        groups = data.get("summary_by_group", {}) or {}
+        min_error = min((finite(group.get("min_relative_norm_error")) for group in groups.values()), default=math.nan)
+        max_cosine = max((finite(group.get("max_direction_cosine")) for group in groups.values()), default=math.nan)
+        return {
+            "group_count": len(groups),
+            "best_relative_norm_error": min_error if math.isfinite(min_error) else None,
+            "best_direction_cosine": max_cosine if math.isfinite(max_cosine) else None,
+        }
+    if stage_name == "newtonian_zero_limit_100kyr":
+        return {
+            "max_variation_norm_relative_difference": data.get("max_variation_norm_relative_difference"),
+            "min_variation_direction_cosine": data.get("min_variation_direction_cosine"),
+            "max_megno_difference": data.get("max_megno_difference"),
+            "max_lcn_difference": data.get("max_lcn_difference"),
+        }
+    if stage_name == "seed_comparison":
+        row = data.get("row", {})
+        return {
+            "left_classification": row.get("left_classification"),
+            "right_classification": row.get("right_classification"),
+            "left_final_megno": row.get("left_final_megno"),
+            "right_final_megno": row.get("right_final_megno"),
+            "left_final_lcn": row.get("left_final_lcn"),
+            "right_final_lcn": row.get("right_final_lcn"),
+        }
+    if stage_name == "timestep_comparison":
+        row = data.get("row", {})
+        return {
+            "left_classification": row.get("left_classification"),
+            "right_classification": row.get("right_classification"),
+            "right_final_lcn": row.get("right_final_lcn"),
+            "throughput_runtime_ratio_right_over_left": row.get("throughput_runtime_ratio_right_over_left"),
+        }
+    if stage_name == "physical_gr_trajectory_comparison_100kyr":
+        return {
+            "max_custom_vs_reboundx_scaled_phase_difference": data.get("max_custom_vs_reboundx_scaled_phase_difference"),
+            "max_paired_gr_minus_newtonian_difference": data.get("max_paired_gr_minus_newtonian_difference"),
+            "max_paired_gr_minus_newtonian_relative_difference": data.get("max_paired_gr_minus_newtonian_relative_difference"),
+            "warning_count": len(data.get("warnings", []) or []),
+        }
+    if stage_name == "gr_checkpoint_resume_equivalence_20kyr":
+        return {
+            "physical_scaled_phase_difference": data.get("physical_scaled_phase_difference"),
+            "tangent_scaled_phase_difference": data.get("tangent_scaled_phase_difference"),
+            "tangent_direction_cosine": data.get("tangent_direction_cosine"),
+            "callback_invocations_after_restart": data.get("callback_invocations_after_restart"),
+        }
+    return {}
+
+
+def evaluate_required_stage(root: Path, spec: dict[str, str]) -> dict[str, Any]:
+    expected_path = root / spec["path"]
+    result: dict[str, Any] = {
+        "stage": spec["stage"],
+        "title": spec["title"],
+        "expected_path": str(expected_path),
+    }
+    if not expected_path.exists():
+        result.update({"status": "missing", "passed": False})
+        return result
+    try:
+        data = load_json(expected_path)
+    except Exception as exc:
+        result.update({"status": "unreadable", "passed": False, "error": str(exc)})
+        return result
+    if spec["kind"] == "gr_tangent_summary":
+        canonical = canonicalize_gr_tangent_summary(data)
+        diagnostics = canonical["diagnostics"]
+        production_metadata = canonical["production_metadata"]
+        passed = gr_tangent_summary_passed(canonical)
+        result.update(
+            {
+                "status": "passed" if passed else "failed",
+                "passed": passed,
+                "derived_from": "gr_tangent_summary diagnostics",
+                "source_stage": data.get("stage", data.get("tag")),
+                "diagnostics": {
+                    "actual_time_years": diagnostics.get("actual_time_years"),
+                    "classification_hint": diagnostics.get("classification_hint"),
+                    "final_megno": diagnostics.get("final_megno"),
+                    "final_lcn_1_per_year": diagnostics.get("final_lcn_1_per_year"),
+                    "lcn_trends_toward_zero": diagnostics.get("lcn_trends_toward_zero"),
+                    "stable_positive_lcn_plateau": diagnostics.get("stable_positive_lcn_plateau"),
+                    "max_newtonian_energy_component_rel_change": diagnostics.get(
+                        "max_newtonian_energy_component_rel_change"
+                    ),
+                    "max_angular_momentum_rel_drift": diagnostics.get("max_angular_momentum_rel_drift"),
+                    "mercury_total_apsidal_drift_arcsec_per_century": diagnostics.get(
+                        "mercury_total_apsidal_drift_arcsec_per_century"
+                    ),
+                    "runtime_seconds": diagnostics.get("runtime_seconds"),
+                    "rows_written": diagnostics.get("rows_written"),
+                },
+                "production_metadata": production_metadata,
+                "production_metadata_is_authoritative": True,
+                "variation_api_smoke_metadata": canonical.get("variation_api_smoke_metadata"),
+            }
+        )
+        return result
+    passed = bool(data.get("passed"))
+    result.update(
+        {
+            "status": "passed" if passed else "failed",
+            "passed": passed,
+            "source_stage": data.get("stage", expected_path.stem),
+            "metrics": summarize_stage_metrics(spec["stage"], data),
+        }
+    )
+    failures = data.get("failures")
+    if failures:
+        result["failures"] = failures
+    return result
+
+
+def blocked_status(failed_stages: list[str], missing_stages: list[str], unreadable_stages: list[str]) -> str:
+    if missing_stages or unreadable_stages:
+        return "BLOCKED_MULTIPLE"
+    if not failed_stages:
+        return "READY_FOR_C_PORT"
+    if len(failed_stages) > 1:
+        return "BLOCKED_MULTIPLE"
+    name = failed_stages[0].lower()
+    if "monitor" in name:
+        return "BLOCKED_MONITORING"
+    if "trajectory" in name:
+        return "BLOCKED_PHYSICAL_TRAJECTORY"
+    if "oracle" in name or "zero" in name:
+        return "BLOCKED_TANGENT_DYNAMICS"
+    if "seed" in name or "timestep" in name:
+        return "BLOCKED_TIMESTEP_OR_SEED"
+    if "resume" in name or "checkpoint" in name:
+        return "BLOCKED_RESUME"
+    return "BLOCKED_MULTIPLE"
+
+
+def sha256_if_present(path: Path | None) -> str | None:
+    if path is None or not path.exists():
+        return None
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def final_report_provenance(args: argparse.Namespace, created_utc: str) -> dict[str, Any]:
+    try:
+        git_commit = subprocess.run(
+            ["git", "rev-parse", "HEAD"], check=True, capture_output=True, text=True
+        ).stdout.strip()
+        dirty = bool(
+            subprocess.run(["git", "status", "--porcelain"], check=True, capture_output=True, text=True).stdout.strip()
+        )
+    except Exception as exc:
+        git_commit = None
+        dirty = None
+        git_error = str(exc)
+    else:
+        git_error = None
+    manifest_path = DEFAULT_MANIFEST if DEFAULT_MANIFEST.exists() else None
+    return {
+        "git_commit_hash": git_commit,
+        "dirty_working_tree": dirty,
+        "git_metadata_error": git_error,
+        "python_version": sys.version,
+        "kernel_path": str(args.kernel_path),
+        "kernel_sha256": sha256_if_present(Path(args.kernel_path)),
+        "manifest_path": str(manifest_path) if manifest_path else None,
+        "manifest_sha256": sha256_if_present(manifest_path),
+        "command_line": [Path(sys.argv[0]).name, *sys.argv[1:]],
+        "hostname": socket.gethostname(),
+        "platform": platform.platform(),
+        "created_utc": created_utc,
+    }
+
+
+def fmt_md(value: Any) -> str:
+    if value is None:
+        return "n/a"
+    if isinstance(value, float):
+        if math.isfinite(value):
+            return f"{value:.6g}"
+        return "n/a"
+    return str(value)
+
+
+def stage_by_name(stage_results: list[dict[str, Any]], name: str) -> dict[str, Any]:
+    for result in stage_results:
+        if result["stage"] == name:
+            return result
+    return {}
+
+
+def build_final_report_markdown(payload: dict[str, Any], json_path: Path) -> str:
+    stage_results = payload["stage_results"]
+    lines = [
+        "# GR Tangent Validation Matrix V2",
+        "",
+        "## Overall Verdict",
+        f"Status: **{payload['status']}**",
+        "",
+        f"JSON summary: `{json_path}`",
+        f"Expected stages: {payload['expected_stage_count']}",
+        f"Observed readable stages: {payload['observed_stage_count']}",
+        "",
+        "## Required-Stage Results",
+        "| Stage | Result | Source result |",
+        "| --- | --- | --- |",
+    ]
+    for result in stage_results:
+        lines.append(f"| {result['stage']} | {result['status']} | `{result['expected_path']}` |")
+    dyn = stage_by_name(stage_results, "dynamic_gr_tangent_oracle").get("metrics", {})
+    zero = stage_by_name(stage_results, "newtonian_zero_limit_100kyr").get("metrics", {})
+    seed = stage_by_name(stage_results, "seed_comparison").get("metrics", {})
+    step = stage_by_name(stage_results, "timestep_comparison").get("metrics", {})
+    physical = stage_by_name(stage_results, "physical_gr_trajectory_comparison_100kyr").get("metrics", {})
+    checkpoint = stage_by_name(stage_results, "gr_checkpoint_resume_equivalence_20kyr").get("metrics", {})
+    monitor = stage_by_name(stage_results, "monitor_process_tree_audit").get("metrics", {})
+    lines.extend(
+        [
+            "",
+            "## Tangent-Oracle Accuracy Summary",
+            f"Best relative norm error across oracle groups: {fmt_md(dyn.get('best_relative_norm_error'))}.",
+            f"Best direction cosine across oracle groups: {fmt_md(dyn.get('best_direction_cosine'))}.",
+            "",
+            "## Newtonian Zero-Limit Summary",
+            f"Max variation norm relative difference: {fmt_md(zero.get('max_variation_norm_relative_difference'))}.",
+            f"Minimum variation direction cosine: {fmt_md(zero.get('min_variation_direction_cosine'))}.",
+            "",
+            "## Seed Comparison",
+            f"Seed classifications: {fmt_md(seed.get('left_classification'))} and {fmt_md(seed.get('right_classification'))}.",
+            f"Final MEGNO values: {fmt_md(seed.get('left_final_megno'))} and {fmt_md(seed.get('right_final_megno'))}.",
+            "",
+            "## Timestep Comparison",
+            f"Timestep classifications: {fmt_md(step.get('left_classification'))} and {fmt_md(step.get('right_classification'))}.",
+            f"0.5-day final LCN: {fmt_md(step.get('right_final_lcn'))}.",
+            "",
+            "## Physical-Trajectory Comparison",
+            f"Max paired GR-minus-Newtonian difference: {fmt_md(physical.get('max_paired_gr_minus_newtonian_difference'))}.",
+            f"Max paired relative difference: {fmt_md(physical.get('max_paired_gr_minus_newtonian_relative_difference'))}.",
+            "",
+            "## Checkpoint/Resume Comparison",
+            f"Physical scaled phase difference: {fmt_md(checkpoint.get('physical_scaled_phase_difference'))}.",
+            f"Tangent scaled phase difference: {fmt_md(checkpoint.get('tangent_scaled_phase_difference'))}.",
+            "",
+            "## Monitoring Verification",
+            f"Monitor sample count: {fmt_md(monitor.get('sample_count'))}.",
+            "",
+            "## Diagnostic-Semantics Notes",
+            "- Newtonian energy component is a consistency diagnostic and is not total conserved GR energy error for the custom Hamiltonian.",
+            "- The full-system Mercury apsidal drift includes Newtonian planetary secular perturbations plus GR and is not the isolated GR excess.",
+            "- Variation API smoke metadata reports a standalone API check; production_metadata is authoritative for production particle counts.",
+            "",
+            "## Remaining Caveats",
+            "- Finite-time tangent and MEGNO diagnostics are not asymptotic Lyapunov proofs.",
+            "- Timestep comparison does not claim convergence of total GR energy from the Newtonian component diagnostic.",
+            "- Isolated Sun-Mercury GR precession remains the analytic approximately 43 arcsec/century validation; full-system totals must not be compared directly with that value.",
+            "",
+            "## Next Authorized Action",
+            "Compiled-C port and C-versus-Python validation only.",
+            "",
+            "## Source Result Paths",
+        ]
+    )
+    for stage_name, source_path in payload["source_result_paths"].items():
+        lines.append(f"- {stage_name}: `{source_path}`")
+    return "\n".join(lines) + "\n"
 
 
 def open_archive_snapshot(rebound, archive_path: Path, time_years: float | None = None):
@@ -200,12 +623,18 @@ def audit_existing_smoke(args: argparse.Namespace) -> int:
         failures.append("duplicate progress times found")
     if times and abs(times[-1] - 1_000_000.0) > 1.0e-6:
         failures.append(f"final CSV time {times[-1]} does not match 1,000,000 yr")
-    critical = ["megno", "lcn_1_per_year", "energy_rel_drift", "angular_momentum_rel_drift"]
-    for column in critical:
-        if any(not math.isfinite(finite(row.get(column))) for row in rows):
-            failures.append(f"non-finite values in critical column {column}")
+    critical = [
+        ("megno",),
+        ("lcn_1_per_year",),
+        ("newtonian_energy_component_rel_change", "energy_rel_drift"),
+        ("angular_momentum_rel_drift",),
+    ]
+    for columns in critical:
+        label = columns[0]
+        if any(not math.isfinite(finite(row_first_value(row, *columns))) for row in rows):
+            failures.append(f"non-finite values in critical column {label}")
     summary = load_json(EXISTING_SUMMARY) if EXISTING_SUMMARY.exists() else {}
-    diagnostics = summary.get("diagnostics", {})
+    diagnostics = canonicalize_gr_tangent_summary(summary)["diagnostics"] if summary else {}
     if diagnostics.get("classification_hint") != "regular_likely":
         failures.append("summary classification is not regular_likely")
     if abs(finite(diagnostics.get("final_lcn_1_per_year"))) > 1.0e-8:
@@ -246,6 +675,8 @@ def audit_existing_smoke(args: argparse.Namespace) -> int:
         "final_time_years": times[-1] if times else None,
         "diagnostics": diagnostics,
         "failures": failures,
+        "diagnostic_definitions": DIAGNOSTIC_DEFINITIONS,
+        "diagnostic_caveat": "The Newtonian energy component is a consistency diagnostic, not total conserved GR energy error for the custom Hamiltonian.",
         "note": "The variation_api block in the original summary is API-smoke metadata only; production N metadata is read from the archive here.",
     }
     json_path = out / "existing_1myr_smoke_audit.json"
@@ -707,70 +1138,45 @@ def checkpoint_resume(args: argparse.Namespace) -> int:
 
 def final_report(args: argparse.Namespace) -> int:
     root = Path(args.output_root)
-    stage_files = sorted(root.rglob("*.json"))
-    stages = []
-    blocked = []
-    for path in stage_files:
-        if path.name == "gr_tangent_validation_matrix_summary.json":
-            continue
-        try:
-            data = load_json(path)
-        except Exception:
-            continue
-        if "passed" in data:
-            stages.append({"path": str(path), "stage": data.get("stage", path.stem), "passed": data["passed"]})
-            if not data["passed"]:
-                blocked.append(data.get("stage", path.stem))
-        elif path.name.startswith("gr_tangent_summary_"):
-            diagnostics = data.get("diagnostics", {})
-            config = data.get("configuration", {})
-            stage_name = data.get("tag", path.stem)
-            passed = (
-                abs(float(diagnostics.get("actual_time_years", -1.0)) - float(config.get("duration_years", 0.0))) <= 1.0e-6
-                and diagnostics.get("classification_hint") == "regular_likely"
-                and bool(diagnostics.get("lcn_trends_toward_zero"))
-                and not bool(diagnostics.get("stable_positive_lcn_plateau"))
-                and int(diagnostics.get("rows_written", 0)) > 0
-            )
-            stages.append(
-                {
-                    "path": str(path),
-                    "stage": stage_name,
-                    "passed": passed,
-                    "derived_from": "gr_tangent_summary diagnostics",
-                    "final_megno": diagnostics.get("final_megno"),
-                    "final_lcn_1_per_year": diagnostics.get("final_lcn_1_per_year"),
-                    "runtime_seconds": diagnostics.get("runtime_seconds"),
-                }
-            )
-            if not passed:
-                blocked.append(stage_name)
-    status = "READY_FOR_C_PORT" if not blocked and stages else "BLOCKED_MULTIPLE"
-    if blocked:
-        names = " ".join(blocked).lower()
-        if "monitor" in names:
-            status = "BLOCKED_MONITORING"
-        elif "trajectory" in names:
-            status = "BLOCKED_PHYSICAL_TRAJECTORY"
-        elif "oracle" in names or "zero" in names:
-            status = "BLOCKED_TANGENT_DYNAMICS"
-        elif "seed" in names or "timestep" in names:
-            status = "BLOCKED_TIMESTEP_OR_SEED"
-        elif "resume" in names:
-            status = "BLOCKED_RESUME"
-        if len(blocked) > 1:
-            status = "BLOCKED_MULTIPLE"
+    stage_results = [evaluate_required_stage(root, spec) for spec in EXPECTED_REQUIRED_STAGES]
+    missing_stages = [result["stage"] for result in stage_results if result["status"] == "missing"]
+    unreadable_stages = [result["stage"] for result in stage_results if result["status"] == "unreadable"]
+    failed_stages = [result["stage"] for result in stage_results if result["status"] == "failed"]
+    passed_stages = [result["stage"] for result in stage_results if result["status"] == "passed"]
+    status = blocked_status(failed_stages, missing_stages, unreadable_stages)
+    created_utc = dt.datetime.utcnow().isoformat() + "Z"
+    source_paths = {spec["stage"]: str(root / spec["path"]) for spec in EXPECTED_REQUIRED_STAGES}
     payload = {
+        "report_schema_version": 2,
         "status": status,
-        "stage_count": len(stages),
-        "failed_stages": blocked,
-        "stages": stages,
-        "interpretation": "READY_FOR_C_PORT means the Python implementation is accepted as the reference oracle for a compiled-C port, not approval for a long Python production run.",
+        "expected_stage_count": len(EXPECTED_REQUIRED_STAGES),
+        "observed_stage_count": len(passed_stages) + len(failed_stages),
+        "stage_count": len(passed_stages) + len(failed_stages),
+        "missing_stages": missing_stages,
+        "failed_stages": failed_stages,
+        "unreadable_stages": unreadable_stages,
+        "passed_stages": passed_stages,
+        "stage_results": stage_results,
+        "source_result_paths": source_paths,
+        "diagnostic_definitions": DIAGNOSTIC_DEFINITIONS,
+        "apsidal_drift_definition": APSIDAL_DRIFT_DEFINITION,
+        "provenance": final_report_provenance(args, created_utc),
+        "interpretation": (
+            "READY_FOR_C_PORT means the Python implementation is accepted as the reference oracle "
+            "for a compiled-C port, not approval for a long Python production run."
+        ),
+        "diagnostic_semantics_notes": [
+            "The Newtonian energy component excludes the custom gr_potential potential-energy term and is not total conserved GR energy error.",
+            "The full-system Mercury apsidal drift is not the isolated relativistic excess; a paired GR-minus-Newtonian integration is required for that comparison.",
+            "variation_api_smoke_metadata is standalone API-smoke metadata; production_metadata is authoritative for production particle counts.",
+        ],
+        "next_authorized_action": "compiled-C port and C-versus-Python validation only",
     }
-    json_path = root / "gr_tangent_validation_matrix_summary.json"
-    md_path = root / "gr_tangent_validation_matrix_report.md"
+    json_path = root / "gr_tangent_validation_matrix_summary_v2.json"
+    md_path = root / "gr_tangent_validation_matrix_report_v2.md"
+    payload["outputs"] = {"summary_json": str(json_path), "markdown_report": str(md_path)}
     atomic_write_json(json_path, payload)
-    write_text(md_path, "# GR Tangent Validation Matrix\n\n" + json.dumps(payload, indent=2, sort_keys=True) + "\n")
+    write_text(md_path, build_final_report_markdown(payload, json_path))
     print(f"[matrix] wrote {md_path}")
     print(f"[matrix] wrote {json_path}")
     return 0 if status == "READY_FOR_C_PORT" else 1

@@ -51,3 +51,18 @@ def test_csv_integrity(tmp_path: Path):
         "finite_columns": ["value"]
     })
     assert result.passed, result.detail
+
+
+def test_csv_integrity_accepts_legacy_finite_column_alias(tmp_path: Path):
+    path = tmp_path / "progress.csv"
+    path.write_text("time_years,energy_rel_drift\n0,1e-9\n5,2e-9\n10,3e-9\n")
+    result = csv_integrity({
+        "kind": "csv_integrity",
+        "pattern": str(path),
+        "target_years": 10,
+        "finite_columns": ["newtonian_energy_component_rel_change"],
+        "finite_column_aliases": {
+            "newtonian_energy_component_rel_change": ["energy_rel_drift"],
+        },
+    })
+    assert result.passed, result.detail

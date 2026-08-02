@@ -161,6 +161,8 @@
         "mini_ephemeris.rebound_gr_tangent_cli",
         "--kernel-path",
         "${KERNEL}",
+        "--manifest-path",
+        "${PROJECT_ROOT}/ephemeris_experiment_runner/manifests/07_gr_tangent_validation_matrix.json",
         "--start-date",
         "2000-01-01",
         "--model-scope",
@@ -184,6 +186,7 @@
         "--tag",
         "gr_100kyr_1d_seed12345",
         "--status-every-record",
+        "--skip-if-complete",
         "--no-progress-bar"
       ],
       "progress_sources": [
@@ -197,7 +200,10 @@
           "patterns": ["${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_progress_*.csv"],
           "target_years": 100000,
           "min_rows": 101,
-          "finite_columns": ["megno", "lcn_1_per_year", "energy_rel_drift", "angular_momentum_rel_drift", "callback_invocations"]
+          "finite_columns": ["megno", "lcn_1_per_year", "newtonian_energy_component_rel_change", "angular_momentum_rel_drift", "callback_invocations"],
+          "finite_column_aliases": {
+            "newtonian_energy_component_rel_change": ["energy_rel_drift"]
+          }
         },
         {
           "kind": "json_metrics",
@@ -229,7 +235,7 @@
       "command": [
         "bash",
         "-lc",
-        "set -euo pipefail; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.rebound_gr_tangent_cli --kernel-path ${KERNEL} --start-date 2000-01-01 --model-scope full_with_pluto --duration-years 100000 --step-days 1 --record-every-years 1000 --megno-seed 67890 --gr-scale 1 --simulationarchive ${OUTPUT_ROOT}/gr_100kyr_1d_seed67890/gr_100kyr_1d_seed67890.bin --archive-interval-years 10000 --output-dir ${OUTPUT_ROOT}/gr_100kyr_1d_seed67890 --tag gr_100kyr_1d_seed67890 --status-every-record --no-progress-bar; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.gr_tangent_validation_matrix --output-root ${OUTPUT_ROOT}/seed_comparison --kernel-path ${KERNEL} compare-summaries --kind seed --left-summary ${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json --right-summary ${OUTPUT_ROOT}/gr_100kyr_1d_seed67890/gr_tangent_summary_gr_100kyr_1d_seed67890.json"
+        "set -euo pipefail; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.rebound_gr_tangent_cli --kernel-path ${KERNEL} --manifest-path ${PROJECT_ROOT}/ephemeris_experiment_runner/manifests/07_gr_tangent_validation_matrix.json --start-date 2000-01-01 --model-scope full_with_pluto --duration-years 100000 --step-days 1 --record-every-years 1000 --megno-seed 67890 --gr-scale 1 --simulationarchive ${OUTPUT_ROOT}/gr_100kyr_1d_seed67890/gr_100kyr_1d_seed67890.bin --archive-interval-years 10000 --output-dir ${OUTPUT_ROOT}/gr_100kyr_1d_seed67890 --tag gr_100kyr_1d_seed67890 --status-every-record --skip-if-complete --no-progress-bar; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.gr_tangent_validation_matrix --output-root ${OUTPUT_ROOT}/seed_comparison --kernel-path ${KERNEL} compare-summaries --kind seed --left-summary ${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json --right-summary ${OUTPUT_ROOT}/gr_100kyr_1d_seed67890/gr_tangent_summary_gr_100kyr_1d_seed67890.json"
       ],
       "progress_sources": [
         {"kind": "csv", "path_globs": ["${OUTPUT_ROOT}/gr_100kyr_1d_seed67890/gr_tangent_progress_*.csv"]}
@@ -256,7 +262,7 @@
       "command": [
         "bash",
         "-lc",
-        "set -euo pipefail; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.rebound_gr_tangent_cli --kernel-path ${KERNEL} --start-date 2000-01-01 --model-scope full_with_pluto --duration-years 100000 --step-days 0.5 --record-every-years 1000 --megno-seed 12345 --gr-scale 1 --simulationarchive ${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345/gr_100kyr_0p5d_seed12345.bin --archive-interval-years 10000 --output-dir ${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345 --tag gr_100kyr_0p5d_seed12345 --status-every-record --no-progress-bar; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.gr_tangent_validation_matrix --output-root ${OUTPUT_ROOT}/timestep_comparison --kernel-path ${KERNEL} compare-summaries --kind timestep --left-summary ${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json --right-summary ${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345/gr_tangent_summary_gr_100kyr_0p5d_seed12345.json"
+        "set -euo pipefail; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.rebound_gr_tangent_cli --kernel-path ${KERNEL} --manifest-path ${PROJECT_ROOT}/ephemeris_experiment_runner/manifests/07_gr_tangent_validation_matrix.json --start-date 2000-01-01 --model-scope full_with_pluto --duration-years 100000 --step-days 0.5 --record-every-years 1000 --megno-seed 12345 --gr-scale 1 --simulationarchive ${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345/gr_100kyr_0p5d_seed12345.bin --archive-interval-years 10000 --output-dir ${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345 --tag gr_100kyr_0p5d_seed12345 --status-every-record --skip-if-complete --no-progress-bar; PYTHONPATH=${PYTHONPATH} ${PYTHON} -m mini_ephemeris.gr_tangent_validation_matrix --output-root ${OUTPUT_ROOT}/timestep_comparison --kernel-path ${KERNEL} compare-summaries --kind timestep --left-summary ${OUTPUT_ROOT}/gr_100kyr_1d_seed12345/gr_tangent_summary_gr_100kyr_1d_seed12345.json --right-summary ${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345/gr_tangent_summary_gr_100kyr_0p5d_seed12345.json"
       ],
       "progress_sources": [
         {"kind": "csv", "path_globs": ["${OUTPUT_ROOT}/gr_100kyr_0p5d_seed12345/gr_tangent_progress_*.csv"]}
@@ -359,7 +365,7 @@
         {
           "kind": "json_metrics",
           "name": "matrix ready for C port",
-          "patterns": ["${OUTPUT_ROOT}/gr_tangent_validation_matrix_summary.json"],
+          "patterns": ["${OUTPUT_ROOT}/gr_tangent_validation_matrix_summary_v2.json"],
           "checks": [{"path": "status", "allowed": ["READY_FOR_C_PORT"]}]
         }
       ]
