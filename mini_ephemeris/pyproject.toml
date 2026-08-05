@@ -16,3 +16,6 @@ dev = ["pytest"]
 
 [project.urls]
 homepage = "https://example.com/mini-ephemeris"
+
+[tool.setuptools.package-data]
+mini_ephemeris = ["csrc/*.c"]
