@@ -30,6 +30,14 @@ from .long_term_stability_cli import (
     sanitize_tag,
     stability_body_list,
 )
+from .m0_telemetry import (
+    STATE_SAMPLE_FIELDS,
+    STATE_SAMPLE_SCHEMA_VERSION,
+    TelemetrySchemaError,
+    gr_potential_energy,
+    read_state_samples,
+    state_sample_rows,
+)
 from .nbody import G_SI
 from .orbital_elements import (
     ARCSEC_PER_RAD,
@@ -39,12 +47,34 @@ from .orbital_elements import (
     seconds_to_years,
 )
 from .rebound_gr_tangent_cli import APSIDAL_DRIFT_DEFINITION, DIAGNOSTIC_DEFINITIONS, FIELDS
-from .stability_diagnostics import invariant_diagnostics_row, invariant_reference
+from .stability_diagnostics import (
+    invariant_diagnostics_row,
+    invariant_reference,
+    total_angular_momentum_vector,
+)
 
 
-RUNNER_SCHEMA_VERSION = 1
+RUNNER_SCHEMA_VERSION = 2
 MAX_VALIDATION_DURATION_YEARS = 100_000.0
 INTENTIONAL_INCOMPLETE_EXIT = 75
+PROGRESS_FIELDS = [
+    *FIELDS,
+    "target_time_years",
+    "time_seconds",
+    "model_id",
+    "runner_schema_version",
+    "state_sample_schema_version",
+    "configuration_fingerprint",
+    "newtonian_energy_j",
+    "gr_potential_energy_j",
+    "corrected_energy_j",
+    "corrected_energy_rel_change",
+    "angular_momentum_x_kg_m2_s",
+    "angular_momentum_y_kg_m2_s",
+    "angular_momentum_z_kg_m2_s",
+    "angular_momentum_norm_kg_m2_s",
+    "nonfinite_result_count",
+]
 
 
 class RunnerSafetyError(RuntimeError):
@@ -100,6 +130,7 @@ def output_paths(output_dir: Path, tag: str, archive_arg: str | None) -> dict[st
     archive = Path(archive_arg) if archive_arg else output_dir / f"gr_tangent_archive_{tag}.bin"
     return {
         "progress": output_dir / f"gr_tangent_progress_{tag}.csv",
+        "state": output_dir / f"gr_tangent_state_{tag}.csv",
         "status": output_dir / f"gr_tangent_status_{tag}.json",
         "summary": output_dir / f"gr_tangent_summary_{tag}.json",
         "restart": output_dir / f"gr_tangent_restart_{tag}.json",
@@ -138,13 +169,26 @@ def apply_output_policy(
         payload = _load_json_object(summary, "summary")
         if payload.get("complete") is not True or payload.get("status") != "COMPLETED":
             raise RunnerSafetyError(f"Summary is not a valid completed run: {summary}")
-        return "skip"
-    if resume:
-        required = [paths["archive"], paths["restart"], paths["progress"]]
+        if payload.get("schema_version") != RUNNER_SCHEMA_VERSION:
+            raise RunnerSafetyError(f"Summary runner schema is incompatible: {summary}")
+        if payload.get("state_sample_schema_version") != STATE_SAMPLE_SCHEMA_VERSION:
+            raise RunnerSafetyError(f"Summary state sample schema is incompatible: {summary}")
+        required = [
+            paths[name] for name in ("progress", "state", "status", "restart", "archive")
+        ]
         missing = [path for path in required if not path.exists()]
         if missing:
             raise RunnerSafetyError(
-                "--resume requires archive, restart sidecar, and progress CSV; missing: "
+                "Completed summary has missing output artifacts: "
+                + ", ".join(str(path) for path in missing)
+            )
+        return "skip"
+    if resume:
+        required = [paths["archive"], paths["restart"], paths["progress"], paths["state"]]
+        missing = [path for path in required if not path.exists()]
+        if missing:
+            raise RunnerSafetyError(
+                "--resume requires archive, restart sidecar, progress CSV, and state CSV; missing: "
                 + ", ".join(str(path) for path in missing)
             )
         if summary.exists():
@@ -218,13 +262,15 @@ def cumulative_stats(
     return output
 
 
-def _read_progress(path: Path) -> list[dict[str, str]]:
+def _read_progress(
+    path: Path, *, configuration_fingerprint: str
+) -> list[dict[str, str]]:
     if b"\x00" in path.read_bytes():
         raise RunnerSafetyError(f"NUL byte in progress CSV: {path}")
     try:
         with path.open(newline="") as handle:
             reader = csv.DictReader(handle)
-            if reader.fieldnames != FIELDS:
+            if reader.fieldnames != PROGRESS_FIELDS:
                 raise RunnerSafetyError(
                     f"Progress CSV schema mismatch in {path}: {reader.fieldnames}"
                 )
@@ -239,6 +285,20 @@ def _read_progress(path: Path) -> list[dict[str, str]]:
             raise RunnerSafetyError(f"Malformed time on CSV row {index}: {path}") from exc
         if not math.isfinite(current) or current <= previous:
             raise RunnerSafetyError(f"Non-monotonic progress CSV at row {index}: {path}")
+        if row.get("configuration_fingerprint") != configuration_fingerprint:
+            raise RunnerSafetyError(
+                f"Progress CSV configuration fingerprint mismatch at row {index}: {path}"
+            )
+        if row.get("runner_schema_version") != str(RUNNER_SCHEMA_VERSION):
+            raise RunnerSafetyError(
+                f"Progress CSV runner schema mismatch at row {index}: {path}"
+            )
+        if row.get("state_sample_schema_version") != str(
+            STATE_SAMPLE_SCHEMA_VERSION
+        ):
+            raise RunnerSafetyError(
+                f"Progress CSV state schema mismatch at row {index}: {path}"
+            )
         previous = current
     return rows
 
@@ -246,7 +306,18 @@ def _read_progress(path: Path) -> list[dict[str, str]]:
 def _rewrite_progress(path: Path, rows: list[dict[str, str]]) -> None:
     temporary = path.with_name(path.name + ".tmp")
     with temporary.open("w", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+        writer = csv.DictWriter(handle, fieldnames=PROGRESS_FIELDS)
+        writer.writeheader()
+        writer.writerows(rows)
+        handle.flush()
+        os.fsync(handle.fileno())
+    os.replace(temporary, path)
+
+
+def _rewrite_state_samples(path: Path, rows: list[dict[str, str]]) -> None:
+    temporary = path.with_name(path.name + ".tmp")
+    with temporary.open("w", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=STATE_SAMPLE_FIELDS)
         writer.writeheader()
         writer.writerows(rows)
         handle.flush()
@@ -289,6 +360,8 @@ def _record_targets(duration_years: float, cadence_years: float) -> list[float]:
 def _config_payload(args: argparse.Namespace, bodies: list[str], hashes: dict[str, str]) -> dict[str, Any]:
     return {
         "runner_schema_version": RUNNER_SCHEMA_VERSION,
+        "state_sample_schema_version": STATE_SAMPLE_SCHEMA_VERSION,
+        "model_id": args.model_id,
         "backend": args.gr_tangent_backend,
         "kernel_sha256": hashes["kernel_sha256"],
         "initial_conditions_sha256": hashes["initial_conditions_sha256"],
@@ -312,6 +385,7 @@ def build_parser() -> argparse.ArgumentParser:
         description="Restart-safe REBOUND GR tangent runner with selectable Python/C backend."
     )
     parser.add_argument("--kernel-path", required=True)
+    parser.add_argument("--model-id", default=None)
     parser.add_argument("--start-date", type=parse_start_datetime, default=parse_start_datetime("2000-01-01"))
     parser.add_argument(
         "--model-scope",
@@ -419,6 +493,7 @@ def run(argv: list[str] | None = None) -> int:
     fingerprint = canonical_hash(config)
     baseline_stats: dict[str, Any] = {}
     rows: list[dict[str, str]] = []
+    state_row_count = 0
     resume_info: dict[str, Any] | None = None
 
     if action == "resume":
@@ -428,6 +503,8 @@ def run(argv: list[str] | None = None) -> int:
             parser.error(str(exc))
         if sidecar.get("schema_version") != RUNNER_SCHEMA_VERSION:
             parser.error("Restart sidecar schema is incompatible.")
+        if sidecar.get("state_sample_schema_version") != STATE_SAMPLE_SCHEMA_VERSION:
+            parser.error("Restart state sample schema is incompatible.")
         if sidecar.get("state") != "incomplete":
             parser.error("Restart sidecar does not describe an incomplete run.")
         if sidecar.get("configuration_fingerprint") != fingerprint:
@@ -443,9 +520,23 @@ def run(argv: list[str] | None = None) -> int:
             float(sim.lyapunov())
         except Exception as exc:
             parser.error(f"Restart archive did not preserve usable MEGNO/LCN state: {exc}")
-        rows = _read_progress(paths["progress"])
+        try:
+            rows = _read_progress(
+                paths["progress"], configuration_fingerprint=fingerprint
+            )
+            state_rows = read_state_samples(
+                paths["state"],
+                body_names=bodies,
+                configuration_fingerprint=fingerprint,
+            )
+        except (RunnerSafetyError, TelemetrySchemaError) as exc:
+            parser.error(str(exc))
         kept = [row for row in rows if float(row["time_years"]) <= archive_years + 1.0e-9]
         removed = len(rows) - len(kept)
+        kept_state_rows = [
+            row for row in state_rows if float(row["time_years"]) <= archive_years + 1.0e-9
+        ]
+        removed_state_rows = len(state_rows) - len(kept_state_rows)
         if not kept:
             parser.error("Restart progress CSV has no sample at or before the archive snapshot.")
         if not math.isclose(float(kept[-1]["time_years"]), archive_years, abs_tol=1.0e-8):
@@ -454,7 +545,18 @@ def run(argv: list[str] | None = None) -> int:
             )
         if removed:
             _rewrite_progress(paths["progress"], kept)
+        if removed_state_rows:
+            _rewrite_state_samples(paths["state"], kept_state_rows)
+        if len(kept_state_rows) != len(kept) * len(bodies):
+            parser.error("Restart state samples do not match retained diagnostic samples.")
+        if not kept_state_rows or not math.isclose(
+            float(kept_state_rows[-1]["time_years"]), archive_years, abs_tol=1.0e-8
+        ):
+            parser.error("Restart state samples do not align with the archive snapshot.")
         rows = kept
+        state_row_count = len(kept_state_rows)
+        if sidecar.get("checkpoint_state_row_count") != state_row_count:
+            parser.error("Restart sidecar state row count does not match retained telemetry.")
         baseline_stats = dict(sidecar.get("checkpoint_callback_stats", {}))
         if sidecar.get("checkpoint_time_years") != float(kept[-1]["time_years"]):
             parser.error("Restart sidecar checkpoint does not match retained progress.")
@@ -462,6 +564,7 @@ def run(argv: list[str] | None = None) -> int:
             "resumed": True,
             "archive_time_years": archive_years,
             "duplicate_or_future_rows_removed": removed,
+            "duplicate_or_future_state_rows_removed": removed_state_rows,
             "fresh_process_callback_reattached": True,
         }
     else:
@@ -506,6 +609,10 @@ def run(argv: list[str] | None = None) -> int:
     )
 
     reference = invariant_reference(state0, G=G_SI)
+    sun_index = bodies.index("sun")
+    corrected_energy_reference_j = reference.energy_j + gr_potential_energy(
+        state0, sun_index=sun_index, coefficient_scale=args.gr_scale, gravitational_constant=G_SI
+    )
     targets = _record_targets(args.duration_years, args.record_every_years)
     start_index = len(rows)
     if rows:
@@ -515,10 +622,15 @@ def run(argv: list[str] | None = None) -> int:
     start_wall = time.perf_counter()
     previous_progress: tuple[float, float] | None = None
     callback_after_reattach = False
-    with paths["progress"].open(progress_mode, newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=FIELDS)
+    with (
+        paths["progress"].open(progress_mode, newline="") as handle,
+        paths["state"].open(progress_mode, newline="") as state_handle,
+    ):
+        writer = csv.DictWriter(handle, fieldnames=PROGRESS_FIELDS)
+        state_writer = csv.DictWriter(state_handle, fieldnames=STATE_SAMPLE_FIELDS)
         if not rows:
             writer.writeheader()
+            state_writer.writeheader()
         for output_index in range(start_index, len(targets)):
             target_years = targets[output_index]
             sim.integrate(target_years * JULIAN_YEAR_S, exact_finish_time=1)
@@ -530,9 +642,29 @@ def run(argv: list[str] | None = None) -> int:
                 if delta_years > 0.0 and delta_wall > 0.0:
                     recent_rate = delta_years / delta_wall
             previous_progress = (target_years, now)
+            actual_time_seconds = float(sim.t)
+            actual_time_years = seconds_to_years(actual_time_seconds)
             state = rebound_state_from_sim(sim, state0.masses)
-            inv = invariant_diagnostics_row(target_years * JULIAN_YEAR_S, state, reference)
-            elements = heliocentric_elements_for_state(state, bodies, sun_index=bodies.index("sun"))
+            inv = invariant_diagnostics_row(actual_time_seconds, state, reference)
+            gr_energy_j = gr_potential_energy(
+                state,
+                sun_index=sun_index,
+                coefficient_scale=args.gr_scale,
+                gravitational_constant=G_SI,
+            )
+            corrected_energy_j = float(inv["energy_j"]) + gr_energy_j
+            corrected_energy_scale = (
+                abs(corrected_energy_reference_j)
+                if corrected_energy_reference_j != 0.0
+                else 1.0
+            )
+            corrected_energy_rel_change = (
+                corrected_energy_j - corrected_energy_reference_j
+            ) / corrected_energy_scale
+            angular_momentum = total_angular_momentum_vector(state)
+            elements = heliocentric_elements_for_state(
+                state, bodies, sun_index=sun_index
+            )
             mercury = next((element for element in elements if element.body_name == "mercury barycenter"), None)
             try:
                 megno = float(sim.megno())
@@ -549,7 +681,7 @@ def run(argv: list[str] | None = None) -> int:
                 "wall_time_monotonic_seconds": now,
                 "recent_throughput_years_per_wall_second": recent_rate if math.isfinite(recent_rate) else "",
                 "worker_pid": os.getpid(),
-                "time_years": target_years,
+                "time_years": actual_time_years,
                 "megno": megno if math.isfinite(megno) else "",
                 "lcn_1_per_year": lcn if math.isfinite(lcn) else "",
                 "newtonian_energy_component_rel_change": float(inv["energy_rel_drift"]),
@@ -562,30 +694,59 @@ def run(argv: list[str] | None = None) -> int:
                 "real_gr_accel_norm_mean": stats["real_gr_accel_norm_mean"] if stats["real_gr_accel_norm_mean"] is not None else "",
                 "tangent_gr_accel_norm_max": stats["tangent_gr_accel_norm_max"],
                 "tangent_gr_accel_norm_mean": stats["tangent_gr_accel_norm_mean"] if stats["tangent_gr_accel_norm_mean"] is not None else "",
+                "target_time_years": target_years,
+                "time_seconds": actual_time_seconds,
+                "model_id": args.model_id or "",
+                "runner_schema_version": RUNNER_SCHEMA_VERSION,
+                "state_sample_schema_version": STATE_SAMPLE_SCHEMA_VERSION,
+                "configuration_fingerprint": fingerprint,
+                "newtonian_energy_j": float(inv["energy_j"]),
+                "gr_potential_energy_j": gr_energy_j,
+                "corrected_energy_j": corrected_energy_j,
+                "corrected_energy_rel_change": corrected_energy_rel_change,
+                "angular_momentum_x_kg_m2_s": float(angular_momentum[0]),
+                "angular_momentum_y_kg_m2_s": float(angular_momentum[1]),
+                "angular_momentum_z_kg_m2_s": float(angular_momentum[2]),
+                "angular_momentum_norm_kg_m2_s": float(inv["angular_momentum_norm_kg_m2_s"]),
+                "nonfinite_result_count": stats["nonfinite_result_count"],
             }
+            sample_rows = state_sample_rows(
+                sim,
+                bodies,
+                sample_index=output_index,
+                configuration_fingerprint=fingerprint,
+            )
+            state_writer.writerows(sample_rows)
+            state_handle.flush()
+            os.fsync(state_handle.fileno())
+            state_row_count += len(sample_rows)
             writer.writerow(row)
             handle.flush()
             os.fsync(handle.fileno())
             rows.append({key: str(value) for key, value in row.items()})
             sidecar = {
                 "schema_version": RUNNER_SCHEMA_VERSION,
+                "state_sample_schema_version": STATE_SAMPLE_SCHEMA_VERSION,
                 "state": "incomplete",
                 "configuration_fingerprint": fingerprint,
                 "configuration": config,
-                "checkpoint_time_years": target_years,
+                "checkpoint_time_years": actual_time_years,
+                "checkpoint_state_row_count": state_row_count,
                 "output_index": output_index,
                 "checkpoint_callback_stats": stats,
                 "hot_path_proof": hot_path,
                 "archive_path": str(paths["archive"]),
                 "progress_path": str(paths["progress"]),
                 "updated_utc": dt.datetime.now(dt.timezone.utc).isoformat(),
+                "state_path": str(paths["state"]),
             }
             atomic_write_json(paths["restart"], sidecar)
             atomic_write_json(
                 paths["status"],
                 {
                     "state": "RUNNING",
-                    "time_years": target_years,
+                    "time_years": actual_time_years,
+                    "corrected_energy_rel_change": corrected_energy_rel_change,
                     "percent_complete": 100.0 * target_years / args.duration_years,
                     "callback_stats": stats,
                     "worker_pid": os.getpid(),
@@ -610,6 +771,25 @@ def run(argv: list[str] | None = None) -> int:
     else:
         apsidal = None
     energies = _float_values(rows, "newtonian_energy_component_rel_change")
+    corrected_energies = _float_values(rows, "corrected_energy_rel_change")
+    max_newtonian_energy_error = max(
+        (abs(value) for value in energies), default=None
+    )
+    max_corrected_energy_error = max(
+        (abs(value) for value in corrected_energies), default=None
+    )
+    energy_improvement_factor = (
+        max_newtonian_energy_error / max_corrected_energy_error
+        if max_newtonian_energy_error is not None
+        and max_corrected_energy_error is not None
+        and max_corrected_energy_error > 0.0
+        else None
+    )
+    corrected_energy_better_conserved = (
+        max_newtonian_energy_error is not None
+        and max_corrected_energy_error is not None
+        and max_corrected_energy_error < max_newtonian_energy_error
+    )
     angular = _float_values(rows, "angular_momentum_rel_drift")
     megno_values = _float_values(rows, "megno")
     lcn_values = _float_values(rows, "lcn_1_per_year")
@@ -635,11 +815,23 @@ def run(argv: list[str] | None = None) -> int:
     }
     summary = {
         "schema_version": RUNNER_SCHEMA_VERSION,
+        "state_sample_schema_version": STATE_SAMPLE_SCHEMA_VERSION,
         "status": "COMPLETED",
         "complete": True,
         "backend": args.gr_tangent_backend,
         "configuration": config,
         "configuration_fingerprint": fingerprint,
+        "output_schemas": {
+            "progress_fields": PROGRESS_FIELDS,
+            "state_sample_schema_version": STATE_SAMPLE_SCHEMA_VERSION,
+            "state_fields": STATE_SAMPLE_FIELDS,
+            "float_serialization": "Python round-trip float64 decimal",
+        },
+        "energy_diagnostic": {
+            "formula": "E_corrected = E_Newtonian - (3*s*G^2*M_sun^2/c^2)*sum_i(m_i/r_i_sun^2)",
+            "units": "joules",
+            "reference_epoch": args.start_date.isoformat(),
+        },
         "production_metadata": _variation_metadata(sim),
         "diagnostic_definitions": DIAGNOSTIC_DEFINITIONS,
         "apsidal_drift_definition": APSIDAL_DRIFT_DEFINITION,
@@ -648,10 +840,14 @@ def run(argv: list[str] | None = None) -> int:
         "diagnostics": {
             "runtime_seconds_this_process": elapsed,
             "rows_written_total": len(rows),
+            "state_rows_written_total": state_row_count,
             "actual_time_years": times[-1] if times else None,
             "final_megno": megno_values[-1] if megno_values else None,
             "final_lcn_1_per_year": lcn_values[-1] if lcn_values else None,
-            "max_newtonian_energy_component_rel_change": max((abs(value) for value in energies), default=None),
+            "max_newtonian_energy_component_rel_change": max_newtonian_energy_error,
+            "max_corrected_energy_rel_change": max_corrected_energy_error,
+            "corrected_energy_improvement_factor": energy_improvement_factor,
+            "corrected_energy_better_conserved": corrected_energy_better_conserved,
             "max_angular_momentum_rel_drift": max((abs(value) for value in angular), default=None),
             "mercury_total_apsidal_drift_arcsec_per_century": apsidal,
             "callback_stats": final_stats,
@@ -660,7 +856,7 @@ def run(argv: list[str] | None = None) -> int:
         "outputs": {name: str(path) for name, path in paths.items()},
         "caveats": [
             "Finite-time tangent/MEGNO diagnostic; not an asymptotic Lyapunov proof.",
-            "The Newtonian energy component excludes custom gr_potential potential energy.",
+            "Corrected energy includes only the conservative potential represented by the validated gr_potential force.",
             "Full-system apsidal drift is total motion, not isolated relativistic excess.",
         ],
     }
@@ -670,8 +866,10 @@ def run(argv: list[str] | None = None) -> int:
         {
             "schema_version": RUNNER_SCHEMA_VERSION,
             "state": "complete",
+            "state_sample_schema_version": STATE_SAMPLE_SCHEMA_VERSION,
             "configuration_fingerprint": fingerprint,
             "summary_path": str(paths["summary"]),
+            "checkpoint_state_row_count": state_row_count,
         },
     )
     atomic_write_json(
