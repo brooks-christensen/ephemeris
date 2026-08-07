@@ -1,0 +1,3688 @@
+{
+  "audit": {
+    "compiled_gr_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "continuation_provenance": {
+      "fine_coarse_ratios_diagnostic_only": true,
+      "locked_sections_verified": [
+        "existing_lane_effective_settings",
+        "state_and_energy_definitions",
+        "long_history_analysis",
+        "common_configuration",
+        "lanes",
+        "method_validation",
+        "comparison_definitions",
+        "artifact_requirements",
+        "classification_rules",
+        "step3_status_rules",
+        "next_action_policy"
+      ],
+      "source_manifest_13_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+      "source_manifest_14_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+      "source_manifest_14_status": "REVERSIBILITY_GATE_PASSED",
+      "source_manifest_14_summary_sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+    },
+    "existing_lane_integrity": {
+      "m0_conv_0p25d_1myr_s12345": {
+        "rows": 100010,
+        "samples": 10001
+      },
+      "m0_conv_0p5d_1myr_s12345": {
+        "rows": 100010,
+        "samples": 10001
+      }
+    },
+    "git_dirty_after_preregistration": true,
+    "git_head": "2b30b92d9169c3f5732f2e495faab1986b7a6789",
+    "historical_inventory_entries": {
+      "step3_summary": 21,
+      "step3b_summary": 28
+    },
+    "manifest_path": "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+    "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+    "protected_files": [
+      {
+        "path": "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c",
+        "sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+      },
+      {
+        "path": "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py",
+        "sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff"
+      },
+      {
+        "path": "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py",
+        "sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9"
+      },
+      {
+        "path": "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py",
+        "sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+      }
+    ],
+    "runtime": {
+      "header_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/rebound/rebound.h",
+      "header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+      "rebound_build": "Feb 11 2026 17:34:38",
+      "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+      "rebound_version": "4.6.0",
+      "shared_library_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/librebound.cpython-310-x86_64-linux-gnu.so",
+      "shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04"
+    },
+    "status": "PASS",
+    "step3c_timeseries_verified": 2,
+    "tag_object_type": "tag",
+    "unique_historical_artifacts": 28
+  },
+  "candidate_mechanisms": {
+    "BOUNDED_ENERGY_OSCILLATION": {
+      "against": "range expansion and block/prefix gates",
+      "assessment": "fails",
+      "for": "periodic residual peaks are present"
+    },
+    "CORRECTED_INVARIANT_OR_FORCE_PROBLEM": {
+      "against": "significant IAS15 drift=False",
+      "assessment": "fails",
+      "for": "IAS15 converged=False"
+    },
+    "MIXED_OR_INCONCLUSIVE": {
+      "against": "selected mechanism=BLOCKED",
+      "assessment": "not needed",
+      "for": "reserved for unresolved mixtures"
+    },
+    "RANDOM_WALK_ROUNDOFF": {
+      "against": "systematic q_h signature and sign-consistent blocks",
+      "assessment": "fails",
+      "for": "increment distributions are near centered"
+    },
+    "SYNCHRONIZATION_RECALCULATION_BIAS": {
+      "against": "IAS15 reproduces=False",
+      "assessment": "fails",
+      "for": "current reproduces=True; min reduction=False"
+    },
+    "SYSTEMATIC_WHFAST_STEP_BIAS": {
+      "against": "sync material reduction=False",
+      "assessment": "fails or is superseded",
+      "for": "full signature=True, current signature=True"
+    },
+    "VARIATION_MEGNO_COUPLING": {
+      "against": "current reproduces full=True",
+      "assessment": "fails",
+      "for": "current reduction=False"
+    }
+  },
+  "classification_evidence": {
+    "any_sync_material_reduction": false,
+    "bounded_rules_passed": false,
+    "current_material_reduction_both": false,
+    "current_min_compatible_both": false,
+    "current_reproduces_full_both": true,
+    "current_systematic_signature": true,
+    "full_systematic_signature": true,
+    "ias15_force_problem": false,
+    "ias15_reproduces": false,
+    "ias15_tolerance_converged": false,
+    "integrity_passed": true,
+    "min_material_reduction_both": false,
+    "min_systematic_signature": false,
+    "random_walk_rules_passed": false,
+    "reversibility_valid": true
+  },
+  "created_utc": "2026-08-07T17:27:56.564435+00:00",
+  "experiment_id": "m0_integrator_roundoff_diagnosis_continuation_v1",
+  "figures": [
+    {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/figures/long_history_energy_and_fits.png",
+      "sha256": "31c15a0afa39fdb3decaa91a06976069601e8669ce8a82a5769d9617e4ffbf6d",
+      "size_bytes": 69673
+    },
+    {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/figures/blockwise_slopes.png",
+      "sha256": "867dff9b7c1d3050a917c5271d0c06a211789235910fd32879db1f8f32c502f4",
+      "size_bytes": 34134
+    },
+    {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/figures/full_current_min_sync_comparison.png",
+      "sha256": "816f8c69475bd2ff1587d58a29081e5e95717ef28c21557540ed6d098fa7ff43",
+      "size_bytes": 131376
+    },
+    {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/figures/ias15_comparison.png",
+      "sha256": "9dab8c5abb5ab3f8a62c49a920f99e9c316d54b7c694af2c6b7511931ad9b162",
+      "size_bytes": 134645
+    },
+    {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/figures/reversibility_errors.png",
+      "sha256": "23e671463acce6566988a4aae990914c899acaa560091f51e4ca50f6f7910696",
+      "size_bytes": 51512
+    }
+  ],
+  "final_0p125_lane_justified": false,
+  "historical_statuses_unchanged": {
+    "step3": "M0_1DAY_NOT_CONVERGED",
+    "step3b": "M0_0P5DAY_NOT_CONVERGED",
+    "step3c": "ENERGY_DRIFT_CONFIRMED"
+  },
+  "ias15": {
+    "energy_history_max_abs_difference": 6.078417186842625e-16,
+    "energy_statistics_agree": true,
+    "force_problem_rule_passed": false,
+    "orbital_elements_agree": true,
+    "state_agreement": {
+      "global_scaled_rms": 1.0004674718995437e-08,
+      "orbital_elements": {
+        "earth barycenter": {
+          "eccentricity_abs_max": 1.2607796751051836e-13,
+          "mean_longitude_abs_rad_max": 4.770499550943441e-09,
+          "semimajor_axis_relative_max": 8.710547153295152e-14
+        },
+        "jupiter barycenter": {
+          "eccentricity_abs_max": 8.51471670948456e-14,
+          "mean_longitude_abs_rad_max": 4.031153189032466e-10,
+          "semimajor_axis_relative_max": 1.8711991794159104e-13
+        },
+        "mars barycenter": {
+          "eccentricity_abs_max": 2.192412917878528e-13,
+          "mean_longitude_abs_rad_max": 2.659292341888886e-09,
+          "semimajor_axis_relative_max": 2.207819326821985e-13
+        },
+        "mercury barycenter": {
+          "eccentricity_abs_max": 6.583622536027178e-14,
+          "mean_longitude_abs_rad_max": 2.324600734127102e-08,
+          "semimajor_axis_relative_max": 3.95243403964792e-14
+        },
+        "neptune barycenter": {
+          "eccentricity_abs_max": 1.3614925159499691e-12,
+          "mean_longitude_abs_rad_max": 3.0880631385343804e-11,
+          "semimajor_axis_relative_max": 1.4057046870536363e-12
+        },
+        "pluto barycenter": {
+          "eccentricity_abs_max": 1.6762979893059082e-12,
+          "mean_longitude_abs_rad_max": 2.1531221250370436e-11,
+          "semimajor_axis_relative_max": 1.7483428149650865e-12
+        },
+        "saturn barycenter": {
+          "eccentricity_abs_max": 6.553126097319506e-13,
+          "mean_longitude_abs_rad_max": 1.6225953913817648e-10,
+          "semimajor_axis_relative_max": 6.731661103084863e-13
+        },
+        "uranus barycenter": {
+          "eccentricity_abs_max": 1.6201831543050105e-12,
+          "mean_longitude_abs_rad_max": 5.714984041560456e-11,
+          "semimajor_axis_relative_max": 1.7074756614262633e-12
+        },
+        "venus barycenter": {
+          "eccentricity_abs_max": 1.099719273978117e-13,
+          "mean_longitude_abs_rad_max": 6.799082630237763e-09,
+          "semimajor_axis_relative_max": 8.291460688422987e-14
+        }
+      },
+      "per_body_scaled_rms": {
+        "earth barycenter": 3.912595810618401e-09,
+        "jupiter barycenter": 3.052442491010675e-10,
+        "mars barycenter": 1.7822506913947087e-09,
+        "mercury barycenter": 3.051281800824819e-08,
+        "neptune barycenter": 1.1239054107426529e-10,
+        "pluto barycenter": 9.917069913695586e-11,
+        "saturn barycenter": 2.044427006185907e-10,
+        "sun": 2.897341124751422e-13,
+        "uranus barycenter": 1.415062598711158e-10,
+        "venus barycenter": 7.158268965614465e-09
+      },
+      "samples": 101,
+      "worst_body": "mercury barycenter",
+      "worst_body_scaled_rms": 3.051281800824819e-08
+    },
+    "thresholds": {
+      "eccentricity_history_abs_max": 1e-09,
+      "energy_fitted_change_per_myr_abs_difference": 5e-11,
+      "energy_history_max_abs_difference": 5e-11,
+      "energy_stat_absolute_floor": 1e-12,
+      "energy_stat_relative_difference_max": 0.25,
+      "global_scaled_state_rms_max": 1e-10,
+      "per_body_scaled_state_rms_max": 5e-10,
+      "semimajor_axis_history_relative_max": 1e-09
+    },
+    "tolerance_converged": false
+  },
+  "long_history": {
+    "0p25d": {
+      "allan_deviation_by_tau_years": {
+        "100": 5.95347602707568e-13,
+        "1000": 4.703885794388829e-13,
+        "10000": 4.096788669890545e-12,
+        "100000": 4.080783004094926e-11,
+        "300": 7.120472179255456e-13,
+        "3000": 1.23858170663745e-12,
+        "30000": 1.2235736040133563e-11
+      },
+      "blocks": [
+        {
+          "ci95_high_per_year": 5.83516314009113e-16,
+          "ci95_low_per_year": 5.79399682670067e-16,
+          "detrended_peak_to_peak": 6.4941003391230485e-12,
+          "detrended_rms": 9.579953084022249e-13,
+          "fitted_change_over_history": 5.8145799833959e-11,
+          "fitted_change_per_myr": 5.814579983395901e-10,
+          "fitted_intercept": -1.751020649755203e-12,
+          "fitted_slope_per_year": 5.8145799833959e-16,
+          "index": 0,
+          "max_abs": 5.847078048906947e-11,
+          "max_abs_worst_epoch_years": 98600.0,
+          "p99_abs": 5.603123287589223e-11,
+          "r_squared": 0.996759634249512,
+          "rms": 3.208910771436821e-11,
+          "signed_endpoint_change": 5.6514034555631896e-11
+        },
+        {
+          "ci95_high_per_year": 5.765523850216624e-16,
+          "ci95_low_per_year": 5.725760169570922e-16,
+          "detrended_peak_to_peak": 5.858806472580642e-12,
+          "detrended_rms": 9.253541637812566e-13,
+          "fitted_change_over_history": 5.7456420098937725e-11,
+          "fitted_change_per_myr": 5.745642009893773e-10,
+          "fitted_intercept": -5.864476559460627e-13,
+          "fitted_slope_per_year": 5.745642009893773e-16,
+          "index": 1,
+          "max_abs": 1.1638531761776918e-10,
+          "max_abs_worst_epoch_years": 199800.0,
+          "p99_abs": 1.1381930636320277e-10,
+          "r_squared": 0.9969032554686217,
+          "rms": 8.719838693419106e-11,
+          "signed_endpoint_change": 5.7667728659682006e-11
+        },
+        {
+          "ci95_high_per_year": 5.8730409121922915e-16,
+          "ci95_low_per_year": 5.829745091492582e-16,
+          "detrended_peak_to_peak": 6.373323749049176e-12,
+          "detrended_rms": 1.0075517987325363e-12,
+          "fitted_change_over_history": 5.851393001842437e-11,
+          "fitted_change_per_myr": 5.851393001842437e-10,
+          "fitted_intercept": -3.873117877409648e-12,
+          "fitted_slope_per_year": 5.851393001842437e-16,
+          "index": 2,
+          "max_abs": 1.7451458632975278e-10,
+          "max_abs_worst_epoch_years": 298400.0,
+          "p99_abs": 1.7194256201083438e-10,
+          "r_squared": 0.9964617348088731,
+          "rms": 1.4341549246798481e-10,
+          "signed_endpoint_change": 5.904836684497696e-11
+        },
+        {
+          "ci95_high_per_year": 6.052125575917044e-16,
+          "ci95_low_per_year": 6.009400531554749e-16,
+          "detrended_peak_to_peak": 6.9739017789238256e-12,
+          "detrended_rms": 9.94269068063761e-13,
+          "fitted_change_over_history": 6.030763053735896e-11,
+          "fitted_change_per_myr": 6.030763053735896e-10,
+          "fitted_intercept": -9.678016310092025e-12,
+          "fitted_slope_per_year": 6.030763053735896e-16,
+          "index": 3,
+          "max_abs": 2.327227747991205e-10,
+          "max_abs_worst_epoch_years": 399600.0,
+          "p99_abs": 2.3141086113737656e-10,
+          "r_squared": 0.9967553680981873,
+          "rms": 2.0215368286205914e-10,
+          "signed_endpoint_change": 5.761744574013156e-11
+        },
+        {
+          "ci95_high_per_year": 5.591170855176519e-16,
+          "ci95_low_per_year": 5.553492687571102e-16,
+          "detrended_peak_to_peak": 6.3522957519398725e-12,
+          "detrended_rms": 8.76821479077303e-13,
+          "fitted_change_over_history": 5.572331771373811e-11,
+          "fitted_change_per_myr": 5.572331771373811e-10,
+          "fitted_intercept": 9.229187062549439e-12,
+          "fitted_slope_per_year": 5.572331771373811e-16,
+          "index": 4,
+          "max_abs": 2.8826129136206957e-10,
+          "max_abs_worst_epoch_years": 498100.0,
+          "p99_abs": 2.872907527235966e-10,
+          "r_squared": 0.9970435123825148,
+          "rms": 2.6048375122125677e-10,
+          "signed_endpoint_change": 5.7218358807107065e-11
+        },
+        {
+          "ci95_high_per_year": 5.913654980905507e-16,
+          "ci95_low_per_year": 5.867299356571044e-16,
+          "detrended_peak_to_peak": 7.474020597810662e-12,
+          "detrended_rms": 1.0787575318989657e-12,
+          "fitted_change_over_history": 5.890477168738275e-11,
+          "fitted_change_per_myr": 5.890477168738275e-10,
+          "fitted_intercept": -7.1633026710337904e-12,
+          "fitted_slope_per_year": 5.890477168738275e-16,
+          "index": 5,
+          "max_abs": 3.4952065280665406e-10,
+          "max_abs_worst_epoch_years": 599300.0,
+          "p99_abs": 3.4705410766213376e-10,
+          "r_squared": 0.9959994532264834,
+          "rms": 3.172716969125549e-10,
+          "signed_endpoint_change": 5.943867970640829e-11
+        },
+        {
+          "ci95_high_per_year": 5.696566710132597e-16,
+          "ci95_low_per_year": 5.66075715482332e-16,
+          "detrended_peak_to_peak": 5.7882389552733214e-12,
+          "detrended_rms": 8.333363655101087e-13,
+          "fitted_change_over_history": 5.6786619324779586e-11,
+          "fitted_change_per_myr": 5.678661932477959e-10,
+          "fitted_intercept": 6.553277428447547e-12,
+          "fitted_slope_per_year": 5.678661932477959e-16,
+          "index": 6,
+          "max_abs": 4.0405128688719416e-10,
+          "max_abs_worst_epoch_years": 699200.0,
+          "p99_abs": 4.029940028391822e-10,
+          "r_squared": 0.9974275701989481,
+          "rms": 3.7602543773007143e-10,
+          "signed_endpoint_change": 5.6066717670197324e-11
+        },
+        {
+          "ci95_high_per_year": 5.638091484752429e-16,
+          "ci95_low_per_year": 5.598651953344973e-16,
+          "detrended_peak_to_peak": 6.474602682232137e-12,
+          "detrended_rms": 9.178107763878844e-13,
+          "fitted_change_over_history": 5.618371719048701e-11,
+          "fitted_change_per_myr": 5.618371719048701e-10,
+          "fitted_intercept": 1.1209754205953606e-11,
+          "fitted_slope_per_year": 5.618371719048701e-16,
+          "index": 7,
+          "max_abs": 4.6210028519066556e-10,
+          "max_abs_worst_epoch_years": 798900.0,
+          "p99_abs": 4.5965223824531775e-10,
+          "r_squared": 0.9968142394913769,
+          "rms": 4.3289315039519837e-10,
+          "signed_endpoint_change": 5.7007664058543024e-11
+        },
+        {
+          "ci95_high_per_year": 5.886392609212723e-16,
+          "ci95_low_per_year": 5.84514501918489e-16,
+          "detrended_peak_to_peak": 7.29892679620857e-12,
+          "detrended_rms": 9.598867247296151e-13,
+          "fitted_change_over_history": 5.865768814198806e-11,
+          "fitted_change_per_myr": 5.865768814198807e-10,
+          "fitted_intercept": -9.463726494950115e-12,
+          "fitted_slope_per_year": 5.865768814198806e-16,
+          "index": 8,
+          "max_abs": 5.190499729700308e-10,
+          "max_abs_worst_epoch_years": 897500.0,
+          "p99_abs": 5.175187198088404e-10,
+          "r_squared": 0.9968032178460879,
+          "rms": 4.894211631240497e-10,
+          "signed_endpoint_change": 5.734122483940491e-11
+        },
+        {
+          "ci95_high_per_year": 5.623090791926502e-16,
+          "ci95_low_per_year": 5.576027238491668e-16,
+          "detrended_peak_to_peak": 6.820245257183417e-12,
+          "detrended_rms": 1.0952319912561085e-12,
+          "fitted_change_over_history": 5.599559015209085e-11,
+          "fitted_change_per_myr": 5.599559015209085e-10,
+          "fitted_intercept": 1.475116375691328e-11,
+          "fitted_slope_per_year": 5.599559015209085e-16,
+          "index": 9,
+          "max_abs": 5.778771449735988e-10,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 5.748278447365617e-10,
+          "r_squared": 0.9954392854580111,
+          "rms": 5.469497604153418e-10,
+          "signed_endpoint_change": 5.7710271713227185e-11
+        }
+      ],
+      "ci95_high_per_year": 5.776372121181906e-16,
+      "ci95_low_per_year": 5.774606419703457e-16,
+      "detrended_peak_to_peak": 9.328763164285099e-12,
+      "detrended_rms": 1.3002225877959222e-12,
+      "endpoint_elapsed_exponent": 1.0490556712843553,
+      "energy_change_per_step": 3.9531069612886253e-19,
+      "fitted_change_over_history": 5.775489270442681e-10,
+      "fitted_change_per_myr": 5.775489270442681e-10,
+      "fitted_intercept": -1.0129846983867255e-12,
+      "fitted_slope_per_year": 5.775489270442681e-16,
+      "increment_distribution": {
+        "excess_kurtosis": 2.4017171126838495,
+        "lag1_autocorrelation": 0.13933712800596357,
+        "mad": 4.522785434027121e-13,
+        "mean": 5.756304925953102e-14,
+        "median": 5.998262633915676e-14,
+        "p01": -2.4320837802826214e-12,
+        "p99": 2.4808990870388827e-12,
+        "positive_fraction": 0.5355,
+        "rms": 8.419486540753519e-13,
+        "sample_std": 8.400205919611336e-13,
+        "skew": -0.035705478679454575
+      },
+      "max_abs": 5.778771449735988e-10,
+      "max_abs_worst_epoch_years": 998700.0,
+      "p99_abs": 5.696177852995406e-10,
+      "periodogram_top_peaks": [
+        {
+          "period_years": 1000100.0,
+          "power": 3.7183497092771326e-19
+        },
+        {
+          "period_years": 250025.0,
+          "power": 1.8071461965777238e-19
+        },
+        {
+          "period_years": 1406.6104078762307,
+          "power": 1.1940085032412004e-19
+        },
+        {
+          "period_years": 333366.6666666666,
+          "power": 1.1893943365249397e-19
+        },
+        {
+          "period_years": 937.3008434864106,
+          "power": 9.74817144409604e-20
+        }
+      ],
+      "prefixes": {
+        "10": {
+          "ci95_high_per_year": 5.914039934345973e-16,
+          "ci95_low_per_year": 4.82279039348766e-16,
+          "detrended_peak_to_peak": 4.618076590685567e-12,
+          "detrended_rms": 7.976860238652521e-13,
+          "fitted_change_over_history": 5.3684151639168165e-12,
+          "fitted_change_per_myr": 5.368415163916817e-10,
+          "fitted_intercept": -1.5045493991795224e-12,
+          "fitted_slope_per_year": 5.368415163916817e-16,
+          "max_abs": 6.169413544580048e-12,
+          "max_abs_worst_epoch_years": 8600.0,
+          "p99_abs": 4.5919461191068166e-12,
+          "r_squared": 0.7938093147422864,
+          "range": 8.859124570179852e-12,
+          "rms": 2.1160307978622994e-12,
+          "signed_endpoint_change": 4.5919461191068166e-12
+        },
+        "100": {
+          "ci95_high_per_year": 5.83516314009113e-16,
+          "ci95_low_per_year": 5.79399682670067e-16,
+          "detrended_peak_to_peak": 6.4941003391230485e-12,
+          "detrended_rms": 9.579953084022249e-13,
+          "fitted_change_over_history": 5.8145799833959e-11,
+          "fitted_change_per_myr": 5.814579983395901e-10,
+          "fitted_intercept": -1.751020649755203e-12,
+          "fitted_slope_per_year": 5.8145799833959e-16,
+          "max_abs": 5.847078048906947e-11,
+          "max_abs_worst_epoch_years": 98600.0,
+          "p99_abs": 5.603123287589223e-11,
+          "r_squared": 0.996759634249512,
+          "range": 6.116049151466927e-11,
+          "rms": 3.208910771436821e-11,
+          "signed_endpoint_change": 5.6514034555631896e-11
+        },
+        "1000": {
+          "ci95_high_per_year": 5.776372121181906e-16,
+          "ci95_low_per_year": 5.774606419703457e-16,
+          "detrended_peak_to_peak": 9.328763164285099e-12,
+          "detrended_rms": 1.3002225877959222e-12,
+          "fitted_change_over_history": 5.775489270442681e-10,
+          "fitted_change_per_myr": 5.775489270442681e-10,
+          "fitted_intercept": -1.0129846983867255e-12,
+          "fitted_slope_per_year": 5.775489270442681e-16,
+          "max_abs": 5.778771449735988e-10,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 5.696177852995406e-10,
+          "r_squared": 0.9999391968836603,
+          "range": 5.805668559991987e-10,
+          "rms": 3.325820433825195e-10,
+          "signed_endpoint_change": 5.756304925953102e-10
+        },
+        "30": {
+          "ci95_high_per_year": 5.770549157834435e-16,
+          "ci95_low_per_year": 5.544170880053066e-16,
+          "detrended_peak_to_peak": 5.2578109588083955e-12,
+          "detrended_rms": 8.641800826436342e-13,
+          "fitted_change_over_history": 1.6972080056831253e-11,
+          "fitted_change_per_myr": 5.65736001894375e-10,
+          "fitted_intercept": -1.7371346366287867e-12,
+          "fitted_slope_per_year": 5.65736001894375e-16,
+          "max_abs": 1.7216827915184423e-11,
+          "max_abs_worst_epoch_years": 28300.0,
+          "p99_abs": 1.637262124994302e-11,
+          "r_squared": 0.9700211396779637,
+          "range": 1.9906538940784225e-11,
+          "rms": 8.393977102804402e-12,
+          "signed_endpoint_change": 1.5449867189147287e-11
+        },
+        "300": {
+          "ci95_high_per_year": 5.76428822724104e-16,
+          "ci95_low_per_year": 5.755684447597291e-16,
+          "detrended_peak_to_peak": 7.047877154663349e-12,
+          "detrended_rms": 1.0408771208046137e-12,
+          "fitted_change_over_history": 1.7279959012257498e-10,
+          "fitted_change_per_myr": 5.759986337419166e-10,
+          "fitted_intercept": -1.2893635719527713e-12,
+          "fitted_slope_per_year": 5.759986337419166e-16,
+          "max_abs": 1.7451458632975278e-10,
+          "max_abs_worst_epoch_years": 298400.0,
+          "p99_abs": 1.703310401505938e-10,
+          "r_squared": 0.9995650729747462,
+          "range": 1.772042973553526e-10,
+          "rms": 9.8665272721236e-11,
+          "signed_endpoint_change": 1.7323013006029086e-10
+        }
+      },
+      "r_squared": 0.9999391968836603,
+      "range_elapsed_exponent": 0.91689602932593,
+      "residual_autocorrelation": {
+        "1": 0.7913341837260677,
+        "10": 0.5325226234185961,
+        "100": 0.5076425817565012,
+        "1000": 0.050293357970659466
+      },
+      "rms": 3.325820433825195e-10,
+      "same_sign_block_count": 10,
+      "signed_endpoint_change": 5.756304925953102e-10
+    },
+    "0p5d": {
+      "allan_deviation_by_tau_years": {
+        "100": 2.3701730894069853e-12,
+        "1000": 8.625046164813762e-13,
+        "10000": 2.067198712828089e-12,
+        "100000": 2.046718358575524e-11,
+        "300": 2.7941481985619125e-12,
+        "3000": 6.483964314145852e-13,
+        "30000": 6.162822368544194e-12
+      },
+      "blocks": [
+        {
+          "ci95_high_per_year": 3.0415988441937966e-16,
+          "ci95_low_per_year": 2.891757137048881e-16,
+          "detrended_peak_to_peak": 2.3961347638045458e-11,
+          "detrended_rms": 3.4870174330712128e-12,
+          "fitted_change_over_history": 2.9666779906213385e-11,
+          "fitted_change_per_myr": 2.966677990621339e-10,
+          "fitted_intercept": -6.642956079524882e-12,
+          "fitted_slope_per_year": 2.9666779906213387e-16,
+          "index": 0,
+          "max_abs": 3.468431115086577e-11,
+          "max_abs_worst_epoch_years": 90200.0,
+          "p99_abs": 2.7535851838053555e-11,
+          "r_squared": 0.8580336932083863,
+          "rms": 1.2358492481745837e-11,
+          "signed_endpoint_change": 2.2674870310353036e-11
+        },
+        {
+          "ci95_high_per_year": 3.138646739351873e-16,
+          "ci95_low_per_year": 2.999757356295118e-16,
+          "detrended_peak_to_peak": 2.1644428436103945e-11,
+          "detrended_rms": 3.2321421666600763e-12,
+          "fitted_change_over_history": 3.069202047823496e-11,
+          "fitted_change_per_myr": 3.0692020478234954e-10,
+          "fitted_intercept": -7.872238064346367e-12,
+          "fitted_slope_per_year": 3.0692020478234956e-16,
+          "index": 1,
+          "max_abs": 6.311239089350363e-11,
+          "max_abs_worst_epoch_years": 199800.0,
+          "p99_abs": 5.7746404134335036e-11,
+          "r_squared": 0.8827575424941867,
+          "rms": 3.9315791762652996e-11,
+          "signed_endpoint_change": 3.079790674023601e-11
+        },
+        {
+          "ci95_high_per_year": 3.0622248907668965e-16,
+          "ci95_low_per_year": 2.917439357801882e-16,
+          "detrended_peak_to_peak": 2.0480290228384363e-11,
+          "detrended_rms": 3.3693534805849667e-12,
+          "fitted_change_over_history": 2.989832124284389e-11,
+          "fitted_change_per_myr": 2.9898321242843893e-10,
+          "fitted_intercept": -5.632218871409299e-12,
+          "fitted_slope_per_year": 2.989832124284389e-16,
+          "index": 2,
+          "max_abs": 9.507079698034362e-11,
+          "max_abs_worst_epoch_years": 298400.0,
+          "p99_abs": 8.787521191893415e-11,
+          "r_squared": 0.8679844702957727,
+          "rms": 6.973292996482798e-11,
+          "signed_endpoint_change": 3.40671150697072e-11
+        },
+        {
+          "ci95_high_per_year": 2.799986178024531e-16,
+          "ci95_low_per_year": 2.652647583272276e-16,
+          "detrended_peak_to_peak": 2.1451652142918248e-11,
+          "detrended_rms": 3.428766651520117e-12,
+          "fitted_change_over_history": 2.726316880648403e-11,
+          "fitted_change_per_myr": 2.726316880648403e-10,
+          "fitted_intercept": 1.670109519420877e-12,
+          "fitted_slope_per_year": 2.7263168806484033e-16,
+          "index": 3,
+          "max_abs": 1.2017281332867194e-10,
+          "max_abs_worst_epoch_years": 393900.0,
+          "p99_abs": 1.1707802589185036e-10,
+          "r_squared": 0.8407425534601137,
+          "rms": 9.74706188335734e-11,
+          "signed_endpoint_change": 2.0188309687981467e-11
+        },
+        {
+          "ci95_high_per_year": 3.031301013919681e-16,
+          "ci95_low_per_year": 2.8977938357622593e-16,
+          "detrended_peak_to_peak": 2.0987194380390112e-11,
+          "detrended_rms": 3.1068910421905193e-12,
+          "fitted_change_over_history": 2.96454742484097e-11,
+          "fitted_change_per_myr": 2.96454742484097e-10,
+          "fitted_intercept": -8.1019496833662e-12,
+          "fitted_slope_per_year": 2.96454742484097e-16,
+          "index": 4,
+          "max_abs": 1.4745683209042132e-10,
+          "max_abs_worst_epoch_years": 489500.0,
+          "p99_abs": 1.440528316510559e-10,
+          "r_squared": 0.883753493670713,
+          "rms": 1.256335935146698e-10,
+          "signed_endpoint_change": 3.4404676779761776e-11
+        },
+        {
+          "ci95_high_per_year": 3.0648367653021383e-16,
+          "ci95_low_per_year": 2.909579133822245e-16,
+          "detrended_peak_to_peak": 2.509409745184624e-11,
+          "detrended_rms": 3.6130532540192295e-12,
+          "fitted_change_over_history": 2.987207949562192e-11,
+          "fitted_change_per_myr": 2.9872079495621914e-10,
+          "fitted_intercept": -9.404479910969351e-12,
+          "fitted_slope_per_year": 2.9872079495621916e-16,
+          "index": 5,
+          "max_abs": 1.8126859307842987e-10,
+          "max_abs_worst_epoch_years": 596400.0,
+          "p99_abs": 1.7566618940787337e-10,
+          "r_squared": 0.8509197999699828,
+          "rms": 1.5517436347319535e-10,
+          "signed_endpoint_change": 2.7598231245493797e-11
+        },
+        {
+          "ci95_high_per_year": 3.044929672549789e-16,
+          "ci95_low_per_year": 2.910631018288318e-16,
+          "detrended_peak_to_peak": 2.0402693230329604e-11,
+          "detrended_rms": 3.125309752343176e-12,
+          "fitted_change_over_history": 2.977780345419053e-11,
+          "fitted_change_per_myr": 2.977780345419054e-10,
+          "fitted_intercept": -9.471929511065234e-12,
+          "fitted_slope_per_year": 2.9777803454190535e-16,
+          "index": 6,
+          "max_abs": 2.0459080440739807e-10,
+          "max_abs_worst_epoch_years": 694900.0,
+          "p99_abs": 2.0282198368371432e-10,
+          "r_squared": 0.8834537843755252,
+          "rms": 1.843112891346222e-10,
+          "signed_endpoint_change": 3.079071466098461e-11
+        },
+        {
+          "ci95_high_per_year": 2.823321196739484e-16,
+          "ci95_low_per_year": 2.6811618009837323e-16,
+          "detrended_peak_to_peak": 2.1738636076356818e-11,
+          "detrended_rms": 3.3082397465998013e-12,
+          "fitted_change_over_history": 2.7522414988616082e-11,
+          "fitted_change_per_myr": 2.752241498861608e-10,
+          "fitted_intercept": 7.618726302797964e-12,
+          "fitted_slope_per_year": 2.752241498861608e-16,
+          "index": 7,
+          "max_abs": 2.389601318802479e-10,
+          "max_abs_worst_epoch_years": 796100.0,
+          "p99_abs": 2.333521616379425e-10,
+          "r_squared": 0.8524893551184788,
+          "rms": 2.1421008994945944e-10,
+          "signed_endpoint_change": 2.8492019529732855e-11
+        },
+        {
+          "ci95_high_per_year": 2.7552081163286283e-16,
+          "ci95_low_per_year": 2.6084149934910213e-16,
+          "detrended_peak_to_peak": 2.4010288914252398e-11,
+          "detrended_rms": 3.416072788697342e-12,
+          "fitted_change_over_history": 2.6818115549098247e-11,
+          "fitted_change_per_myr": 2.681811554909825e-10,
+          "fitted_intercept": 1.26856836422319e-11,
+          "fitted_slope_per_year": 2.681811554909825e-16,
+          "index": 8,
+          "max_abs": 2.629793018574439e-10,
+          "max_abs_worst_epoch_years": 897500.0,
+          "p99_abs": 2.58023509862026e-10,
+          "r_squared": 0.8372985008155959,
+          "rms": 2.4078864686606747e-10,
+          "signed_endpoint_change": 2.438781978745332e-11
+        },
+        {
+          "ci95_high_per_year": 3.04941860229382e-16,
+          "ci95_low_per_year": 2.9051627582455633e-16,
+          "detrended_peak_to_peak": 2.1372579359095824e-11,
+          "detrended_rms": 3.3570269092849324e-12,
+          "fitted_change_over_history": 2.9772906802696915e-11,
+          "fitted_change_per_myr": 2.9772906802696916e-10,
+          "fitted_intercept": -1.411706282583264e-11,
+          "fitted_slope_per_year": 2.9772906802696917e-16,
+          "index": 9,
+          "max_abs": 2.9666649684530116e-10,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 2.8938877222065473e-10,
+          "r_squared": 0.8678610395637141,
+          "rms": 2.688841914078569e-10,
+          "signed_endpoint_change": 3.18112818650409e-11
+        }
+      ],
+      "ci95_high_per_year": 2.897882329554366e-16,
+      "ci95_low_per_year": 2.8930833382060593e-16,
+      "detrended_peak_to_peak": 2.6807170777724857e-11,
+      "detrended_rms": 3.5338685649086847e-12,
+      "endpoint_elapsed_exponent": 1.3264953506632744,
+      "energy_change_per_step": 3.963699977933214e-19,
+      "fitted_change_over_history": 2.8954828338802124e-10,
+      "fitted_change_per_myr": 2.8954828338802124e-10,
+      "fitted_intercept": -4.750591392854822e-12,
+      "fitted_slope_per_year": 2.8954828338802127e-16,
+      "increment_distribution": {
+        "excess_kurtosis": 2.429075766394095,
+        "lag1_autocorrelation": 0.13931464948582037,
+        "mad": 1.8103064669694913e-12,
+        "mean": 2.8521294567674495e-14,
+        "median": 5.780648146493238e-14,
+        "p01": -9.873938946125489e-12,
+        "p99": 9.720373397547956e-12,
+        "positive_fraction": 0.5091,
+        "rms": 3.351930928211097e-12,
+        "sample_std": 3.3519771864319313e-12,
+        "skew": -0.04474786416619131
+      },
+      "max_abs": 2.9666649684530116e-10,
+      "max_abs_worst_epoch_years": 998700.0,
+      "p99_abs": 2.8074989555945966e-10,
+      "periodogram_top_peaks": [
+        {
+          "period_years": 1406.6104078762307,
+          "power": 1.914749456733011e-18
+        },
+        {
+          "period_years": 937.3008434864106,
+          "power": 1.54819411724785e-18
+        },
+        {
+          "period_years": 703.3052039381154,
+          "power": 1.0804785414502414e-18
+        },
+        {
+          "period_years": 419.32914046121596,
+          "power": 7.691435198485242e-19
+        },
+        {
+          "period_years": 562.4859392575928,
+          "power": 7.03153759220587e-19
+        }
+      ],
+      "prefixes": {
+        "10": {
+          "ci95_high_per_year": 4.0079140198314218e-16,
+          "ci95_low_per_year": -3.174998254884957e-17,
+          "detrended_peak_to_peak": 1.751073245672627e-11,
+          "detrended_rms": 3.1618085897485336e-12,
+          "fitted_change_over_history": 1.845207097171463e-12,
+          "fitted_change_per_myr": 1.8452070971714632e-10,
+          "fitted_intercept": -5.6928722225517625e-12,
+          "fitted_slope_per_year": 1.8452070971714631e-16,
+          "max_abs": 1.1127897660056123e-11,
+          "max_abs_worst_epoch_years": 700.0,
+          "p99_abs": 1.0619193032849582e-11,
+          "r_squared": 0.028134813072945852,
+          "range": 1.8867210972550762e-11,
+          "rms": 5.748208752707461e-12,
+          "signed_endpoint_change": -1.0891033677662116e-12
+        },
+        "100": {
+          "ci95_high_per_year": 3.0415988441937966e-16,
+          "ci95_low_per_year": 2.891757137048881e-16,
+          "detrended_peak_to_peak": 2.3961347638045458e-11,
+          "detrended_rms": 3.4870174330712128e-12,
+          "fitted_change_over_history": 2.9666779906213385e-11,
+          "fitted_change_per_myr": 2.966677990621339e-10,
+          "fitted_intercept": -6.642956079524882e-12,
+          "fitted_slope_per_year": 2.9666779906213387e-16,
+          "max_abs": 3.468431115086577e-11,
+          "max_abs_worst_epoch_years": 90200.0,
+          "p99_abs": 2.7535851838053555e-11,
+          "r_squared": 0.8580336932083863,
+          "range": 4.5812208810921896e-11,
+          "rms": 1.2358492481745837e-11,
+          "signed_endpoint_change": 2.2674870310353036e-11
+        },
+        "1000": {
+          "ci95_high_per_year": 2.897882329554366e-16,
+          "ci95_low_per_year": 2.8930833382060593e-16,
+          "detrended_peak_to_peak": 2.6807170777724857e-11,
+          "detrended_rms": 3.5338685649086847e-12,
+          "fitted_change_over_history": 2.8954828338802124e-10,
+          "fitted_change_per_myr": 2.8954828338802124e-10,
+          "fitted_intercept": -4.750591392854822e-12,
+          "fitted_slope_per_year": 2.8954828338802127e-16,
+          "max_abs": 2.9666649684530116e-10,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 2.8074989555945966e-10,
+          "r_squared": 0.998216070244019,
+          "range": 3.077943945053573e-10,
+          "rms": 1.6311651521901066e-10,
+          "signed_endpoint_change": 2.85212945676745e-10
+        },
+        "30": {
+          "ci95_high_per_year": 3.1184330361278874e-16,
+          "ci95_low_per_year": 2.237115166363161e-16,
+          "detrended_peak_to_peak": 2.1245259851814866e-11,
+          "detrended_rms": 3.364357026623126e-12,
+          "fitted_change_over_history": 8.033322303736572e-12,
+          "fitted_change_per_myr": 2.6777741012455243e-10,
+          "fitted_intercept": -6.179838878285524e-12,
+          "fitted_slope_per_year": 2.677774101245524e-16,
+          "max_abs": 1.247381818652257e-11,
+          "max_abs_worst_epoch_years": 28300.0,
+          "p99_abs": 1.1145407707282875e-11,
+          "r_squared": 0.3235424246909193,
+          "range": 2.3601715846578692e-11,
+          "rms": 4.627304188436126e-12,
+          "signed_endpoint_change": 1.4356709896780969e-12
+        },
+        "300": {
+          "ci95_high_per_year": 3.0559235536183233e-16,
+          "ci95_low_per_year": 3.028007224476334e-16,
+          "detrended_peak_to_peak": 2.4504211690110966e-11,
+          "detrended_rms": 3.3772910864655164e-12,
+          "fitted_change_over_history": 9.125896167141986e-11,
+          "fitted_change_per_myr": 3.041965389047329e-10,
+          "fitted_intercept": -7.139266598559094e-12,
+          "fitted_slope_per_year": 3.0419653890473287e-16,
+          "max_abs": 9.507079698034362e-11,
+          "max_abs_worst_epoch_years": 298400.0,
+          "p99_abs": 8.470642468554589e-11,
+          "r_squared": 0.9838414323006135,
+          "range": 1.0619869464039974e-10,
+          "rms": 4.676945447498866e-11,
+          "signed_endpoint_change": 8.753989212029625e-11
+        }
+      },
+      "r_squared": 0.998216070244019,
+      "range_elapsed_exponent": 0.6166960324624978,
+      "residual_autocorrelation": {
+        "1": 0.5501952788084016,
+        "10": 0.009295049664544199,
+        "100": 0.15060666803180214,
+        "1000": 0.055732696283706355
+      },
+      "rms": 1.6311651521901066e-10,
+      "same_sign_block_count": 10,
+      "signed_endpoint_change": 2.85212945676745e-10
+    }
+  },
+  "manifest_path": "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+  "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+  "material_reduction": {
+    "current_vs_full": {
+      "0p25d": {
+        "passed": false,
+        "physical_accuracy_not_worse": true,
+        "ratios": {
+          "absolute_normalized_fitted_slope": 1.0,
+          "max_abs": 1.0,
+          "p99_abs": 1.0,
+          "rms": 1.0
+        }
+      },
+      "0p5d": {
+        "passed": false,
+        "physical_accuracy_not_worse": true,
+        "ratios": {
+          "absolute_normalized_fitted_slope": 1.0,
+          "max_abs": 1.0,
+          "p99_abs": 1.0,
+          "rms": 1.0
+        }
+      }
+    },
+    "min_vs_current": {
+      "0p25d": {
+        "passed": true,
+        "physical_accuracy_not_worse": true,
+        "ratios": {
+          "absolute_normalized_fitted_slope": 0.03227410116899783,
+          "max_abs": 0.06150383218310382,
+          "p99_abs": 0.05660293950800534,
+          "rms": 0.049624577200096755
+        }
+      },
+      "0p5d": {
+        "passed": false,
+        "physical_accuracy_not_worse": true,
+        "ratios": {
+          "absolute_normalized_fitted_slope": 0.042904096844048376,
+          "max_abs": 0.39389834293359666,
+          "p99_abs": 0.4342177649157128,
+          "rms": 0.5529110086403924
+        }
+      }
+    }
+  },
+  "new_lanes": {
+    "m0_diag_phys_current_sync_0p25d_100k": {
+      "artifact_inventory": {
+        "archive": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p25d_100k/simulationarchive.bin",
+          "sha256": "079130971f6c720090ed6247b3895429c978e23e48ba4ce1411f2ab530e02f28",
+          "size_bytes": 33676
+        },
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p25d_100k/events.log",
+          "sha256": "320d62d29da30fea679b6faffe67d78af81440f780b3805b04e111be23068e43",
+          "size_bytes": 468
+        },
+        "progress": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p25d_100k/progress.csv",
+          "sha256": "1ad1e9df3880f4423722e39b03e55d3d6922f13be1839e4b849a7fb93d7b812a",
+          "size_bytes": 464456
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p25d_100k/physical_state.csv",
+          "sha256": "caa12209cf2b7bb1b59109315da215e6020290f25f6e645da0319a260f64d118",
+          "size_bytes": 2495624
+        },
+        "status": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p25d_100k/status.json",
+          "sha256": "137f95ff059b0d6389c7a50fa44b59e6fcbf2c9b0012a7bd1b24711e448822c1",
+          "size_bytes": 378
+        }
+      },
+      "callback_stats": {
+        "callback_invocations": 146100000,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 1314900000,
+        "real_gr_accel_norm_max": 1.2165757112024963e-08,
+        "real_gr_accel_norm_mean": 8.705418036626523e-10,
+        "real_gr_accel_norm_sum": 1.1446754176360214,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "energy": {
+        "compensated_decimal_max_abs": 8.661125512135989e-16,
+        "statistics": {
+          "compensated": {
+            "ci95_high_per_year": 5.835162883301766e-16,
+            "ci95_low_per_year": 5.793996328210853e-16,
+            "detrended_peak_to_peak": 6.49426579777356e-12,
+            "detrended_rms": 9.580009330958235e-13,
+            "fitted_change_over_history": 5.8145796057563096e-11,
+            "fitted_change_per_myr": 5.814579605756309e-10,
+            "fitted_intercept": -1.7507418214416416e-12,
+            "fitted_slope_per_year": 5.81457960575631e-16,
+            "max_abs": 5.847117681380088e-11,
+            "max_abs_worst_epoch_years": 98600.0,
+            "p99_abs": 5.6031781036245445e-11,
+            "r_squared": 0.9967595959027288,
+            "rms": 3.2089343108524356e-11,
+            "signed_endpoint_change": 5.6514407369449944e-11
+          },
+          "decimal": {
+            "ci95_high_per_year": 5.83516314009113e-16,
+            "ci95_low_per_year": 5.79399682670067e-16,
+            "detrended_peak_to_peak": 6.4941003391230485e-12,
+            "detrended_rms": 9.579953084022249e-13,
+            "fitted_change_over_history": 5.8145799833959e-11,
+            "fitted_change_per_myr": 5.814579983395901e-10,
+            "fitted_intercept": -1.751020649755203e-12,
+            "fitted_slope_per_year": 5.8145799833959e-16,
+            "max_abs": 5.847078048906947e-11,
+            "max_abs_worst_epoch_years": 98600.0,
+            "p99_abs": 5.603123287589223e-11,
+            "r_squared": 0.996759634249512,
+            "rms": 3.208910771436821e-11,
+            "signed_endpoint_change": 5.6514034555631896e-11
+          },
+          "float64": {
+            "ci95_high_per_year": 5.835155904214944e-16,
+            "ci95_low_per_year": 5.79399044676162e-16,
+            "detrended_peak_to_peak": 6.492972579956577e-12,
+            "detrended_rms": 9.579753895973949e-13,
+            "fitted_change_over_history": 5.814573175488282e-11,
+            "fitted_change_per_myr": 5.814573175488282e-10,
+            "fitted_intercept": -1.751268480985172e-12,
+            "fitted_slope_per_year": 5.814573175488282e-16,
+            "max_abs": 5.847024546232811e-11,
+            "max_abs_worst_epoch_years": 98600.0,
+            "p99_abs": 5.60312222253618e-11,
+            "r_squared": 0.9967597609970205,
+            "rms": 3.208885682399062e-11,
+            "signed_endpoint_change": 5.651347601797718e-11
+          },
+          "recorded": {
+            "ci95_high_per_year": 5.835155904214944e-16,
+            "ci95_low_per_year": 5.79399044676162e-16,
+            "detrended_peak_to_peak": 6.492972579956577e-12,
+            "detrended_rms": 9.579753895973949e-13,
+            "fitted_change_over_history": 5.814573175488282e-11,
+            "fitted_change_per_myr": 5.814573175488282e-10,
+            "fitted_intercept": -1.751268480985172e-12,
+            "fitted_slope_per_year": 5.814573175488282e-16,
+            "max_abs": 5.847024546232811e-11,
+            "max_abs_worst_epoch_years": 98600.0,
+            "p99_abs": 5.60312222253618e-11,
+            "r_squared": 0.9967597609970205,
+            "rms": 3.208885682399062e-11,
+            "signed_endpoint_change": 5.651347601797718e-11
+          }
+        },
+        "telemetry_reproduction_max_abs": 0.0,
+        "timeseries": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/recomputed_energy/m0_diag_phys_current_sync_0p25d_100k.csv",
+          "sha256": "9a4ae8137dc6198a8839dfce94754adb95aaef2bc59b5a20fff0bf07bce99cca",
+          "size_bytes": 320565
+        }
+      },
+      "runtime_seconds": 220.0260356279323,
+      "throughput_years_per_wall_second": 454.4916682910275
+    },
+    "m0_diag_phys_current_sync_0p5d_100k": {
+      "artifact_inventory": {
+        "archive": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p5d_100k/simulationarchive.bin",
+          "sha256": "816bdb9af6553d9d010e7c3fb910e97fd68fe5e8cb309344065a2f037ef1af05",
+          "size_bytes": 33676
+        },
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p5d_100k/events.log",
+          "sha256": "e03e32889587586fe49cd4099ec204b064affda0ec310e1bb10ba0f156e2a728",
+          "size_bytes": 465
+        },
+        "progress": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p5d_100k/progress.csv",
+          "sha256": "45de521e29d89412660f52e1b49fff3fa8caadfffe94b7ab22bc045c05c8cc36",
+          "size_bytes": 464139
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p5d_100k/physical_state.csv",
+          "sha256": "c535bb0218a860ca18a66335363bb33202d62e380286137775604c927b0050fe",
+          "size_bytes": 2495533
+        },
+        "status": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p5d_100k/status.json",
+          "sha256": "bce6aa3f0e6688abb6d005fc60dc24737652db6828234939605e59fb103dc826",
+          "size_bytes": 376
+        }
+      },
+      "callback_stats": {
+        "callback_invocations": 73050000,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 657450000,
+        "real_gr_accel_norm_max": 1.216583665095818e-08,
+        "real_gr_accel_norm_mean": 8.705418039428802e-10,
+        "real_gr_accel_norm_sum": 0.5723377090022466,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "energy": {
+        "compensated_decimal_max_abs": 9.36681360881639e-16,
+        "statistics": {
+          "compensated": {
+            "ci95_high_per_year": 3.041599243398279e-16,
+            "ci95_low_per_year": 2.8917572720007166e-16,
+            "detrended_peak_to_peak": 2.3960761684655125e-11,
+            "detrended_rms": 3.487023582584622e-12,
+            "fitted_change_over_history": 2.966678257699498e-11,
+            "fitted_change_per_myr": 2.966678257699498e-10,
+            "fitted_intercept": -6.642678167944618e-12,
+            "fitted_slope_per_year": 2.966678257699498e-16,
+            "max_abs": 3.4684460198511624e-11,
+            "max_abs_worst_epoch_years": 90200.0,
+            "p99_abs": 2.7536151374483902e-11,
+            "r_squared": 0.8580332854992159,
+            "rms": 1.2358679821324002e-11,
+            "signed_endpoint_change": 2.2675055497356232e-11
+          },
+          "decimal": {
+            "ci95_high_per_year": 3.0415988441937966e-16,
+            "ci95_low_per_year": 2.891757137048881e-16,
+            "detrended_peak_to_peak": 2.3961347638045458e-11,
+            "detrended_rms": 3.4870174330712128e-12,
+            "fitted_change_over_history": 2.9666779906213385e-11,
+            "fitted_change_per_myr": 2.966677990621339e-10,
+            "fitted_intercept": -6.642956079524882e-12,
+            "fitted_slope_per_year": 2.9666779906213387e-16,
+            "max_abs": 3.468431115086577e-11,
+            "max_abs_worst_epoch_years": 90200.0,
+            "p99_abs": 2.7535851838053555e-11,
+            "r_squared": 0.8580336932083863,
+            "rms": 1.2358492481745837e-11,
+            "signed_endpoint_change": 2.2674870310353036e-11
+          },
+          "float64": {
+            "ci95_high_per_year": 3.041592696407255e-16,
+            "ci95_low_per_year": 2.8917500122119017e-16,
+            "detrended_peak_to_peak": 2.396114368288845e-11,
+            "detrended_rms": 3.4870401703449366e-12,
+            "fitted_change_over_history": 2.9666713543095786e-11,
+            "fitted_change_per_myr": 2.966671354309578e-10,
+            "fitted_intercept": -6.643230932762881e-12,
+            "fitted_slope_per_year": 2.9666713543095784e-16,
+            "max_abs": 3.468427392821709e-11,
+            "max_abs_worst_epoch_years": 90200.0,
+            "p99_abs": 2.7535778833894797e-11,
+            "r_squared": 0.8580315596643231,
+            "rms": 1.2358281451081689e-11,
+            "signed_endpoint_change": 2.2674682956767124e-11
+          },
+          "recorded": {
+            "ci95_high_per_year": 3.041592696407255e-16,
+            "ci95_low_per_year": 2.8917500122119017e-16,
+            "detrended_peak_to_peak": 2.396114368288845e-11,
+            "detrended_rms": 3.4870401703449366e-12,
+            "fitted_change_over_history": 2.9666713543095786e-11,
+            "fitted_change_per_myr": 2.966671354309578e-10,
+            "fitted_intercept": -6.643230932762881e-12,
+            "fitted_slope_per_year": 2.9666713543095784e-16,
+            "max_abs": 3.468427392821709e-11,
+            "max_abs_worst_epoch_years": 90200.0,
+            "p99_abs": 2.7535778833894797e-11,
+            "r_squared": 0.8580315596643231,
+            "rms": 1.2358281451081689e-11,
+            "signed_endpoint_change": 2.2674682956767124e-11
+          }
+        },
+        "telemetry_reproduction_max_abs": 0.0,
+        "timeseries": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/recomputed_energy/m0_diag_phys_current_sync_0p5d_100k.csv",
+          "sha256": "254104d3f08cbb88932a56946f86eedecc03e39f089b59de3cfa33a704794079",
+          "size_bytes": 320394
+        }
+      },
+      "runtime_seconds": 119.9857128720032,
+      "throughput_years_per_wall_second": 833.4325613140015
+    },
+    "m0_diag_phys_ias15_eps1e12_10k": {
+      "artifact_inventory": {
+        "archive": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/simulationarchive.bin",
+          "sha256": "de9eb3f9bc4513d77024388fb85972a8489aa644827cfcfb231b6cd38689c8e6",
+          "size_bytes": 139140
+        },
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/events.log",
+          "sha256": "452034afe28164e4da0331a2f794e7895e3ecfd2938107d8b3cd8aed6a16e2ee",
+          "size_bytes": 449
+        },
+        "progress": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/progress.csv",
+          "sha256": "f99769331a7065c846b4399d453c88ce54492898df8dbb6a0614be5dce8e2495",
+          "size_bytes": 48754
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/physical_state.csv",
+          "sha256": "c95024d866dbc1de92f0f6a708b6a1f71f34a3b9b7407d62f492f80837d28c9f",
+          "size_bytes": 248736
+        },
+        "status": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/status.json",
+          "sha256": "d8d3b692cae30a4367cdf670f6e20497896d6afaf1b3cde15f2f78634c390142",
+          "size_bytes": 369
+        }
+      },
+      "callback_stats": {
+        "callback_invocations": 74575651,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 671180859,
+        "real_gr_accel_norm_max": 1.2152284950578609e-08,
+        "real_gr_accel_norm_mean": 9.707233584782216e-10,
+        "real_gr_accel_norm_sum": 0.6515309375947776,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "energy": {
+        "compensated_decimal_max_abs": 7.035188401413023e-16,
+        "statistics": {
+          "compensated": {
+            "ci95_high_per_year": 4.2336206578420076e-20,
+            "ci95_low_per_year": 1.1819955940079087e-20,
+            "detrended_peak_to_peak": 1.055342180462657e-15,
+            "detrended_rms": 2.2306892899883744e-16,
+            "fitted_change_over_history": 2.707808125924958e-16,
+            "fitted_change_per_myr": 2.707808125924958e-14,
+            "fitted_intercept": 2.3899444316557225e-16,
+            "fitted_slope_per_year": 2.707808125924958e-20,
+            "max_abs": 9.313514727991092e-16,
+            "max_abs_worst_epoch_years": 3100.0,
+            "p99_abs": 9.313514727991092e-16,
+            "r_squared": 0.11130832505520771,
+            "rms": 4.4289519495140103e-16,
+            "signed_endpoint_change": 5.588108836794655e-16
+          },
+          "decimal": {
+            "ci95_high_per_year": 2.743730458766795e-20,
+            "ci95_low_per_year": 8.303723851977517e-21,
+            "detrended_peak_to_peak": 7.013072205813205e-16,
+            "detrended_rms": 1.3986342598919247e-16,
+            "fitted_change_over_history": 1.787051421982273e-16,
+            "fitted_change_per_myr": 1.787051421982273e-14,
+            "fitted_intercept": -5.383460814122407e-18,
+            "fitted_slope_per_year": 1.787051421982273e-20,
+            "max_abs": 4.589977451611935e-16,
+            "max_abs_worst_epoch_years": 3200.0,
+            "p99_abs": 3.9938836898194573e-16,
+            "r_squared": 0.1218568674149868,
+            "rms": 1.7125159642635413e-16,
+            "signed_endpoint_change": 2.0970117252713267e-16
+          },
+          "float64": {
+            "ci95_high_per_year": 7.597656595157022e-20,
+            "ci95_low_per_year": -1.978086846642882e-20,
+            "detrended_peak_to_peak": 3.361294656699566e-15,
+            "detrended_rms": 6.999715853841447e-16,
+            "fitted_change_over_history": 2.8097848742570696e-16,
+            "fitted_change_per_myr": 2.80978487425707e-14,
+            "fitted_intercept": -2.7696450903391113e-16,
+            "fitted_slope_per_year": 2.80978487425707e-20,
+            "max_abs": 1.862702945598219e-15,
+            "max_abs_worst_epoch_years": 800.0,
+            "p99_abs": 1.6764326510383974e-15,
+            "r_squared": 0.013511276147998408,
+            "rms": 7.178414698060494e-16,
+            "signed_endpoint_change": 0.0
+          },
+          "recorded": {
+            "ci95_high_per_year": 7.597656595157022e-20,
+            "ci95_low_per_year": -1.978086846642882e-20,
+            "detrended_peak_to_peak": 3.361294656699566e-15,
+            "detrended_rms": 6.999715853841447e-16,
+            "fitted_change_over_history": 2.8097848742570696e-16,
+            "fitted_change_per_myr": 2.80978487425707e-14,
+            "fitted_intercept": -2.7696450903391113e-16,
+            "fitted_slope_per_year": 2.80978487425707e-20,
+            "max_abs": 1.862702945598219e-15,
+            "max_abs_worst_epoch_years": 800.0,
+            "p99_abs": 1.6764326510383974e-15,
+            "r_squared": 0.013511276147998408,
+            "rms": 7.178414698060494e-16,
+            "signed_endpoint_change": 0.0
+          }
+        },
+        "telemetry_reproduction_max_abs": 0.0,
+        "timeseries": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/recomputed_energy/m0_diag_phys_ias15_eps1e12_10k.csv",
+          "sha256": "16afb8f9db66f811acfd3bb25938bed5cba382d58513387f0d0abdce194407c1",
+          "size_bytes": 30981
+        }
+      },
+      "runtime_seconds": 63.027595818042755,
+      "throughput_years_per_wall_second": 158.66066078213512
+    },
+    "m0_diag_phys_ias15_eps1e13_10k": {
+      "artifact_inventory": {
+        "archive": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/simulationarchive.bin",
+          "sha256": "a79e2957e28f25acd4b508e166c577c18e74da8162034e07babe042ac43382c2",
+          "size_bytes": 139140
+        },
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/events.log",
+          "sha256": "ee3585efcd2dbbc0a3294feed6854bf2f062aa9c29f119b36161252c2431b282",
+          "size_bytes": 449
+        },
+        "progress": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/progress.csv",
+          "sha256": "24208438c5bb93bbdb64b3bb11d180c39553e1631408b5b42d6bed3b910283f4",
+          "size_bytes": 48810
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/physical_state.csv",
+          "sha256": "87084590631f040fe25821c2876c1dee41b281ff245621fae7603b2a63515c83",
+          "size_bytes": 248688
+        },
+        "status": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/status.json",
+          "sha256": "9e37c2411293a347bc4b66cc2cd2e4a341e9f32efe2dbf5e41261b48d1060037",
+          "size_bytes": 369
+        }
+      },
+      "callback_stats": {
+        "callback_invocations": 93655150,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 842896350,
+        "real_gr_accel_norm_max": 1.2152296775300467e-08,
+        "real_gr_accel_norm_mean": 9.774787413162919e-10,
+        "real_gr_accel_norm_sum": 0.8239132632580967,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "energy": {
+        "compensated_decimal_max_abs": 9.43990400086407e-16,
+        "statistics": {
+          "compensated": {
+            "ci95_high_per_year": 1.6913553621064004e-20,
+            "ci95_low_per_year": -1.2704300604802454e-20,
+            "detrended_peak_to_peak": 9.4440015714952e-16,
+            "detrended_rms": 2.165017943949782e-16,
+            "fitted_change_over_history": 2.1046265081307754e-17,
+            "fitted_change_per_myr": 2.1046265081307754e-15,
+            "fitted_intercept": 2.3845201365316736e-16,
+            "fitted_slope_per_year": 2.1046265081307754e-21,
+            "max_abs": 7.450811782392874e-16,
+            "max_abs_worst_epoch_years": 900.0,
+            "p99_abs": 7.450811782392874e-16,
+            "r_squared": 0.0008025965606658358,
+            "rms": 3.2999894052369205e-16,
+            "signed_endpoint_change": 5.588108836794655e-16
+          },
+          "decimal": {
+            "ci95_high_per_year": 3.6417698859053785e-21,
+            "ci95_low_per_year": -1.309527954387128e-20,
+            "detrended_peak_to_peak": 6.171475856132717e-16,
+            "detrended_rms": 1.22345164061867e-16,
+            "fitted_change_over_history": -4.72675482898295e-17,
+            "fitted_change_per_myr": -4.7267548289829505e-15,
+            "fitted_intercept": -1.1423241674188638e-17,
+            "fitted_slope_per_year": -4.7267548289829504e-21,
+            "max_abs": 3.3707662728371023e-16,
+            "max_abs_worst_epoch_years": 7200.0,
+            "p99_abs": 3.056529398245541e-16,
+            "r_squared": 0.012528413293950047,
+            "rms": 1.2801266469681501e-16,
+            "signed_endpoint_change": 5.242962021416582e-17
+          },
+          "float64": {
+            "ci95_high_per_year": 4.249527113962409e-20,
+            "ci95_low_per_year": -5.3864593719629525e-20,
+            "detrended_peak_to_peak": 3.540272528894617e-15,
+            "detrended_rms": 7.043752559044711e-16,
+            "fitted_change_over_history": -5.684661290002721e-17,
+            "fitted_change_per_myr": -5.684661290002721e-15,
+            "fitted_intercept": -2.4268296384992525e-16,
+            "fitted_slope_per_year": -5.684661290002721e-21,
+            "max_abs": 2.0489732401580412e-15,
+            "max_abs_worst_epoch_years": 8700.0,
+            "p99_abs": 1.6764326510383974e-15,
+            "r_squared": 0.0005533240634384429,
+            "rms": 7.549289977244748e-16,
+            "signed_endpoint_change": 1.8627029455982194e-16
+          },
+          "recorded": {
+            "ci95_high_per_year": 4.249527113962409e-20,
+            "ci95_low_per_year": -5.3864593719629525e-20,
+            "detrended_peak_to_peak": 3.540272528894617e-15,
+            "detrended_rms": 7.043752559044711e-16,
+            "fitted_change_over_history": -5.684661290002721e-17,
+            "fitted_change_per_myr": -5.684661290002721e-15,
+            "fitted_intercept": -2.4268296384992525e-16,
+            "fitted_slope_per_year": -5.684661290002721e-21,
+            "max_abs": 2.0489732401580412e-15,
+            "max_abs_worst_epoch_years": 8700.0,
+            "p99_abs": 1.6764326510383974e-15,
+            "r_squared": 0.0005533240634384429,
+            "rms": 7.549289977244748e-16,
+            "signed_endpoint_change": 1.8627029455982194e-16
+          }
+        },
+        "telemetry_reproduction_max_abs": 0.0,
+        "timeseries": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/recomputed_energy/m0_diag_phys_ias15_eps1e13_10k.csv",
+          "sha256": "388de82c062c4952cdf9db4b3839d3709a256bb330c1e47531a75a78333d777d",
+          "size_bytes": 31074
+        }
+      },
+      "runtime_seconds": 79.06229660694953,
+      "throughput_years_per_wall_second": 126.482538822696
+    },
+    "m0_diag_phys_min_sync_0p25d_100k": {
+      "artifact_inventory": {
+        "archive": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p25d_100k/simulationarchive.bin",
+          "sha256": "e78a3b50d10a18b25e08aab9d5d785d939cdbcf6d53bd623b7f44780095d6d16",
+          "size_bytes": 33876
+        },
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p25d_100k/events.log",
+          "sha256": "7502ead0c21e8b8d7cbc879bedabe9afe89e255e167d0e6aaf56471d1ba3e051",
+          "size_bytes": 456
+        },
+        "progress": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p25d_100k/progress.csv",
+          "sha256": "c6269d0a2ddfd742270813497fe2c7c31a2b28a45f2a36dd92cb49d320d3f2b5",
+          "size_bytes": 461927
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p25d_100k/physical_state.csv",
+          "sha256": "9fb4f08bff99c2e702fc3c5be1045b80b8a5d0d1cd24fb82ff15c101b017dc06",
+          "size_bytes": 2495489
+        },
+        "status": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p25d_100k/status.json",
+          "sha256": "75d4be07f5808973eef83eb223bdc547367f21d50bf235798317ebcd91d02bd0",
+          "size_bytes": 374
+        }
+      },
+      "callback_stats": {
+        "callback_invocations": 146100000,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 1314900000,
+        "real_gr_accel_norm_max": 1.2165757116149638e-08,
+        "real_gr_accel_norm_mean": 8.70541803657974e-10,
+        "real_gr_accel_norm_sum": 1.14467541762987,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "energy": {
+        "compensated_decimal_max_abs": 8.933598585914721e-16,
+        "statistics": {
+          "compensated": {
+            "ci95_high_per_year": 2.0739654068537688e-17,
+            "ci95_low_per_year": 1.67927762587663e-17,
+            "detrended_peak_to_peak": 5.958850034495415e-12,
+            "detrended_rms": 9.184913860841443e-13,
+            "fitted_change_over_history": 1.8766215163651995e-12,
+            "fitted_change_per_myr": 1.8766215163651994e-11,
+            "fitted_intercept": -2.1204343371223373e-12,
+            "fitted_slope_per_year": 1.8766215163651994e-17,
+            "max_abs": 3.595575495888241e-12,
+            "max_abs_worst_epoch_years": 39800.0,
+            "p99_abs": 3.1712517648809667e-12,
+            "r_squared": 0.25847364797693584,
+            "rms": 1.5922013775134568e-12,
+            "signed_endpoint_change": -5.953198614131905e-13
+          },
+          "decimal": {
+            "ci95_high_per_year": 2.0739488338394362e-17,
+            "ci95_low_per_year": 1.6792580189475436e-17,
+            "detrended_peak_to_peak": 5.959025098235966e-12,
+            "detrended_rms": 9.184984464105635e-13,
+            "fitted_change_over_history": 1.87660342639349e-12,
+            "fitted_change_per_myr": 1.8766034263934898e-11,
+            "fitted_intercept": -2.120701032797375e-12,
+            "fitted_slope_per_year": 1.87660342639349e-17,
+            "max_abs": 3.5961770708148297e-12,
+            "max_abs_worst_epoch_years": 39800.0,
+            "p99_abs": 3.171532485033088e-12,
+            "r_squared": 0.25846700624992236,
+            "rms": 1.5924084030538858e-12,
+            "signed_endpoint_change": -5.957643926066232e-13
+          },
+          "float64": {
+            "ci95_high_per_year": 2.073922426792576e-17,
+            "ci95_low_per_year": 1.6792349581728886e-17,
+            "detrended_peak_to_peak": 5.958499077143063e-12,
+            "detrended_rms": 9.184906591864734e-13,
+            "fitted_change_over_history": 1.876578692482732e-12,
+            "fitted_change_per_myr": 1.8765786924827323e-11,
+            "fitted_intercept": -2.1209869949700328e-12,
+            "fitted_slope_per_year": 1.8765786924827322e-17,
+            "max_abs": 3.5968793879501615e-12,
+            "max_abs_worst_epoch_years": 39800.0,
+            "p99_abs": 3.170879224291849e-12,
+            "r_squared": 0.2584652038711782,
+            "rms": 1.5926230071832177e-12,
+            "signed_endpoint_change": -5.955061317077507e-13
+          },
+          "recorded": {
+            "ci95_high_per_year": 2.073922426792576e-17,
+            "ci95_low_per_year": 1.6792349581728886e-17,
+            "detrended_peak_to_peak": 5.958499077143063e-12,
+            "detrended_rms": 9.184906591864734e-13,
+            "fitted_change_over_history": 1.876578692482732e-12,
+            "fitted_change_per_myr": 1.8765786924827323e-11,
+            "fitted_intercept": -2.1209869949700328e-12,
+            "fitted_slope_per_year": 1.8765786924827322e-17,
+            "max_abs": 3.5968793879501615e-12,
+            "max_abs_worst_epoch_years": 39800.0,
+            "p99_abs": 3.170879224291849e-12,
+            "r_squared": 0.2584652038711782,
+            "rms": 1.5926230071832177e-12,
+            "signed_endpoint_change": -5.955061317077507e-13
+          }
+        },
+        "telemetry_reproduction_max_abs": 0.0,
+        "timeseries": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/recomputed_energy/m0_diag_phys_min_sync_0p25d_100k.csv",
+          "sha256": "8d0d739b664a7c353e4717f3d9a85a4d9cbe8ee979962ee213aa89c516b7c90f",
+          "size_bytes": 320220
+        }
+      },
+      "runtime_seconds": 146.06028974999208,
+      "throughput_years_per_wall_second": 684.64878558825
+    },
+    "m0_diag_phys_min_sync_0p5d_100k": {
+      "artifact_inventory": {
+        "archive": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p5d_100k/simulationarchive.bin",
+          "sha256": "da6d3c965d79f771851a357ae18609d978183a6df4a10da84492a64dd59f9263",
+          "size_bytes": 33876
+        },
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p5d_100k/events.log",
+          "sha256": "8f61e5336dc0b216c0ea3ac518521d7b41eb7efa66847a8bef792ad3f1a9382e",
+          "size_bytes": 452
+        },
+        "progress": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p5d_100k/progress.csv",
+          "sha256": "88e07d502ef2fcb3586330d1e648542257dab67e1abd3a7f440f3f7252beb7cd",
+          "size_bytes": 460482
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p5d_100k/physical_state.csv",
+          "sha256": "6ff41cc897600d4f8ba500889f9874108a903d23464adec70e0997b1de27198f",
+          "size_bytes": 2495783
+        },
+        "status": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p5d_100k/status.json",
+          "sha256": "9ca9bbb10829034904e124450889608025755c18160185e3ffdd646c5b7a39f8",
+          "size_bytes": 372
+        }
+      },
+      "callback_stats": {
+        "callback_invocations": 73050000,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 657450000,
+        "real_gr_accel_norm_max": 1.2165836648646259e-08,
+        "real_gr_accel_norm_mean": 8.705418039401639e-10,
+        "real_gr_accel_norm_sum": 0.5723377090004608,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "energy": {
+        "compensated_decimal_max_abs": 8.280010845927506e-16,
+        "statistics": {
+          "compensated": {
+            "ci95_high_per_year": 2.0212253871293685e-17,
+            "ci95_low_per_year": 5.245334507977159e-18,
+            "detrended_peak_to_peak": 2.3424757948269503e-11,
+            "detrended_rms": 3.4830028123466178e-12,
+            "fitted_change_over_history": 1.2728794189635422e-12,
+            "fitted_change_per_myr": 1.2728794189635422e-11,
+            "fitted_intercept": -6.503477240369243e-12,
+            "fitted_slope_per_year": 1.2728794189635422e-17,
+            "max_abs": 1.3662181024784692e-11,
+            "max_abs_worst_epoch_years": 25800.0,
+            "p99_abs": 1.1956131396911284e-11,
+            "r_squared": 0.011029019445838673,
+            "rms": 6.8329149356572236e-12,
+            "signed_endpoint_change": -6.2434077330561085e-12
+          },
+          "decimal": {
+            "ci95_high_per_year": 2.0211741381762257e-17,
+            "ci95_low_per_year": 5.244786581182692e-18,
+            "detrended_peak_to_peak": 2.3424925238916717e-11,
+            "detrended_rms": 3.4830110590728695e-12,
+            "fitted_change_over_history": 1.2728263981472474e-12,
+            "fitted_change_per_myr": 1.2728263981472475e-11,
+            "fitted_intercept": -6.50371653003752e-12,
+            "fitted_slope_per_year": 1.2728263981472475e-17,
+            "max_abs": 1.3662092688119296e-11,
+            "max_abs_worst_epoch_years": 25800.0,
+            "p99_abs": 1.1956556040169836e-11,
+            "r_squared": 0.011028059140263946,
+            "rms": 6.833146543356798e-12,
+            "signed_endpoint_change": -6.243678886251899e-12
+          },
+          "float64": {
+            "ci95_high_per_year": 2.021182554676523e-17,
+            "ci95_low_per_year": 5.24496576809037e-18,
+            "detrended_peak_to_peak": 2.3424763408160762e-11,
+            "detrended_rms": 3.4829889462015908e-12,
+            "fitted_change_over_history": 1.2728395657427798e-12,
+            "fitted_change_per_myr": 1.27283956574278e-11,
+            "fitted_intercept": -6.504013891632022e-12,
+            "fitted_slope_per_year": 1.27283956574278e-17,
+            "max_abs": 1.36621810247847e-11,
+            "max_abs_worst_epoch_years": 25800.0,
+            "p99_abs": 1.1958180370151449e-11,
+            "r_squared": 0.011028423288476197,
+            "rms": 6.833385156077109e-12,
+            "signed_endpoint_change": -6.244711625118031e-12
+          },
+          "recorded": {
+            "ci95_high_per_year": 2.021182554676523e-17,
+            "ci95_low_per_year": 5.24496576809037e-18,
+            "detrended_peak_to_peak": 2.3424763408160762e-11,
+            "detrended_rms": 3.4829889462015908e-12,
+            "fitted_change_over_history": 1.2728395657427798e-12,
+            "fitted_change_per_myr": 1.27283956574278e-11,
+            "fitted_intercept": -6.504013891632022e-12,
+            "fitted_slope_per_year": 1.27283956574278e-17,
+            "max_abs": 1.36621810247847e-11,
+            "max_abs_worst_epoch_years": 25800.0,
+            "p99_abs": 1.1958180370151449e-11,
+            "r_squared": 0.011028423288476197,
+            "rms": 6.833385156077109e-12,
+            "signed_endpoint_change": -6.244711625118031e-12
+          }
+        },
+        "telemetry_reproduction_max_abs": 0.0,
+        "timeseries": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/recomputed_energy/m0_diag_phys_min_sync_0p5d_100k.csv",
+          "sha256": "6538295c3eddfee854ce95788b31b1097b4db32042d0c8a067a009c1a12e7426",
+          "size_bytes": 318283
+        }
+      },
+      "runtime_seconds": 81.47387829201762,
+      "throughput_years_per_wall_second": 1227.3872570737494
+    }
+  },
+  "no_stage4_command": true,
+  "physical_accuracy_against_ias15": {
+    "m0_diag_phys_current_sync_0p25d_100k": {
+      "global_scaled_rms": 2.1473454977553687e-06,
+      "orbital_elements": {
+        "earth barycenter": {
+          "eccentricity_abs_max": 2.988288436145403e-10,
+          "mean_longitude_abs_rad_max": 2.9980370195303863e-06,
+          "semimajor_axis_relative_max": 2.1099802942833846e-10
+        },
+        "jupiter barycenter": {
+          "eccentricity_abs_max": 1.2223096840235925e-10,
+          "mean_longitude_abs_rad_max": 1.1388336496054308e-08,
+          "semimajor_axis_relative_max": 6.938985773629075e-11
+        },
+        "mars barycenter": {
+          "eccentricity_abs_max": 1.6517194556531223e-10,
+          "mean_longitude_abs_rad_max": 6.191896000373731e-07,
+          "semimajor_axis_relative_max": 1.1569916112024196e-10
+        },
+        "mercury barycenter": {
+          "eccentricity_abs_max": 6.349024084251198e-11,
+          "mean_longitude_abs_rad_max": 1.5257618466435472e-06,
+          "semimajor_axis_relative_max": 1.0073184588082058e-10
+        },
+        "neptune barycenter": {
+          "eccentricity_abs_max": 1.0559446546321016e-10,
+          "mean_longitude_abs_rad_max": 2.389404230029868e-10,
+          "semimajor_axis_relative_max": 1.7477659959569998e-10
+        },
+        "pluto barycenter": {
+          "eccentricity_abs_max": 1.450495556998277e-10,
+          "mean_longitude_abs_rad_max": 2.496847173460992e-10,
+          "semimajor_axis_relative_max": 1.678524626512255e-10
+        },
+        "saturn barycenter": {
+          "eccentricity_abs_max": 3.3851796019113145e-10,
+          "mean_longitude_abs_rad_max": 3.981912666262132e-08,
+          "semimajor_axis_relative_max": 2.2570509794235522e-10
+        },
+        "uranus barycenter": {
+          "eccentricity_abs_max": 1.0223839136402901e-10,
+          "mean_longitude_abs_rad_max": 5.939879699212725e-10,
+          "semimajor_axis_relative_max": 1.5062461086610533e-10
+        },
+        "venus barycenter": {
+          "eccentricity_abs_max": 3.345758409906141e-10,
+          "mean_longitude_abs_rad_max": 1.7020070184337042e-06,
+          "semimajor_axis_relative_max": 2.3009106638961304e-10
+        }
+      },
+      "per_body_scaled_rms": {
+        "earth barycenter": 4.540334562435814e-06,
+        "jupiter barycenter": 2.07535007096159e-08,
+        "mars barycenter": 7.804628729161063e-07,
+        "mercury barycenter": 4.005974764732836e-06,
+        "neptune barycenter": 6.125150414021667e-10,
+        "pluto barycenter": 4.628305337836145e-10,
+        "saturn barycenter": 9.147948114228914e-08,
+        "sun": 3.8766609358012034e-11,
+        "uranus barycenter": 1.8260319492961826e-09,
+        "venus barycenter": 2.971620717425504e-06
+      },
+      "samples": 101,
+      "worst_body": "earth barycenter",
+      "worst_body_scaled_rms": 4.540334562435814e-06
+    },
+    "m0_diag_phys_current_sync_0p5d_100k": {
+      "global_scaled_rms": 8.396780794442241e-06,
+      "orbital_elements": {
+        "earth barycenter": {
+          "eccentricity_abs_max": 1.2005536200593303e-09,
+          "mean_longitude_abs_rad_max": 1.2102781597356227e-05,
+          "semimajor_axis_relative_max": 8.454447678302973e-10
+        },
+        "jupiter barycenter": {
+          "eccentricity_abs_max": 5.396199251328504e-10,
+          "mean_longitude_abs_rad_max": 1.1806867794561526e-07,
+          "semimajor_axis_relative_max": 2.66759659959983e-10
+        },
+        "mars barycenter": {
+          "eccentricity_abs_max": 6.699788779318538e-10,
+          "mean_longitude_abs_rad_max": 2.4463132080043697e-06,
+          "semimajor_axis_relative_max": 4.640659099894495e-10
+        },
+        "mercury barycenter": {
+          "eccentricity_abs_max": 2.5233817813052895e-10,
+          "mean_longitude_abs_rad_max": 5.909139179749444e-06,
+          "semimajor_axis_relative_max": 4.0231172771850485e-10
+        },
+        "neptune barycenter": {
+          "eccentricity_abs_max": 7.590020868752934e-10,
+          "mean_longitude_abs_rad_max": 1.0480274426072356e-09,
+          "semimajor_axis_relative_max": 1.0757355586280535e-09
+        },
+        "pluto barycenter": {
+          "eccentricity_abs_max": 9.049017368756296e-10,
+          "mean_longitude_abs_rad_max": 1.1951390987974264e-09,
+          "semimajor_axis_relative_max": 9.621172889927888e-10
+        },
+        "saturn barycenter": {
+          "eccentricity_abs_max": 1.4355301843071988e-09,
+          "mean_longitude_abs_rad_max": 1.530110793623862e-07,
+          "semimajor_axis_relative_max": 1.1596884082968075e-09
+        },
+        "uranus barycenter": {
+          "eccentricity_abs_max": 5.461551766394734e-10,
+          "mean_longitude_abs_rad_max": 2.130946086253971e-09,
+          "semimajor_axis_relative_max": 7.729592608391676e-10
+        },
+        "venus barycenter": {
+          "eccentricity_abs_max": 1.3408954844910947e-09,
+          "mean_longitude_abs_rad_max": 6.637458668912188e-06,
+          "semimajor_axis_relative_max": 9.157899897555469e-10
+        }
+      },
+      "per_body_scaled_rms": {
+        "earth barycenter": 1.8313065177965038e-05,
+        "jupiter barycenter": 1.7103585417146453e-07,
+        "mars barycenter": 3.0900190441074547e-06,
+        "mercury barycenter": 1.4974979040381514e-05,
+        "neptune barycenter": 9.024556404684888e-10,
+        "pluto barycenter": 7.406535665864423e-10,
+        "saturn barycenter": 3.521600706097266e-07,
+        "sun": 2.0351528307173117e-10,
+        "uranus barycenter": 6.7501068356212544e-09,
+        "venus barycenter": 1.1650724826672119e-05
+      },
+      "samples": 101,
+      "worst_body": "earth barycenter",
+      "worst_body_scaled_rms": 1.8313065177965038e-05
+    },
+    "m0_diag_phys_min_sync_0p25d_100k": {
+      "global_scaled_rms": 2.1554708962626715e-06,
+      "orbital_elements": {
+        "earth barycenter": {
+          "eccentricity_abs_max": 2.9984413216221917e-10,
+          "mean_longitude_abs_rad_max": 3.0447821002255186e-06,
+          "semimajor_axis_relative_max": 2.1066449714643274e-10
+        },
+        "jupiter barycenter": {
+          "eccentricity_abs_max": 1.345814432118786e-10,
+          "mean_longitude_abs_rad_max": 3.3703184576516776e-08,
+          "semimajor_axis_relative_max": 6.624025311566157e-11
+        },
+        "mars barycenter": {
+          "eccentricity_abs_max": 1.666938392874684e-10,
+          "mean_longitude_abs_rad_max": 6.006998845009548e-07,
+          "semimajor_axis_relative_max": 1.172582790989831e-10
+        },
+        "mercury barycenter": {
+          "eccentricity_abs_max": 6.360917348402495e-11,
+          "mean_longitude_abs_rad_max": 1.6256000883174693e-06,
+          "semimajor_axis_relative_max": 1.0036980394100946e-10
+        },
+        "neptune barycenter": {
+          "eccentricity_abs_max": 2.0309923361161442e-10,
+          "mean_longitude_abs_rad_max": 3.83654885638407e-10,
+          "semimajor_axis_relative_max": 2.8608994546881284e-10
+        },
+        "pluto barycenter": {
+          "eccentricity_abs_max": 2.39411074298701e-10,
+          "mean_longitude_abs_rad_max": 4.0089886965688493e-10,
+          "semimajor_axis_relative_max": 2.525635833364031e-10
+        },
+        "saturn barycenter": {
+          "eccentricity_abs_max": 3.563108072479615e-10,
+          "mean_longitude_abs_rad_max": 3.733105913283907e-08,
+          "semimajor_axis_relative_max": 3.000426039032838e-10
+        },
+        "uranus barycenter": {
+          "eccentricity_abs_max": 1.5019533533555673e-10,
+          "mean_longitude_abs_rad_max": 3.9750602809363045e-10,
+          "semimajor_axis_relative_max": 1.9902435640260357e-10
+        },
+        "venus barycenter": {
+          "eccentricity_abs_max": 3.343174508931013e-10,
+          "mean_longitude_abs_rad_max": 1.5997250639721017e-06,
+          "semimajor_axis_relative_max": 2.264856811505576e-10
+        }
+      },
+      "per_body_scaled_rms": {
+        "earth barycenter": 4.598284120825704e-06,
+        "jupiter barycenter": 4.6923435954412306e-08,
+        "mars barycenter": 7.571353946594746e-07,
+        "mercury barycenter": 4.105275496860268e-06,
+        "neptune barycenter": 1.2263693704332626e-09,
+        "pluto barycenter": 1.010005528381388e-09,
+        "saturn barycenter": 8.507851216521108e-08,
+        "sun": 5.379031044443715e-11,
+        "uranus barycenter": 7.251157902999783e-10,
+        "venus barycenter": 2.807195551559494e-06
+      },
+      "samples": 101,
+      "worst_body": "earth barycenter",
+      "worst_body_scaled_rms": 4.598284120825704e-06
+    },
+    "m0_diag_phys_min_sync_0p5d_100k": {
+      "global_scaled_rms": 8.482444599169911e-06,
+      "orbital_elements": {
+        "earth barycenter": {
+          "eccentricity_abs_max": 1.2045232762603053e-09,
+          "mean_longitude_abs_rad_max": 1.2115949333590947e-05,
+          "semimajor_axis_relative_max": 8.486719731491913e-10
+        },
+        "jupiter barycenter": {
+          "eccentricity_abs_max": 5.575974751370616e-10,
+          "mean_longitude_abs_rad_max": 1.3466264647821194e-07,
+          "semimajor_axis_relative_max": 2.677584972139878e-10
+        },
+        "mars barycenter": {
+          "eccentricity_abs_max": 6.716912165360966e-10,
+          "mean_longitude_abs_rad_max": 2.4363375539238064e-06,
+          "semimajor_axis_relative_max": 4.6539033193544434e-10
+        },
+        "mercury barycenter": {
+          "eccentricity_abs_max": 2.5279847659653853e-10,
+          "mean_longitude_abs_rad_max": 6.052321547933559e-06,
+          "semimajor_axis_relative_max": 4.018375687152344e-10
+        },
+        "neptune barycenter": {
+          "eccentricity_abs_max": 8.278203539324736e-10,
+          "mean_longitude_abs_rad_max": 1.2386891512505827e-09,
+          "semimajor_axis_relative_max": 1.1502619638847271e-09
+        },
+        "pluto barycenter": {
+          "eccentricity_abs_max": 9.731756234199196e-10,
+          "mean_longitude_abs_rad_max": 1.1338787686554497e-09,
+          "semimajor_axis_relative_max": 1.027146281702455e-09
+        },
+        "saturn barycenter": {
+          "eccentricity_abs_max": 1.4713774365571197e-09,
+          "mean_longitude_abs_rad_max": 1.5441446077346654e-07,
+          "semimajor_axis_relative_max": 1.2221655093631392e-09
+        },
+        "uranus barycenter": {
+          "eccentricity_abs_max": 6.139251190750983e-10,
+          "mean_longitude_abs_rad_max": 2.8865452250670387e-09,
+          "semimajor_axis_relative_max": 8.110238280415285e-10
+        },
+        "venus barycenter": {
+          "eccentricity_abs_max": 1.3463784987073624e-09,
+          "mean_longitude_abs_rad_max": 6.735563122362009e-06,
+          "semimajor_axis_relative_max": 9.215962844483598e-10
+        }
+      },
+      "per_body_scaled_rms": {
+        "earth barycenter": 1.833596787170552e-05,
+        "jupiter barycenter": 1.8974937021577268e-07,
+        "mars barycenter": 3.0740752131928276e-06,
+        "mercury barycenter": 1.5311653638326376e-05,
+        "neptune barycenter": 1.8884492356110508e-09,
+        "pluto barycenter": 1.158757593626748e-09,
+        "saturn barycenter": 3.5434886153221726e-07,
+        "sun": 2.1875380490158423e-10,
+        "uranus barycenter": 9.473492440937985e-09,
+        "venus barycenter": 1.1800534216219735e-05
+      },
+      "samples": 101,
+      "worst_body": "earth barycenter",
+      "worst_body_scaled_rms": 1.833596787170552e-05
+    }
+  },
+  "primary_mechanism": "BLOCKED",
+  "production_configuration_must_change": false,
+  "reproduction": {
+    "current_vs_full": {
+      "0p25d": {
+        "block_slope_normalized_rms_difference": 0.0,
+        "fitted_change_relative_difference": 0.0,
+        "left": {
+          "ci95_high_per_year": 5.83516314009113e-16,
+          "ci95_low_per_year": 5.79399682670067e-16,
+          "detrended_peak_to_peak": 6.4941003391230485e-12,
+          "detrended_rms": 9.579953084022249e-13,
+          "fitted_change_over_history": 5.8145799833959e-11,
+          "fitted_change_per_myr": 5.814579983395901e-10,
+          "fitted_intercept": -1.751020649755203e-12,
+          "fitted_slope_per_year": 5.8145799833959e-16,
+          "max_abs": 5.847078048906947e-11,
+          "max_abs_worst_epoch_years": 98600.0,
+          "p99_abs": 5.603123287589223e-11,
+          "r_squared": 0.996759634249512,
+          "rms": 3.208910771436821e-11,
+          "signed_endpoint_change": 5.6514034555631896e-11
+        },
+        "metric_relative_differences": {
+          "max_abs": 0.0,
+          "p99_abs": 0.0,
+          "rms": 0.0
+        },
+        "paired_block_common_sign_count": 10,
+        "passed": true,
+        "right": {
+          "ci95_high_per_year": 5.83516314009113e-16,
+          "ci95_low_per_year": 5.79399682670067e-16,
+          "detrended_peak_to_peak": 6.4941003391230485e-12,
+          "detrended_rms": 9.579953084022249e-13,
+          "fitted_change_over_history": 5.8145799833959e-11,
+          "fitted_change_per_myr": 5.814579983395901e-10,
+          "fitted_intercept": -1.751020649755203e-12,
+          "fitted_slope_per_year": 5.8145799833959e-16,
+          "max_abs": 5.847078048906947e-11,
+          "max_abs_worst_epoch_years": 98600.0,
+          "p99_abs": 5.603123287589223e-11,
+          "r_squared": 0.996759634249512,
+          "rms": 3.208910771436821e-11,
+          "signed_endpoint_change": 5.6514034555631896e-11
+        }
+      },
+      "0p5d": {
+        "block_slope_normalized_rms_difference": 0.0,
+        "fitted_change_relative_difference": 0.0,
+        "left": {
+          "ci95_high_per_year": 3.0415988441937966e-16,
+          "ci95_low_per_year": 2.891757137048881e-16,
+          "detrended_peak_to_peak": 2.3961347638045458e-11,
+          "detrended_rms": 3.4870174330712128e-12,
+          "fitted_change_over_history": 2.9666779906213385e-11,
+          "fitted_change_per_myr": 2.966677990621339e-10,
+          "fitted_intercept": -6.642956079524882e-12,
+          "fitted_slope_per_year": 2.9666779906213387e-16,
+          "max_abs": 3.468431115086577e-11,
+          "max_abs_worst_epoch_years": 90200.0,
+          "p99_abs": 2.7535851838053555e-11,
+          "r_squared": 0.8580336932083863,
+          "rms": 1.2358492481745837e-11,
+          "signed_endpoint_change": 2.2674870310353036e-11
+        },
+        "metric_relative_differences": {
+          "max_abs": 0.0,
+          "p99_abs": 0.0,
+          "rms": 0.0
+        },
+        "paired_block_common_sign_count": 10,
+        "passed": true,
+        "right": {
+          "ci95_high_per_year": 3.0415988441937966e-16,
+          "ci95_low_per_year": 2.891757137048881e-16,
+          "detrended_peak_to_peak": 2.3961347638045458e-11,
+          "detrended_rms": 3.4870174330712128e-12,
+          "fitted_change_over_history": 2.9666779906213385e-11,
+          "fitted_change_per_myr": 2.966677990621339e-10,
+          "fitted_intercept": -6.642956079524882e-12,
+          "fitted_slope_per_year": 2.9666779906213387e-16,
+          "max_abs": 3.468431115086577e-11,
+          "max_abs_worst_epoch_years": 90200.0,
+          "p99_abs": 2.7535851838053555e-11,
+          "r_squared": 0.8580336932083863,
+          "rms": 1.2358492481745837e-11,
+          "signed_endpoint_change": 2.2674870310353036e-11
+        }
+      }
+    },
+    "min_vs_current": {
+      "0p25d": {
+        "block_slope_normalized_rms_difference": 0.980028690879279,
+        "fitted_change_relative_difference": 0.9677258988310022,
+        "left": {
+          "ci95_high_per_year": 5.83516314009113e-16,
+          "ci95_low_per_year": 5.79399682670067e-16,
+          "detrended_peak_to_peak": 6.4941003391230485e-12,
+          "detrended_rms": 9.579953084022249e-13,
+          "fitted_change_over_history": 5.8145799833959e-11,
+          "fitted_change_per_myr": 5.814579983395901e-10,
+          "fitted_intercept": -1.751020649755203e-12,
+          "fitted_slope_per_year": 5.8145799833959e-16,
+          "max_abs": 5.847078048906947e-11,
+          "max_abs_worst_epoch_years": 98600.0,
+          "p99_abs": 5.603123287589223e-11,
+          "r_squared": 0.996759634249512,
+          "rms": 3.208910771436821e-11,
+          "signed_endpoint_change": 5.6514034555631896e-11
+        },
+        "metric_relative_differences": {
+          "max_abs": 0.9384961678168962,
+          "p99_abs": 0.9433970604919947,
+          "rms": 0.9503754227999033
+        },
+        "paired_block_common_sign_count": 6,
+        "passed": false,
+        "right": {
+          "ci95_high_per_year": 2.0739488338394362e-17,
+          "ci95_low_per_year": 1.6792580189475436e-17,
+          "detrended_peak_to_peak": 5.959025098235966e-12,
+          "detrended_rms": 9.184984464105635e-13,
+          "fitted_change_over_history": 1.87660342639349e-12,
+          "fitted_change_per_myr": 1.8766034263934898e-11,
+          "fitted_intercept": -2.120701032797375e-12,
+          "fitted_slope_per_year": 1.87660342639349e-17,
+          "max_abs": 3.5961770708148297e-12,
+          "max_abs_worst_epoch_years": 39800.0,
+          "p99_abs": 3.171532485033088e-12,
+          "r_squared": 0.25846700624992236,
+          "rms": 1.5924084030538858e-12,
+          "signed_endpoint_change": -5.957643926066232e-13
+        }
+      },
+      "0p5d": {
+        "block_slope_normalized_rms_difference": 1.0029561251584294,
+        "fitted_change_relative_difference": 0.9570959031559516,
+        "left": {
+          "ci95_high_per_year": 3.0415988441937966e-16,
+          "ci95_low_per_year": 2.891757137048881e-16,
+          "detrended_peak_to_peak": 2.3961347638045458e-11,
+          "detrended_rms": 3.4870174330712128e-12,
+          "fitted_change_over_history": 2.9666779906213385e-11,
+          "fitted_change_per_myr": 2.966677990621339e-10,
+          "fitted_intercept": -6.642956079524882e-12,
+          "fitted_slope_per_year": 2.9666779906213387e-16,
+          "max_abs": 3.468431115086577e-11,
+          "max_abs_worst_epoch_years": 90200.0,
+          "p99_abs": 2.7535851838053555e-11,
+          "r_squared": 0.8580336932083863,
+          "rms": 1.2358492481745837e-11,
+          "signed_endpoint_change": 2.2674870310353036e-11
+        },
+        "metric_relative_differences": {
+          "max_abs": 0.6061016570664034,
+          "p99_abs": 0.5657822350842872,
+          "rms": 0.4470889913596075
+        },
+        "paired_block_common_sign_count": 6,
+        "passed": false,
+        "right": {
+          "ci95_high_per_year": 2.0211741381762257e-17,
+          "ci95_low_per_year": 5.244786581182692e-18,
+          "detrended_peak_to_peak": 2.3424925238916717e-11,
+          "detrended_rms": 3.4830110590728695e-12,
+          "fitted_change_over_history": 1.2728263981472474e-12,
+          "fitted_change_per_myr": 1.2728263981472475e-11,
+          "fitted_intercept": -6.50371653003752e-12,
+          "fitted_slope_per_year": 1.2728263981472475e-17,
+          "max_abs": 1.3662092688119296e-11,
+          "max_abs_worst_epoch_years": 25800.0,
+          "p99_abs": 1.1956556040169836e-11,
+          "r_squared": 0.011028059140263946,
+          "rms": 6.833146543356798e-12,
+          "signed_endpoint_change": -6.243678886251899e-12
+        }
+      }
+    }
+  },
+  "reversibility": {
+    "m0_diag_reversibility_current_sync_0p25d_10k": {
+      "artifact_inventory": {
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_reversibility_current_sync_0p25d_10k/events.log",
+          "sha256": "fb7bbc0661fab0b6711e77f8ca04025df263098c685e403c485737acc5364039",
+          "size_bytes": 500
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_reversibility_current_sync_0p25d_10k/physical_state.csv",
+          "sha256": "5a797fc7882cd0a399bad690071159d96c689ecd042e5c4334c6bbda974a4b6f",
+          "size_bytes": 7258
+        }
+      },
+      "audit": {
+        "compiled_gr_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "continuation_provenance": {
+          "fine_coarse_ratios_diagnostic_only": true,
+          "locked_sections_verified": [
+            "existing_lane_effective_settings",
+            "state_and_energy_definitions",
+            "long_history_analysis",
+            "common_configuration",
+            "lanes",
+            "method_validation",
+            "comparison_definitions",
+            "artifact_requirements",
+            "classification_rules",
+            "step3_status_rules",
+            "next_action_policy"
+          ],
+          "source_manifest_13_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+          "source_manifest_14_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+          "source_manifest_14_status": "REVERSIBILITY_GATE_PASSED",
+          "source_manifest_14_summary_sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+        },
+        "existing_lane_integrity": {
+          "m0_conv_0p25d_1myr_s12345": {
+            "rows": 100010,
+            "samples": 10001
+          },
+          "m0_conv_0p5d_1myr_s12345": {
+            "rows": 100010,
+            "samples": 10001
+          }
+        },
+        "git_dirty_after_preregistration": true,
+        "git_head": "2b30b92d9169c3f5732f2e495faab1986b7a6789",
+        "historical_inventory_entries": {
+          "step3_summary": 21,
+          "step3b_summary": 28
+        },
+        "manifest_path": "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+        "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+        "protected_files": [
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c",
+            "sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py",
+            "sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py",
+            "sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py",
+            "sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+          }
+        ],
+        "runtime": {
+          "header_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/rebound/rebound.h",
+          "header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+          "rebound_build": "Feb 11 2026 17:34:38",
+          "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+          "rebound_version": "4.6.0",
+          "shared_library_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/librebound.cpython-310-x86_64-linux-gnu.so",
+          "shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04"
+        },
+        "status": "PASS",
+        "step3c_timeseries_verified": 2,
+        "tag_object_type": "tag",
+        "unique_historical_artifacts": 28
+      },
+      "callback_stats": {
+        "callback_invocations": 29220000,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 262980000,
+        "real_gr_accel_norm_max": 1.215220739694316e-08,
+        "real_gr_accel_norm_mean": 8.718647297918496e-10,
+        "real_gr_accel_norm_sum": 0.2292829866406606,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "command": [
+        "/home/peacelovephysics/ephemeris/mini_ephemeris/src/mini_ephemeris/m0_integrator_roundoff_diagnosis.py",
+        "--manifest",
+        "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+        "run-reversibility",
+        "--lane-id",
+        "m0_diag_reversibility_current_sync_0p25d_10k"
+      ],
+      "configuration": {
+        "N_active": -1,
+        "backend": "compiled_c",
+        "backward_steps": 14610000,
+        "body_names": [
+          "sun",
+          "mercury barycenter",
+          "venus barycenter",
+          "earth barycenter",
+          "mars barycenter",
+          "jupiter barycenter",
+          "saturn barycenter",
+          "uranus barycenter",
+          "neptune barycenter",
+          "pluto barycenter"
+        ],
+        "boundary": "none",
+        "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "coordinates": "jacobi",
+        "corrector": 0,
+        "corrector2": 0,
+        "expected_callback_invocations": 29220000,
+        "expected_samples": 3,
+        "expected_state_rows": 30,
+        "force_is_velocity_dependent": false,
+        "forward_steps": 14610000,
+        "forward_years": 10000.0,
+        "gr_scale": 1.0,
+        "gravitational_constant": "6.67430e-11",
+        "gravity": "basic",
+        "include_central_response": true,
+        "initial_conditions_sha256": "bd9b632e1aa7410719bb85675ac7b939b8e9ff29ed577baed679629dab66acf7",
+        "integrator": "whfast",
+        "keep_unsynchronized": 0,
+        "kernel": "default",
+        "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+        "kind": "whfast_reversibility",
+        "megno": false,
+        "model_id": "m0_grpot_emb_pluto_v1",
+        "model_scope": "full_with_pluto",
+        "physical_only": true,
+        "purpose": "current_sync",
+        "real_particle_count": 10,
+        "recalculate_coordinates_this_timestep": 0,
+        "safe_mode": 1,
+        "schema_version": 1,
+        "speed_of_light_m_per_s": "299792458",
+        "start_date": "2000-01-01T00:00:00+00:00",
+        "step_days": 0.25,
+        "variations": false
+      },
+      "configuration_fingerprint": "9fae09c69d5cd527c76a7a41896e678eb62eb11fc10069e198656dae4623d732",
+      "direction_reversal_procedure": "At the forward comparison point, temporarily set keep_unsynchronized=0, synchronize with the positive timestep so internal Jacobi coordinates are at the physical endpoint, restore the configured mode, then negate dt.",
+      "forward_time_seconds": 315576000000.0,
+      "lane_id": "m0_diag_reversibility_current_sync_0p25d_10k",
+      "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+      "method_gate": {
+        "fine_coarse_ratios_diagnostic_only": true,
+        "source": "manifest 14",
+        "status": "REVERSIBILITY_GATE_PASSED",
+        "summary_sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+      },
+      "metrics": {
+        "angular_momentum_vector_relative_difference": 5.024398408169177e-12,
+        "center_of_mass_position_error_m": 23.27886957989321,
+        "center_of_mass_velocity_error_m_per_s": 1.5009508547564628e-10,
+        "corrected_energy_relative_difference": 1.2096206658420277e-11,
+        "global_scaled_rms": 2.815931925928761e-07,
+        "orbital_element_errors": {
+          "earth barycenter": {
+            "eccentricity_abs": 1.2513913516531971e-12,
+            "mean_longitude_abs_rad": 2.7595476126407448e-08,
+            "semimajor_axis_relative": 2.982452117449961e-13
+          },
+          "jupiter barycenter": {
+            "eccentricity_abs": 7.796194939624357e-11,
+            "mean_longitude_abs_rad": 5.570733740967171e-08,
+            "semimajor_axis_relative": 3.314623436500079e-11
+          },
+          "mars barycenter": {
+            "eccentricity_abs": 1.6095166865959243e-11,
+            "mean_longitude_abs_rad": 4.546047094322603e-09,
+            "semimajor_axis_relative": 7.317609791284079e-12
+          },
+          "mercury barycenter": {
+            "eccentricity_abs": 5.171418848703979e-13,
+            "mean_longitude_abs_rad": 3.0745394852260693e-07,
+            "semimajor_axis_relative": 9.645258872681762e-13
+          },
+          "neptune barycenter": {
+            "eccentricity_abs": 1.0475769557372061e-11,
+            "mean_longitude_abs_rad": 5.634310795699093e-10,
+            "semimajor_axis_relative": 3.024361303473558e-10
+          },
+          "pluto barycenter": {
+            "eccentricity_abs": 1.0396999927664297e-10,
+            "mean_longitude_abs_rad": 3.678835014397919e-12,
+            "semimajor_axis_relative": 1.957868618401079e-10
+          },
+          "saturn barycenter": {
+            "eccentricity_abs": 4.8521936468759463e-11,
+            "mean_longitude_abs_rad": 7.073391650180838e-09,
+            "semimajor_axis_relative": 1.912947569303031e-11
+          },
+          "uranus barycenter": {
+            "eccentricity_abs": 1.9120486444146323e-10,
+            "mean_longitude_abs_rad": 5.1236703768609e-10,
+            "semimajor_axis_relative": 2.454768142249976e-10
+          },
+          "venus barycenter": {
+            "eccentricity_abs": 7.175536206882605e-13,
+            "mean_longitude_abs_rad": 1.2889461942222624e-08,
+            "semimajor_axis_relative": 4.637927382478602e-13
+          }
+        },
+        "per_body": {
+          "earth barycenter": {
+            "position_error_m": 4202.188152890193,
+            "scaled_rms": 7.411866568625035e-08,
+            "velocity_error_m_per_s": 0.0008502826025808869
+          },
+          "jupiter barycenter": {
+            "position_error_m": 45456.27895198506,
+            "scaled_rms": 1.4186620021124776e-07,
+            "velocity_error_m_per_s": 0.0007992630883040956
+          },
+          "mars barycenter": {
+            "position_error_m": 1153.8452031189454,
+            "scaled_rms": 1.1816714074568093e-08,
+            "velocity_error_m_per_s": 0.00013225133938458782
+          },
+          "mercury barycenter": {
+            "position_error_m": 14452.144638466392,
+            "scaled_rms": 8.745210704963386e-07,
+            "velocity_error_m_per_s": 0.010144373949603658
+          },
+          "neptune barycenter": {
+            "position_error_m": 2578.0004673833405,
+            "scaled_rms": 7.0403950151091924e-09,
+            "velocity_error_m_per_s": 3.1128951933079826e-06
+          },
+          "pluto barycenter": {
+            "position_error_m": 1672.8819683911674,
+            "scaled_rms": 4.5679544547980036e-09,
+            "velocity_error_m_per_s": 1.8260114359033552e-06
+          },
+          "saturn barycenter": {
+            "position_error_m": 9849.10974077931,
+            "scaled_rms": 2.7559941882959616e-08,
+            "velocity_error_m_per_s": 7.075241398672336e-05
+          },
+          "sun": {
+            "position_error_m": 26.139372544200043,
+            "scaled_rms": 9.811958236965392e-11,
+            "velocity_error_m_per_s": 7.823043545047875e-07
+          },
+          "uranus barycenter": {
+            "position_error_m": 1341.611874075506,
+            "scaled_rms": 3.6705629922897266e-09,
+            "velocity_error_m_per_s": 3.039057986967116e-06
+          },
+          "venus barycenter": {
+            "position_error_m": 1424.5172836405982,
+            "scaled_rms": 3.946469157134373e-08,
+            "velocity_error_m_per_s": 0.0004560248049856513
+          }
+        },
+        "worst_body": "mercury barycenter"
+      },
+      "return_time_seconds": 0.0,
+      "runtime_seconds": 41.77845610608347,
+      "samples": 3,
+      "schema_version": 1,
+      "settings": {
+        "N": 10,
+        "N_active": -1,
+        "N_real": 10,
+        "N_var": 0,
+        "boundary": "none",
+        "dt_seconds": -21600.0,
+        "force_is_velocity_dependent": 0,
+        "gravity": "basic",
+        "integrator": "whfast",
+        "whfast": {
+          "coordinates": "jacobi",
+          "corrector": 0,
+          "corrector2": 0,
+          "is_synchronized": 1,
+          "keep_unsynchronized": 0,
+          "kernel": "default",
+          "recalculate_coordinates_this_timestep": 0,
+          "safe_mode": 1
+        }
+      },
+      "state_rows": 30,
+      "status": "COMPLETED"
+    },
+    "m0_diag_reversibility_current_sync_0p5d_10k": {
+      "artifact_inventory": {
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_reversibility_current_sync_0p5d_10k/events.log",
+          "sha256": "3ecb3b7723e1d4e9e9b13abfa329e98beb1253c466a863eafe9d31471d40cf4e",
+          "size_bytes": 497
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_reversibility_current_sync_0p5d_10k/physical_state.csv",
+          "sha256": "e6616826031bf5c7f2afc60114aba96f9a38add16139b168f5e30fdd6c8af00b",
+          "size_bytes": 7251
+        }
+      },
+      "audit": {
+        "compiled_gr_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "continuation_provenance": {
+          "fine_coarse_ratios_diagnostic_only": true,
+          "locked_sections_verified": [
+            "existing_lane_effective_settings",
+            "state_and_energy_definitions",
+            "long_history_analysis",
+            "common_configuration",
+            "lanes",
+            "method_validation",
+            "comparison_definitions",
+            "artifact_requirements",
+            "classification_rules",
+            "step3_status_rules",
+            "next_action_policy"
+          ],
+          "source_manifest_13_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+          "source_manifest_14_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+          "source_manifest_14_status": "REVERSIBILITY_GATE_PASSED",
+          "source_manifest_14_summary_sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+        },
+        "existing_lane_integrity": {
+          "m0_conv_0p25d_1myr_s12345": {
+            "rows": 100010,
+            "samples": 10001
+          },
+          "m0_conv_0p5d_1myr_s12345": {
+            "rows": 100010,
+            "samples": 10001
+          }
+        },
+        "git_dirty_after_preregistration": true,
+        "git_head": "2b30b92d9169c3f5732f2e495faab1986b7a6789",
+        "historical_inventory_entries": {
+          "step3_summary": 21,
+          "step3b_summary": 28
+        },
+        "manifest_path": "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+        "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+        "protected_files": [
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c",
+            "sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py",
+            "sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py",
+            "sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py",
+            "sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+          }
+        ],
+        "runtime": {
+          "header_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/rebound/rebound.h",
+          "header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+          "rebound_build": "Feb 11 2026 17:34:38",
+          "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+          "rebound_version": "4.6.0",
+          "shared_library_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/librebound.cpython-310-x86_64-linux-gnu.so",
+          "shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04"
+        },
+        "status": "PASS",
+        "step3c_timeseries_verified": 2,
+        "tag_object_type": "tag",
+        "unique_historical_artifacts": 28
+      },
+      "callback_stats": {
+        "callback_invocations": 14610000,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 131490000,
+        "real_gr_accel_norm_max": 1.2152166953356654e-08,
+        "real_gr_accel_norm_mean": 8.718647298658628e-10,
+        "real_gr_accel_norm_sum": 0.11464149333006231,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "command": [
+        "/home/peacelovephysics/ephemeris/mini_ephemeris/src/mini_ephemeris/m0_integrator_roundoff_diagnosis.py",
+        "--manifest",
+        "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+        "run-reversibility",
+        "--lane-id",
+        "m0_diag_reversibility_current_sync_0p5d_10k"
+      ],
+      "configuration": {
+        "N_active": -1,
+        "backend": "compiled_c",
+        "backward_steps": 7305000,
+        "body_names": [
+          "sun",
+          "mercury barycenter",
+          "venus barycenter",
+          "earth barycenter",
+          "mars barycenter",
+          "jupiter barycenter",
+          "saturn barycenter",
+          "uranus barycenter",
+          "neptune barycenter",
+          "pluto barycenter"
+        ],
+        "boundary": "none",
+        "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "coordinates": "jacobi",
+        "corrector": 0,
+        "corrector2": 0,
+        "expected_callback_invocations": 14610000,
+        "expected_samples": 3,
+        "expected_state_rows": 30,
+        "force_is_velocity_dependent": false,
+        "forward_steps": 7305000,
+        "forward_years": 10000.0,
+        "gr_scale": 1.0,
+        "gravitational_constant": "6.67430e-11",
+        "gravity": "basic",
+        "include_central_response": true,
+        "initial_conditions_sha256": "bd9b632e1aa7410719bb85675ac7b939b8e9ff29ed577baed679629dab66acf7",
+        "integrator": "whfast",
+        "keep_unsynchronized": 0,
+        "kernel": "default",
+        "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+        "kind": "whfast_reversibility",
+        "megno": false,
+        "model_id": "m0_grpot_emb_pluto_v1",
+        "model_scope": "full_with_pluto",
+        "physical_only": true,
+        "purpose": "current_sync",
+        "real_particle_count": 10,
+        "recalculate_coordinates_this_timestep": 0,
+        "safe_mode": 1,
+        "schema_version": 1,
+        "speed_of_light_m_per_s": "299792458",
+        "start_date": "2000-01-01T00:00:00+00:00",
+        "step_days": 0.5,
+        "variations": false
+      },
+      "configuration_fingerprint": "8d7d89972a9ab6da6aaa76020bfc26270f073cc504b78f73ddf256f2d113c52e",
+      "direction_reversal_procedure": "At the forward comparison point, temporarily set keep_unsynchronized=0, synchronize with the positive timestep so internal Jacobi coordinates are at the physical endpoint, restore the configured mode, then negate dt.",
+      "forward_time_seconds": 315576000000.0,
+      "lane_id": "m0_diag_reversibility_current_sync_0p5d_10k",
+      "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+      "method_gate": {
+        "fine_coarse_ratios_diagnostic_only": true,
+        "source": "manifest 14",
+        "status": "REVERSIBILITY_GATE_PASSED",
+        "summary_sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+      },
+      "metrics": {
+        "angular_momentum_vector_relative_difference": 2.5002998475954474e-12,
+        "center_of_mass_position_error_m": 10.002507218389097,
+        "center_of_mass_velocity_error_m_per_s": 6.418309038035823e-11,
+        "corrected_energy_relative_difference": 6.3773360748446235e-12,
+        "global_scaled_rms": 1.7120823057086666e-07,
+        "orbital_element_errors": {
+          "earth barycenter": {
+            "eccentricity_abs": 1.274667871253854e-12,
+            "mean_longitude_abs_rad": 1.8579770610926974e-08,
+            "semimajor_axis_relative": 1.089961810091323e-12
+          },
+          "jupiter barycenter": {
+            "eccentricity_abs": 4.8996535995105006e-11,
+            "mean_longitude_abs_rad": 2.8382903360935078e-08,
+            "semimajor_axis_relative": 1.7869006658601524e-11
+          },
+          "mars barycenter": {
+            "eccentricity_abs": 3.039679619121216e-12,
+            "mean_longitude_abs_rad": 2.4505044216027727e-08,
+            "semimajor_axis_relative": 1.0384108156688985e-12
+          },
+          "mercury barycenter": {
+            "eccentricity_abs": 1.0305645226083016e-12,
+            "mean_longitude_abs_rad": 1.7861684842301884e-07,
+            "semimajor_axis_relative": 2.3148094303103205e-13
+          },
+          "neptune barycenter": {
+            "eccentricity_abs": 5.513162842918362e-12,
+            "mean_longitude_abs_rad": 1.681286221355549e-10,
+            "semimajor_axis_relative": 1.5421641346915798e-10
+          },
+          "pluto barycenter": {
+            "eccentricity_abs": 5.297934313475139e-11,
+            "mean_longitude_abs_rad": 7.115907862953463e-11,
+            "semimajor_axis_relative": 1.0053539342561695e-10
+          },
+          "saturn barycenter": {
+            "eccentricity_abs": 1.5830607658084972e-11,
+            "mean_longitude_abs_rad": 1.3093064410441002e-09,
+            "semimajor_axis_relative": 1.1145192895113984e-11
+          },
+          "uranus barycenter": {
+            "eccentricity_abs": 9.754597823929956e-11,
+            "mean_longitude_abs_rad": 3.108091561898618e-11,
+            "semimajor_axis_relative": 1.2582660773952106e-10
+          },
+          "venus barycenter": {
+            "eccentricity_abs": 4.179877798049514e-12,
+            "mean_longitude_abs_rad": 4.982397738828581e-08,
+            "semimajor_axis_relative": 1.0492799529651346e-12
+          }
+        },
+        "per_body": {
+          "earth barycenter": {
+            "position_error_m": 2821.9647292905543,
+            "scaled_rms": 4.9868890091385266e-08,
+            "velocity_error_m_per_s": 0.0005721180139611065
+          },
+          "jupiter barycenter": {
+            "position_error_m": 23164.699721944307,
+            "scaled_rms": 7.229442531220195e-08,
+            "velocity_error_m_per_s": 0.00040728006392096703
+          },
+          "mars barycenter": {
+            "position_error_m": 6084.283446036127,
+            "scaled_rms": 6.329766818810807e-08,
+            "velocity_error_m_per_s": 0.0007092581082764428
+          },
+          "mercury barycenter": {
+            "position_error_m": 8416.292351029184,
+            "scaled_rms": 5.081215306568519e-07,
+            "velocity_error_m_per_s": 0.005894141332970058
+          },
+          "neptune barycenter": {
+            "position_error_m": 776.9116244694292,
+            "scaled_rms": 2.1217058894803848e-09,
+            "velocity_error_m_per_s": 9.374041396771877e-07
+          },
+          "pluto barycenter": {
+            "position_error_m": 315.21364621606745,
+            "scaled_rms": 8.607182492354259e-10,
+            "velocity_error_m_per_s": 3.437564127372243e-07
+          },
+          "saturn barycenter": {
+            "position_error_m": 1565.0639622707008,
+            "scaled_rms": 4.393188106394223e-09,
+            "velocity_error_m_per_s": 1.1946754098126117e-05
+          },
+          "sun": {
+            "position_error_m": 14.204425159097935,
+            "scaled_rms": 5.162428427996216e-11,
+            "velocity_error_m_per_s": 3.9590057200770207e-07
+          },
+          "uranus barycenter": {
+            "position_error_m": 130.6178055865042,
+            "scaled_rms": 3.5742839949566796e-10,
+            "velocity_error_m_per_s": 3.065283678618244e-07
+          },
+          "venus barycenter": {
+            "position_error_m": 5402.914358166452,
+            "scaled_rms": 1.522840579743547e-07,
+            "velocity_error_m_per_s": 0.0017599740992895257
+          }
+        },
+        "worst_body": "mercury barycenter"
+      },
+      "return_time_seconds": 0.0,
+      "runtime_seconds": 22.90386012196541,
+      "samples": 3,
+      "schema_version": 1,
+      "settings": {
+        "N": 10,
+        "N_active": -1,
+        "N_real": 10,
+        "N_var": 0,
+        "boundary": "none",
+        "dt_seconds": -43200.0,
+        "force_is_velocity_dependent": 0,
+        "gravity": "basic",
+        "integrator": "whfast",
+        "whfast": {
+          "coordinates": "jacobi",
+          "corrector": 0,
+          "corrector2": 0,
+          "is_synchronized": 1,
+          "keep_unsynchronized": 0,
+          "kernel": "default",
+          "recalculate_coordinates_this_timestep": 0,
+          "safe_mode": 1
+        }
+      },
+      "state_rows": 30,
+      "status": "COMPLETED"
+    },
+    "m0_diag_reversibility_min_sync_0p25d_10k": {
+      "artifact_inventory": {
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_reversibility_min_sync_0p25d_10k/events.log",
+          "sha256": "041cb4b5e0fa1d84a41f09371cd3884749f2fddbe195ffab4b23ced3b75e4955",
+          "size_bytes": 488
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_reversibility_min_sync_0p25d_10k/physical_state.csv",
+          "sha256": "745e2da2c7f6de294620547f34b4c5b2031b43cca951c69f27e800bbf832980b",
+          "size_bytes": 7260
+        }
+      },
+      "audit": {
+        "compiled_gr_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "continuation_provenance": {
+          "fine_coarse_ratios_diagnostic_only": true,
+          "locked_sections_verified": [
+            "existing_lane_effective_settings",
+            "state_and_energy_definitions",
+            "long_history_analysis",
+            "common_configuration",
+            "lanes",
+            "method_validation",
+            "comparison_definitions",
+            "artifact_requirements",
+            "classification_rules",
+            "step3_status_rules",
+            "next_action_policy"
+          ],
+          "source_manifest_13_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+          "source_manifest_14_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+          "source_manifest_14_status": "REVERSIBILITY_GATE_PASSED",
+          "source_manifest_14_summary_sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+        },
+        "existing_lane_integrity": {
+          "m0_conv_0p25d_1myr_s12345": {
+            "rows": 100010,
+            "samples": 10001
+          },
+          "m0_conv_0p5d_1myr_s12345": {
+            "rows": 100010,
+            "samples": 10001
+          }
+        },
+        "git_dirty_after_preregistration": true,
+        "git_head": "2b30b92d9169c3f5732f2e495faab1986b7a6789",
+        "historical_inventory_entries": {
+          "step3_summary": 21,
+          "step3b_summary": 28
+        },
+        "manifest_path": "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+        "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+        "protected_files": [
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c",
+            "sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py",
+            "sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py",
+            "sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py",
+            "sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+          }
+        ],
+        "runtime": {
+          "header_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/rebound/rebound.h",
+          "header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+          "rebound_build": "Feb 11 2026 17:34:38",
+          "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+          "rebound_version": "4.6.0",
+          "shared_library_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/librebound.cpython-310-x86_64-linux-gnu.so",
+          "shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04"
+        },
+        "status": "PASS",
+        "step3c_timeseries_verified": 2,
+        "tag_object_type": "tag",
+        "unique_historical_artifacts": 28
+      },
+      "callback_stats": {
+        "callback_invocations": 29220000,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 262980000,
+        "real_gr_accel_norm_max": 1.2152207396798133e-08,
+        "real_gr_accel_norm_mean": 8.718647297911885e-10,
+        "real_gr_accel_norm_sum": 0.22928298664048674,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "command": [
+        "/home/peacelovephysics/ephemeris/mini_ephemeris/src/mini_ephemeris/m0_integrator_roundoff_diagnosis.py",
+        "--manifest",
+        "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+        "run-reversibility",
+        "--lane-id",
+        "m0_diag_reversibility_min_sync_0p25d_10k"
+      ],
+      "configuration": {
+        "N_active": -1,
+        "backend": "compiled_c",
+        "backward_steps": 14610000,
+        "body_names": [
+          "sun",
+          "mercury barycenter",
+          "venus barycenter",
+          "earth barycenter",
+          "mars barycenter",
+          "jupiter barycenter",
+          "saturn barycenter",
+          "uranus barycenter",
+          "neptune barycenter",
+          "pluto barycenter"
+        ],
+        "boundary": "none",
+        "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "coordinates": "jacobi",
+        "corrector": 0,
+        "corrector2": 0,
+        "expected_callback_invocations": 29220000,
+        "expected_samples": 3,
+        "expected_state_rows": 30,
+        "force_is_velocity_dependent": false,
+        "forward_steps": 14610000,
+        "forward_years": 10000.0,
+        "gr_scale": 1.0,
+        "gravitational_constant": "6.67430e-11",
+        "gravity": "basic",
+        "include_central_response": true,
+        "initial_conditions_sha256": "bd9b632e1aa7410719bb85675ac7b939b8e9ff29ed577baed679629dab66acf7",
+        "integrator": "whfast",
+        "keep_unsynchronized": 1,
+        "kernel": "default",
+        "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+        "kind": "whfast_reversibility",
+        "megno": false,
+        "model_id": "m0_grpot_emb_pluto_v1",
+        "model_scope": "full_with_pluto",
+        "physical_only": true,
+        "purpose": "min_sync",
+        "real_particle_count": 10,
+        "recalculate_coordinates_this_timestep": 0,
+        "safe_mode": 0,
+        "schema_version": 1,
+        "speed_of_light_m_per_s": "299792458",
+        "start_date": "2000-01-01T00:00:00+00:00",
+        "step_days": 0.25,
+        "variations": false
+      },
+      "configuration_fingerprint": "449724d1bde7099dd11ff8e3a0d9b46a7f97af90aaf010404258ad8583983d9b",
+      "direction_reversal_procedure": "At the forward comparison point, temporarily set keep_unsynchronized=0, synchronize with the positive timestep so internal Jacobi coordinates are at the physical endpoint, restore the configured mode, then negate dt.",
+      "forward_time_seconds": 315576000000.0,
+      "lane_id": "m0_diag_reversibility_min_sync_0p25d_10k",
+      "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+      "method_gate": {
+        "fine_coarse_ratios_diagnostic_only": true,
+        "source": "manifest 14",
+        "status": "REVERSIBILITY_GATE_PASSED",
+        "summary_sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+      },
+      "metrics": {
+        "angular_momentum_vector_relative_difference": 4.2177136130316244e-14,
+        "center_of_mass_position_error_m": 1.8277315997561036e-07,
+        "center_of_mass_velocity_error_m_per_s": 2.149739064693181e-15,
+        "corrected_energy_relative_difference": -2.963560386446767e-13,
+        "global_scaled_rms": 1.3650396802944467e-07,
+        "orbital_element_errors": {
+          "earth barycenter": {
+            "eccentricity_abs": 5.965054838963368e-13,
+            "mean_longitude_abs_rad": 2.750806871176792e-08,
+            "semimajor_axis_relative": 1.4443064973697486e-13
+          },
+          "jupiter barycenter": {
+            "eccentricity_abs": 2.1267834715565925e-11,
+            "mean_longitude_abs_rad": 3.2398499438812678e-09,
+            "semimajor_axis_relative": 3.2769618935890692e-12
+          },
+          "mars barycenter": {
+            "eccentricity_abs": 1.015576511775862e-13,
+            "mean_longitude_abs_rad": 6.141460673347865e-10,
+            "semimajor_axis_relative": 8.244628420434602e-13
+          },
+          "mercury barycenter": {
+            "eccentricity_abs": 1.897870749445474e-12,
+            "mean_longitude_abs_rad": 1.4092596600789872e-07,
+            "semimajor_axis_relative": 5.700728744993031e-13
+          },
+          "neptune barycenter": {
+            "eccentricity_abs": 1.9906402914937615e-12,
+            "mean_longitude_abs_rad": 1.4239631696000288e-10,
+            "semimajor_axis_relative": 1.1567721835711649e-11
+          },
+          "pluto barycenter": {
+            "eccentricity_abs": 6.499772942092363e-12,
+            "mean_longitude_abs_rad": 1.9488943792111968e-10,
+            "semimajor_axis_relative": 1.0405086112306392e-11
+          },
+          "saturn barycenter": {
+            "eccentricity_abs": 1.634774954295537e-11,
+            "mean_longitude_abs_rad": 3.926594160930108e-09,
+            "semimajor_axis_relative": 4.267628875773574e-12
+          },
+          "uranus barycenter": {
+            "eccentricity_abs": 1.209797539925006e-11,
+            "mean_longitude_abs_rad": 9.064820005733054e-10,
+            "semimajor_axis_relative": 1.598789674950421e-11
+          },
+          "venus barycenter": {
+            "eccentricity_abs": 3.207659832193954e-13,
+            "mean_longitude_abs_rad": 4.598244141007513e-08,
+            "semimajor_axis_relative": 1.0808669317938121e-12
+          }
+        },
+        "per_body": {
+          "earth barycenter": {
+            "position_error_m": 4184.305533435297,
+            "scaled_rms": 7.386150949068707e-08,
+            "velocity_error_m_per_s": 0.0008473489149275335
+          },
+          "jupiter barycenter": {
+            "position_error_m": 2657.1238797235123,
+            "scaled_rms": 8.288292810465053e-09,
+            "velocity_error_m_per_s": 4.6614542514538574e-05
+          },
+          "mars barycenter": {
+            "position_error_m": 153.33991438271585,
+            "scaled_rms": 1.5885157663295053e-09,
+            "velocity_error_m_per_s": 1.779391034405902e-05
+          },
+          "mercury barycenter": {
+            "position_error_m": 6632.822914635264,
+            "scaled_rms": 4.008786959885166e-07,
+            "velocity_error_m_per_s": 0.004650149135623388
+          },
+          "neptune barycenter": {
+            "position_error_m": 628.1489237442129,
+            "scaled_rms": 1.7154463640311169e-09,
+            "velocity_error_m_per_s": 7.590684567827594e-07
+          },
+          "pluto barycenter": {
+            "position_error_m": 1518.2027362183246,
+            "scaled_rms": 4.145532782906771e-09,
+            "velocity_error_m_per_s": 1.6381293545778493e-06
+          },
+          "saturn barycenter": {
+            "position_error_m": 5954.931314562493,
+            "scaled_rms": 1.6639052110590125e-08,
+            "velocity_error_m_per_s": 4.1492041184289115e-05
+          },
+          "sun": {
+            "position_error_m": 0.9220568727777902,
+            "scaled_rms": 3.9210095348650285e-12,
+            "velocity_error_m_per_s": 3.4917774389918015e-08
+          },
+          "uranus barycenter": {
+            "position_error_m": 2514.205822163851,
+            "scaled_rms": 6.8790169690649294e-09,
+            "velocity_error_m_per_s": 5.746008114755401e-06
+          },
+          "venus barycenter": {
+            "position_error_m": 4996.634500885666,
+            "scaled_rms": 1.4056512751330737e-07,
+            "velocity_error_m_per_s": 0.0016245070163802768
+          }
+        },
+        "worst_body": "mercury barycenter"
+      },
+      "return_time_seconds": 0.0,
+      "runtime_seconds": 26.817125302972272,
+      "samples": 3,
+      "schema_version": 1,
+      "settings": {
+        "N": 10,
+        "N_active": -1,
+        "N_real": 10,
+        "N_var": 0,
+        "boundary": "none",
+        "dt_seconds": -21600.0,
+        "force_is_velocity_dependent": 0,
+        "gravity": "basic",
+        "integrator": "whfast",
+        "whfast": {
+          "coordinates": "jacobi",
+          "corrector": 0,
+          "corrector2": 0,
+          "is_synchronized": 0,
+          "keep_unsynchronized": 1,
+          "kernel": "default",
+          "recalculate_coordinates_this_timestep": 0,
+          "safe_mode": 0
+        }
+      },
+      "state_rows": 30,
+      "status": "COMPLETED"
+    },
+    "m0_diag_reversibility_min_sync_0p5d_10k": {
+      "artifact_inventory": {
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_reversibility_min_sync_0p5d_10k/events.log",
+          "sha256": "406b359d2b2792b1bca152cba9b104a02e2b1944df4a2713b96c6767de00fe6b",
+          "size_bytes": 485
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_reversibility_min_sync_0p5d_10k/physical_state.csv",
+          "sha256": "314b6e17d0a23029b4be4a6544e0e43a3e549d4c84078afad031e973ba2f66d5",
+          "size_bytes": 7246
+        }
+      },
+      "audit": {
+        "compiled_gr_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "continuation_provenance": {
+          "fine_coarse_ratios_diagnostic_only": true,
+          "locked_sections_verified": [
+            "existing_lane_effective_settings",
+            "state_and_energy_definitions",
+            "long_history_analysis",
+            "common_configuration",
+            "lanes",
+            "method_validation",
+            "comparison_definitions",
+            "artifact_requirements",
+            "classification_rules",
+            "step3_status_rules",
+            "next_action_policy"
+          ],
+          "source_manifest_13_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+          "source_manifest_14_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+          "source_manifest_14_status": "REVERSIBILITY_GATE_PASSED",
+          "source_manifest_14_summary_sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+        },
+        "existing_lane_integrity": {
+          "m0_conv_0p25d_1myr_s12345": {
+            "rows": 100010,
+            "samples": 10001
+          },
+          "m0_conv_0p5d_1myr_s12345": {
+            "rows": 100010,
+            "samples": 10001
+          }
+        },
+        "git_dirty_after_preregistration": true,
+        "git_head": "2b30b92d9169c3f5732f2e495faab1986b7a6789",
+        "historical_inventory_entries": {
+          "step3_summary": 21,
+          "step3b_summary": 28
+        },
+        "manifest_path": "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+        "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+        "protected_files": [
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c",
+            "sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py",
+            "sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py",
+            "sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9"
+          },
+          {
+            "path": "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py",
+            "sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+          }
+        ],
+        "runtime": {
+          "header_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/rebound/rebound.h",
+          "header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+          "rebound_build": "Feb 11 2026 17:34:38",
+          "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+          "rebound_version": "4.6.0",
+          "shared_library_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/librebound.cpython-310-x86_64-linux-gnu.so",
+          "shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04"
+        },
+        "status": "PASS",
+        "step3c_timeseries_verified": 2,
+        "tag_object_type": "tag",
+        "unique_historical_artifacts": 28
+      },
+      "callback_stats": {
+        "callback_invocations": 14610000,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 131490000,
+        "real_gr_accel_norm_max": 1.2152166944199733e-08,
+        "real_gr_accel_norm_mean": 8.7186472986678e-10,
+        "real_gr_accel_norm_sum": 0.1146414933301829,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "command": [
+        "/home/peacelovephysics/ephemeris/mini_ephemeris/src/mini_ephemeris/m0_integrator_roundoff_diagnosis.py",
+        "--manifest",
+        "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+        "run-reversibility",
+        "--lane-id",
+        "m0_diag_reversibility_min_sync_0p5d_10k"
+      ],
+      "configuration": {
+        "N_active": -1,
+        "backend": "compiled_c",
+        "backward_steps": 7305000,
+        "body_names": [
+          "sun",
+          "mercury barycenter",
+          "venus barycenter",
+          "earth barycenter",
+          "mars barycenter",
+          "jupiter barycenter",
+          "saturn barycenter",
+          "uranus barycenter",
+          "neptune barycenter",
+          "pluto barycenter"
+        ],
+        "boundary": "none",
+        "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "coordinates": "jacobi",
+        "corrector": 0,
+        "corrector2": 0,
+        "expected_callback_invocations": 14610000,
+        "expected_samples": 3,
+        "expected_state_rows": 30,
+        "force_is_velocity_dependent": false,
+        "forward_steps": 7305000,
+        "forward_years": 10000.0,
+        "gr_scale": 1.0,
+        "gravitational_constant": "6.67430e-11",
+        "gravity": "basic",
+        "include_central_response": true,
+        "initial_conditions_sha256": "bd9b632e1aa7410719bb85675ac7b939b8e9ff29ed577baed679629dab66acf7",
+        "integrator": "whfast",
+        "keep_unsynchronized": 1,
+        "kernel": "default",
+        "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+        "kind": "whfast_reversibility",
+        "megno": false,
+        "model_id": "m0_grpot_emb_pluto_v1",
+        "model_scope": "full_with_pluto",
+        "physical_only": true,
+        "purpose": "min_sync",
+        "real_particle_count": 10,
+        "recalculate_coordinates_this_timestep": 0,
+        "safe_mode": 0,
+        "schema_version": 1,
+        "speed_of_light_m_per_s": "299792458",
+        "start_date": "2000-01-01T00:00:00+00:00",
+        "step_days": 0.5,
+        "variations": false
+      },
+      "configuration_fingerprint": "6a0a37d6947746c6d244d08d3d566ab399c3e63b8f77ee566ba4716fdf5ff30e",
+      "direction_reversal_procedure": "At the forward comparison point, temporarily set keep_unsynchronized=0, synchronize with the positive timestep so internal Jacobi coordinates are at the physical endpoint, restore the configured mode, then negate dt.",
+      "forward_time_seconds": 315576000000.0,
+      "lane_id": "m0_diag_reversibility_min_sync_0p5d_10k",
+      "manifest_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+      "method_gate": {
+        "fine_coarse_ratios_diagnostic_only": true,
+        "source": "manifest 14",
+        "status": "REVERSIBILITY_GATE_PASSED",
+        "summary_sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+      },
+      "metrics": {
+        "angular_momentum_vector_relative_difference": 9.279682800052482e-14,
+        "center_of_mass_position_error_m": 2.267442192940571e-07,
+        "center_of_mass_velocity_error_m_per_s": 6.757602888558368e-15,
+        "corrected_energy_relative_difference": -1.383988288579477e-13,
+        "global_scaled_rms": 5.014999888709074e-08,
+        "orbital_element_errors": {
+          "earth barycenter": {
+            "eccentricity_abs": 8.226128112021058e-13,
+            "mean_longitude_abs_rad": 3.173139973000616e-08,
+            "semimajor_axis_relative": 2.0399809284883453e-14
+          },
+          "jupiter barycenter": {
+            "eccentricity_abs": 3.958278149696071e-12,
+            "mean_longitude_abs_rad": 1.273501304410729e-10,
+            "semimajor_axis_relative": 6.218387976064234e-13
+          },
+          "mars barycenter": {
+            "eccentricity_abs": 6.119826867490019e-12,
+            "mean_longitude_abs_rad": 3.5131266784560466e-08,
+            "semimajor_axis_relative": 6.296202350239981e-12
+          },
+          "mercury barycenter": {
+            "eccentricity_abs": 3.631261957792731e-13,
+            "mean_longitude_abs_rad": 1.2537147320301756e-08,
+            "semimajor_axis_relative": 4.4399019807318043e-13
+          },
+          "neptune barycenter": {
+            "eccentricity_abs": 1.4933349695711584e-12,
+            "mean_longitude_abs_rad": 1.8973711490843925e-10,
+            "semimajor_axis_relative": 1.0523601849978187e-12
+          },
+          "pluto barycenter": {
+            "eccentricity_abs": 2.0511370379949767e-13,
+            "mean_longitude_abs_rad": 9.215028740072739e-11,
+            "semimajor_axis_relative": 8.435792431707699e-13
+          },
+          "saturn barycenter": {
+            "eccentricity_abs": 5.558602189648099e-12,
+            "mean_longitude_abs_rad": 1.159441431752839e-09,
+            "semimajor_axis_relative": 2.7012249658685745e-13
+          },
+          "uranus barycenter": {
+            "eccentricity_abs": 2.9820729219309783e-12,
+            "mean_longitude_abs_rad": 3.94856591867665e-10,
+            "semimajor_axis_relative": 2.4058566388596976e-12
+          },
+          "venus barycenter": {
+            "eccentricity_abs": 3.9685268959921416e-13,
+            "mean_longitude_abs_rad": 2.9863711947797356e-08,
+            "semimajor_axis_relative": 2.3083876938636276e-13
+          }
+        },
+        "per_body": {
+          "earth barycenter": {
+            "position_error_m": 4826.876829570729,
+            "scaled_rms": 8.52005160295466e-08,
+            "velocity_error_m_per_s": 0.0009774304486051665
+          },
+          "jupiter barycenter": {
+            "position_error_m": 108.15891961297258,
+            "scaled_rms": 3.361078314901713e-10,
+            "velocity_error_m_per_s": 1.8668376034458546e-06
+          },
+          "mars barycenter": {
+            "position_error_m": 8739.380175018046,
+            "scaled_rms": 9.079227974891294e-08,
+            "velocity_error_m_per_s": 0.0010172328522827796
+          },
+          "mercury barycenter": {
+            "position_error_m": 589.6539432566835,
+            "scaled_rms": 3.5662606320081436e-08,
+            "velocity_error_m_per_s": 0.0004136829282581892
+          },
+          "neptune barycenter": {
+            "position_error_m": 840.7163599334654,
+            "scaled_rms": 2.2959640806822486e-09,
+            "velocity_error_m_per_s": 1.017656889438676e-06
+          },
+          "pluto barycenter": {
+            "position_error_m": 681.8677505301523,
+            "scaled_rms": 1.8618811211959888e-09,
+            "velocity_error_m_per_s": 7.375034003523675e-07
+          },
+          "saturn barycenter": {
+            "position_error_m": 1745.2726109014059,
+            "scaled_rms": 4.877195559681814e-09,
+            "velocity_error_m_per_s": 1.2193891104787514e-05
+          },
+          "sun": {
+            "position_error_m": 0.384648296366721,
+            "scaled_rms": 1.1032414005476942e-12,
+            "velocity_error_m_per_s": 3.942586050244316e-09
+          },
+          "uranus barycenter": {
+            "position_error_m": 1086.1239035484289,
+            "scaled_rms": 2.971757262076289e-09,
+            "velocity_error_m_per_s": 2.4915153048790066e-06
+          },
+          "venus barycenter": {
+            "position_error_m": 3245.5060453294623,
+            "scaled_rms": 9.129384974187555e-08,
+            "velocity_error_m_per_s": 0.0010550793739311285
+          }
+        },
+        "worst_body": "venus barycenter"
+      },
+      "return_time_seconds": 0.0,
+      "runtime_seconds": 13.903819651925005,
+      "samples": 3,
+      "schema_version": 1,
+      "settings": {
+        "N": 10,
+        "N_active": -1,
+        "N_real": 10,
+        "N_var": 0,
+        "boundary": "none",
+        "dt_seconds": -43200.0,
+        "force_is_velocity_dependent": 0,
+        "gravity": "basic",
+        "integrator": "whfast",
+        "whfast": {
+          "coordinates": "jacobi",
+          "corrector": 0,
+          "corrector2": 0,
+          "is_synchronized": 0,
+          "keep_unsynchronized": 1,
+          "kernel": "default",
+          "recalculate_coordinates_this_timestep": 0,
+          "safe_mode": 0
+        }
+      },
+      "state_rows": 30,
+      "status": "COMPLETED"
+    }
+  },
+  "reversibility_diagnostics": {
+    "current_sync": {
+      "affects_validity": false,
+      "diagnostic_only": true,
+      "metrics": {
+        "angular_momentum_vector_relative_difference": {
+          "apparent_order": -1.0068497468702458,
+          "coarse_0p5d_abs": 2.5002998475954474e-12,
+          "fine_0p25d_abs": 5.024398408169177e-12,
+          "fine_over_coarse_ratio": 2.00951834357034
+        },
+        "center_of_mass_position_error_m": {
+          "apparent_order": -1.2186593329712248,
+          "coarse_0p5d_abs": 10.002507218389097,
+          "fine_0p25d_abs": 23.27886957989321,
+          "fine_over_coarse_ratio": 2.3273034521880875
+        },
+        "center_of_mass_velocity_error_m_per_s": {
+          "apparent_order": -1.2256115785690733,
+          "coarse_0p5d_abs": 6.418309038035823e-11,
+          "fine_0p25d_abs": 1.5009508547564628e-10,
+          "fine_over_coarse_ratio": 2.3385456291705684
+        },
+        "corrected_energy_relative_difference": {
+          "apparent_order": -0.9235288767917785,
+          "coarse_0p5d_abs": 6.3773360748446235e-12,
+          "fine_0p25d_abs": 1.2096206658420277e-11,
+          "fine_over_coarse_ratio": 1.8967491310570437
+        },
+        "global_scaled_rms": {
+          "apparent_order": -0.7178603990602707,
+          "coarse_0p5d_abs": 1.7120823057086666e-07,
+          "fine_0p25d_abs": 2.815931925928761e-07,
+          "fine_over_coarse_ratio": 1.6447409780122622
+        }
+      }
+    },
+    "min_sync": {
+      "affects_validity": false,
+      "diagnostic_only": true,
+      "metrics": {
+        "angular_momentum_vector_relative_difference": {
+          "apparent_order": 1.1376143536867243,
+          "coarse_0p5d_abs": 9.279682800052482e-14,
+          "fine_0p25d_abs": 4.2177136130316244e-14,
+          "fine_over_coarse_ratio": 0.45451053704203886
+        },
+        "center_of_mass_position_error_m": {
+          "apparent_order": 0.3110115427165141,
+          "coarse_0p5d_abs": 2.267442192940571e-07,
+          "fine_0p25d_abs": 1.8277315997561036e-07,
+          "fine_over_coarse_ratio": 0.8060763822101144
+        },
+        "center_of_mass_velocity_error_m_per_s": {
+          "apparent_order": 1.6523500166932776,
+          "coarse_0p5d_abs": 6.757602888558368e-15,
+          "fine_0p25d_abs": 2.149739064693181e-15,
+          "fine_over_coarse_ratio": 0.31812154400682685
+        },
+        "corrected_energy_relative_difference": {
+          "apparent_order": -1.0984997197924515,
+          "coarse_0p5d_abs": 1.383988288579477e-13,
+          "fine_0p25d_abs": 2.963560386446767e-13,
+          "fine_over_coarse_ratio": 2.1413189771197847
+        },
+        "global_scaled_rms": {
+          "apparent_order": -1.4446213154759342,
+          "coarse_0p5d_abs": 5.014999888709074e-08,
+          "fine_0p25d_abs": 1.3650396802944467e-07,
+          "fine_over_coarse_ratio": 2.721913680133352
+        }
+      }
+    }
+  },
+  "schema_version": 1,
+  "smallest_next_action": "Preregister one bounded 10 kyr IAS15 epsilon=1e-14 tolerance lane, after a 100-year runtime benchmark, and compare epsilon=1e-13 versus 1e-14 against the unchanged convergence gates before another WHFast trajectory.",
+  "state_comparisons": {
+    "m0_diag_phys_current_sync_0p25d_100k_vs_full": {
+      "global_scaled_rms": 0.0,
+      "orbital_elements": {
+        "earth barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "jupiter barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "mars barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "mercury barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "neptune barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "pluto barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "saturn barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "uranus barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "venus barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        }
+      },
+      "per_body_scaled_rms": {
+        "earth barycenter": 0.0,
+        "jupiter barycenter": 0.0,
+        "mars barycenter": 0.0,
+        "mercury barycenter": 0.0,
+        "neptune barycenter": 0.0,
+        "pluto barycenter": 0.0,
+        "saturn barycenter": 0.0,
+        "sun": 0.0,
+        "uranus barycenter": 0.0,
+        "venus barycenter": 0.0
+      },
+      "samples": 1001,
+      "worst_body": "sun",
+      "worst_body_scaled_rms": 0.0
+    },
+    "m0_diag_phys_current_sync_0p5d_100k_vs_full": {
+      "global_scaled_rms": 0.0,
+      "orbital_elements": {
+        "earth barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "jupiter barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "mars barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "mercury barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "neptune barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "pluto barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "saturn barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "uranus barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        },
+        "venus barycenter": {
+          "eccentricity_abs_max": 0.0,
+          "mean_longitude_abs_rad_max": 0.0,
+          "semimajor_axis_relative_max": 0.0
+        }
+      },
+      "per_body_scaled_rms": {
+        "earth barycenter": 0.0,
+        "jupiter barycenter": 0.0,
+        "mars barycenter": 0.0,
+        "mercury barycenter": 0.0,
+        "neptune barycenter": 0.0,
+        "pluto barycenter": 0.0,
+        "saturn barycenter": 0.0,
+        "sun": 0.0,
+        "uranus barycenter": 0.0,
+        "venus barycenter": 0.0
+      },
+      "samples": 1001,
+      "worst_body": "sun",
+      "worst_body_scaled_rms": 0.0
+    },
+    "m0_diag_phys_min_sync_0p25d_100k_vs_full": {
+      "global_scaled_rms": 2.5813830778298664e-06,
+      "orbital_elements": {
+        "earth barycenter": {
+          "eccentricity_abs_max": 2.421139747021961e-10,
+          "mean_longitude_abs_rad_max": 8.250590668446023e-07,
+          "semimajor_axis_relative_max": 1.9071370933351793e-10
+        },
+        "jupiter barycenter": {
+          "eccentricity_abs_max": 3.5419683089288334e-09,
+          "mean_longitude_abs_rad_max": 2.6041710547985986e-06,
+          "semimajor_axis_relative_max": 1.584828185284372e-09
+        },
+        "mars barycenter": {
+          "eccentricity_abs_max": 8.480179336523008e-10,
+          "mean_longitude_abs_rad_max": 9.271270187127811e-07,
+          "semimajor_axis_relative_max": 5.126747902955851e-10
+        },
+        "mercury barycenter": {
+          "eccentricity_abs_max": 1.1946074685020847e-10,
+          "mean_longitude_abs_rad_max": 3.17624099110958e-06,
+          "semimajor_axis_relative_max": 4.4165825290086135e-11
+        },
+        "neptune barycenter": {
+          "eccentricity_abs_max": 1.2562029834753408e-08,
+          "mean_longitude_abs_rad_max": 3.0048059596055054e-08,
+          "semimajor_axis_relative_max": 1.3289439128035393e-08
+        },
+        "pluto barycenter": {
+          "eccentricity_abs_max": 1.454112433241228e-08,
+          "mean_longitude_abs_rad_max": 2.7265261159925558e-08,
+          "semimajor_axis_relative_max": 1.9802227225602028e-08
+        },
+        "saturn barycenter": {
+          "eccentricity_abs_max": 1.323309375966808e-08,
+          "mean_longitude_abs_rad_max": 4.7111802059518487e-07,
+          "semimajor_axis_relative_max": 8.720335768959992e-09
+        },
+        "uranus barycenter": {
+          "eccentricity_abs_max": 9.882292158203132e-09,
+          "mean_longitude_abs_rad_max": 1.4224093902726054e-08,
+          "semimajor_axis_relative_max": 1.1247913403584522e-08
+        },
+        "venus barycenter": {
+          "eccentricity_abs_max": 2.1646860345891916e-10,
+          "mean_longitude_abs_rad_max": 3.866425496212855e-06,
+          "semimajor_axis_relative_max": 1.4016253376064124e-10
+        }
+      },
+      "per_body_scaled_rms": {
+        "earth barycenter": 1.2006471733759495e-06,
+        "jupiter barycenter": 2.8250765707296894e-06,
+        "mars barycenter": 8.952433136932876e-07,
+        "mercury barycenter": 4.806422682927357e-06,
+        "neptune barycenter": 1.005668762949113e-07,
+        "pluto barycenter": 8.823741727920054e-08,
+        "saturn barycenter": 7.168270417156738e-07,
+        "sun": 3.01552834686274e-09,
+        "uranus barycenter": 1.6282614225911264e-08,
+        "venus barycenter": 5.725172514333819e-06
+      },
+      "samples": 1001,
+      "worst_body": "venus barycenter",
+      "worst_body_scaled_rms": 5.725172514333819e-06
+    },
+    "m0_diag_phys_min_sync_0p5d_100k_vs_full": {
+      "global_scaled_rms": 2.1708258546688935e-06,
+      "orbital_elements": {
+        "earth barycenter": {
+          "eccentricity_abs_max": 1.8686570693593474e-10,
+          "mean_longitude_abs_rad_max": 3.3072048521987085e-07,
+          "semimajor_axis_relative_max": 7.593930916567998e-11
+        },
+        "jupiter barycenter": {
+          "eccentricity_abs_max": 2.1196144388280214e-09,
+          "mean_longitude_abs_rad_max": 1.3165824572780593e-06,
+          "semimajor_axis_relative_max": 8.579987541119205e-10
+        },
+        "mars barycenter": {
+          "eccentricity_abs_max": 3.447029467418261e-10,
+          "mean_longitude_abs_rad_max": 6.203740543497815e-08,
+          "semimajor_axis_relative_max": 1.7372760066789126e-10
+        },
+        "mercury barycenter": {
+          "eccentricity_abs_max": 9.76829728216444e-11,
+          "mean_longitude_abs_rad_max": 3.0651724509667133e-06,
+          "semimajor_axis_relative_max": 6.084029690215759e-11
+        },
+        "neptune barycenter": {
+          "eccentricity_abs_max": 6.228834113428117e-09,
+          "mean_longitude_abs_rad_max": 7.4330426258484295e-09,
+          "semimajor_axis_relative_max": 6.681670286662246e-09
+        },
+        "pluto barycenter": {
+          "eccentricity_abs_max": 7.394991341502788e-09,
+          "mean_longitude_abs_rad_max": 8.623090685944135e-09,
+          "semimajor_axis_relative_max": 1.0087148329803541e-08
+        },
+        "saturn barycenter": {
+          "eccentricity_abs_max": 7.536577167899239e-09,
+          "mean_longitude_abs_rad_max": 1.6041451100790027e-07,
+          "semimajor_axis_relative_max": 4.858421780873505e-09
+        },
+        "uranus barycenter": {
+          "eccentricity_abs_max": 4.872856597393227e-09,
+          "mean_longitude_abs_rad_max": 2.6107779049766577e-08,
+          "semimajor_axis_relative_max": 5.404180294716278e-09
+        },
+        "venus barycenter": {
+          "eccentricity_abs_max": 1.415893791101297e-10,
+          "mean_longitude_abs_rad_max": 1.4960219605342218e-06,
+          "semimajor_axis_relative_max": 9.19599623910336e-11
+        }
+      },
+      "per_body_scaled_rms": {
+        "earth barycenter": 5.508925910044496e-07,
+        "jupiter barycenter": 1.4137345848838048e-06,
+        "mars barycenter": 8.795444843494949e-08,
+        "mercury barycenter": 6.077545557435271e-06,
+        "neptune barycenter": 6.212945677550857e-09,
+        "pluto barycenter": 7.147088379184203e-09,
+        "saturn barycenter": 1.969555852083884e-07,
+        "sun": 1.5160364469939435e-09,
+        "uranus barycenter": 6.989735569597263e-08,
+        "venus barycenter": 2.799045494299362e-06
+      },
+      "samples": 1001,
+      "worst_body": "mercury barycenter",
+      "worst_body_scaled_rms": 6.077545557435271e-06
+    }
+  },
+  "step3_diagnosis_status": "BLOCKED",
+  "systematic_signatures": {
+    "current_sync": {
+      "coarse_same_sign_blocks": 10,
+      "fine_same_sign_blocks": 10,
+      "passed": true,
+      "q_0p25": 3.9798630960957566e-19,
+      "q_0p5": 4.061160835895056e-19,
+      "q_relative_difference": 0.02001835019207803,
+      "slope_ratio_0p25_over_0p5": 1.9599632996158438
+    },
+    "full": {
+      "coarse_same_sign_blocks": 10,
+      "fine_same_sign_blocks": 10,
+      "passed": true,
+      "q_0p25": 3.9531069612886253e-19,
+      "q_0p5": 3.963699977933214e-19,
+      "q_relative_difference": 0.002672507178535796,
+      "slope_ratio_0p25_over_0p5": 1.9946549856429285
+    },
+    "min_sync": {
+      "coarse_same_sign_blocks": 6,
+      "fine_same_sign_blocks": 6,
+      "passed": false,
+      "q_0p25": 1.2844650420215537e-20,
+      "q_0p5": 1.7424043780249795e-20,
+      "q_relative_difference": 0.26282035432125195,
+      "slope_ratio_0p25_over_0p5": 1.474359291357496
+    }
+  }
+}

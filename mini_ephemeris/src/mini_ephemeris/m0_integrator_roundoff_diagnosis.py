@@ -229,6 +229,95 @@ def _runtime_identity(rebound: Any) -> dict[str, Any]:
     }
 
 
+
+def _audit_continuation_provenance(
+    manifest: dict[str, Any], root: Path
+) -> dict[str, Any] | None:
+    provenance = manifest.get("continuation_provenance")
+    if provenance is None:
+        return None
+    locked_sections = provenance["locked_sections_imported_unchanged"]
+    source_manifest_path = Path(provenance["source_manifest_13_path"])
+    source_manifest = _load_json(source_manifest_path, "source manifest 13")
+    _require(
+        sha256_file(source_manifest_path) == provenance["source_manifest_13_sha256"],
+        "Source manifest 13 hash changed.",
+    )
+    for section in locked_sections:
+        _require(
+            manifest[section] == source_manifest[section],
+            f"Manifest 13 locked section changed: {section}",
+        )
+    fixed = (
+        ("source_manifest_13_summary_path", "source_manifest_13_summary_sha256"),
+        ("source_manifest_13_report_path", "source_manifest_13_report_sha256"),
+        ("source_manifest_14_path", "source_manifest_14_sha256"),
+        ("source_manifest_14_summary_path", "source_manifest_14_summary_sha256"),
+        ("source_manifest_14_report_path", "source_manifest_14_report_sha256"),
+    )
+    for path_key, hash_key in fixed:
+        path = Path(provenance[path_key])
+        _require(
+            sha256_file(path) == provenance[hash_key],
+            f"Continuation source hash changed: {path}",
+        )
+    manifest_13_summary = _load_json(
+        Path(provenance["source_manifest_13_summary_path"]), "manifest 13 summary"
+    )
+    _require(
+        manifest_13_summary.get("primary_mechanism")
+        == provenance["historical_manifest_13_primary_mechanism"]
+        == "BLOCKED",
+        "Historical manifest 13 mechanism changed.",
+    )
+    _require(
+        manifest_13_summary.get("step3_diagnosis_status")
+        == provenance["historical_manifest_13_step3_status"]
+        == "BLOCKED",
+        "Historical manifest 13 status changed.",
+    )
+    gate_summary = _load_json(
+        Path(provenance["source_manifest_14_summary_path"]), "manifest 14 summary"
+    )
+    gate = manifest["continuation_method_gate"]
+    _require(
+        gate_summary.get("final_status")
+        == gate["required_status"]
+        == "REVERSIBILITY_GATE_PASSED",
+        "Manifest 14 absolute reversibility gate did not pass.",
+    )
+    _require(
+        gate_summary.get("step3d_may_resume") is True,
+        "Manifest 14 does not permit continuation.",
+    )
+    _require(
+        all(
+            item.get("diagnostic_only") is True
+            and item.get("affects_validity") is False
+            for item in gate_summary["diagnostic_ratios"].values()
+        ),
+        "Manifest 14 ratio policy changed.",
+    )
+    _require(
+        gate["fine_coarse_return_error_ratios_are_diagnostic_only"] is True
+        and gate["fine_coarse_return_error_ratios_affect_validity"] is False
+        and gate["does_not_change_scientific_or_causal_thresholds"] is True,
+        "Continuation method-gate policy changed.",
+    )
+    return {
+        "source_manifest_13_sha256": sha256_file(source_manifest_path),
+        "source_manifest_14_sha256": sha256_file(
+            Path(provenance["source_manifest_14_path"])
+        ),
+        "source_manifest_14_summary_sha256": sha256_file(
+            Path(provenance["source_manifest_14_summary_path"])
+        ),
+        "source_manifest_14_status": gate_summary["final_status"],
+        "locked_sections_verified": locked_sections,
+        "fine_coarse_ratios_diagnostic_only": True,
+    }
+
+
 def _audit_state_file(
     path: Path,
     *,
@@ -352,6 +441,7 @@ def audit(manifest_path: Path) -> dict[str, Any]:
     _require(runtime["header_sha256"] == expected_runtime["rebound_header_sha256"], "REBOUND header hash mismatch.")
     c_artifact = root / "mini_ephemeris/build/gr_tangent_c/libmini_ephemeris_gr_tangent.so"
     _require(sha256_file(c_artifact) == expected_runtime["compiled_gr_artifact_sha256"], "Compiled GR artifact mismatch.")
+    continuation = _audit_continuation_provenance(manifest, root)
     return {
         "status": "PASS",
         "git_head": head,
@@ -366,6 +456,7 @@ def audit(manifest_path: Path) -> dict[str, Any]:
         "existing_lane_integrity": existing_integrity,
         "runtime": runtime,
         "compiled_gr_artifact_sha256": sha256_file(c_artifact),
+        "continuation_provenance": continuation,
     }
 
 
@@ -473,7 +564,10 @@ def _settings(sim: Any) -> dict[str, Any]:
 def _initial_state(manifest: dict[str, Any]) -> tuple[list[str], NBodyState]:
     config = manifest["common_configuration"]
     bodies = stability_body_list("full_with_pluto", include_pluto=True)
-    _require(bodies == config["body_names"], "Body order differs from manifest 13.")
+    _require(
+        list(bodies) == config["body_names"],
+        "Body order differs from the frozen manifest configuration.",
+    )
     state = initial_state_solar_system_barycentric(
         dt.datetime.fromisoformat(config["start_date"]),
         bodies=bodies,
@@ -984,15 +1078,48 @@ def benchmark_ias15(manifest_path: Path) -> None:
     _require(passed, "Projected IAS15 runtime exceeds preregistered limit.")
 
 
+
+def _require_reversibility_gate(
+    manifest_path: Path, manifest: dict[str, Any]
+) -> dict[str, Any]:
+    if manifest.get("continuation_method_gate") is not None:
+        evidence = _audit_continuation_provenance(
+            manifest, Path(manifest["paths"]["project_root"])
+        )
+        _require(evidence is not None, "Continuation method-gate evidence is missing.")
+        return {
+            "source": "manifest 14",
+            "status": evidence["source_manifest_14_status"],
+            "summary_sha256": evidence["source_manifest_14_summary_sha256"],
+            "fine_coarse_ratios_diagnostic_only": evidence[
+                "fine_coarse_ratios_diagnostic_only"
+            ],
+        }
+    validation_path = (
+        Path(manifest["paths"]["output_root"])
+        / "reversibility_method_validation/summary.json"
+    )
+    validation = _load_json(validation_path, "reversibility validation")
+    _require(
+        validation.get("passed") is True,
+        "Reversibility method validation did not pass.",
+    )
+    _require(
+        validation.get("manifest_sha256") == sha256_file(manifest_path),
+        "Validation manifest mismatch.",
+    )
+    return {
+        "source": "local manifest-13 method validation",
+        "status": "PASSED",
+        "summary_sha256": sha256_file(validation_path),
+        "fine_coarse_ratios_diagnostic_only": False,
+    }
+
+
 def run_reversibility(manifest_path: Path, lane_id: str) -> None:
     manifest = _load_json(manifest_path, "manifest 13")
     audit_payload = audit(manifest_path)
-    validation = _load_json(
-        Path(manifest["paths"]["output_root"]) / "reversibility_method_validation/summary.json",
-        "reversibility validation",
-    )
-    _require(validation.get("passed") is True, "Reversibility method validation did not pass.")
-    _require(validation.get("manifest_sha256") == sha256_file(manifest_path), "Validation manifest mismatch.")
+    method_gate = _require_reversibility_gate(manifest_path, manifest)
     lane, config = _expanded_lane(manifest, lane_id)
     _require(config["kind"] == "whfast_reversibility", "Not a reversibility lane.")
     paths = _lane_paths(manifest, lane_id)
@@ -1032,6 +1159,7 @@ def run_reversibility(manifest_path: Path, lane_id: str) -> None:
             "configuration_fingerprint": lane["configuration_fingerprint"],
             "command": sys.argv,
             "audit": audit_payload,
+            "method_gate": method_gate,
             "settings": _settings(sim),
             "direction_reversal_procedure": (
                 "At the forward comparison point, temporarily set keep_unsynchronized=0, "
@@ -1511,6 +1639,43 @@ def classify_mechanism(evidence: dict[str, Any]) -> tuple[str, str]:
     return "MIXED_OR_INCONCLUSIVE", "STEP3_DIAGNOSIS_INCONCLUSIVE"
 
 
+def _reversibility_timestep_diagnostics(
+    reversibility: dict[str, dict[str, Any]],
+) -> dict[str, Any]:
+    metric_names = (
+        "global_scaled_rms",
+        "corrected_energy_relative_difference",
+        "angular_momentum_vector_relative_difference",
+        "center_of_mass_position_error_m",
+        "center_of_mass_velocity_error_m_per_s",
+    )
+    diagnostics = {}
+    for mode in ("current_sync", "min_sync"):
+        coarse = reversibility[
+            f"m0_diag_reversibility_{mode}_0p5d_10k"
+        ]["metrics"]
+        fine = reversibility[
+            f"m0_diag_reversibility_{mode}_0p25d_10k"
+        ]["metrics"]
+        metrics = {}
+        for name in metric_names:
+            coarse_error = abs(float(coarse[name]))
+            fine_error = abs(float(fine[name]))
+            ratio = fine_error / max(coarse_error, 1e-300)
+            metrics[name] = {
+                "coarse_0p5d_abs": coarse_error,
+                "fine_0p25d_abs": fine_error,
+                "fine_over_coarse_ratio": ratio,
+                "apparent_order": math.log(ratio) / math.log(0.5),
+            }
+        diagnostics[mode] = {
+            "diagnostic_only": True,
+            "affects_validity": False,
+            "metrics": metrics,
+        }
+    return diagnostics
+
+
 def _figure_save(fig: Any, path: Path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(path, dpi=160, bbox_inches="tight", metadata={"Software": "mini_ephemeris"})
@@ -1602,10 +1767,29 @@ def _make_figures(
 
 
 def _markdown_report(payload: dict[str, Any]) -> str:
+    ias15 = payload["ias15"]
+    ias15_state = ias15["state_agreement"]
+    ias15_thresholds = ias15["thresholds"]
+    evidence = payload["classification_evidence"]
     lines = [
         f"# {payload['primary_mechanism']}",
         "",
         f"Step 3 diagnosis status: **{payload['step3_diagnosis_status']}**",
+        "",
+        "## Classification Gates",
+        "",
+        f"- Artifact and telemetry integrity: {evidence['integrity_passed']}.",
+        f"- Manifest-14 reversibility validity: {evidence['reversibility_valid']}.",
+        f"- IAS15 tolerance convergence: {ias15['tolerance_converged']}.",
+        f"- IAS15 global scaled-state RMS: {ias15_state['global_scaled_rms']:.12g} "
+        f"(limit {ias15_thresholds['global_scaled_state_rms_max']:.12g}).",
+        f"- IAS15 worst body: {ias15_state['worst_body']} at "
+        f"{ias15_state['worst_body_scaled_rms']:.12g} "
+        f"(per-body limit {ias15_thresholds['per_body_scaled_state_rms_max']:.12g}).",
+        f"- IAS15 corrected-energy history difference: "
+        f"{ias15['energy_history_max_abs_difference']:.12g} "
+        f"(limit {ias15_thresholds['energy_history_max_abs_difference']:.12g}); "
+        f"orbital elements agree: {ias15['orbital_elements_agree']}.",
         "",
         "## Long History",
         "",
@@ -1626,6 +1810,23 @@ def _markdown_report(payload: dict[str, Any]) -> str:
                 f"- {lane_id}: fitted change/Myr `{energy['fitted_change_per_myr']:.12g}`, "
                 f"max `{energy['max_abs']:.12g}`, runtime `{item['runtime_seconds']:.3f}` s."
             )
+    lines.extend(["", "## Reversibility Diagnostics", ""])
+    lines.extend(
+        [
+            "Fine/coarse ratios and apparent orders are diagnostic only and do not affect validity.",
+            "",
+            "| Mode | Global RMS 0.5 d | Global RMS 0.25 d | Fine/coarse | Apparent order |",
+            "| --- | ---: | ---: | ---: | ---: |",
+        ]
+    )
+    for mode, item in payload["reversibility_diagnostics"].items():
+        metric = item["metrics"]["global_scaled_rms"]
+        lines.append(
+            f"| {mode} | {metric['coarse_0p5d_abs']:.12g} | "
+            f"{metric['fine_0p25d_abs']:.12g} | "
+            f"{metric['fine_over_coarse_ratio']:.12g} | "
+            f"{metric['apparent_order']:.9g} |"
+        )
     lines.extend(["", "## Candidate Mechanisms", ""])
     for name, item in payload["candidate_mechanisms"].items():
         lines.append(f"- **{name}**: {item['assessment']}. Evidence for: {item['for']}. Evidence against: {item['against']}.")
@@ -1795,6 +1996,7 @@ def analyze(manifest_path: Path) -> None:
         manifest["comparison_definitions"]["systematic_per_step_signature"],
     )
     reversibility = {lane_id: summaries[lane_id] for lane_id in reversibility_ids}
+    reversibility_diagnostics = _reversibility_timestep_diagnostics(reversibility)
     reversibility_valid = all(
         abs(item["return_time_seconds"]) <= 1e-6
         and item["callback_stats"]["callback_invocations"] == item["configuration"]["expected_callback_invocations"]
@@ -1885,6 +2087,7 @@ def analyze(manifest_path: Path) -> None:
         "physical_accuracy_against_ias15": physical_accuracy,
         "ias15": {
             "tolerance_converged": ias_converged,
+            "thresholds": ias_threshold,
             "state_agreement": ias_state,
             "energy_history_max_abs_difference": float(ias_energy_difference),
             "energy_statistics_agree": ias_stat_agreement,
@@ -1892,6 +2095,7 @@ def analyze(manifest_path: Path) -> None:
             "force_problem_rule_passed": ias_force_problem,
         },
         "reversibility": reversibility,
+        "reversibility_diagnostics": reversibility_diagnostics,
         "classification_evidence": evidence,
         "candidate_mechanisms": candidate,
         "production_configuration_must_change": step3_status == "STEP3_INTEGRATOR_CONFIGURATION_CHANGE_REQUIRED",
@@ -1903,7 +2107,7 @@ def analyze(manifest_path: Path) -> None:
             if step3_status == "STEP3_FORCE_INVARIANT_PROBLEM"
             else "Use the separately preregistered bounded next step described by the status policy."
             if step3_status == "STEP3_NUMERICAL_FLOOR_CHARACTERIZED"
-            else "Identify the smallest unresolved bounded numerical comparison before another trajectory."
+            else "Preregister one bounded 10 kyr IAS15 epsilon=1e-14 tolerance lane, after a 100-year runtime benchmark, and compare epsilon=1e-13 versus 1e-14 against the unchanged convergence gates before another WHFast trajectory."
         ),
         "figures": figures,
         "no_stage4_command": True,
