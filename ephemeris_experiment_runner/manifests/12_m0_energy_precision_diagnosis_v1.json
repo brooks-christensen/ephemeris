@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "kind": "m0_offline_energy_precision_diagnosis_manifest",
+  "experiment_id": "m0_energy_precision_diagnosis_v1",
+  "model_id": "m0_grpot_emb_pluto_v1",
+  "frozen_before_diagnostic_calculation": true,
+  "provenance": {
+    "starting_commit": "7e9447971ed9684a785d2d69fc6410e1c0775711",
+    "validated_c_baseline_commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b",
+    "validated_c_annotated_tag": "gr-tangent-compiled-c-v1",
+    "step2_commit": "ac83476520328d047b590a1c4bf49bd405cd55fd",
+    "step3_commit": "ef12816423aab6211a50e9f1c4d3391a3156c8df",
+    "step3b_commit": "7e9447971ed9684a785d2d69fc6410e1c0775711",
+    "manifest_10_sha256": "5a45bd7967eeba7694a2bf076af33290cf113eefa5379ec439773fda0ad04363",
+    "manifest_11_sha256": "c589820f11f6a7171d3b3b0f852ff58c9b7184b9c77426f9a61174a2163112da",
+    "step3_summary_sha256": "651bb6b3210a442dd2a740d20c72780b000e5120096b780aebe021c086e61b82",
+    "step3b_summary_sha256": "76e4c4637870a6c8ba38613242efdbe03db88a3ad38d3687aaaa4707f13da20f",
+    "historical_statuses_immutable": {
+      "step3": "M0_1DAY_NOT_CONVERGED",
+      "step3b": "M0_0P5DAY_NOT_CONVERGED"
+    }
+  },
+  "protected_files": {
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+  },
+  "paths": {
+    "project_root": "/home/peacelovephysics/ephemeris",
+    "manifest_10": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/10_m0_timestep_convergence_v1.json",
+    "manifest_11": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/11_m0_timestep_convergence_0p25_v1.json",
+    "step3_summary": "/home/peacelovephysics/ephemeris/docs/validation/m0-timestep-convergence-v1/m0_timestep_convergence_summary.json",
+    "step3b_summary": "/home/peacelovephysics/ephemeris/docs/validation/m0-timestep-convergence-0p25-v1/m0_timestep_convergence_0p25_summary.json",
+    "manifest": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/12_m0_energy_precision_diagnosis_v1.json",
+    "output_root": "/home/peacelovephysics/ephemeris/output/stability/m0_energy_precision_diagnosis_v1",
+    "report_json": "/home/peacelovephysics/ephemeris/docs/validation/m0-energy-precision-diagnosis-v1/m0_energy_precision_diagnosis_summary.json",
+    "report_markdown": "/home/peacelovephysics/ephemeris/docs/validation/m0-energy-precision-diagnosis-v1/m0_energy_precision_diagnosis_report.md"
+  },
+  "execution_policy": {
+    "offline_only": true,
+    "no_integration": true,
+    "no_10myr_launch": true,
+    "no_0p125d_request": true,
+    "do_not_modify_input_artifacts": true,
+    "do_not_modify_runner_or_telemetry": true,
+    "do_not_revise_historical_statuses": true,
+    "fresh_ignored_timeseries_only": true
+  },
+  "state_schema": {
+    "schema_version": 1,
+    "coordinate_frame": "Solar-system barycentric ICRF Cartesian state stored by the runner.",
+    "units": {
+      "mass_kg": "kg",
+      "x_m_y_m_z_m": "m",
+      "vx_vy_vz_m_per_s": "m/s",
+      "time_seconds": "s",
+      "time_years": "Julian year of exactly 31557600 s"
+    },
+    "real_particle_count": 10,
+    "sun_index": 0,
+    "body_order": [
+      "sun",
+      "mercury barycenter",
+      "venus barycenter",
+      "earth barycenter",
+      "mars barycenter",
+      "jupiter barycenter",
+      "saturn barycenter",
+      "uranus barycenter",
+      "neptune barycenter",
+      "pluto barycenter"
+    ],
+    "expected_samples_per_lane": 10001,
+    "expected_state_rows_per_lane": 100010,
+    "matched_epoch_rule": "Join state groups and progress rows by exact sample_index and exact float64 time_years=100*sample_index; no interpolation.",
+    "numeric_serialization": "Python csv.DictWriter applied str() to Python float values. Every relevant token must satisfy str(float(token)) == token, proving canonical shortest lossless float64 round-trip representation.",
+    "decimal_construction": "Construct Decimal directly from each original mass, position, velocity, time, and recorded-telemetry CSV token; never parse reference inputs through float."
+  },
+  "authoritative_constants": {
+    "gravitational_constant_decimal": "6.67430E-11",
+    "gravitational_constant_units": "m^3 kg^-1 s^-2",
+    "speed_of_light_decimal": "299792458",
+    "speed_of_light_units": "m/s",
+    "coefficient_scale_decimal": "1",
+    "decimal_precision_digits": 60,
+    "float64_unit_roundoff": 1.1102230246251565e-16
+  },
+  "energy_formulas": {
+    "kinetic": "K = sum_i 0.5*m_i*(vx_i^2+vy_i^2+vz_i^2), including the Sun and all ten real particles in the stored barycentric frame.",
+    "newtonian_pair_potential": "U_N = -G*sum_{i<j}(m_i*m_j/sqrt((x_j-x_i)^2+(y_j-y_i)^2+(z_j-z_i)^2)) over all 45 unordered real-particle pairs.",
+    "newtonian_total": "E_Newtonian = K + U_N.",
+    "gr_potential": "U_GR,pot = -(3*s*G^2*M_sun^2/c^2)*sum_{i!=sun}(m_i/((x_i-x_sun)^2+(y_i-y_sun)^2+(z_i-z_sun)^2)).",
+    "corrected_total": "E_corrected = E_Newtonian + U_GR,pot.",
+    "initial_denominator": "For each lane and numerical method independently, drift(t)=(E_corrected(t)-E_corrected(0))/abs(E_corrected(0)); use 1 J only if E_corrected(0)==0.",
+    "energy_units": "joule"
+  },
+  "evaluation_methods": {
+    "float64_matching": "Independent implementation matching telemetry: numpy float64 kinetic array expression and np.sum; nested i then j Newtonian pair accumulation; body-index GR weighted-inverse-r2 accumulation; telemetry operation order for prefactor and corrected total.",
+    "compensated": "Parse float64 inputs, explicitly enumerate kinetic component terms, 45 Newtonian pair terms, and 9 GR terms, combine each category and totals with Python math.fsum.",
+    "decimal_reference": "Use decimal localcontext precision 60. Build all values and constants directly from CSV/manifest decimal strings. Perform squared norms, pair distances and Decimal.sqrt(), products, category sums, corrected totals, own-initial drift, statistics, and trend entirely in Decimal arithmetic.",
+    "optional_longdouble": false
+  },
+  "statistics": {
+    "maximum": "max(abs(drift_t)) with earliest sample on ties; record value and epoch.",
+    "rms": "sqrt(sum(drift_t^2)/10001).",
+    "p99": "Sort absolute drift values and select zero-based index 9900 because (N-1)*0.99=9900 exactly for N=10001; this equals numpy.percentile(...,99.0) linear behavior without interpolation.",
+    "fitted_trend": "Unweighted OLS after centering times and drifts at their arithmetic means; report slope per year and slope*1000000 as fitted change over 1 Myr.",
+    "unchanged_energy_bound": 1e-7,
+    "unchanged_trend_rule": "abs(fitted_change_over_1myr) <= max(0.25*max_abs,1e-10) for every compared lane.",
+    "unchanged_monotonic_rule": "The 0.25-day maximum, RMS, and p99 must each be <= the corresponding 0.5-day statistic; maximum nonmonotonicity is waived only if both maxima are <=1e-12.",
+    "unchanged_roundoff_floor": 1e-12
+  },
+  "numeric_tolerances": {
+    "operation_count_budget": 1024,
+    "gamma_formula": "gamma_k=(k*u)/(1-k*u)",
+    "gamma_1024": 1.1368683772162895e-13,
+    "raw_energy_safety_factor": 8.0,
+    "raw_newtonian_abs_tolerance_j": "8*gamma_1024*(abs(K)+sum(abs(each Newtonian pair term)))",
+    "raw_gr_abs_tolerance_j": "8*gamma_1024*sum(abs(each GR term))",
+    "raw_corrected_abs_tolerance_j": "raw_newtonian_tolerance+raw_gr_tolerance+8*u*(abs(E_Newtonian)+abs(U_GR,pot))",
+    "telemetry_drift_abs_tolerance": "(raw_corrected_tolerance_t+raw_corrected_tolerance_t0)/abs(E_corrected_t0)+16*gamma_1024",
+    "method_history_agreement_abs": 1.8189894035460633e-12,
+    "lane_worsening_significance_margin": 7.275957614184253e-12,
+    "lane_margin_derivation": "4*method_history_agreement_abs",
+    "conditioning_overlap_rule": "If the 0.5-to-0.25 difference in any decisive Decimal statistic is <= lane_worsening_significance_margin, that statistic cannot establish worsening."
+  },
+  "input_lanes": [
+    {
+      "id": "m0_conv_0p5d_1myr_s12345",
+      "step_days": 0.5,
+      "configuration_fingerprint": "68fb88378722f7408b60bb1251c6755611da521fa7f26fcafc10736c7b2da59e",
+      "state_path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_state_m0_conv_0p5d_1myr_s12345.csv",
+      "state_sha256": "367ae71cb5cfcfa6e2379a3966e8d526597b1b021b8ccb5a9c52057bb1b7da15",
+      "state_size_bytes": 36829342,
+      "progress_path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_progress_m0_conv_0p5d_1myr_s12345.csv",
+      "progress_sha256": "004d167ced5b0b3b071fc8ec020c02187eab7310132f9f5f52b8a9f0fae53039",
+      "progress_size_bytes": 6304065,
+      "timeseries_output": "/home/peacelovephysics/ephemeris/output/stability/m0_energy_precision_diagnosis_v1/m0_conv_0p5d_1myr_s12345_energy_methods.csv"
+    },
+    {
+      "id": "m0_conv_0p25d_1myr_s12345",
+      "step_days": 0.25,
+      "configuration_fingerprint": "3e79729659677339dd5a4cd64c9f8d217af3d97a863786b9388b6a5b8b42533c",
+      "state_path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_state_m0_conv_0p25d_1myr_s12345.csv",
+      "state_sha256": "154cbaa5360d506fca5237fd22fa3c8489577bbf1c272ac5232b11c37a2b9c73",
+      "state_size_bytes": 36828273,
+      "progress_path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_progress_m0_conv_0p25d_1myr_s12345.csv",
+      "progress_sha256": "18d03ef44fbe30b3f4087fdf19a9a9de5e58ccd5d0ac2eea8d64d8fc16b9e4b2",
+      "progress_size_bytes": 6304578,
+      "timeseries_output": "/home/peacelovephysics/ephemeris/output/stability/m0_energy_precision_diagnosis_v1/m0_conv_0p25d_1myr_s12345_energy_methods.csv"
+    }
+  ],
+  "classification_rules": {
+    "BLOCKED": "An input/provenance/schema/hash audit fails, required values are nonfinite, or float64 reconstruction does not reproduce recorded telemetry within the preregistered dynamic tolerances and the discrepancy is not identified.",
+    "ENERGY_TELEMETRY_PRECISION_LIMITED": "Telemetry reconstruction passes; compensated and Decimal histories agree; the Decimal history removes 0.25-day worsening under all maximum/RMS/p99 rules and both Decimal lane trends satisfy the unchanged trend rule.",
+    "ENERGY_DRIFT_CONFIRMED": "Telemetry reconstruction passes; compensated and Decimal histories agree within method_history_agreement_abs; Decimal and compensated maximum/RMS/p99 all show 0.25-day worsening over 0.5 day by more than lane_worsening_significance_margin; and the Decimal 0.25-day fitted-trend magnitude also exceeds the 0.5-day magnitude by more than that margin.",
+    "INCONCLUSIVE": "Audits and telemetry reconstruction pass, but method disagreement, stored-state conditioning overlap, or mixed Decimal/compensated ordering prevents either precision-limited or confirmed-drift classification."
+  },
+  "output_policy": {
+    "timeseries_schema_version": 1,
+    "timeseries_directory_must_be_absent_before_run": true,
+    "timeseries_are_ignored_and_not_committed": true,
+    "compact_reports_only_are_committed": true
+  }
+}
