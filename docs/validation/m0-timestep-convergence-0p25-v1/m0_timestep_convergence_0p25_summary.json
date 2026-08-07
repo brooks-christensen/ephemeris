@@ -1,0 +1,1186 @@
+{
+  "angular_momentum": {
+    "m0_conv_0p25d_1myr_s12345": {
+      "final": 2.3968335057047346e-10,
+      "fitted_change_over_1myr": 2.399380961404854e-10,
+      "fitted_trend_per_year": 2.399380961404854e-16,
+      "max_abs": 2.3968335057047346e-10,
+      "max_abs_worst_epoch_years": 1000000.0,
+      "p99_abs": 2.373751927271357e-10,
+      "rms": 1.3873915374072276e-10
+    },
+    "m0_conv_0p5d_1myr_s12345": {
+      "final": 1.2012876393983744e-10,
+      "fitted_change_over_1myr": 1.2005281767977305e-10,
+      "fitted_trend_per_year": 1.2005281767977305e-16,
+      "max_abs": 1.2015556473757524e-10,
+      "max_abs_worst_epoch_years": 999300.0,
+      "p99_abs": 1.1899576031114433e-10,
+      "rms": 6.984954305957967e-11
+    },
+    "m0_conv_1d_1myr_s12345": {
+      "final": 6.029794722932048e-11,
+      "fitted_change_over_1myr": 5.998130268270163e-11,
+      "fitted_trend_per_year": 5.998130268270163e-17,
+      "max_abs": 6.029794722932048e-11,
+      "max_abs_worst_epoch_years": 1000000.0,
+      "p99_abs": 5.970898836381688e-11,
+      "rms": 3.4696816989810684e-11
+    }
+  },
+  "artifact_inventory": {
+    "new_0p25d": [
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_progress_m0_conv_0p25d_1myr_s12345.csv",
+        "sha256": "18d03ef44fbe30b3f4087fdf19a9a9de5e58ccd5d0ac2eea8d64d8fc16b9e4b2",
+        "size_bytes": 6304578
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_state_m0_conv_0p25d_1myr_s12345.csv",
+        "sha256": "154cbaa5360d506fca5237fd22fa3c8489577bbf1c272ac5232b11c37a2b9c73",
+        "size_bytes": 36828273
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_status_m0_conv_0p25d_1myr_s12345.json",
+        "sha256": "f4ac049417f3b94c68de2a3321bc89b037d39b0d3c13cbc6eee61ad26e0acf2d",
+        "size_bytes": 618
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_summary_m0_conv_0p25d_1myr_s12345.json",
+        "sha256": "7d0a2e58d724979d2e6e44034fc37513eb124bc2791f3e3db35713d47b2b28c8",
+        "size_bytes": 11012
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_restart_m0_conv_0p25d_1myr_s12345.json",
+        "sha256": "bed38fdd46309aa0d4a845d8c392149245f8055f8c8c1d6ce0f16542831a4a64",
+        "size_bytes": 398
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_archive_m0_conv_0p25d_1myr_s12345.bin",
+        "sha256": "1aebd60e2671a4b7b1b1dbe6453e48d10fd460daa31e167f4d86b5fe9c7d6def",
+        "size_bytes": 63572
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/logs/m0_conv_0p25d_1myr_s12345.log",
+        "sha256": "679c6a6ec9bb7ecc5fb9786602704ebf77d7d4945cf6a25443cb124b2ad4f8b9",
+        "size_bytes": 861942
+      }
+    ],
+    "reused_step3": [
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_2d_1myr_s12345/gr_tangent_progress_m0_conv_2d_1myr_s12345.csv",
+        "sha256": "c7f5d9fd4b22e3dcd31d41a595f71b15c43282fa01024b0030ceb3b6d4ff2b4c",
+        "size_bytes": 6306369
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_2d_1myr_s12345/gr_tangent_state_m0_conv_2d_1myr_s12345.csv",
+        "sha256": "80f28319bad1b6e21c5668099c7fb581aa1346233912e6bdb172f112c9fd4e5f",
+        "size_bytes": 36828867
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_2d_1myr_s12345/gr_tangent_status_m0_conv_2d_1myr_s12345.json",
+        "sha256": "468178581761fb3c5e53b2ca59df3d836612d26a84f12513510ac1d6625c3b15",
+        "size_bytes": 620
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_2d_1myr_s12345/gr_tangent_summary_m0_conv_2d_1myr_s12345.json",
+        "sha256": "6e0e8ea66d8966261f97400160bb3bd952925460b4cb0bec9098e59e345c8f48",
+        "size_bytes": 10960
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_2d_1myr_s12345/gr_tangent_restart_m0_conv_2d_1myr_s12345.json",
+        "sha256": "c609266775c90b7e19ac5dc19eccb1591edd100db72a105d335d0f98724ba6d4",
+        "size_bytes": 392
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_2d_1myr_s12345/gr_tangent_archive_m0_conv_2d_1myr_s12345.bin",
+        "sha256": "cbe56d564e4df371f2ae40b5ca54de0e4d36d27a046ef04fba431acea58f4b05",
+        "size_bytes": 63572
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/logs/m0_conv_2d_1myr_s12345.log",
+        "sha256": "33f05ba8482244b7e65775048db1267cddeb3945f3ede26a9c2673027d39009c",
+        "size_bytes": 823454
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_1d_1myr_s12345/gr_tangent_progress_m0_conv_1d_1myr_s12345.csv",
+        "sha256": "38472ee2dccd0800465b716123b32dbf00534ecc295ac09c5409b60129044123",
+        "size_bytes": 6304902
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_1d_1myr_s12345/gr_tangent_state_m0_conv_1d_1myr_s12345.csv",
+        "sha256": "248d8431bddd44dc1b1d9ac0eaeb1ca2df953639e8c3c81e00d7f53807de7bec",
+        "size_bytes": 36830483
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_1d_1myr_s12345/gr_tangent_status_m0_conv_1d_1myr_s12345.json",
+        "sha256": "8a3fdbbe6c9cb4eba6332040d1cf1fa53ec2a28e88c2b560bf538f379fdafe24",
+        "size_bytes": 618
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_1d_1myr_s12345/gr_tangent_summary_m0_conv_1d_1myr_s12345.json",
+        "sha256": "7143a269646822a2fae6c033aef08cc4486cab09f5df3e65def93b39f41cf5bd",
+        "size_bytes": 10957
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_1d_1myr_s12345/gr_tangent_restart_m0_conv_1d_1myr_s12345.json",
+        "sha256": "f691818290b691717f6094fa366c3ffe7718147c796e5053021d0b6e9f513e96",
+        "size_bytes": 392
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_1d_1myr_s12345/gr_tangent_archive_m0_conv_1d_1myr_s12345.bin",
+        "sha256": "bbb4b3f5328f94057b0e5c16b73ec37249c8fa78dd4dd947d2f6f430de7f46bd",
+        "size_bytes": 63572
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/logs/m0_conv_1d_1myr_s12345.log",
+        "sha256": "d300aeecb3aeb43693dc895227007350897c1245663174aae4002a528bbb20df",
+        "size_bytes": 826496
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_progress_m0_conv_0p5d_1myr_s12345.csv",
+        "sha256": "004d167ced5b0b3b071fc8ec020c02187eab7310132f9f5f52b8a9f0fae53039",
+        "size_bytes": 6304065
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_state_m0_conv_0p5d_1myr_s12345.csv",
+        "sha256": "367ae71cb5cfcfa6e2379a3966e8d526597b1b021b8ccb5a9c52057bb1b7da15",
+        "size_bytes": 36829342
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_status_m0_conv_0p5d_1myr_s12345.json",
+        "sha256": "b11fe98f4a876052ae7f19f680160e6e3e78a7246b8e049115e2968bba2c1bb9",
+        "size_bytes": 619
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_summary_m0_conv_0p5d_1myr_s12345.json",
+        "sha256": "818f7a3fa3962858034ff1fdec8e72b46d13a941bcc7838626f24d2bdd35dcf3",
+        "size_bytes": 10988
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_restart_m0_conv_0p5d_1myr_s12345.json",
+        "sha256": "8530e88f82b237c089ca494e536da3a47b1b7fb9e1c3fb5c3d915f02c70cdde8",
+        "size_bytes": 396
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_archive_m0_conv_0p5d_1myr_s12345.bin",
+        "sha256": "3ee131ed27f67797ffda168ead0d1a163291610599b0f3495f9d3b4c75aeb026",
+        "size_bytes": 63572
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/logs/m0_conv_0p5d_1myr_s12345.log",
+        "sha256": "ece5c45daceb26fa33a571a80e41b6fab5e89ac075884d4bc6b6a48df9030827",
+        "size_bytes": 848023
+      }
+    ]
+  },
+  "comparison_definitions": {
+    "energy": {
+      "quantity": "Runner corrected_energy_rel_change for E_Newtonian+U_GR,pot relative to the common t=0 corrected energy.",
+      "robust_percentile": 99.0,
+      "trend": "Unweighted ordinary least-squares slope after centering time; report slope per year and accumulated fitted change over 1 Myr."
+    },
+    "lcn": {
+      "final_dimensionless_difference": "abs((LCN_1d-LCN_0.5d)*1000000 years)",
+      "history_rms": "sqrt(mean(square((LCN_left-LCN_right)*1000000 years)))"
+    },
+    "matching": "Match all 10001 rows by exact sample index and exact time; no interpolation.",
+    "mercury_perihelion_fit": {
+      "fit": "Unweighted ordinary least squares after centering time at its arithmetic mean.",
+      "fit_interval_years": [
+        0,
+        1000000
+      ],
+      "quantity": "J2000-ecliptic heliocentric longitude of perihelion",
+      "reported_units": "arcsec/century",
+      "sampling_years": 100,
+      "unwrapping": "numpy.unwrap with period 2*pi over the complete matched history"
+    },
+    "orbital_elements": {
+      "angle_difference": "Principal wrapped difference atan2(sin(delta),cos(delta)).",
+      "frame": "J2000 ecliptic heliocentric osculating elements",
+      "gravitational_parameter": "G*(M_sun+M_body)",
+      "routine": "mini_ephemeris.orbital_elements.heliocentric_elements_for_state",
+      "semimajor_axis_relative_denominator": "For each pair/body, max(abs(mean(a_left(t0),a_right(t0))),1e-12 AU), fixed for the full history."
+    },
+    "physical_frame": "Barycentric ICRF Cartesian state stored by the runner.",
+    "physical_scaling": {
+      "pair_body_rms": "sqrt(mean(square(sample_body_vector))) over all matched samples and six components for one body",
+      "pair_global_rms": "sqrt(mean(square(sample_body_vector))) over all matched samples, real bodies, and six components",
+      "position_denominator_m": 149597870700.0,
+      "sample_body_vector": "[dx/AU,dy/AU,dz/AU,dvx/(AU/JulianYear),dvy/(AU/JulianYear),dvz/(AU/JulianYear)]",
+      "velocity_denominator_m_per_s": 4740.470463533349
+    },
+    "tangent": {
+      "direction_cosine": "dot(v_left,v_right)/(norm(v_left)*norm(v_right)) for each matched full-system first-variation vector.",
+      "direction_discrepancy": "sqrt(max(0,2-2*cosine)); pair RMS is sqrt(mean(direction_discrepancy^2)).",
+      "near_zero_floor": 1e-300,
+      "norm_relative_difference": "abs(norm_left-norm_right)/max(norm_left,norm_right,1e-300)",
+      "scaling": "Use the same AU and AU/JulianYear component scales as the physical state."
+    }
+  },
+  "comparisons": {
+    "coarse_1d_vs_0p5d": {
+      "angular_momentum": {
+        "relative_vector_difference_max": 5.988448530848897e-11,
+        "relative_vector_difference_rms": 3.5157176186405186e-11,
+        "worst_epoch_years": 999300.0
+      },
+      "lcn": {
+        "final_accumulated_abs_difference": 1.2183767717812428e-12,
+        "history_accumulated_max_abs_difference": 8.50179262648678e-08,
+        "history_accumulated_rms_difference": 9.018504804010979e-10,
+        "worst_epoch_years": 100.0
+      },
+      "megno": {
+        "final_abs_difference": 3.7759876978515905e-05,
+        "history_max_abs_difference": 3.7759876978515905e-05,
+        "history_rms_difference": 1.5966561234939547e-05,
+        "worst_epoch_years": 1000000.0
+      },
+      "orbital_elements": {
+        "per_body": {
+          "earth barycenter": {
+            "eccentricity_max_abs_difference": 8.716554358093043e-07,
+            "eccentricity_worst_epoch_years": 977200.0,
+            "inclination_max_abs_difference_arcsec": 0.01560807891134136,
+            "inclination_worst_epoch_years": 993900.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 39.31684040326637,
+            "longitude_perihelion_worst_epoch_years": 460900.0,
+            "mean_longitude_max_abs_difference_arcsec": 756.7805356030512,
+            "mean_longitude_worst_epoch_years": 999300.0,
+            "semimajor_axis_max_relative_difference": 4.113109676402115e-07,
+            "semimajor_axis_reference_m": 149597369753.91214,
+            "semimajor_axis_worst_epoch_years": 927500.0
+          },
+          "jupiter barycenter": {
+            "eccentricity_max_abs_difference": 3.763254178140718e-07,
+            "eccentricity_worst_epoch_years": 965300.0,
+            "inclination_max_abs_difference_arcsec": 0.0019454034155381428,
+            "inclination_worst_epoch_years": 963600.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 2.7915012154475027,
+            "longitude_perihelion_worst_epoch_years": 956900.0,
+            "mean_longitude_max_abs_difference_arcsec": 23.074819763645365,
+            "mean_longitude_worst_epoch_years": 1000000.0,
+            "semimajor_axis_max_relative_difference": 2.0468680831156273e-07,
+            "semimajor_axis_reference_m": 778547207473.2429,
+            "semimajor_axis_worst_epoch_years": 967500.0
+          },
+          "mars barycenter": {
+            "eccentricity_max_abs_difference": 2.3958266746199053e-07,
+            "eccentricity_worst_epoch_years": 933000.0,
+            "inclination_max_abs_difference_arcsec": 0.004122898645141937,
+            "inclination_worst_epoch_years": 870100.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 1.7919057945776882,
+            "longitude_perihelion_worst_epoch_years": 956600.0,
+            "mean_longitude_max_abs_difference_arcsec": 152.0596221374873,
+            "mean_longitude_worst_epoch_years": 999900.0,
+            "semimajor_axis_max_relative_difference": 1.7563685905005816e-07,
+            "semimajor_axis_reference_m": 227939012542.96155,
+            "semimajor_axis_worst_epoch_years": 963500.0
+          },
+          "mercury barycenter": {
+            "eccentricity_max_abs_difference": 6.950329164978619e-08,
+            "eccentricity_worst_epoch_years": 953500.0,
+            "inclination_max_abs_difference_arcsec": 0.0017237546555462413,
+            "inclination_worst_epoch_years": 834200.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 0.07009108868610253,
+            "longitude_perihelion_worst_epoch_years": 939700.0,
+            "mean_longitude_max_abs_difference_arcsec": 304.67769897185315,
+            "mean_longitude_worst_epoch_years": 1000000.0,
+            "semimajor_axis_max_relative_difference": 3.47251712595762e-08,
+            "semimajor_axis_reference_m": 57909070249.50738,
+            "semimajor_axis_worst_epoch_years": 808100.0
+          },
+          "neptune barycenter": {
+            "eccentricity_max_abs_difference": 7.0745591240675e-07,
+            "eccentricity_worst_epoch_years": 962600.0,
+            "inclination_max_abs_difference_arcsec": 0.0012982800682736478,
+            "inclination_worst_epoch_years": 994700.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 206.1143849359382,
+            "longitude_perihelion_worst_epoch_years": 967500.0,
+            "mean_longitude_max_abs_difference_arcsec": 0.1827745230956159,
+            "mean_longitude_worst_epoch_years": 997300.0,
+            "semimajor_axis_max_relative_difference": 7.538106498044604e-07,
+            "semimajor_axis_reference_m": 4503456022055.627,
+            "semimajor_axis_worst_epoch_years": 999400.0
+          },
+          "pluto barycenter": {
+            "eccentricity_max_abs_difference": 7.597905558598406e-07,
+            "eccentricity_worst_epoch_years": 997100.0,
+            "inclination_max_abs_difference_arcsec": 0.02192110506810919,
+            "inclination_worst_epoch_years": 951700.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 0.6787740647567503,
+            "longitude_perihelion_worst_epoch_years": 955900.0,
+            "mean_longitude_max_abs_difference_arcsec": 0.2922919566144216,
+            "mean_longitude_worst_epoch_years": 974400.0,
+            "semimajor_axis_max_relative_difference": 1.0088264818254616e-06,
+            "semimajor_axis_reference_m": 5873873930770.626,
+            "semimajor_axis_worst_epoch_years": 969300.0
+          },
+          "saturn barycenter": {
+            "eccentricity_max_abs_difference": 1.0781258293346418e-06,
+            "eccentricity_worst_epoch_years": 964200.0,
+            "inclination_max_abs_difference_arcsec": 0.00525522079197633,
+            "inclination_worst_epoch_years": 963600.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 12.975389039374624,
+            "longitude_perihelion_worst_epoch_years": 985000.0,
+            "mean_longitude_max_abs_difference_arcsec": 9.268767713887883,
+            "mean_longitude_worst_epoch_years": 960700.0,
+            "semimajor_axis_max_relative_difference": 8.498604162343292e-07,
+            "semimajor_axis_reference_m": 1433449772390.5576,
+            "semimajor_axis_worst_epoch_years": 964200.0
+          },
+          "uranus barycenter": {
+            "eccentricity_max_abs_difference": 5.767268698164685e-07,
+            "eccentricity_worst_epoch_years": 998700.0,
+            "inclination_max_abs_difference_arcsec": 0.001337071508319088,
+            "inclination_worst_epoch_years": 960100.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 11.644616918305239,
+            "longitude_perihelion_worst_epoch_years": 281900.0,
+            "mean_longitude_max_abs_difference_arcsec": 0.4736583658754207,
+            "mean_longitude_worst_epoch_years": 993600.0,
+            "semimajor_axis_max_relative_difference": 6.407740532257561e-07,
+            "semimajor_axis_reference_m": 2876687798313.8237,
+            "semimajor_axis_worst_epoch_years": 988500.0
+          },
+          "venus barycenter": {
+            "eccentricity_max_abs_difference": 8.836228542821734e-07,
+            "eccentricity_worst_epoch_years": 994700.0,
+            "inclination_max_abs_difference_arcsec": 0.02144550099341962,
+            "inclination_worst_epoch_years": 995100.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 33.56879413287173,
+            "longitude_perihelion_worst_epoch_years": 905600.0,
+            "mean_longitude_max_abs_difference_arcsec": 443.94043237683695,
+            "mean_longitude_worst_epoch_years": 997900.0,
+            "semimajor_axis_max_relative_difference": 4.5319292682838946e-07,
+            "semimajor_axis_reference_m": 108208156548.88931,
+            "semimajor_axis_worst_epoch_years": 991900.0
+          }
+        }
+      },
+      "physical": {
+        "global_scaled_rms": 0.0024564045363937026,
+        "max_global_sample_rms": 0.0048542945430801905,
+        "per_body": {
+          "earth barycenter": {
+            "max_sample_rms": 0.01019326369210826,
+            "rms": 0.005478181841786811,
+            "worst_epoch_years": 990600.0
+          },
+          "jupiter barycenter": {
+            "max_sample_rms": 0.000282794656205745,
+            "rms": 0.00013018832774259619,
+            "worst_epoch_years": 994500.0
+          },
+          "mars barycenter": {
+            "max_sample_rms": 0.0017921368841181545,
+            "rms": 0.0009280390982608594,
+            "worst_epoch_years": 999500.0
+          },
+          "mercury barycenter": {
+            "max_sample_rms": 0.009645317111427973,
+            "rms": 0.003986909944780026,
+            "worst_epoch_years": 933900.0
+          },
+          "neptune barycenter": {
+            "max_sample_rms": 3.017210832020973e-06,
+            "rms": 8.659582296841968e-07,
+            "worst_epoch_years": 997100.0
+          },
+          "pluto barycenter": {
+            "max_sample_rms": 1.2385233770107233e-05,
+            "rms": 2.7383100556832975e-06,
+            "worst_epoch_years": 994500.0
+          },
+          "saturn barycenter": {
+            "max_sample_rms": 0.00018567047109979232,
+            "rms": 9.100296179142856e-05,
+            "worst_epoch_years": 960700.0
+          },
+          "sun": {
+            "max_sample_rms": 3.290487895284885e-07,
+            "rms": 1.285363309532682e-07,
+            "worst_epoch_years": 994500.0
+          },
+          "uranus barycenter": {
+            "max_sample_rms": 1.5770119048909748e-05,
+            "rms": 5.164086224566094e-06,
+            "worst_epoch_years": 997900.0
+          },
+          "venus barycenter": {
+            "max_sample_rms": 0.007025491026893911,
+            "rms": 0.0036805954986275265,
+            "worst_epoch_years": 981200.0
+          }
+        },
+        "worst_epoch_years": 988500.0
+      },
+      "tangent": {
+        "direction_discrepancy_max": 0.002232642670846433,
+        "direction_discrepancy_rms": 0.0009547091759190344,
+        "final_direction_cosine": 0.9999989439007049,
+        "final_left_norm": 5819.362124364909,
+        "final_right_norm": 5822.473169871849,
+        "minimum_direction_cosine": 0.9999975076533522,
+        "minimum_direction_cosine_epoch_years": 921000.0,
+        "norm_relative_difference_max": 0.0006520732835391384,
+        "norm_relative_difference_rms": 0.00023164966875852754,
+        "norm_relative_difference_worst_epoch_years": 904200.0
+      }
+    },
+    "fine_0p5d_vs_0p25d": {
+      "angular_momentum": {
+        "relative_vector_difference_max": 1.1958221639981741e-10,
+        "relative_vector_difference_rms": 6.89017310663223e-11,
+        "worst_epoch_years": 999900.0
+      },
+      "lcn": {
+        "final_accumulated_abs_difference": 2.572584670901517e-13,
+        "history_accumulated_max_abs_difference": 4.230707280530119e-08,
+        "history_accumulated_rms_difference": 4.488105773414802e-10,
+        "worst_epoch_years": 100.0
+      },
+      "megno": {
+        "final_abs_difference": 8.147599386276738e-06,
+        "history_max_abs_difference": 8.147599386276738e-06,
+        "history_rms_difference": 3.2781149403865316e-06,
+        "worst_epoch_years": 1000000.0
+      },
+      "orbital_elements": {
+        "per_body": {
+          "earth barycenter": {
+            "eccentricity_max_abs_difference": 2.2256792979111206e-07,
+            "eccentricity_worst_epoch_years": 977200.0,
+            "inclination_max_abs_difference_arcsec": 0.004047738635910195,
+            "inclination_worst_epoch_years": 993900.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 9.98138299967786,
+            "longitude_perihelion_worst_epoch_years": 460900.0,
+            "mean_longitude_max_abs_difference_arcsec": 211.253147965368,
+            "mean_longitude_worst_epoch_years": 999800.0,
+            "semimajor_axis_max_relative_difference": 1.0713097626268456e-07,
+            "semimajor_axis_reference_m": 149597369753.91214,
+            "semimajor_axis_worst_epoch_years": 927500.0
+          },
+          "jupiter barycenter": {
+            "eccentricity_max_abs_difference": 2.2169992514031733e-07,
+            "eccentricity_worst_epoch_years": 968100.0,
+            "inclination_max_abs_difference_arcsec": 0.0011360627781516906,
+            "inclination_worst_epoch_years": 963600.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 1.7202022537643258,
+            "longitude_perihelion_worst_epoch_years": 956900.0,
+            "mean_longitude_max_abs_difference_arcsec": 29.374518020865725,
+            "mean_longitude_worst_epoch_years": 1000000.0,
+            "semimajor_axis_max_relative_difference": 1.2626122541999998e-07,
+            "semimajor_axis_reference_m": 778547207473.2429,
+            "semimajor_axis_worst_epoch_years": 967500.0
+          },
+          "mars barycenter": {
+            "eccentricity_max_abs_difference": 8.315310755235839e-08,
+            "eccentricity_worst_epoch_years": 951700.0,
+            "inclination_max_abs_difference_arcsec": 0.0016492300610273715,
+            "inclination_worst_epoch_years": 879600.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 0.7522063352550167,
+            "longitude_perihelion_worst_epoch_years": 952400.0,
+            "mean_longitude_max_abs_difference_arcsec": 43.56069300110358,
+            "mean_longitude_worst_epoch_years": 999900.0,
+            "semimajor_axis_max_relative_difference": 6.354052034697514e-08,
+            "semimajor_axis_reference_m": 227939012542.96155,
+            "semimajor_axis_worst_epoch_years": 981700.0
+          },
+          "mercury barycenter": {
+            "eccentricity_max_abs_difference": 1.613984362824894e-08,
+            "eccentricity_worst_epoch_years": 999800.0,
+            "inclination_max_abs_difference_arcsec": 0.00034879318189334166,
+            "inclination_worst_epoch_years": 922300.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 0.015623473074298181,
+            "longitude_perihelion_worst_epoch_years": 955500.0,
+            "mean_longitude_max_abs_difference_arcsec": 58.04536964864129,
+            "mean_longitude_worst_epoch_years": 999600.0,
+            "semimajor_axis_max_relative_difference": 7.0712036974643445e-09,
+            "semimajor_axis_reference_m": 57909070249.50738,
+            "semimajor_axis_worst_epoch_years": 808100.0
+          },
+          "neptune barycenter": {
+            "eccentricity_max_abs_difference": 7.075439486057405e-07,
+            "eccentricity_worst_epoch_years": 962600.0,
+            "inclination_max_abs_difference_arcsec": 0.0014243408918135116,
+            "inclination_worst_epoch_years": 996100.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 330.32531583126547,
+            "longitude_perihelion_worst_epoch_years": 967500.0,
+            "mean_longitude_max_abs_difference_arcsec": 0.3073131343894448,
+            "mean_longitude_worst_epoch_years": 997300.0,
+            "semimajor_axis_max_relative_difference": 7.889349747150121e-07,
+            "semimajor_axis_reference_m": 4503456022055.627,
+            "semimajor_axis_worst_epoch_years": 998000.0
+          },
+          "pluto barycenter": {
+            "eccentricity_max_abs_difference": 8.147001580582902e-07,
+            "eccentricity_worst_epoch_years": 992900.0,
+            "inclination_max_abs_difference_arcsec": 0.02314206628821002,
+            "inclination_worst_epoch_years": 986800.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 0.704375435290285,
+            "longitude_perihelion_worst_epoch_years": 998900.0,
+            "mean_longitude_max_abs_difference_arcsec": 0.3110575834419812,
+            "mean_longitude_worst_epoch_years": 994100.0,
+            "semimajor_axis_max_relative_difference": 1.0329403336471594e-06,
+            "semimajor_axis_reference_m": 5873873930770.626,
+            "semimajor_axis_worst_epoch_years": 995000.0
+          },
+          "saturn barycenter": {
+            "eccentricity_max_abs_difference": 7.693608023578991e-07,
+            "eccentricity_worst_epoch_years": 964200.0,
+            "inclination_max_abs_difference_arcsec": 0.0034677430252552143,
+            "inclination_worst_epoch_years": 963600.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 8.375998653745246,
+            "longitude_perihelion_worst_epoch_years": 985400.0,
+            "mean_longitude_max_abs_difference_arcsec": 2.578431600929698,
+            "mean_longitude_worst_epoch_years": 998600.0,
+            "semimajor_axis_max_relative_difference": 6.547930413144757e-07,
+            "semimajor_axis_reference_m": 1433449772390.5576,
+            "semimajor_axis_worst_epoch_years": 999400.0
+          },
+          "uranus barycenter": {
+            "eccentricity_max_abs_difference": 6.142457363855769e-07,
+            "eccentricity_worst_epoch_years": 998700.0,
+            "inclination_max_abs_difference_arcsec": 0.0012085919287627058,
+            "inclination_worst_epoch_years": 970100.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 20.380149472589622,
+            "longitude_perihelion_worst_epoch_years": 281900.0,
+            "mean_longitude_max_abs_difference_arcsec": 0.5602329550362654,
+            "mean_longitude_worst_epoch_years": 998200.0,
+            "semimajor_axis_max_relative_difference": 6.54306849826831e-07,
+            "semimajor_axis_reference_m": 2876687798313.8237,
+            "semimajor_axis_worst_epoch_years": 991000.0
+          },
+          "venus barycenter": {
+            "eccentricity_max_abs_difference": 2.2809205109386443e-07,
+            "eccentricity_worst_epoch_years": 994700.0,
+            "inclination_max_abs_difference_arcsec": 0.0054394036884350535,
+            "inclination_worst_epoch_years": 998100.0,
+            "longitude_perihelion_max_abs_difference_arcsec": 8.597596489177693,
+            "longitude_perihelion_worst_epoch_years": 905600.0,
+            "mean_longitude_max_abs_difference_arcsec": 86.04778562614767,
+            "mean_longitude_worst_epoch_years": 997900.0,
+            "semimajor_axis_max_relative_difference": 1.1419687300549529e-07,
+            "semimajor_axis_reference_m": 108208156548.88931,
+            "semimajor_axis_worst_epoch_years": 993700.0
+          }
+        }
+      },
+      "physical": {
+        "global_scaled_rms": 0.0005991676010809224,
+        "max_global_sample_rms": 0.0011451064803288352,
+        "per_body": {
+          "earth barycenter": {
+            "max_sample_rms": 0.0028446012630858725,
+            "rms": 0.0014937405491494493,
+            "worst_epoch_years": 990600.0
+          },
+          "jupiter barycenter": {
+            "max_sample_rms": 0.000360409049974349,
+            "rms": 0.00015399183605894457,
+            "worst_epoch_years": 994500.0
+          },
+          "mars barycenter": {
+            "max_sample_rms": 0.0005133570502990644,
+            "rms": 0.00026060592038284407,
+            "worst_epoch_years": 999500.0
+          },
+          "mercury barycenter": {
+            "max_sample_rms": 0.001888983927986756,
+            "rms": 0.0008486076420878679,
+            "worst_epoch_years": 933900.0
+          },
+          "neptune barycenter": {
+            "max_sample_rms": 9.85690078689029e-06,
+            "rms": 4.500211943956355e-06,
+            "worst_epoch_years": 997300.0
+          },
+          "pluto barycenter": {
+            "max_sample_rms": 1.4826235068190954e-05,
+            "rms": 4.150084039435546e-06,
+            "worst_epoch_years": 994500.0
+          },
+          "saturn barycenter": {
+            "max_sample_rms": 5.08024650272171e-05,
+            "rms": 1.29994582776534e-05,
+            "worst_epoch_years": 998600.0
+          },
+          "sun": {
+            "max_sample_rms": 3.5806781779447026e-07,
+            "rms": 1.473619680475247e-07,
+            "worst_epoch_years": 998700.0
+          },
+          "uranus barycenter": {
+            "max_sample_rms": 1.808012457933051e-05,
+            "rms": 6.337131158157673e-06,
+            "worst_epoch_years": 999500.0
+          },
+          "venus barycenter": {
+            "max_sample_rms": 0.001356818641541233,
+            "rms": 0.0007394232956761622,
+            "worst_epoch_years": 981200.0
+          }
+        },
+        "worst_epoch_years": 988500.0
+      },
+      "tangent": {
+        "direction_discrepancy_max": 0.0004414124090566641,
+        "direction_discrepancy_rms": 0.00020978412642765656,
+        "final_direction_cosine": 0.9999999566690386,
+        "final_left_norm": 5822.473169871849,
+        "final_right_norm": 5823.124870992399,
+        "minimum_direction_cosine": 0.9999999025775426,
+        "minimum_direction_cosine_epoch_years": 934400.0,
+        "norm_relative_difference_max": 0.00015191794324650524,
+        "norm_relative_difference_rms": 4.995040761453588e-05,
+        "norm_relative_difference_worst_epoch_years": 813400.0
+      }
+    }
+  },
+  "corrected_energy": {
+    "m0_conv_0p25d_1myr_s12345": {
+      "final": 5.756303461970395e-10,
+      "fitted_change_over_1myr": 5.775489363438368e-10,
+      "fitted_trend_per_year": 5.775489363438369e-16,
+      "max_abs": 5.778762071385473e-10,
+      "max_abs_worst_epoch_years": 998700.0,
+      "p99_abs": 5.69616050926292e-10,
+      "rms": 3.325817889510991e-10
+    },
+    "m0_conv_0p5d_1myr_s12345": {
+      "final": 2.8521204573204626e-10,
+      "fitted_change_over_1myr": 2.8954831817136977e-10,
+      "fitted_trend_per_year": 2.895483181713698e-16,
+      "max_abs": 2.9666636495541337e-10,
+      "max_abs_worst_epoch_years": 998700.0,
+      "p99_abs": 2.807486369338038e-10,
+      "rms": 1.6311627654291472e-10
+    },
+    "m0_conv_1d_1myr_s12345": {
+      "final": 1.2495253510455784e-10,
+      "fitted_change_over_1myr": 1.4391722658088445e-10,
+      "fitted_trend_per_year": 1.4391722658088446e-16,
+      "max_abs": 1.7182000391875464e-10,
+      "max_abs_worst_epoch_years": 998700.0,
+      "p99_abs": 1.345082012154767e-10,
+      "rms": 6.339153735016865e-11
+    }
+  },
+  "created_utc": "2026-08-07T05:19:30.723577+00:00",
+  "criteria": {
+    "angular_momentum": {
+      "passed": true,
+      "per_run": {
+        "m0_conv_0p25d_1myr_s12345": true,
+        "m0_conv_0p5d_1myr_s12345": true,
+        "m0_conv_1d_1myr_s12345": true
+      }
+    },
+    "corrected_energy": {
+      "all_maxima_at_roundoff_floor": false,
+      "metrics_nonincreasing": {
+        "max_abs": false,
+        "p99_abs": false,
+        "rms": false
+      },
+      "passed": false,
+      "per_run_bounded": {
+        "m0_conv_0p25d_1myr_s12345": true,
+        "m0_conv_0p5d_1myr_s12345": true,
+        "m0_conv_1d_1myr_s12345": true
+      },
+      "per_run_trend_bounded": {
+        "m0_conv_0p25d_1myr_s12345": false,
+        "m0_conv_0p5d_1myr_s12345": false,
+        "m0_conv_1d_1myr_s12345": false
+      }
+    },
+    "eccentricity_history": {
+      "limits": {
+        "earth barycenter": 1e-05,
+        "mars barycenter": 1e-05,
+        "mercury barycenter": 1e-06,
+        "venus barycenter": 1e-05
+      },
+      "passed": true,
+      "per_body": {
+        "earth barycenter": true,
+        "mars barycenter": true,
+        "mercury barycenter": true,
+        "venus barycenter": true
+      }
+    },
+    "lcn": {
+      "passed": true
+    },
+    "megno": {
+      "passed": true
+    },
+    "mercury_perihelion_rate": {
+      "fine_pair_abs_difference_arcsec_per_century": 1.5506361705774907e-07,
+      "passed": true
+    },
+    "physical_state": {
+      "fine_over_coarse_global_rms_ratio": 0.24392057261080152,
+      "inner_planet_fine_strictly_smaller": {
+        "earth barycenter": true,
+        "mars barycenter": true,
+        "mercury barycenter": true,
+        "venus barycenter": true
+      },
+      "passed": true
+    },
+    "run_integrity": {
+      "passed": true
+    },
+    "semimajor_axis_history": {
+      "passed": false,
+      "per_body": {
+        "earth barycenter": false,
+        "mars barycenter": true,
+        "mercury barycenter": true,
+        "venus barycenter": false
+      }
+    },
+    "tangent": {
+      "passed": true
+    }
+  },
+  "energy_pattern": {
+    "new_0p25_energy_worsens_relative_to_0p5": {
+      "max_abs": true,
+      "p99_abs": true,
+      "rms": true
+    },
+    "physical_convergence_continues": true,
+    "physical_convergence_with_further_energy_worsening": true
+  },
+  "experiment_id": "m0_timestep_convergence_0p25_v1",
+  "failures": [
+    "semimajor_axis_history",
+    "corrected_energy"
+  ],
+  "final_status": "M0_0P5DAY_NOT_CONVERGED",
+  "git_dirty": true,
+  "git_head": "ef12816423aab6211a50e9f1c4d3391a3156c8df",
+  "manifest_path": "ephemeris_experiment_runner/manifests/11_m0_timestep_convergence_0p25_v1.json",
+  "manifest_sha256": "c589820f11f6a7171d3b3b0f852ff58c9b7184b9c77426f9a61174a2163112da",
+  "mercury_perihelion": {
+    "m0_conv_0p25d_1myr_s12345": {
+      "fit_interval_end_years": 1000000.0,
+      "fit_interval_start_years": 0.0,
+      "fit_residual_rms_arcsec": 24887.72824700062,
+      "mean_rate_arcsec_per_century": 563.7147178458104
+    },
+    "m0_conv_0p5d_1myr_s12345": {
+      "fit_interval_end_years": 1000000.0,
+      "fit_interval_start_years": 0.0,
+      "fit_residual_rms_arcsec": 24887.7278363473,
+      "mean_rate_arcsec_per_century": 563.7147176907467
+    },
+    "m0_conv_1d_1myr_s12345": {
+      "fit_interval_end_years": 1000000.0,
+      "fit_interval_start_years": 0.0,
+      "fit_residual_rms_arcsec": 24887.72646472147,
+      "mean_rate_arcsec_per_century": 563.7147167688706
+    }
+  },
+  "model_id": "m0_grpot_emb_pluto_v1",
+  "next_action": "Do not request a 0.125-day lane. First recompute corrected energy epoch-by-epoch from the existing 0.5-day and new 0.25-day state artifacts using compensated or extended-precision summation and compare it with recorded telemetry.",
+  "production_candidate_step_days": 0.5,
+  "protected_files_unchanged": true,
+  "runs": {
+    "m0_conv_0p25d_1myr_s12345": {
+      "archive_final_time_years": 1000000.0,
+      "callback_invocations": 1461000000,
+      "configuration_fingerprint": "3e79729659677339dd5a4cd64c9f8d217af3d97a863786b9388b6a5b8b42533c",
+      "exact_times": true,
+      "finite_physical_state": true,
+      "finite_tangent_state": true,
+      "nonfinite_result_count": 0,
+      "passed": true,
+      "runtime_seconds": 4921.3711325859185,
+      "scientific_samples": 10001,
+      "state_rows": 100010,
+      "step_days": 0.25,
+      "throughput_years_per_second": 203.1954049103696
+    },
+    "m0_conv_0p5d_1myr_s12345": {
+      "archive_final_time_years": 1000000.0,
+      "callback_invocations": 730500000,
+      "configuration_fingerprint": "68fb88378722f7408b60bb1251c6755611da521fa7f26fcafc10736c7b2da59e",
+      "exact_times": true,
+      "finite_physical_state": true,
+      "finite_tangent_state": true,
+      "nonfinite_result_count": 0,
+      "passed": true,
+      "runtime_seconds": 2393.8122592259897,
+      "scientific_samples": 10001,
+      "state_rows": 100010,
+      "step_days": 0.5,
+      "throughput_years_per_second": 417.7437040627981
+    },
+    "m0_conv_1d_1myr_s12345": {
+      "archive_final_time_years": 1000000.0,
+      "callback_invocations": 365250000,
+      "configuration_fingerprint": "cd739cfbcb1173240dd1874e7b0bd22be0bb490243b9f4af7e63ddd0a698b85c",
+      "exact_times": true,
+      "finite_physical_state": true,
+      "finite_tangent_state": true,
+      "nonfinite_result_count": 0,
+      "passed": true,
+      "runtime_seconds": 1301.3635535559733,
+      "scientific_samples": 10001,
+      "state_rows": 100010,
+      "step_days": 1.0,
+      "throughput_years_per_second": 768.4247782009124
+    }
+  },
+  "schema_version": 1,
+  "step3_artifacts_unchanged": true,
+  "threshold_evidence": {
+    "angular_momentum": {
+      "accepted_100k_1d_scale": 6.223931883253886e-12,
+      "limit": 1e-09,
+      "per_run": {
+        "m0_conv_0p25d_1myr_s12345": {
+          "final": 2.3968335057047346e-10,
+          "fitted_change_over_1myr": 2.399380961404854e-10,
+          "fitted_trend_per_year": 2.399380961404854e-16,
+          "max_abs": 2.3968335057047346e-10,
+          "max_abs_worst_epoch_years": 1000000.0,
+          "p99_abs": 2.373751927271357e-10,
+          "rms": 1.3873915374072276e-10
+        },
+        "m0_conv_0p5d_1myr_s12345": {
+          "final": 1.2012876393983744e-10,
+          "fitted_change_over_1myr": 1.2005281767977305e-10,
+          "fitted_trend_per_year": 1.2005281767977305e-16,
+          "max_abs": 1.2015556473757524e-10,
+          "max_abs_worst_epoch_years": 999300.0,
+          "p99_abs": 1.1899576031114433e-10,
+          "rms": 6.984954305957967e-11
+        },
+        "m0_conv_1d_1myr_s12345": {
+          "final": 6.029794722932048e-11,
+          "fitted_change_over_1myr": 5.998130268270163e-11,
+          "fitted_trend_per_year": 5.998130268270163e-17,
+          "max_abs": 6.029794722932048e-11,
+          "max_abs_worst_epoch_years": 1000000.0,
+          "p99_abs": 5.970898836381688e-11,
+          "rms": 3.4696816989810684e-11
+        }
+      },
+      "value": 2.3968335057047346e-10,
+      "worst_epoch_years": 1000000.0,
+      "worst_run": "m0_conv_0p25d_1myr_s12345"
+    },
+    "callback_nonfinite": {
+      "limit": 0,
+      "per_run": {
+        "m0_conv_0p25d_1myr_s12345": {
+          "callback_invocations": 1461000000,
+          "nonfinite_result_count": 0
+        },
+        "m0_conv_0p5d_1myr_s12345": {
+          "callback_invocations": 730500000,
+          "nonfinite_result_count": 0
+        },
+        "m0_conv_1d_1myr_s12345": {
+          "callback_invocations": 365250000,
+          "nonfinite_result_count": 0
+        }
+      },
+      "worst_epoch_years": null
+    },
+    "corrected_energy": {
+      "nonincreasing_with_step_reduction": {
+        "max_abs": {
+          "passed": false,
+          "transitions": [
+            {
+              "coarse_run": "m0_conv_1d_1myr_s12345",
+              "coarse_value": 1.7182000391875464e-10,
+              "fine_over_coarse_ratio": 1.7266113269075034,
+              "fine_run": "m0_conv_0p5d_1myr_s12345",
+              "fine_value": 2.9666636495541337e-10,
+              "passed": false,
+              "worst_epoch_years": 998700.0
+            },
+            {
+              "coarse_run": "m0_conv_0p5d_1myr_s12345",
+              "coarse_value": 2.9666636495541337e-10,
+              "fine_over_coarse_ratio": 1.9478993084551313,
+              "fine_run": "m0_conv_0p25d_1myr_s12345",
+              "fine_value": 5.778762071385473e-10,
+              "passed": false,
+              "worst_epoch_years": 998700.0
+            }
+          ],
+          "worst_transition": {
+            "coarse_run": "m0_conv_0p5d_1myr_s12345",
+            "coarse_value": 2.9666636495541337e-10,
+            "fine_over_coarse_ratio": 1.9478993084551313,
+            "fine_run": "m0_conv_0p25d_1myr_s12345",
+            "fine_value": 5.778762071385473e-10,
+            "passed": false,
+            "worst_epoch_years": 998700.0
+          }
+        },
+        "p99_abs": {
+          "passed": false,
+          "transitions": [
+            {
+              "coarse_run": "m0_conv_1d_1myr_s12345",
+              "coarse_value": 1.345082012154767e-10,
+              "fine_over_coarse_ratio": 2.087223190830244,
+              "fine_run": "m0_conv_0p5d_1myr_s12345",
+              "fine_value": 2.807486369338038e-10,
+              "passed": false,
+              "worst_epoch_years": null
+            },
+            {
+              "coarse_run": "m0_conv_0p5d_1myr_s12345",
+              "coarse_value": 2.807486369338038e-10,
+              "fine_over_coarse_ratio": 2.0289183133615665,
+              "fine_run": "m0_conv_0p25d_1myr_s12345",
+              "fine_value": 5.69616050926292e-10,
+              "passed": false,
+              "worst_epoch_years": null
+            }
+          ],
+          "worst_transition": {
+            "coarse_run": "m0_conv_1d_1myr_s12345",
+            "coarse_value": 1.345082012154767e-10,
+            "fine_over_coarse_ratio": 2.087223190830244,
+            "fine_run": "m0_conv_0p5d_1myr_s12345",
+            "fine_value": 2.807486369338038e-10,
+            "passed": false,
+            "worst_epoch_years": null
+          }
+        },
+        "rms": {
+          "passed": false,
+          "transitions": [
+            {
+              "coarse_run": "m0_conv_1d_1myr_s12345",
+              "coarse_value": 6.339153735016865e-11,
+              "fine_over_coarse_ratio": 2.5731553983598214,
+              "fine_run": "m0_conv_0p5d_1myr_s12345",
+              "fine_value": 1.6311627654291472e-10,
+              "passed": false,
+              "worst_epoch_years": null
+            },
+            {
+              "coarse_run": "m0_conv_0p5d_1myr_s12345",
+              "coarse_value": 1.6311627654291472e-10,
+              "fine_over_coarse_ratio": 2.0389246002902675,
+              "fine_run": "m0_conv_0p25d_1myr_s12345",
+              "fine_value": 3.325817889510991e-10,
+              "passed": false,
+              "worst_epoch_years": null
+            }
+          ],
+          "worst_transition": {
+            "coarse_run": "m0_conv_1d_1myr_s12345",
+            "coarse_value": 6.339153735016865e-11,
+            "fine_over_coarse_ratio": 2.5731553983598214,
+            "fine_run": "m0_conv_0p5d_1myr_s12345",
+            "fine_value": 1.6311627654291472e-10,
+            "passed": false,
+            "worst_epoch_years": null
+          }
+        }
+      },
+      "per_run": {
+        "m0_conv_0p25d_1myr_s12345": {
+          "final": 5.756303461970395e-10,
+          "fitted_change_over_1myr": 5.775489363438368e-10,
+          "fitted_trend_per_year": 5.775489363438369e-16,
+          "max_abs": 5.778762071385473e-10,
+          "max_abs_limit": 1e-07,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 5.69616050926292e-10,
+          "rms": 3.325817889510991e-10,
+          "trend_limit": 1.4446905178463682e-10
+        },
+        "m0_conv_0p5d_1myr_s12345": {
+          "final": 2.8521204573204626e-10,
+          "fitted_change_over_1myr": 2.8954831817136977e-10,
+          "fitted_trend_per_year": 2.895483181713698e-16,
+          "max_abs": 2.9666636495541337e-10,
+          "max_abs_limit": 1e-07,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 2.807486369338038e-10,
+          "rms": 1.6311627654291472e-10,
+          "trend_limit": 1e-10
+        },
+        "m0_conv_1d_1myr_s12345": {
+          "final": 1.2495253510455784e-10,
+          "fitted_change_over_1myr": 1.4391722658088445e-10,
+          "fitted_trend_per_year": 1.4391722658088446e-16,
+          "max_abs": 1.7182000391875464e-10,
+          "max_abs_limit": 1e-07,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 1.345082012154767e-10,
+          "rms": 6.339153735016865e-11,
+          "trend_limit": 1e-10
+        }
+      },
+      "roundoff_floor": 1e-12,
+      "worst_epoch_years": 998700.0,
+      "worst_max_abs": 5.778762071385473e-10,
+      "worst_run_by_max_abs": "m0_conv_0p25d_1myr_s12345"
+    },
+    "eccentricity_history": {
+      "limit": 1e-05,
+      "mercury": {
+        "limit": 1e-06,
+        "value": 1.613984362824894e-08,
+        "worst_epoch_years": 999800.0
+      },
+      "per_inner_body": {
+        "earth barycenter": {
+          "limit": 1e-05,
+          "value": 2.2256792979111206e-07,
+          "worst_epoch_years": 977200.0
+        },
+        "mars barycenter": {
+          "limit": 1e-05,
+          "value": 8.315310755235839e-08,
+          "worst_epoch_years": 951700.0
+        },
+        "mercury barycenter": {
+          "limit": 1e-06,
+          "value": 1.613984362824894e-08,
+          "worst_epoch_years": 999800.0
+        },
+        "venus barycenter": {
+          "limit": 1e-05,
+          "value": 2.2809205109386443e-07,
+          "worst_epoch_years": 994700.0
+        }
+      },
+      "value": 2.2809205109386443e-07,
+      "worst_body": "venus barycenter",
+      "worst_epoch_years": 994700.0
+    },
+    "lcn": {
+      "final_accumulated_abs_difference": 2.572584670901517e-13,
+      "limit": 0.001,
+      "worst_epoch_years": 1000000.0
+    },
+    "megno": {
+      "final_abs_difference": 8.147599386276738e-06,
+      "final_limit": 0.001,
+      "history_rms_difference": 3.2781149403865316e-06,
+      "history_rms_limit": 0.001,
+      "worst_epoch_years": 1000000.0
+    },
+    "mercury_perihelion_rate": {
+      "body": "mercury barycenter",
+      "fit_interval_years": [
+        0.0,
+        1000000.0
+      ],
+      "limit_arcsec_per_century": 0.001,
+      "value_arcsec_per_century": 1.5506361705774907e-07,
+      "worst_epoch_years": null
+    },
+    "physical_state": {
+      "global_fine_over_coarse_ratio": 0.24392057261080152,
+      "limit": 0.5,
+      "per_inner_body": {
+        "earth barycenter": {
+          "coarse_rms": 0.005478181841786811,
+          "fine_over_coarse_ratio": 0.2726708591079259,
+          "fine_rms": 0.0014937405491494493,
+          "fine_worst_epoch_years": 990600.0
+        },
+        "mars barycenter": {
+          "coarse_rms": 0.0009280390982608594,
+          "fine_over_coarse_ratio": 0.2808135140763124,
+          "fine_rms": 0.00026060592038284407,
+          "fine_worst_epoch_years": 999500.0
+        },
+        "mercury barycenter": {
+          "coarse_rms": 0.003986909944780026,
+          "fine_over_coarse_ratio": 0.21284846004583857,
+          "fine_rms": 0.0008486076420878679,
+          "fine_worst_epoch_years": 933900.0
+        },
+        "venus barycenter": {
+          "coarse_rms": 0.0036805954986275265,
+          "fine_over_coarse_ratio": 0.20089773406284092,
+          "fine_rms": 0.0007394232956761622,
+          "fine_worst_epoch_years": 981200.0
+        }
+      },
+      "worst_epoch_years": 999500.0,
+      "worst_inner_body": "mars barycenter",
+      "worst_inner_fine_over_coarse_ratio": 0.2808135140763124
+    },
+    "semimajor_axis_history": {
+      "limit": 1e-07,
+      "per_inner_body": {
+        "earth barycenter": {
+          "limit": 1e-07,
+          "value": 1.0713097626268456e-07,
+          "worst_epoch_years": 927500.0
+        },
+        "mars barycenter": {
+          "limit": 1e-07,
+          "value": 6.354052034697514e-08,
+          "worst_epoch_years": 981700.0
+        },
+        "mercury barycenter": {
+          "limit": 1e-07,
+          "value": 7.0712036974643445e-09,
+          "worst_epoch_years": 808100.0
+        },
+        "venus barycenter": {
+          "limit": 1e-07,
+          "value": 1.1419687300549529e-07,
+          "worst_epoch_years": 993700.0
+        }
+      },
+      "value": 1.1419687300549529e-07,
+      "worst_body": "venus barycenter",
+      "worst_epoch_years": 993700.0
+    },
+    "tangent": {
+      "body": "full-system first variation",
+      "coarse_direction_rms": 0.0009547091759190344,
+      "final_direction_cosine": 0.9999999566690386,
+      "fine_direction_rms": 0.00020978412642765656,
+      "minimum": 0.9999,
+      "worst_epoch_years": 934400.0
+    }
+  },
+  "thresholds": {
+    "accepted_100k_1d_angular_momentum_rel_drift": 6.223931883253886e-12,
+    "angular_momentum_rel_drift_max_per_run": 1e-09,
+    "corrected_energy_max_abs_per_run": 1e-07,
+    "corrected_energy_metrics_nonincreasing_with_step_reduction": [
+      "max_abs",
+      "rms",
+      "p99_abs"
+    ],
+    "corrected_energy_roundoff_floor": 1e-12,
+    "corrected_energy_trend_limit": "abs(fitted_change_over_1myr) <= max(0.25*max_abs,1e-10) for every run",
+    "final_lcn_accumulated_difference_max": 0.001,
+    "final_megno_difference_max": 0.001,
+    "final_tangent_direction_cosine_min": 0.9999,
+    "fine_tangent_direction_rms_strictly_smaller": true,
+    "global_scaled_physical_rms_fine_over_coarse_max": 0.5,
+    "inner_planet_eccentricity_history_max_abs": 1e-05,
+    "inner_planet_semimajor_axis_history_max_relative": 1e-07,
+    "megno_history_rms_difference_max": 0.001,
+    "mercury_eccentricity_history_max_abs": 1e-06,
+    "mercury_perihelion_rate_difference_arcsec_per_century_max": 0.001,
+    "nonfinite_callback_results": 0,
+    "physical_fine_strictly_smaller_global_and_each_inner_planet": true
+  }
+}
