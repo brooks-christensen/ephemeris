@@ -1,0 +1,432 @@
+{
+  "artifact_requirements": {
+    "archive_snapshots": 11,
+    "committed_artifacts": "Manifest, focused source/tests, compact strict-finite JSON/Markdown reports, and deterministic PNG figures only.",
+    "raw_output_policy": "The trajectory, archive, logs, operational sidecars, and caches remain ignored beneath output_root.",
+    "required_lane_files": [
+      "progress_csv",
+      "state_csv",
+      "status_json",
+      "summary_json",
+      "restart_json",
+      "simulationarchive",
+      "log"
+    ],
+    "scientific_lane_integrity": "Exactly 10001 unique ordered scientific samples and 100010 state rows at exact 100-year targets; exactly 11 readable archive snapshots; matching schemas and fingerprint; finite physical and first-variation state; exactly 2922000000 callback invocations; zero nonfinite callback results; exact artifact hashes; telemetry energy exactly reproducible from stored state rows."
+  },
+  "audit_before_preregistration": {
+    "available_disk_bytes": 837092900864,
+    "compiled_c_tag_object_type": "tag",
+    "compiled_c_tag_target": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b",
+    "existing_0p25_lane": {
+      "archive_final_time_years": 1000000,
+      "artifact_count": 7,
+      "callback_invocations": 1461000000,
+      "configuration_fingerprint": "3e79729659677339dd5a4cd64c9f8d217af3d97a863786b9388b6a5b8b42533c",
+      "finite_physical_state": true,
+      "finite_tangent_state": true,
+      "nonfinite_result_count": 0,
+      "scientific_samples": 10001,
+      "state_rows": 100010
+    },
+    "historical_inventory": "PASS: 73 unique raw artifacts referenced by the committed manifest-13 through manifest-16 summaries matched path, byte size, and SHA-256.",
+    "ias15_reference_status": "IAS15_REFERENCE_QUALIFIED_AT_ROUNDOFF_PHASE_FLOOR",
+    "starting_commit": "bf77df7caa4f41639924a5bdfdee8e4f93015636",
+    "worktree_clean": true
+  },
+  "comparison_definitions": {
+    "angular_momentum": "Use the runner relative angular-momentum drift per lane and the relative difference of the three stored Cartesian angular-momentum components between matched lanes.",
+    "center_of_mass_and_linear_momentum": "Recompute total linear momentum, barycentric center-of-mass position, and barycentric center-of-mass velocity from every stored state row; report maximum displacement/change and do not invent a new pass threshold.",
+    "energy": {
+      "corrected": "E_corrected = E_Newtonian + U_GR,pot, with U_GR,pot = -(3*s*G^2*M_sun^2/c^2)*sum_{i != sun}(m_i/r_i_sun^2).",
+      "historical_step3_trend_gate": "Report the unchanged abs(fitted_change_over_1myr) <= max(0.25*max_abs,1e-10) result as a historical diagnostic. Manifest 16's validated systematic per-step mechanism supersedes using that trend or monotonic max/RMS/p99 behavior as a Step-3e failure by itself.",
+      "reconstruction": "Recompute every lane's energy from stored physical-state rows using the manifest-13 60-digit Decimal summation and independently reproduce the runner float telemetry with the validated float formula.",
+      "statistics": "Use manifest 13's centered unweighted OLS slope and 95% interval, max absolute, RMS, p99 absolute, final drift, detrended residual, and ten closed 100-kyr block definitions."
+    },
+    "matching": "Match all 10001 rows by exact sample index and exact time from 0 through 1000000 Julian years; no interpolation.",
+    "orbital_elements": "Use mini_ephemeris.orbital_elements.heliocentric_elements_for_state in the J2000-ecliptic heliocentric osculating frame, G*(M_sun+M_body), and principal wrapped angular differences atan2(sin(delta),cos(delta)).",
+    "phase_aware_gate": "Raw state convergence is the primary frozen Step 3 gate. If it alone fails, it may be superseded only when the discrepancy is phase-dominated under the imported manifest-16 transverse/orientation rules and every frozen nonphase, tangent, chaos, energy, angular-momentum, and integrity gate passes. No nonphase failure may be dismissed as phase.",
+    "physical_scaling": {
+      "pair_body_rms": "sqrt(mean(square([dx/AU,dy/AU,dz/AU,dvx/(AU/JulianYear),dvy/(AU/JulianYear),dvz/(AU/JulianYear)]))) over matched samples for one body",
+      "pair_global_rms": "The same RMS over all matched samples, real bodies, and six components.",
+      "position_denominator_m": 149597870700,
+      "velocity_denominator_m_per_s": 4740.470463533349
+    },
+    "rtn": "For each non-Sun body use the 0.125-day lane's heliocentric R=r/|r|, N=(r cross v)/|r cross v|, T=N cross R frame and project the 0.25-day-minus-0.125-day heliocentric Cartesian difference.",
+    "secular_frequency": {
+      "alias_risk": "Flag a diagnostic as alias-risky when its refined absolute frequency is below two Fourier bins or above 0.8 times the 0.005 cycles/year Nyquist frequency; an alias flag is reported and is not a new decision threshold.",
+      "estimator": "NAFF-lite diagnostic: subtract the complex mean, apply a Hann window, take the largest nonzero complex-FFT peak, and apply three-bin parabolic log-power refinement.",
+      "fit_interval_years": [
+        0,
+        1000000
+      ],
+      "sampling_years": 100,
+      "series": "z_e=e*exp(i*longitude_of_perihelion) and z_i=sin(i/2)*exp(i*longitude_of_ascending_node)",
+      "threshold_role": "Diagnostic only because manifests 10 and 16 preregistered no secular-frequency pass threshold."
+    },
+    "tangent": "Use the same AU and AU/JulianYear component scales, full-system first-variation direction cosine/discrepancy, and norm-relative difference as manifest 10."
+  },
+  "decision_rules": {
+    "BLOCKED": "Any prerequisite, configuration, operational prefix, schema, fingerprint, archive, hash, finite-state, energy-reconstruction, callback, or required-analysis integrity gate fails.",
+    "STEP3E_025_DAY_PRODUCTION_NOT_VALIDATED": "Integrity passes, but one or more preregistered physical/nonphase, orbital, tangent, MEGNO, LCN, mechanism-aware corrected-energy, or angular-momentum criteria fail.",
+    "STEP3E_025_DAY_PRODUCTION_VALIDATED": "Every integrity and scientific gate passes, using the raw physical-state gate or only its explicitly bounded manifest-16 phase-aware supersession. The 0.25-day timestep is validated as the M0 production timestep and the Step 3 convergence problem is closed.",
+    "allowed_statuses": [
+      "STEP3E_025_DAY_PRODUCTION_VALIDATED",
+      "STEP3E_025_DAY_PRODUCTION_NOT_VALIDATED",
+      "BLOCKED"
+    ],
+    "doubled_energy_slope_interpretation": "A roughly doubled 0.125-day corrected-energy slope is expected under SYSTEMATIC_WHFAST_STEP_BIAS and is not a failure when the frozen q/slope/history envelope passes.",
+    "stage4_command_policy": "Do not provide or execute a Stage 4 command in Step 3e."
+  },
+  "endpoint_semantics": {
+    "archive_interval_years": 100000,
+    "duration_years": 1000000,
+    "exact_time_rule": "For sample k in [0,10000], time_years == 100*k and time_seconds == 100*k*31557600 using float64 equality.",
+    "expected_archive_snapshots": 11,
+    "expected_callback_invocations": 2922000000,
+    "expected_full_steps": 2922000000,
+    "expected_scientific_samples": 10001,
+    "expected_state_rows": 100010,
+    "fractional_endpoint_step": false,
+    "scientific_cadence_years": 100,
+    "steps_per_archive_interval": 292200000,
+    "steps_per_scientific_interval": 292200
+  },
+  "energy_prediction": {
+    "block_prediction": {
+      "block_count": 10,
+      "expected_sign": "positive",
+      "minimum_same_sign_blocks": 8,
+      "q_each_block_interval": [
+        3.6573194312830514e-19,
+        4.2153891282423703e-19
+      ]
+    },
+    "components": {
+      "empirical_block_q_max": 4.2015086212505075e-19,
+      "empirical_block_q_min": 3.671199938274914e-19,
+      "ias15_energy_floor": 8.064098122334158e-16,
+      "ias15_q_equivalent": 2.759787173967884e-25,
+      "oscillatory_absolute_allowance": 9.328763164285099e-12,
+      "stochastic_1myr_absolute_allowance": 5.516377253294507e-12,
+      "stochastic_q_half_width": 3.284730560100509e-22,
+      "systematic_q_center": 3.9584034696109196e-19,
+      "truncation_q_half_width": 1.059301664458869e-21
+    },
+    "evidence": {
+      "ias15_energy_floor_source": "Maximum 10-kyr pairwise corrected-energy history difference across the qualified manifest-16 default/1e-12/1e-13 IAS15 reference lanes.",
+      "q_0p25": 3.9531069612886253e-19,
+      "q_0p5": 3.963699977933214e-19,
+      "q_definition": "q_h = h_days*fitted_corrected_energy_slope_per_year/365.25.",
+      "source_histories": "Committed manifest-15 0.5-day and 0.25-day full tangent/MEGNO 1 Myr corrected-energy histories imported from manifest 13."
+    },
+    "expected_signs": {
+      "fitted_slope": "positive",
+      "final_change": "positive",
+      "q": "positive"
+    },
+    "history_envelope": "At time t years, lower=slope_low*t-oscillatory_allowance-stochastic_1myr_allowance*sqrt(t/1000000)-ias15_floor and upper=slope_high*t+the same three allowances.",
+    "predicted_1myr_endpoint_envelope": [
+      1.0538227909935159e-09,
+      1.2465826500998124e-09
+    ],
+    "predicted_fitted_change_over_1myr": {
+      "center": 1.1566454938203108e-09,
+      "high": 1.2317367032724207e-09,
+      "low": 1.0686687378209076e-09
+    },
+    "predicted_q_interval": [
+      3.6573194312830514e-19,
+      4.2153891282423703e-19
+    ],
+    "predicted_slope_per_year": {
+      "center": 1.1566454938203108e-15,
+      "high": 1.2317367032724206e-15,
+      "low": 1.0686687378209075e-15
+    }
+  },
+  "execution_policy": {
+    "collision_safe": true,
+    "fresh_output_root_before_preregistration": true,
+    "fresh_report_root_before_preregistration": true,
+    "no_10myr": true,
+    "no_additional_trajectory": true,
+    "no_benchmark_trajectory": true,
+    "no_physics_or_protected_file_change": true,
+    "no_prior_lane_rerun": true,
+    "no_stage4": true,
+    "restart_policy": "Only a fresh-process restart of the same authenticated partial lane, with the identical manifest and fingerprint, is permitted.",
+    "serial": true,
+    "trajectory_count": 1
+  },
+  "experiment_id": "m0_step3e_whfast_0125d_convergence_v1",
+  "frozen_before_authorized_trajectory": true,
+  "historical_results_immutable": {
+    "manifest_13_primary_mechanism": "BLOCKED",
+    "manifest_13_step3_diagnosis_status": "BLOCKED",
+    "manifest_14_status": "REVERSIBILITY_GATE_PASSED",
+    "manifest_15_primary_mechanism": "BLOCKED",
+    "manifest_15_step3_diagnosis_status": "BLOCKED",
+    "manifest_16_ias15_reference_status": "IAS15_REFERENCE_QUALIFIED_AT_ROUNDOFF_PHASE_FLOOR",
+    "manifest_16_primary_mechanism": "SYSTEMATIC_WHFAST_STEP_BIAS",
+    "manifest_16_step3_diagnosis_status": "STEP3_NUMERICAL_FLOOR_CHARACTERIZED",
+    "step3_status": "M0_1DAY_NOT_CONVERGED",
+    "step3b_status": "M0_0P5DAY_NOT_CONVERGED"
+  },
+  "kind": "m0_step3e_whfast_0125d_convergence_manifest",
+  "model_id": "m0_grpot_emb_pluto_v1",
+  "new_lane": {
+    "command": [
+      "env",
+      "PYTHONPATH=/home/peacelovephysics/ephemeris/mini_ephemeris/src",
+      "/home/peacelovephysics/ephemeris/.venv/bin/python",
+      "-m",
+      "mini_ephemeris.rebound_gr_tangent_backend_cli",
+      "--kernel-path",
+      "/home/peacelovephysics/ephemeris/data/de431_part-2.bsp",
+      "--model-id",
+      "m0_grpot_emb_pluto_v1",
+      "--model-scope",
+      "full_with_pluto",
+      "--duration-years",
+      "1000000",
+      "--production-duration-approved",
+      "--step-days",
+      "0.125",
+      "--record-every-years",
+      "100",
+      "--archive-interval-years",
+      "100000",
+      "--megno-seed",
+      "12345",
+      "--gr-scale",
+      "1",
+      "--gr-tangent-backend",
+      "c",
+      "--manifest-path",
+      "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json",
+      "--output-dir",
+      "/home/peacelovephysics/ephemeris/output/stability/m0_step3e_whfast_0125d_convergence_v1/m0_step3e_tangent_whfast_0125d_1myr",
+      "--tag",
+      "m0_step3e_tangent_whfast_0125d_1myr"
+    ],
+    "configuration_fingerprint": "1064be4cb34530ca032ac958c99ae46c33def89fd2aaea8decc82f647649f50e",
+    "id": "m0_step3e_tangent_whfast_0125d_1myr",
+    "log_path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3e_whfast_0125d_convergence_v1/logs/m0_step3e_tangent_whfast_0125d_1myr.log",
+    "output_dir": "/home/peacelovephysics/ephemeris/output/stability/m0_step3e_whfast_0125d_convergence_v1/m0_step3e_tangent_whfast_0125d_1myr",
+    "step_days": 0.125
+  },
+  "operational_gate": {
+    "available_disk_bytes_before_preregistration": 837092900864,
+    "basis": "Double the observed completed 0.25-day 1 Myr runtime for doubled step count, then apply a frozen 1.25 safety factor.",
+    "disk_estimate_bytes": 44070393,
+    "disk_required_with_atomic_and_safety_allowance_bytes": 132211179,
+    "existing_0p25_runtime_seconds": 4921.3711325859185,
+    "linear_projected_runtime_seconds": 9842.742265171837,
+    "minimum_throughput_years_per_second": 81.27816196414784,
+    "prefix": {
+      "expected_progress_rows_including_t0": 101,
+      "expected_state_rows_including_t0": 1010,
+      "maximum_elapsed_seconds": 123.03427831464796,
+      "minimum_completed_years": 10000,
+      "minimum_completed_steps": 29220000,
+      "projection": "elapsed wall time from child-process launch through the exact 10000-year sample, multiplied by 100"
+    },
+    "runtime_ceiling_seconds": 12303.427831464796,
+    "safety_factor": 1.25,
+    "stop_rule": "If the authenticated lane exits before the prefix, misses exact prefix counts/state, projects above the runtime ceiling, or available disk is below the frozen requirement, terminate it, retain restartable partial artifacts, emit BLOCKED, and do not launch a replacement."
+  },
+  "paths": {
+    "figure_directory": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3e-whfast-0125d-convergence-v1/figures",
+    "kernel": "/home/peacelovephysics/ephemeris/data/de431_part-2.bsp",
+    "manifest": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json",
+    "manifest_10": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/10_m0_timestep_convergence_v1.json",
+    "manifest_11": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/11_m0_timestep_convergence_0p25_v1.json",
+    "manifest_13": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json",
+    "manifest_14": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json",
+    "manifest_15": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+    "manifest_16": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json",
+    "output_root": "/home/peacelovephysics/ephemeris/output/stability/m0_step3e_whfast_0125d_convergence_v1",
+    "project_root": "/home/peacelovephysics/ephemeris",
+    "report_json": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_summary.json",
+    "report_markdown": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_report.md",
+    "step3b_summary": "/home/peacelovephysics/ephemeris/docs/validation/m0-timestep-convergence-0p25-v1/m0_timestep_convergence_0p25_summary.json"
+  },
+  "preregistered_commands": [
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3e_convergence --manifest ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json audit",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3e_convergence --manifest ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json run",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3e_convergence --manifest ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json analyze"
+  ],
+  "production_candidate_step_days": 0.25,
+  "protected_files": {
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+  },
+  "provenance": {
+    "starting_commit": "bf77df7caa4f41639924a5bdfdee8e4f93015636",
+    "step2_commit": "ac83476520328d047b590a1c4bf49bd405cd55fd",
+    "validated_c_annotated_tag": "gr-tangent-compiled-c-v1",
+    "validated_c_baseline_commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b"
+  },
+  "runtime_identity": {
+    "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+    "floating_point": {
+      "fegetround": 0,
+      "python_float_mant_dig": 53,
+      "python_float_radix": 2,
+      "python_float_rounds": 1
+    },
+    "numpy_version": "2.2.6",
+    "python_version_family": "3.10",
+    "rebound_build": "Feb 11 2026 17:34:38",
+    "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+    "rebound_header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+    "rebound_shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04",
+    "rebound_version": "4.6.0",
+    "reboundx_used": false,
+    "reboundx_version": "4.6.1"
+  },
+  "schema_version": 1,
+  "shared_configuration": {
+    "archive_interval_years": 100000,
+    "backend": "c",
+    "body_names": [
+      "sun",
+      "mercury barycenter",
+      "venus barycenter",
+      "earth barycenter",
+      "mars barycenter",
+      "jupiter barycenter",
+      "saturn barycenter",
+      "uranus barycenter",
+      "neptune barycenter",
+      "pluto barycenter"
+    ],
+    "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "duration_years": 1000000,
+    "gr_scale": 1,
+    "include_central_response": true,
+    "initial_conditions_sha256": "bd9b632e1aa7410719bb85675ac7b939b8e9ff29ed577baed679629dab66acf7",
+    "integrator": "whfast",
+    "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+    "megno_seed": 12345,
+    "model_scope": "full_with_pluto",
+    "record_every_years": 100,
+    "runner_schema_version": 2,
+    "start_date": "2000-01-01T00:00:00+00:00",
+    "state_sample_schema_version": 1
+  },
+  "source_artifacts": {
+    "manifest_10": {
+      "path": "ephemeris_experiment_runner/manifests/10_m0_timestep_convergence_v1.json",
+      "sha256": "5a45bd7967eeba7694a2bf076af33290cf113eefa5379ec439773fda0ad04363"
+    },
+    "manifest_11": {
+      "path": "ephemeris_experiment_runner/manifests/11_m0_timestep_convergence_0p25_v1.json",
+      "sha256": "c589820f11f6a7171d3b3b0f852ff58c9b7184b9c77426f9a61174a2163112da"
+    },
+    "manifest_13": {
+      "path": "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json",
+      "sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240"
+    },
+    "manifest_13_report": {
+      "path": "docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_report.md",
+      "sha256": "6f33f93e15a8ba78ad216799926fff36221d5a9dee2b23e483485a2045a07018"
+    },
+    "manifest_13_summary": {
+      "path": "docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_summary.json",
+      "sha256": "6c7cdf074fdd436f58ca720bec87a9acb6b25d38d168227d3196638fd97ffb81"
+    },
+    "manifest_14": {
+      "path": "ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json",
+      "sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188"
+    },
+    "manifest_14_report": {
+      "path": "docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_report.md",
+      "sha256": "f742ad6b2e7baa36e2de68bb6f7b3c131426b4aa27b97519cd8e96d718af53b0"
+    },
+    "manifest_14_summary": {
+      "path": "docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_summary.json",
+      "sha256": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+    },
+    "manifest_15": {
+      "path": "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+      "sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe"
+    },
+    "manifest_15_report": {
+      "path": "docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_report.md",
+      "sha256": "ab913e127b35e12cd8778915b04366625604398568ff11105be392b0a460f7db"
+    },
+    "manifest_15_summary": {
+      "path": "docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_summary.json",
+      "sha256": "0e4a39d17f6d79c4e886fda1c0be0a81174e6e190e14e260ae6ca2568c2c1481"
+    },
+    "manifest_16": {
+      "path": "ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json",
+      "sha256": "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6"
+    },
+    "manifest_16_report": {
+      "path": "docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_report.md",
+      "sha256": "fca2495afdb8d8ee73382546acb3ab3d9c983cedd7cf5d3aa6deeb3f9b64172a"
+    },
+    "manifest_16_summary": {
+      "path": "docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_summary.json",
+      "sha256": "8f720e6cb160f943b55cdd4be9a982a504d0f4235707080eb0db46a51f2d3071"
+    },
+    "step3_report": {
+      "path": "docs/validation/m0-timestep-convergence-v1/m0_timestep_convergence_report.md",
+      "sha256": "f4f526766b74d7e82c09601403d8254ba8bf628729b5f27c6c094b305176ab2b"
+    },
+    "step3_summary": {
+      "path": "docs/validation/m0-timestep-convergence-v1/m0_timestep_convergence_summary.json",
+      "sha256": "651bb6b3210a442dd2a740d20c72780b000e5120096b780aebe021c086e61b82"
+    },
+    "step3b_report": {
+      "path": "docs/validation/m0-timestep-convergence-0p25-v1/m0_timestep_convergence_0p25_report.md",
+      "sha256": "dfa388e2036b0e2dfa60a3bd8617665b69ce9a885e09b68362de12d479f36b20"
+    },
+    "step3b_summary": {
+      "path": "docs/validation/m0-timestep-convergence-0p25-v1/m0_timestep_convergence_0p25_summary.json",
+      "sha256": "76e4c4637870a6c8ba38613242efdbe03db88a3ad38d3687aaaa4707f13da20f"
+    }
+  },
+  "thresholds": {
+    "angular_momentum_rel_drift_max_per_run": 1e-09,
+    "corrected_energy_max_abs_per_run": 1e-07,
+    "corrected_energy_roundoff_floor": 1e-12,
+    "final_lcn_accumulated_difference_max": 0.001,
+    "final_megno_difference_max": 0.001,
+    "final_tangent_direction_cosine_min": 0.9999,
+    "fine_tangent_direction_rms_strictly_smaller": true,
+    "global_scaled_physical_rms_fine_over_coarse_max": 0.5,
+    "inner_planet_eccentricity_history_max_abs": 1e-05,
+    "inner_planet_semimajor_axis_history_max_relative": 1e-07,
+    "manifest16_phase": {
+      "global_transverse_position_variance_fraction_min": 0.9,
+      "ias15_global_scaled_rms": 1.0875556664310227e-08,
+      "ias15_per_body_scaled_rms": {
+        "earth barycenter": 4.175442432153023e-09,
+        "jupiter barycenter": 3.259858792250234e-10,
+        "mars barycenter": 1.882194072905195e-09,
+        "mercury barycenter": 3.311774356579771e-08,
+        "neptune barycenter": 1.201286631513233e-10,
+        "pluto barycenter": 1.0599953114478348e-10,
+        "saturn barycenter": 2.1826674554532498e-10,
+        "sun": 3.088036653768074e-13,
+        "uranus barycenter": 1.510404740080174e-10,
+        "venus barycenter": 8.050653848095807e-09
+      },
+      "orientation_angle_abs_rad_max": 1e-09,
+      "phase_angle_over_orientation_min": 10,
+      "worst_body_transverse_position_variance_fraction_min": 0.9
+    },
+    "megno_history_rms_difference_max": 0.001,
+    "mercury_eccentricity_history_max_abs": 1e-06,
+    "mercury_perihelion_rate_difference_arcsec_per_century_max": 0.001,
+    "nonfinite_callback_results": 0,
+    "physical_fine_strictly_smaller_global_and_each_inner_planet": true
+  }
+}
