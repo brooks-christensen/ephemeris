@@ -1,0 +1,389 @@
+{
+  "schema_version": 1,
+  "kind": "m0_integrator_roundoff_diagnosis_manifest",
+  "experiment_id": "m0_integrator_roundoff_diagnosis_v1",
+  "model_id": "m0_grpot_emb_pluto_v1",
+  "frozen_before_new_integrations": true,
+  "phase_b_completed_utc": "2026-08-07T14:09:34Z",
+  "provenance": {
+    "starting_commit": "a3d13a63bc0dba43daec743973b3f44874a94ffb",
+    "validated_c_baseline_commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b",
+    "validated_c_annotated_tag": "gr-tangent-compiled-c-v1",
+    "step3_commit": "ef12816423aab6211a50e9f1c4d3391a3156c8df",
+    "step3b_commit": "7e9447971ed9684a785d2d69fc6410e1c0775711",
+    "step3c_commit": "a3d13a63bc0dba43daec743973b3f44874a94ffb",
+    "manifest_10_sha256": "5a45bd7967eeba7694a2bf076af33290cf113eefa5379ec439773fda0ad04363",
+    "manifest_11_sha256": "c589820f11f6a7171d3b3b0f852ff58c9b7184b9c77426f9a61174a2163112da",
+    "manifest_12_sha256": "1fddf3c0672dcd21522c7abbc23b769b32a9fc2d1b2367c2e88c933781e1678a",
+    "step3_summary_sha256": "651bb6b3210a442dd2a740d20c72780b000e5120096b780aebe021c086e61b82",
+    "step3b_summary_sha256": "76e4c4637870a6c8ba38613242efdbe03db88a3ad38d3687aaaa4707f13da20f",
+    "step3c_summary_sha256": "56f90a5c61e857d805e2bbbefdddc6b24e22fb937c8c458811a568015b0c5214",
+    "historical_statuses_immutable": {
+      "step3": "M0_1DAY_NOT_CONVERGED",
+      "step3b": "M0_0P5DAY_NOT_CONVERGED",
+      "step3c": "ENERGY_DRIFT_CONFIRMED"
+    }
+  },
+  "protected_files": {
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+  },
+  "paths": {
+    "project_root": "/home/peacelovephysics/ephemeris",
+    "python": "/home/peacelovephysics/ephemeris/.venv/bin/python",
+    "pythonpath": "/home/peacelovephysics/ephemeris/mini_ephemeris/src",
+    "kernel": "/home/peacelovephysics/ephemeris/data/de431_part-2.bsp",
+    "manifest": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json",
+    "output_root": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_v1",
+    "report_json": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_summary.json",
+    "report_markdown": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_report.md",
+    "figure_directory": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-v1/figures",
+    "step3_summary": "/home/peacelovephysics/ephemeris/docs/validation/m0-timestep-convergence-v1/m0_timestep_convergence_summary.json",
+    "step3b_summary": "/home/peacelovephysics/ephemeris/docs/validation/m0-timestep-convergence-0p25-v1/m0_timestep_convergence_0p25_summary.json",
+    "step3c_summary": "/home/peacelovephysics/ephemeris/docs/validation/m0-energy-precision-diagnosis-v1/m0_energy_precision_diagnosis_summary.json",
+    "step3c_timeseries_root": "/home/peacelovephysics/ephemeris/output/stability/m0_energy_precision_diagnosis_v1",
+    "existing_convergence_root": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1"
+  },
+  "execution_policy": {
+    "serial": true,
+    "fresh_collision_safe_outputs": true,
+    "preserve_failed_attempts": true,
+    "maximum_new_lane_duration_years": 100000,
+    "no_0p125d_1myr_lane": true,
+    "no_10myr_run": true,
+    "no_stage4_command": true,
+    "no_rebound_or_reboundx_change": true,
+    "no_physics_or_protected_file_change": true,
+    "no_historical_artifact_change": true,
+    "thresholds_frozen_before_new_results": true,
+    "ias15_projected_combined_runtime_limit_seconds": 7200,
+    "ias15_benchmark_duration_years": 100
+  },
+  "installed_runtime": {
+    "python_version_family": "3.10",
+    "rebound_version": "4.6.0",
+    "rebound_build": "Feb 11 2026 17:34:38",
+    "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+    "rebound_shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04",
+    "rebound_header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+    "reboundx_version": "4.6.1",
+    "reboundx_used_by_controls": false,
+    "compiled_gr_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "compiler_identity": "cc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+    "source_audit": {
+      "repository": "https://github.com/hannorein/rebound.git",
+      "commit": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+      "installed_header_matches_source_commit": true,
+      "whfast_safe_mode_behavior": "safe_mode=1 synchronizes at the end of every step and reconstructs Jacobi coordinates from inertial particles at the next step.",
+      "megno_behavior": "The N_var block requests synchronized positions for MEGNO, but the existing safe_mode=1 path is already synchronized at that point.",
+      "additional_force_behavior": "WHFast transforms to inertial coordinates before acceleration evaluation. The compiled callback reads positions, adds accelerations only, sets force_is_velocity_dependent=0, and neither requests nor causes synchronization.",
+      "minimal_mode_validity": "REBOUND 4.6.0 officially supports safe_mode=0 with keep_unsynchronized=1. integrate() synchronizes physical arrays at each scheduled endpoint while preserving the unsynchronized internal p_jh state.",
+      "did_modify_particles_equivalent": "This version has no did_modify_particles API. Manual particle edits require ri_whfast.recalculate_coordinates_this_timestep=1; the controls perform no particle edits between outputs."
+    }
+  },
+  "existing_lane_effective_settings": {
+    "integrator": "whfast",
+    "exact_finish_time": 1,
+    "scheduled_output_intervals_are_integer_step_counts": true,
+    "coordinates": "jacobi",
+    "kernel": "default",
+    "corrector": 0,
+    "corrector2": 0,
+    "safe_mode": 1,
+    "keep_unsynchronized": 0,
+    "recalculate_coordinates_this_timestep_initial": 0,
+    "gravity": "basic",
+    "gravity_ignore_terms_after_whfast_init": 1,
+    "boundary": "none",
+    "N_active": -1,
+    "particle_order": [
+      "sun",
+      "mercury barycenter",
+      "venus barycenter",
+      "earth barycenter",
+      "mars barycenter",
+      "jupiter barycenter",
+      "saturn barycenter",
+      "uranus barycenter",
+      "neptune barycenter",
+      "pluto barycenter"
+    ],
+    "real_particles": 10,
+    "variation_particles": 10,
+    "variation_configuration_count": 1,
+    "force_is_velocity_dependent": 0,
+    "additional_forces": "direct compiled-C gr_potential force/Jacobian callback",
+    "variation_initialization": "sim.init_megno(seed=12345) creates one first-order variation block; sim.lyapunov() initializes its LCN access.",
+    "megno_seed": 12345,
+    "scientific_output": "sim.integrate(target, exact_finish_time=1), then read synchronized physical and variation particle arrays.",
+    "simulationarchive": "sim.save_to_file(path, interval=100000 Julian years); archive heartbeat serializes state and does not itself request synchronization.",
+    "restart": "load final eligible SimulationArchive snapshot, validate fingerprint/schema/MEGNO, trim later CSV rows, reattach compiled callback, and continue at the next scientific target."
+  },
+  "state_and_energy_definitions": {
+    "coordinate_frame": "Solar-system barycentric ICRF Cartesian physical state.",
+    "units": "SI for masses, Cartesian states, energies, angular momentum, and center of mass; Julian years are exactly 31557600 s.",
+    "physical_scaling": "For matched states use [dx/AU,dy/AU,dz/AU,dvx/(AU/JulianYear),dvy/(AU/JulianYear),dvz/(AU/JulianYear)] and RMS over stated samples, bodies, and components.",
+    "kinetic": "K=sum_i 0.5*m_i*(vx_i^2+vy_i^2+vz_i^2), including the Sun and all ten real particles.",
+    "newtonian_pair_potential": "U_N=-G*sum_{i<j}(m_i*m_j/r_ij) over all 45 real-particle pairs.",
+    "gr_potential": "U_GR,pot=-(3*s*G^2*M_sun^2/c^2)*sum_{i!=sun}(m_i/r_i_sun^2).",
+    "corrected_energy": "E_corrected=K+U_N+U_GR,pot.",
+    "normalized_energy": "e(t)=(E_corrected(t)-E_corrected(0))/abs(E_corrected(0)); use 1 J only if the initial corrected energy is zero.",
+    "energy_recomputation": "At every epoch use telemetry-order float64, explicit-term math.fsum, and Decimal precision 60 constructed directly from state CSV strings.",
+    "angular_momentum": "L=sum_i m_i*(r_i cross v_i), measured about the stored barycentric origin.",
+    "center_of_mass": "Mass-weighted barycentric position and velocity over all ten real particles.",
+    "matched_epoch_rule": "Match exact sample_index and exact target time; no interpolation."
+  },
+  "long_history_analysis": {
+    "source": "Step 3c Decimal corrected-energy histories for the existing 0.5-day and 0.25-day lanes.",
+    "ols": "Unweighted OLS after centering time and e. The descriptive 95% CI uses the usual Student-t standard error with N-2 degrees of freedom; R^2=1-SSE/SST.",
+    "blocks": "Ten closed 100 kyr intervals [100000*b,100000*(b+1)] for b=0..9; adjacent blocks share their exact boundary sample.",
+    "prefixes_kyr": [10, 30, 100, 300, 1000],
+    "prefix_rule": "Use every exact 100-year sample from t=0 through the stated endpoint, inclusive.",
+    "detrending": "Subtract the full-history centered OLS line; report residual RMS and peak-to-peak.",
+    "residual_autocorrelation_lags_samples": [1, 10, 100, 1000],
+    "periodogram": "scipy.signal.periodogram with 0.01/year sampling, linear detrending, boxcar window, density scaling; report five strongest nonzero frequencies.",
+    "allan": "For averaging lengths m=[1,3,10,30,100,300,1000] samples, compute sqrt(0.5*mean((avg[i+m]-avg[i])^2)) from overlapping m-sample averages.",
+    "increments": "Use consecutive 100-year e differences; report mean, sample standard deviation, RMS, median, MAD, p01, p99, skew, excess kurtosis, positive fraction, and lag-1 correlation.",
+    "per_step_bias": "q_h=slope_per_year*(h_days/365.25).",
+    "timestep_scaling_exponent": "log(abs(slope_0.25/slope_0.5))/log(0.25/0.5).",
+    "elapsed_scaling": "OLS slope of log(prefix range or absolute endpoint) against log(prefix duration) over all five prefixes.",
+    "range_expansion": "A range is expanding when its 1000-kyr prefix range exceeds its 100-kyr range by more than 4x and the fitted range exponent exceeds 0.25.",
+    "preintegration_observation": {
+      "slope_ratio_0p25_over_0p5": 1.9946549856429285,
+      "q_abs_ratio_0p25_over_0p5": 0.9973274928214642,
+      "timestep_slope_exponent": -0.9961392258725265,
+      "common_sign_blocks_0p5": 10,
+      "common_sign_blocks_0p25": 10,
+      "range_expands": true,
+      "systematic_per_step_signature_passes_before_controls": true
+    }
+  },
+  "common_configuration": {
+    "schema_version": 1,
+    "model_id": "m0_grpot_emb_pluto_v1",
+    "start_date": "2000-01-01T00:00:00+00:00",
+    "model_scope": "full_with_pluto",
+    "body_names": [
+      "sun",
+      "mercury barycenter",
+      "venus barycenter",
+      "earth barycenter",
+      "mars barycenter",
+      "jupiter barycenter",
+      "saturn barycenter",
+      "uranus barycenter",
+      "neptune barycenter",
+      "pluto barycenter"
+    ],
+    "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+    "initial_conditions_sha256": "bd9b632e1aa7410719bb85675ac7b939b8e9ff29ed577baed679629dab66acf7",
+    "backend": "compiled_c",
+    "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "gravitational_constant": "6.67430e-11",
+    "speed_of_light_m_per_s": "299792458",
+    "gr_scale": 1.0,
+    "include_central_response": true,
+    "physical_only": true,
+    "real_particle_count": 10,
+    "N_active": -1,
+    "gravity": "basic",
+    "boundary": "none",
+    "force_is_velocity_dependent": false
+  },
+  "lanes": [
+    {
+      "id": "m0_diag_phys_current_sync_0p5d_100k",
+      "purpose": "Physical-only reproduction of existing per-step synchronization at 0.5 day.",
+      "configuration_fingerprint": "e6f51a8997b7c067e83c88049dedc4cf866576e91de721cb8eee1f9e5c97acec",
+      "configuration": {"kind":"whfast_physical_control","purpose":"current_sync","integrator":"whfast","step_days":0.5,"duration_years":100000.0,"record_every_years":100.0,"archive_interval_years":10000.0,"exact_finish_time":1,"coordinates":"jacobi","kernel":"default","corrector":0,"corrector2":0,"safe_mode":1,"keep_unsynchronized":0,"recalculate_coordinates_this_timestep":0,"variations":false,"megno":false,"expected_samples":1001,"expected_state_rows":10010,"expected_integration_steps":73050000,"expected_callback_invocations":73050000}
+    },
+    {
+      "id": "m0_diag_phys_current_sync_0p25d_100k",
+      "purpose": "Physical-only reproduction of existing per-step synchronization at 0.25 day.",
+      "configuration_fingerprint": "2806d7c6215d49b4b0f80eb30a5ffdad31c3af6e3fb3499317cf6768beda0fe9",
+      "configuration": {"kind":"whfast_physical_control","purpose":"current_sync","integrator":"whfast","step_days":0.25,"duration_years":100000.0,"record_every_years":100.0,"archive_interval_years":10000.0,"exact_finish_time":1,"coordinates":"jacobi","kernel":"default","corrector":0,"corrector2":0,"safe_mode":1,"keep_unsynchronized":0,"recalculate_coordinates_this_timestep":0,"variations":false,"megno":false,"expected_samples":1001,"expected_state_rows":10010,"expected_integration_steps":146100000,"expected_callback_invocations":146100000}
+    },
+    {
+      "id": "m0_diag_phys_min_sync_0p5d_100k",
+      "purpose": "Officially supported minimally synchronized physical-only WHFast control at 0.5 day.",
+      "configuration_fingerprint": "7ee3126b1cc80666809f97732e69b9062de87b94a1cd743a16da4685b7df91f9",
+      "configuration": {"kind":"whfast_physical_control","purpose":"min_sync","integrator":"whfast","step_days":0.5,"duration_years":100000.0,"record_every_years":100.0,"archive_interval_years":10000.0,"exact_finish_time":1,"coordinates":"jacobi","kernel":"default","corrector":0,"corrector2":0,"safe_mode":0,"keep_unsynchronized":1,"recalculate_coordinates_this_timestep":0,"variations":false,"megno":false,"expected_samples":1001,"expected_state_rows":10010,"expected_integration_steps":73050000,"expected_callback_invocations":73050000}
+    },
+    {
+      "id": "m0_diag_phys_min_sync_0p25d_100k",
+      "purpose": "Officially supported minimally synchronized physical-only WHFast control at 0.25 day.",
+      "configuration_fingerprint": "3d26473291e32bb8fb47e8e86a939c56ffc606e5133ed3cb5778f8d3aa1333c8",
+      "configuration": {"kind":"whfast_physical_control","purpose":"min_sync","integrator":"whfast","step_days":0.25,"duration_years":100000.0,"record_every_years":100.0,"archive_interval_years":10000.0,"exact_finish_time":1,"coordinates":"jacobi","kernel":"default","corrector":0,"corrector2":0,"safe_mode":0,"keep_unsynchronized":1,"recalculate_coordinates_this_timestep":0,"variations":false,"megno":false,"expected_samples":1001,"expected_state_rows":10010,"expected_integration_steps":146100000,"expected_callback_invocations":146100000}
+    },
+    {
+      "id": "m0_diag_phys_ias15_eps1e12_10k",
+      "purpose": "Independent physical-only IAS15 reference at epsilon 1e-12.",
+      "configuration_fingerprint": "2e41596b0ef503e8e3869016e13efbaff9d07a595cf7af075579e4c1696d1de0",
+      "configuration": {"kind":"ias15_physical_reference","purpose":"independent_integrator_tolerance_control","integrator":"ias15","epsilon":1e-12,"adaptive_mode":"PRS23","min_dt_seconds":0.0,"initial_dt_days":1.0,"duration_years":10000.0,"record_every_years":100.0,"archive_interval_years":1000.0,"exact_finish_time":1,"variations":false,"megno":false,"expected_samples":101,"expected_state_rows":1010,"expected_callback_invocations":"adaptive_observed"}
+    },
+    {
+      "id": "m0_diag_phys_ias15_eps1e13_10k",
+      "purpose": "Independent physical-only IAS15 tolerance-convergence reference at epsilon 1e-13.",
+      "configuration_fingerprint": "77138f8d79554607729ca36e92734c779c30a46bda10f9ad5fadb526fa1b27d8",
+      "configuration": {"kind":"ias15_physical_reference","purpose":"independent_integrator_tolerance_control","integrator":"ias15","epsilon":1e-13,"adaptive_mode":"PRS23","min_dt_seconds":0.0,"initial_dt_days":1.0,"duration_years":10000.0,"record_every_years":100.0,"archive_interval_years":1000.0,"exact_finish_time":1,"variations":false,"megno":false,"expected_samples":101,"expected_state_rows":1010,"expected_callback_invocations":"adaptive_observed"}
+    },
+    {
+      "id": "m0_diag_reversibility_current_sync_0p5d_10k",
+      "purpose": "Current-sync 0.5-day exact-step forward/backward return test.",
+      "configuration_fingerprint": "8d7d89972a9ab6da6aaa76020bfc26270f073cc504b78f73ddf256f2d113c52e",
+      "configuration": {"kind":"whfast_reversibility","purpose":"current_sync","integrator":"whfast","step_days":0.5,"forward_years":10000.0,"forward_steps":7305000,"backward_steps":7305000,"coordinates":"jacobi","kernel":"default","corrector":0,"corrector2":0,"safe_mode":1,"keep_unsynchronized":0,"recalculate_coordinates_this_timestep":0,"variations":false,"megno":false,"expected_samples":3,"expected_state_rows":30,"expected_callback_invocations":14610000}
+    },
+    {
+      "id": "m0_diag_reversibility_current_sync_0p25d_10k",
+      "purpose": "Current-sync 0.25-day exact-step forward/backward return test.",
+      "configuration_fingerprint": "9fae09c69d5cd527c76a7a41896e678eb62eb11fc10069e198656dae4623d732",
+      "configuration": {"kind":"whfast_reversibility","purpose":"current_sync","integrator":"whfast","step_days":0.25,"forward_years":10000.0,"forward_steps":14610000,"backward_steps":14610000,"coordinates":"jacobi","kernel":"default","corrector":0,"corrector2":0,"safe_mode":1,"keep_unsynchronized":0,"recalculate_coordinates_this_timestep":0,"variations":false,"megno":false,"expected_samples":3,"expected_state_rows":30,"expected_callback_invocations":29220000}
+    },
+    {
+      "id": "m0_diag_reversibility_min_sync_0p5d_10k",
+      "purpose": "Minimal-sync 0.5-day exact-step forward/backward return test.",
+      "configuration_fingerprint": "6a0a37d6947746c6d244d08d3d566ab399c3e63b8f77ee566ba4716fdf5ff30e",
+      "configuration": {"kind":"whfast_reversibility","purpose":"min_sync","integrator":"whfast","step_days":0.5,"forward_years":10000.0,"forward_steps":7305000,"backward_steps":7305000,"coordinates":"jacobi","kernel":"default","corrector":0,"corrector2":0,"safe_mode":0,"keep_unsynchronized":1,"recalculate_coordinates_this_timestep":0,"variations":false,"megno":false,"expected_samples":3,"expected_state_rows":30,"expected_callback_invocations":14610000}
+    },
+    {
+      "id": "m0_diag_reversibility_min_sync_0p25d_10k",
+      "purpose": "Minimal-sync 0.25-day exact-step forward/backward return test.",
+      "configuration_fingerprint": "449724d1bde7099dd11ff8e3a0d9b46a7f97af90aaf010404258ad8583983d9b",
+      "configuration": {"kind":"whfast_reversibility","purpose":"min_sync","integrator":"whfast","step_days":0.25,"forward_years":10000.0,"forward_steps":14610000,"backward_steps":14610000,"coordinates":"jacobi","kernel":"default","corrector":0,"corrector2":0,"safe_mode":0,"keep_unsynchronized":1,"recalculate_coordinates_this_timestep":0,"variations":false,"megno":false,"expected_samples":3,"expected_state_rows":30,"expected_callback_invocations":29220000}
+    }
+  ],
+  "method_validation": {
+    "reversibility_two_body": {
+      "duration_days": 365.0,
+      "step_days": [0.5, 0.25],
+      "compiled_gr_enabled": true,
+      "modes": ["current_sync", "min_sync"],
+      "exact_forward_and_backward_steps": true,
+      "required_final_time_abs_seconds_max": 1e-6,
+      "required_scaled_state_rms_max": 1e-8,
+      "required_0p25_error_over_0p5_error_max": 4.0,
+      "common_configuration": {"schema_version":1,"kind":"compiled_gr_two_body_reversibility_validation","model_id":"analytic_sun_mercury_two_body","masses_kg":["1.9884098713264225e30","3.3009873694619664e23"],"separation_m":"57909050000","backend":"compiled_c","c_source_sha256":"c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23","c_artifact_sha256":"e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067","gravitational_constant":"6.67430e-11","speed_of_light_m_per_s":"299792458","gr_scale":1.0,"include_central_response":true,"integrator":"whfast","coordinates":"jacobi","kernel":"default","corrector":0,"corrector2":0,"duration_days":365.0,"variations":false,"megno":false},
+      "cases": [
+        {"id":"two_body_current_sync_0p5d","configuration_fingerprint":"747523505a55e9d566a9d90cf7ed82375dc94054bb415938b0e4741e0ac78287","configuration":{"purpose":"current_sync","safe_mode":1,"keep_unsynchronized":0,"step_days":0.5,"forward_steps":730,"backward_steps":730,"expected_callback_invocations":1460}},
+        {"id":"two_body_current_sync_0p25d","configuration_fingerprint":"d924a59c05cd36e99dd0f43ae57b7e5be43f0e7b8f2a5448ad8c5a48329b8fec","configuration":{"purpose":"current_sync","safe_mode":1,"keep_unsynchronized":0,"step_days":0.25,"forward_steps":1460,"backward_steps":1460,"expected_callback_invocations":2920}},
+        {"id":"two_body_min_sync_0p5d","configuration_fingerprint":"bbf617679acc483e8e0fd6973af3aa46efcdc530ead867f26e4e20eb7e56f59a","configuration":{"purpose":"min_sync","safe_mode":0,"keep_unsynchronized":1,"step_days":0.5,"forward_steps":730,"backward_steps":730,"expected_callback_invocations":1460}},
+        {"id":"two_body_min_sync_0p25d","configuration_fingerprint":"75565808e67a6ae65b55a9679d21305659b59dbbf7babbf726dc050e25ba1e66","configuration":{"purpose":"min_sync","safe_mode":0,"keep_unsynchronized":1,"step_days":0.25,"forward_steps":1460,"backward_steps":1460,"expected_callback_invocations":2920}}
+      ]
+    },
+    "ias15_benchmark": {
+      "duration_years": 100.0,
+      "epsilons": [1e-12, 1e-13],
+      "projection": "For each epsilon multiply observed 100-year runtime by 100; sum both projections.",
+      "combined_runtime_limit_seconds": 7200,
+      "blocked_if_exceeded": true,
+      "cases": [
+        {"id":"ias15_benchmark_eps1e12_100y","configuration_fingerprint":"8aede3fed85b194ca19301f56b1cf97bb7729132b90e1d2de6b67d4b78da1393","configuration":{"kind":"ias15_runtime_benchmark","purpose":"project_10k_runtime","integrator":"ias15","epsilon":1e-12,"adaptive_mode":"PRS23","min_dt_seconds":0.0,"initial_dt_days":1.0,"duration_years":100.0,"record_times_years":[0.0,100.0],"variations":false,"megno":false,"expected_samples":2,"expected_state_rows":20}},
+        {"id":"ias15_benchmark_eps1e13_100y","configuration_fingerprint":"06bd1af1dee0a5766111f358e185fe3afe95ffb5a322913d79b1c689df8edc65","configuration":{"kind":"ias15_runtime_benchmark","purpose":"project_10k_runtime","integrator":"ias15","epsilon":1e-13,"adaptive_mode":"PRS23","min_dt_seconds":0.0,"initial_dt_days":1.0,"duration_years":100.0,"record_times_years":[0.0,100.0],"variations":false,"megno":false,"expected_samples":2,"expected_state_rows":20}}
+      ]
+    }
+  },
+  "comparison_definitions": {
+    "reproduction": {
+      "signed_slopes_same_sign": true,
+      "normalized_fitted_change_relative_difference_max": 0.25,
+      "energy_max_rms_p99_relative_difference_max": 0.25,
+      "control_blocks": "Ten closed 10 kyr intervals over 100 kyr; adjacent blocks share boundaries.",
+      "paired_block_common_sign_count_min": 8,
+      "block_slope_vector_normalized_rms_difference_max": 0.35
+    },
+    "material_reduction": {
+      "minimum_factor": 4.0,
+      "required_metrics": ["absolute_normalized_fitted_slope", "max_abs", "rms", "p99_abs"],
+      "required_at_both_timesteps": true,
+      "physical_accuracy_rule": "Against the converged epsilon=1e-13 IAS15 state over 10 kyr, the proposed control global scaled RMS and each inner-planet RMS must be <=1.25 times the comparator plus 1e-14."
+    },
+    "systematic_per_step_signature": {
+      "slope_ratio_0p25_over_0p5_min": 1.6,
+      "slope_ratio_0p25_over_0p5_max": 2.5,
+      "q_same_sign": true,
+      "q_relative_difference_max": 0.35,
+      "same_sign_blocks_min": 8,
+      "block_count": 10
+    },
+    "ias15_tolerance_convergence": {
+      "global_scaled_state_rms_max": 1e-10,
+      "per_body_scaled_state_rms_max": 5e-10,
+      "semimajor_axis_history_relative_max": 1e-9,
+      "eccentricity_history_abs_max": 1e-9,
+      "energy_history_max_abs_difference": 5e-11,
+      "energy_fitted_change_per_myr_abs_difference": 5e-11,
+      "energy_stat_relative_difference_max": 0.25,
+      "energy_stat_absolute_floor": 1e-12
+    },
+    "ias15_force_problem": {
+      "minimum_abs_fitted_change_per_myr": 7.2e-11,
+      "same_sign_as_both_existing_whfast_lanes": true,
+      "descriptive_ols_ci_excludes_zero": true
+    },
+    "bounded_history": {
+      "range_elapsed_exponent_max": 0.25,
+      "range_1000k_over_100k_max": 4.0,
+      "slope_1000k_over_100k_max": 0.25,
+      "same_sign_100k_blocks_max": 6
+    },
+    "random_walk": {
+      "elapsed_growth_exponent_min": 0.35,
+      "elapsed_growth_exponent_max": 0.65,
+      "systematic_signature_must_fail": true,
+      "ias15_must_not_reproduce": true
+    },
+    "reversibility": {
+      "compare_points": ["initial", "forward_10000_years", "returned_initial_epoch"],
+      "scaled_state_rms": "Same AU and AU/JulianYear component scaling as physical-state convergence.",
+      "orbital_elements": "J2000-ecliptic heliocentric osculating elements using mini_ephemeris.orbital_elements.heliocentric_elements_for_state.",
+      "timestep_scaling": "log(error_0.25/error_0.5)/log(0.25/0.5) for each positive return metric.",
+      "interpretation_gate": "Use only tests with exact integer step counts, explicit synchronized comparisons, exact callback totals, and return time within 1e-6 s."
+    }
+  },
+  "runtime_and_disk_estimates": {
+    "basis": "Existing 1 Myr full tangent runtimes were 2393.812259 s at 0.5 day and 4921.371133 s at 0.25 day; scale linearly by duration and conservatively retain tangent cost.",
+    "whfast_controls_seconds": 1463.0,
+    "whfast_reversibility_seconds": 293.0,
+    "ias15_prebenchmark_placeholder_seconds": 3600.0,
+    "ias15_combined_stop_limit_seconds": 7200.0,
+    "total_prebenchmark_estimate_seconds": 5356.0,
+    "expected_raw_disk_bytes": 50000000,
+    "required_disk_with_safety_bytes": 100000000,
+    "available_disk_bytes_before_launch": 837131923456
+  },
+  "artifact_requirements": {
+    "whfast_and_ias15_lane_files": ["progress_csv", "physical_state_csv", "simulationarchive", "status_json", "summary_json", "events_log"],
+    "reversibility_lane_files": ["physical_state_csv", "summary_json", "events_log"],
+    "scientific_lane_integrity": "Exact expected target times/counts; unique sample indices; finite states; schema/fingerprint match; readable archive; zero nonfinite callback results; no duplicate rows.",
+    "whfast_callback_rule": "Exactly one compiled callback invocation per full WHFast step; expected totals are preregistered per lane.",
+    "ias15_callback_rule": "Adaptive callback totals are determined by accepted/rejected IAS15 force evaluations and are recorded, finite, positive, and reproducible only under the identical runtime build.",
+    "timeseries_policy": "Raw lanes, recomputed timeseries, archives, logs, binaries, and caches remain ignored under output_root.",
+    "committed_artifacts": "Manifest, focused source/tests, compact JSON/Markdown reports, and five deterministic PNG figures only."
+  },
+  "classification_rules": {
+    "SYNCHRONIZATION_RECALCULATION_BIAS": "Physical-only current_sync reproduces the existing full-lane drift at both timesteps; min_sync materially reduces slope/max/RMS/p99 by >=4x at both timesteps without worsening IAS15-referenced physical accuracy; tolerance-converged IAS15 does not reproduce the drift.",
+    "VARIATION_MEGNO_COUPLING": "Physical-only current_sync materially reduces full-lane drift at both timesteps; current_sync and min_sync reproduce one another; tolerance-converged IAS15 does not reproduce the full drift.",
+    "SYSTEMATIC_WHFAST_STEP_BIAS": "The systematic per-step signature passes for full and physical-only histories; synchronization modes do not materially reduce it; tolerance-converged IAS15 does not reproduce it.",
+    "RANDOM_WALK_ROUNDOFF": "Elapsed-time evidence fits the preregistered square-root range, the systematic signature fails, controls retain compatible stochastic behavior, and IAS15 does not reproduce drift.",
+    "BOUNDED_ENERGY_OSCILLATION": "Both long histories pass every bounded-history rule; a periodic residual alone is insufficient.",
+    "CORRECTED_INVARIANT_OR_FORCE_PROBLEM": "IAS15 is tolerance-converged and both tolerance lanes pass the preregistered scientifically significant same-sign drift rule.",
+    "MIXED_OR_INCONCLUSIVE": "Integrity passes but evidence satisfies no single complete causal rule or supports multiple unresolved mechanisms.",
+    "BLOCKED": "A preregistered audit, benchmark, integrity, telemetry reproduction, IAS15 convergence, or reversibility-validity gate fails and prevents defensible classification."
+  },
+  "step3_status_rules": {
+    "STEP3_NUMERICAL_FLOOR_CHARACTERIZED": "Independent-integrator, synchronization-control, reversibility, and long-history evidence support one coherent numerical-floor mechanism without requiring a configuration change or physics change.",
+    "STEP3_INTEGRATOR_CONFIGURATION_CHANGE_REQUIRED": "A synchronization or variation/MEGNO configuration mechanism is causally isolated and materially reduced by an exact supported configuration change.",
+    "STEP3_FORCE_INVARIANT_PROBLEM": "The CORRECTED_INVARIANT_OR_FORCE_PROBLEM rule passes; no force or invariant change is made here.",
+    "STEP3_DIAGNOSIS_INCONCLUSIVE": "Primary mechanism is MIXED_OR_INCONCLUSIVE or evidence is otherwise insufficient without an integrity failure.",
+    "BLOCKED": "Primary mechanism is BLOCKED."
+  },
+  "next_action_policy": {
+    "numerical_floor_characterized": "Provide but do not execute a bounded Step 3e prompt for one 0.125-day 1 Myr lane with a separately preregistered evidence-based roundoff envelope.",
+    "configuration_change_required": "Provide but do not execute the smallest revalidation plan for only the isolated configuration change.",
+    "force_problem": "Stop and report; do not modify validated physics in Step 3d.",
+    "inconclusive": "State the smallest missing bounded evidence; do not request a 0.125-day lane automatically."
+  }
+}

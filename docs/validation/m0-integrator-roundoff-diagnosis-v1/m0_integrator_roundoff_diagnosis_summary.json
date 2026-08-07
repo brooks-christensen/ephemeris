@@ -1,0 +1,1274 @@
+{
+  "audit": {
+    "compiled_gr_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "existing_lane_integrity": {
+      "m0_conv_0p25d_1myr_s12345": {
+        "rows": 100010,
+        "samples": 10001
+      },
+      "m0_conv_0p5d_1myr_s12345": {
+        "rows": 100010,
+        "samples": 10001
+      }
+    },
+    "git_dirty_after_preregistration": true,
+    "git_head": "a3d13a63bc0dba43daec743973b3f44874a94ffb",
+    "historical_inventory_entries": {
+      "step3_summary": 21,
+      "step3b_summary": 28
+    },
+    "manifest_path": "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json",
+    "manifest_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+    "protected_files": [
+      {
+        "path": "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py",
+        "sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff"
+      },
+      {
+        "path": "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py",
+        "sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+      },
+      {
+        "path": "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py",
+        "sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9"
+      },
+      {
+        "path": "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c",
+        "sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+      }
+    ],
+    "runtime": {
+      "header_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/rebound/rebound.h",
+      "header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+      "rebound_build": "Feb 11 2026 17:34:38",
+      "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+      "rebound_version": "4.6.0",
+      "shared_library_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/librebound.cpython-310-x86_64-linux-gnu.so",
+      "shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04"
+    },
+    "status": "PASS",
+    "step3c_timeseries_verified": 2,
+    "tag_object_type": "tag",
+    "unique_historical_artifacts": 28
+  },
+  "blocking_reason": "The corrected two-body reversibility method passes every absolute gate, but the minimal-sync 0.25/0.5-day return-error ratio is 8.35827019, above the frozen maximum 4.",
+  "candidate_mechanisms": {
+    "BOUNDED_ENERGY_OSCILLATION": {
+      "against": "range growth and ten same-sign blocks fail the bounded-history interpretation",
+      "assessment": "not established",
+      "for": "oscillatory residual power exists"
+    },
+    "CORRECTED_INVARIANT_OR_FORCE_PROBLEM": {
+      "against": "no tolerance-converged IAS15 reference ran",
+      "assessment": "unclassified",
+      "for": "the existing corrected-energy drift is independently reconstructed"
+    },
+    "MIXED_OR_INCONCLUSIVE": {
+      "against": "the failed integrity gate requires BLOCKED rather than a causal conclusion",
+      "assessment": "superseded by BLOCKED",
+      "for": "several mechanisms remain unresolved"
+    },
+    "RANDOM_WALK_ROUNDOFF": {
+      "against": "the 0.25-day exponent and preregistered per-step signature are inconsistent with a pure random walk",
+      "assessment": "not established",
+      "for": "the 0.5-day range exponent overlaps a square-root-like regime"
+    },
+    "SYNCHRONIZATION_RECALCULATION_BIAS": {
+      "against": "no 100 kyr current/min synchronization control ran",
+      "assessment": "unclassified",
+      "for": "the failed first method attempt confirms reversal is sensitive to internal leapfrog phase"
+    },
+    "SYSTEMATIC_WHFAST_STEP_BIAS": {
+      "against": "physical-only synchronization controls and IAS15 were not authorized past the failed gate",
+      "assessment": "plausible but unclassified",
+      "for": "existing full-history systematic signature passed=True"
+    },
+    "VARIATION_MEGNO_COUPLING": {
+      "against": "no matched physical-only control ran",
+      "assessment": "unclassified",
+      "for": "the existing histories include variations and MEGNO"
+    }
+  },
+  "created_utc": "2026-08-07T14:41:37.984693+00:00",
+  "decisive_scientific_lanes_launched": 0,
+  "existing_systematic_signature": {
+    "coarse_same_sign_blocks": 10,
+    "fine_same_sign_blocks": 10,
+    "passed": true,
+    "q_0p25": 3.9531069612886253e-19,
+    "q_0p5": 3.963699977933214e-19,
+    "q_relative_difference": 0.002672507178535796,
+    "slope_ratio_0p25_over_0p5": 1.9946549856429285
+  },
+  "experiment_id": "m0_integrator_roundoff_diagnosis_v1",
+  "figures": [
+    {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-v1/figures/long_history_energy_and_fits.png",
+      "sha256": "31c15a0afa39fdb3decaa91a06976069601e8669ce8a82a5769d9617e4ffbf6d",
+      "size_bytes": 69673
+    },
+    {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-v1/figures/blockwise_slopes.png",
+      "sha256": "867dff9b7c1d3050a917c5271d0c06a211789235910fd32879db1f8f32c502f4",
+      "size_bytes": 34134
+    },
+    {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-v1/figures/reversibility_method_validation_errors.png",
+      "sha256": "08c5c166611a2c0c29c07e395fd4de5b7aa94422b28264c6d497279d844a33a2",
+      "size_bytes": 43190
+    }
+  ],
+  "final_0p125_lane_justified": false,
+  "historical_statuses_unchanged": {
+    "step3": "M0_1DAY_NOT_CONVERGED",
+    "step3b": "M0_0P5DAY_NOT_CONVERGED",
+    "step3c": "ENERGY_DRIFT_CONFIRMED"
+  },
+  "long_history": {
+    "0p25d": {
+      "allan_deviation_by_tau_years": {
+        "100": 5.95347602707568e-13,
+        "1000": 4.703885794388829e-13,
+        "10000": 4.096788669890545e-12,
+        "100000": 4.080783004094926e-11,
+        "300": 7.120472179255456e-13,
+        "3000": 1.23858170663745e-12,
+        "30000": 1.2235736040133563e-11
+      },
+      "blocks": [
+        {
+          "ci95_high_per_year": 5.83516314009113e-16,
+          "ci95_low_per_year": 5.79399682670067e-16,
+          "detrended_peak_to_peak": 6.4941003391230485e-12,
+          "detrended_rms": 9.579953084022249e-13,
+          "fitted_change_over_history": 5.8145799833959e-11,
+          "fitted_change_per_myr": 5.814579983395901e-10,
+          "fitted_intercept": -1.751020649755203e-12,
+          "fitted_slope_per_year": 5.8145799833959e-16,
+          "index": 0,
+          "max_abs": 5.847078048906947e-11,
+          "max_abs_worst_epoch_years": 98600.0,
+          "p99_abs": 5.603123287589223e-11,
+          "r_squared": 0.996759634249512,
+          "rms": 3.208910771436821e-11,
+          "signed_endpoint_change": 5.6514034555631896e-11
+        },
+        {
+          "ci95_high_per_year": 5.765523850216624e-16,
+          "ci95_low_per_year": 5.725760169570922e-16,
+          "detrended_peak_to_peak": 5.858806472580642e-12,
+          "detrended_rms": 9.253541637812566e-13,
+          "fitted_change_over_history": 5.7456420098937725e-11,
+          "fitted_change_per_myr": 5.745642009893773e-10,
+          "fitted_intercept": -5.864476559460627e-13,
+          "fitted_slope_per_year": 5.745642009893773e-16,
+          "index": 1,
+          "max_abs": 1.1638531761776918e-10,
+          "max_abs_worst_epoch_years": 199800.0,
+          "p99_abs": 1.1381930636320277e-10,
+          "r_squared": 0.9969032554686217,
+          "rms": 8.719838693419106e-11,
+          "signed_endpoint_change": 5.7667728659682006e-11
+        },
+        {
+          "ci95_high_per_year": 5.8730409121922915e-16,
+          "ci95_low_per_year": 5.829745091492582e-16,
+          "detrended_peak_to_peak": 6.373323749049176e-12,
+          "detrended_rms": 1.0075517987325363e-12,
+          "fitted_change_over_history": 5.851393001842437e-11,
+          "fitted_change_per_myr": 5.851393001842437e-10,
+          "fitted_intercept": -3.873117877409648e-12,
+          "fitted_slope_per_year": 5.851393001842437e-16,
+          "index": 2,
+          "max_abs": 1.7451458632975278e-10,
+          "max_abs_worst_epoch_years": 298400.0,
+          "p99_abs": 1.7194256201083438e-10,
+          "r_squared": 0.9964617348088731,
+          "rms": 1.4341549246798481e-10,
+          "signed_endpoint_change": 5.904836684497696e-11
+        },
+        {
+          "ci95_high_per_year": 6.052125575917044e-16,
+          "ci95_low_per_year": 6.009400531554749e-16,
+          "detrended_peak_to_peak": 6.9739017789238256e-12,
+          "detrended_rms": 9.94269068063761e-13,
+          "fitted_change_over_history": 6.030763053735896e-11,
+          "fitted_change_per_myr": 6.030763053735896e-10,
+          "fitted_intercept": -9.678016310092025e-12,
+          "fitted_slope_per_year": 6.030763053735896e-16,
+          "index": 3,
+          "max_abs": 2.327227747991205e-10,
+          "max_abs_worst_epoch_years": 399600.0,
+          "p99_abs": 2.3141086113737656e-10,
+          "r_squared": 0.9967553680981873,
+          "rms": 2.0215368286205914e-10,
+          "signed_endpoint_change": 5.761744574013156e-11
+        },
+        {
+          "ci95_high_per_year": 5.591170855176519e-16,
+          "ci95_low_per_year": 5.553492687571102e-16,
+          "detrended_peak_to_peak": 6.3522957519398725e-12,
+          "detrended_rms": 8.76821479077303e-13,
+          "fitted_change_over_history": 5.572331771373811e-11,
+          "fitted_change_per_myr": 5.572331771373811e-10,
+          "fitted_intercept": 9.229187062549439e-12,
+          "fitted_slope_per_year": 5.572331771373811e-16,
+          "index": 4,
+          "max_abs": 2.8826129136206957e-10,
+          "max_abs_worst_epoch_years": 498100.0,
+          "p99_abs": 2.872907527235966e-10,
+          "r_squared": 0.9970435123825148,
+          "rms": 2.6048375122125677e-10,
+          "signed_endpoint_change": 5.7218358807107065e-11
+        },
+        {
+          "ci95_high_per_year": 5.913654980905507e-16,
+          "ci95_low_per_year": 5.867299356571044e-16,
+          "detrended_peak_to_peak": 7.474020597810662e-12,
+          "detrended_rms": 1.0787575318989657e-12,
+          "fitted_change_over_history": 5.890477168738275e-11,
+          "fitted_change_per_myr": 5.890477168738275e-10,
+          "fitted_intercept": -7.1633026710337904e-12,
+          "fitted_slope_per_year": 5.890477168738275e-16,
+          "index": 5,
+          "max_abs": 3.4952065280665406e-10,
+          "max_abs_worst_epoch_years": 599300.0,
+          "p99_abs": 3.4705410766213376e-10,
+          "r_squared": 0.9959994532264834,
+          "rms": 3.172716969125549e-10,
+          "signed_endpoint_change": 5.943867970640829e-11
+        },
+        {
+          "ci95_high_per_year": 5.696566710132597e-16,
+          "ci95_low_per_year": 5.66075715482332e-16,
+          "detrended_peak_to_peak": 5.7882389552733214e-12,
+          "detrended_rms": 8.333363655101087e-13,
+          "fitted_change_over_history": 5.6786619324779586e-11,
+          "fitted_change_per_myr": 5.678661932477959e-10,
+          "fitted_intercept": 6.553277428447547e-12,
+          "fitted_slope_per_year": 5.678661932477959e-16,
+          "index": 6,
+          "max_abs": 4.0405128688719416e-10,
+          "max_abs_worst_epoch_years": 699200.0,
+          "p99_abs": 4.029940028391822e-10,
+          "r_squared": 0.9974275701989481,
+          "rms": 3.7602543773007143e-10,
+          "signed_endpoint_change": 5.6066717670197324e-11
+        },
+        {
+          "ci95_high_per_year": 5.638091484752429e-16,
+          "ci95_low_per_year": 5.598651953344973e-16,
+          "detrended_peak_to_peak": 6.474602682232137e-12,
+          "detrended_rms": 9.178107763878844e-13,
+          "fitted_change_over_history": 5.618371719048701e-11,
+          "fitted_change_per_myr": 5.618371719048701e-10,
+          "fitted_intercept": 1.1209754205953606e-11,
+          "fitted_slope_per_year": 5.618371719048701e-16,
+          "index": 7,
+          "max_abs": 4.6210028519066556e-10,
+          "max_abs_worst_epoch_years": 798900.0,
+          "p99_abs": 4.5965223824531775e-10,
+          "r_squared": 0.9968142394913769,
+          "rms": 4.3289315039519837e-10,
+          "signed_endpoint_change": 5.7007664058543024e-11
+        },
+        {
+          "ci95_high_per_year": 5.886392609212723e-16,
+          "ci95_low_per_year": 5.84514501918489e-16,
+          "detrended_peak_to_peak": 7.29892679620857e-12,
+          "detrended_rms": 9.598867247296151e-13,
+          "fitted_change_over_history": 5.865768814198806e-11,
+          "fitted_change_per_myr": 5.865768814198807e-10,
+          "fitted_intercept": -9.463726494950115e-12,
+          "fitted_slope_per_year": 5.865768814198806e-16,
+          "index": 8,
+          "max_abs": 5.190499729700308e-10,
+          "max_abs_worst_epoch_years": 897500.0,
+          "p99_abs": 5.175187198088404e-10,
+          "r_squared": 0.9968032178460879,
+          "rms": 4.894211631240497e-10,
+          "signed_endpoint_change": 5.734122483940491e-11
+        },
+        {
+          "ci95_high_per_year": 5.623090791926502e-16,
+          "ci95_low_per_year": 5.576027238491668e-16,
+          "detrended_peak_to_peak": 6.820245257183417e-12,
+          "detrended_rms": 1.0952319912561085e-12,
+          "fitted_change_over_history": 5.599559015209085e-11,
+          "fitted_change_per_myr": 5.599559015209085e-10,
+          "fitted_intercept": 1.475116375691328e-11,
+          "fitted_slope_per_year": 5.599559015209085e-16,
+          "index": 9,
+          "max_abs": 5.778771449735988e-10,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 5.748278447365617e-10,
+          "r_squared": 0.9954392854580111,
+          "rms": 5.469497604153418e-10,
+          "signed_endpoint_change": 5.7710271713227185e-11
+        }
+      ],
+      "ci95_high_per_year": 5.776372121181906e-16,
+      "ci95_low_per_year": 5.774606419703457e-16,
+      "detrended_peak_to_peak": 9.328763164285099e-12,
+      "detrended_rms": 1.3002225877959222e-12,
+      "endpoint_elapsed_exponent": 1.0490556712843553,
+      "energy_change_per_step": 3.9531069612886253e-19,
+      "fitted_change_over_history": 5.775489270442681e-10,
+      "fitted_change_per_myr": 5.775489270442681e-10,
+      "fitted_intercept": -1.0129846983867255e-12,
+      "fitted_slope_per_year": 5.775489270442681e-16,
+      "increment_distribution": {
+        "excess_kurtosis": 2.4017171126838495,
+        "lag1_autocorrelation": 0.13933712800596357,
+        "mad": 4.522785434027121e-13,
+        "mean": 5.756304925953102e-14,
+        "median": 5.998262633915676e-14,
+        "p01": -2.4320837802826214e-12,
+        "p99": 2.4808990870388827e-12,
+        "positive_fraction": 0.5355,
+        "rms": 8.419486540753519e-13,
+        "sample_std": 8.400205919611336e-13,
+        "skew": -0.035705478679454575
+      },
+      "max_abs": 5.778771449735988e-10,
+      "max_abs_worst_epoch_years": 998700.0,
+      "p99_abs": 5.696177852995406e-10,
+      "periodogram_top_peaks": [
+        {
+          "period_years": 1000100.0,
+          "power": 3.7183497092771326e-19
+        },
+        {
+          "period_years": 250025.0,
+          "power": 1.8071461965777238e-19
+        },
+        {
+          "period_years": 1406.6104078762307,
+          "power": 1.1940085032412004e-19
+        },
+        {
+          "period_years": 333366.6666666666,
+          "power": 1.1893943365249397e-19
+        },
+        {
+          "period_years": 937.3008434864106,
+          "power": 9.74817144409604e-20
+        }
+      ],
+      "prefixes": {
+        "10": {
+          "ci95_high_per_year": 5.914039934345973e-16,
+          "ci95_low_per_year": 4.82279039348766e-16,
+          "detrended_peak_to_peak": 4.618076590685567e-12,
+          "detrended_rms": 7.976860238652521e-13,
+          "fitted_change_over_history": 5.3684151639168165e-12,
+          "fitted_change_per_myr": 5.368415163916817e-10,
+          "fitted_intercept": -1.5045493991795224e-12,
+          "fitted_slope_per_year": 5.368415163916817e-16,
+          "max_abs": 6.169413544580048e-12,
+          "max_abs_worst_epoch_years": 8600.0,
+          "p99_abs": 4.5919461191068166e-12,
+          "r_squared": 0.7938093147422864,
+          "range": 8.859124570179852e-12,
+          "rms": 2.1160307978622994e-12,
+          "signed_endpoint_change": 4.5919461191068166e-12
+        },
+        "100": {
+          "ci95_high_per_year": 5.83516314009113e-16,
+          "ci95_low_per_year": 5.79399682670067e-16,
+          "detrended_peak_to_peak": 6.4941003391230485e-12,
+          "detrended_rms": 9.579953084022249e-13,
+          "fitted_change_over_history": 5.8145799833959e-11,
+          "fitted_change_per_myr": 5.814579983395901e-10,
+          "fitted_intercept": -1.751020649755203e-12,
+          "fitted_slope_per_year": 5.8145799833959e-16,
+          "max_abs": 5.847078048906947e-11,
+          "max_abs_worst_epoch_years": 98600.0,
+          "p99_abs": 5.603123287589223e-11,
+          "r_squared": 0.996759634249512,
+          "range": 6.116049151466927e-11,
+          "rms": 3.208910771436821e-11,
+          "signed_endpoint_change": 5.6514034555631896e-11
+        },
+        "1000": {
+          "ci95_high_per_year": 5.776372121181906e-16,
+          "ci95_low_per_year": 5.774606419703457e-16,
+          "detrended_peak_to_peak": 9.328763164285099e-12,
+          "detrended_rms": 1.3002225877959222e-12,
+          "fitted_change_over_history": 5.775489270442681e-10,
+          "fitted_change_per_myr": 5.775489270442681e-10,
+          "fitted_intercept": -1.0129846983867255e-12,
+          "fitted_slope_per_year": 5.775489270442681e-16,
+          "max_abs": 5.778771449735988e-10,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 5.696177852995406e-10,
+          "r_squared": 0.9999391968836603,
+          "range": 5.805668559991987e-10,
+          "rms": 3.325820433825195e-10,
+          "signed_endpoint_change": 5.756304925953102e-10
+        },
+        "30": {
+          "ci95_high_per_year": 5.770549157834435e-16,
+          "ci95_low_per_year": 5.544170880053066e-16,
+          "detrended_peak_to_peak": 5.2578109588083955e-12,
+          "detrended_rms": 8.641800826436342e-13,
+          "fitted_change_over_history": 1.6972080056831253e-11,
+          "fitted_change_per_myr": 5.65736001894375e-10,
+          "fitted_intercept": -1.7371346366287867e-12,
+          "fitted_slope_per_year": 5.65736001894375e-16,
+          "max_abs": 1.7216827915184423e-11,
+          "max_abs_worst_epoch_years": 28300.0,
+          "p99_abs": 1.637262124994302e-11,
+          "r_squared": 0.9700211396779637,
+          "range": 1.9906538940784225e-11,
+          "rms": 8.393977102804402e-12,
+          "signed_endpoint_change": 1.5449867189147287e-11
+        },
+        "300": {
+          "ci95_high_per_year": 5.76428822724104e-16,
+          "ci95_low_per_year": 5.755684447597291e-16,
+          "detrended_peak_to_peak": 7.047877154663349e-12,
+          "detrended_rms": 1.0408771208046137e-12,
+          "fitted_change_over_history": 1.7279959012257498e-10,
+          "fitted_change_per_myr": 5.759986337419166e-10,
+          "fitted_intercept": -1.2893635719527713e-12,
+          "fitted_slope_per_year": 5.759986337419166e-16,
+          "max_abs": 1.7451458632975278e-10,
+          "max_abs_worst_epoch_years": 298400.0,
+          "p99_abs": 1.703310401505938e-10,
+          "r_squared": 0.9995650729747462,
+          "range": 1.772042973553526e-10,
+          "rms": 9.8665272721236e-11,
+          "signed_endpoint_change": 1.7323013006029086e-10
+        }
+      },
+      "r_squared": 0.9999391968836603,
+      "range_elapsed_exponent": 0.91689602932593,
+      "residual_autocorrelation": {
+        "1": 0.7913341837260677,
+        "10": 0.5325226234185961,
+        "100": 0.5076425817565012,
+        "1000": 0.050293357970659466
+      },
+      "rms": 3.325820433825195e-10,
+      "same_sign_block_count": 10,
+      "signed_endpoint_change": 5.756304925953102e-10
+    },
+    "0p5d": {
+      "allan_deviation_by_tau_years": {
+        "100": 2.3701730894069853e-12,
+        "1000": 8.625046164813762e-13,
+        "10000": 2.067198712828089e-12,
+        "100000": 2.046718358575524e-11,
+        "300": 2.7941481985619125e-12,
+        "3000": 6.483964314145852e-13,
+        "30000": 6.162822368544194e-12
+      },
+      "blocks": [
+        {
+          "ci95_high_per_year": 3.0415988441937966e-16,
+          "ci95_low_per_year": 2.891757137048881e-16,
+          "detrended_peak_to_peak": 2.3961347638045458e-11,
+          "detrended_rms": 3.4870174330712128e-12,
+          "fitted_change_over_history": 2.9666779906213385e-11,
+          "fitted_change_per_myr": 2.966677990621339e-10,
+          "fitted_intercept": -6.642956079524882e-12,
+          "fitted_slope_per_year": 2.9666779906213387e-16,
+          "index": 0,
+          "max_abs": 3.468431115086577e-11,
+          "max_abs_worst_epoch_years": 90200.0,
+          "p99_abs": 2.7535851838053555e-11,
+          "r_squared": 0.8580336932083863,
+          "rms": 1.2358492481745837e-11,
+          "signed_endpoint_change": 2.2674870310353036e-11
+        },
+        {
+          "ci95_high_per_year": 3.138646739351873e-16,
+          "ci95_low_per_year": 2.999757356295118e-16,
+          "detrended_peak_to_peak": 2.1644428436103945e-11,
+          "detrended_rms": 3.2321421666600763e-12,
+          "fitted_change_over_history": 3.069202047823496e-11,
+          "fitted_change_per_myr": 3.0692020478234954e-10,
+          "fitted_intercept": -7.872238064346367e-12,
+          "fitted_slope_per_year": 3.0692020478234956e-16,
+          "index": 1,
+          "max_abs": 6.311239089350363e-11,
+          "max_abs_worst_epoch_years": 199800.0,
+          "p99_abs": 5.7746404134335036e-11,
+          "r_squared": 0.8827575424941867,
+          "rms": 3.9315791762652996e-11,
+          "signed_endpoint_change": 3.079790674023601e-11
+        },
+        {
+          "ci95_high_per_year": 3.0622248907668965e-16,
+          "ci95_low_per_year": 2.917439357801882e-16,
+          "detrended_peak_to_peak": 2.0480290228384363e-11,
+          "detrended_rms": 3.3693534805849667e-12,
+          "fitted_change_over_history": 2.989832124284389e-11,
+          "fitted_change_per_myr": 2.9898321242843893e-10,
+          "fitted_intercept": -5.632218871409299e-12,
+          "fitted_slope_per_year": 2.989832124284389e-16,
+          "index": 2,
+          "max_abs": 9.507079698034362e-11,
+          "max_abs_worst_epoch_years": 298400.0,
+          "p99_abs": 8.787521191893415e-11,
+          "r_squared": 0.8679844702957727,
+          "rms": 6.973292996482798e-11,
+          "signed_endpoint_change": 3.40671150697072e-11
+        },
+        {
+          "ci95_high_per_year": 2.799986178024531e-16,
+          "ci95_low_per_year": 2.652647583272276e-16,
+          "detrended_peak_to_peak": 2.1451652142918248e-11,
+          "detrended_rms": 3.428766651520117e-12,
+          "fitted_change_over_history": 2.726316880648403e-11,
+          "fitted_change_per_myr": 2.726316880648403e-10,
+          "fitted_intercept": 1.670109519420877e-12,
+          "fitted_slope_per_year": 2.7263168806484033e-16,
+          "index": 3,
+          "max_abs": 1.2017281332867194e-10,
+          "max_abs_worst_epoch_years": 393900.0,
+          "p99_abs": 1.1707802589185036e-10,
+          "r_squared": 0.8407425534601137,
+          "rms": 9.74706188335734e-11,
+          "signed_endpoint_change": 2.0188309687981467e-11
+        },
+        {
+          "ci95_high_per_year": 3.031301013919681e-16,
+          "ci95_low_per_year": 2.8977938357622593e-16,
+          "detrended_peak_to_peak": 2.0987194380390112e-11,
+          "detrended_rms": 3.1068910421905193e-12,
+          "fitted_change_over_history": 2.96454742484097e-11,
+          "fitted_change_per_myr": 2.96454742484097e-10,
+          "fitted_intercept": -8.1019496833662e-12,
+          "fitted_slope_per_year": 2.96454742484097e-16,
+          "index": 4,
+          "max_abs": 1.4745683209042132e-10,
+          "max_abs_worst_epoch_years": 489500.0,
+          "p99_abs": 1.440528316510559e-10,
+          "r_squared": 0.883753493670713,
+          "rms": 1.256335935146698e-10,
+          "signed_endpoint_change": 3.4404676779761776e-11
+        },
+        {
+          "ci95_high_per_year": 3.0648367653021383e-16,
+          "ci95_low_per_year": 2.909579133822245e-16,
+          "detrended_peak_to_peak": 2.509409745184624e-11,
+          "detrended_rms": 3.6130532540192295e-12,
+          "fitted_change_over_history": 2.987207949562192e-11,
+          "fitted_change_per_myr": 2.9872079495621914e-10,
+          "fitted_intercept": -9.404479910969351e-12,
+          "fitted_slope_per_year": 2.9872079495621916e-16,
+          "index": 5,
+          "max_abs": 1.8126859307842987e-10,
+          "max_abs_worst_epoch_years": 596400.0,
+          "p99_abs": 1.7566618940787337e-10,
+          "r_squared": 0.8509197999699828,
+          "rms": 1.5517436347319535e-10,
+          "signed_endpoint_change": 2.7598231245493797e-11
+        },
+        {
+          "ci95_high_per_year": 3.044929672549789e-16,
+          "ci95_low_per_year": 2.910631018288318e-16,
+          "detrended_peak_to_peak": 2.0402693230329604e-11,
+          "detrended_rms": 3.125309752343176e-12,
+          "fitted_change_over_history": 2.977780345419053e-11,
+          "fitted_change_per_myr": 2.977780345419054e-10,
+          "fitted_intercept": -9.471929511065234e-12,
+          "fitted_slope_per_year": 2.9777803454190535e-16,
+          "index": 6,
+          "max_abs": 2.0459080440739807e-10,
+          "max_abs_worst_epoch_years": 694900.0,
+          "p99_abs": 2.0282198368371432e-10,
+          "r_squared": 0.8834537843755252,
+          "rms": 1.843112891346222e-10,
+          "signed_endpoint_change": 3.079071466098461e-11
+        },
+        {
+          "ci95_high_per_year": 2.823321196739484e-16,
+          "ci95_low_per_year": 2.6811618009837323e-16,
+          "detrended_peak_to_peak": 2.1738636076356818e-11,
+          "detrended_rms": 3.3082397465998013e-12,
+          "fitted_change_over_history": 2.7522414988616082e-11,
+          "fitted_change_per_myr": 2.752241498861608e-10,
+          "fitted_intercept": 7.618726302797964e-12,
+          "fitted_slope_per_year": 2.752241498861608e-16,
+          "index": 7,
+          "max_abs": 2.389601318802479e-10,
+          "max_abs_worst_epoch_years": 796100.0,
+          "p99_abs": 2.333521616379425e-10,
+          "r_squared": 0.8524893551184788,
+          "rms": 2.1421008994945944e-10,
+          "signed_endpoint_change": 2.8492019529732855e-11
+        },
+        {
+          "ci95_high_per_year": 2.7552081163286283e-16,
+          "ci95_low_per_year": 2.6084149934910213e-16,
+          "detrended_peak_to_peak": 2.4010288914252398e-11,
+          "detrended_rms": 3.416072788697342e-12,
+          "fitted_change_over_history": 2.6818115549098247e-11,
+          "fitted_change_per_myr": 2.681811554909825e-10,
+          "fitted_intercept": 1.26856836422319e-11,
+          "fitted_slope_per_year": 2.681811554909825e-16,
+          "index": 8,
+          "max_abs": 2.629793018574439e-10,
+          "max_abs_worst_epoch_years": 897500.0,
+          "p99_abs": 2.58023509862026e-10,
+          "r_squared": 0.8372985008155959,
+          "rms": 2.4078864686606747e-10,
+          "signed_endpoint_change": 2.438781978745332e-11
+        },
+        {
+          "ci95_high_per_year": 3.04941860229382e-16,
+          "ci95_low_per_year": 2.9051627582455633e-16,
+          "detrended_peak_to_peak": 2.1372579359095824e-11,
+          "detrended_rms": 3.3570269092849324e-12,
+          "fitted_change_over_history": 2.9772906802696915e-11,
+          "fitted_change_per_myr": 2.9772906802696916e-10,
+          "fitted_intercept": -1.411706282583264e-11,
+          "fitted_slope_per_year": 2.9772906802696917e-16,
+          "index": 9,
+          "max_abs": 2.9666649684530116e-10,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 2.8938877222065473e-10,
+          "r_squared": 0.8678610395637141,
+          "rms": 2.688841914078569e-10,
+          "signed_endpoint_change": 3.18112818650409e-11
+        }
+      ],
+      "ci95_high_per_year": 2.897882329554366e-16,
+      "ci95_low_per_year": 2.8930833382060593e-16,
+      "detrended_peak_to_peak": 2.6807170777724857e-11,
+      "detrended_rms": 3.5338685649086847e-12,
+      "endpoint_elapsed_exponent": 1.3264953506632744,
+      "energy_change_per_step": 3.963699977933214e-19,
+      "fitted_change_over_history": 2.8954828338802124e-10,
+      "fitted_change_per_myr": 2.8954828338802124e-10,
+      "fitted_intercept": -4.750591392854822e-12,
+      "fitted_slope_per_year": 2.8954828338802127e-16,
+      "increment_distribution": {
+        "excess_kurtosis": 2.429075766394095,
+        "lag1_autocorrelation": 0.13931464948582037,
+        "mad": 1.8103064669694913e-12,
+        "mean": 2.8521294567674495e-14,
+        "median": 5.780648146493238e-14,
+        "p01": -9.873938946125489e-12,
+        "p99": 9.720373397547956e-12,
+        "positive_fraction": 0.5091,
+        "rms": 3.351930928211097e-12,
+        "sample_std": 3.3519771864319313e-12,
+        "skew": -0.04474786416619131
+      },
+      "max_abs": 2.9666649684530116e-10,
+      "max_abs_worst_epoch_years": 998700.0,
+      "p99_abs": 2.8074989555945966e-10,
+      "periodogram_top_peaks": [
+        {
+          "period_years": 1406.6104078762307,
+          "power": 1.914749456733011e-18
+        },
+        {
+          "period_years": 937.3008434864106,
+          "power": 1.54819411724785e-18
+        },
+        {
+          "period_years": 703.3052039381154,
+          "power": 1.0804785414502414e-18
+        },
+        {
+          "period_years": 419.32914046121596,
+          "power": 7.691435198485242e-19
+        },
+        {
+          "period_years": 562.4859392575928,
+          "power": 7.03153759220587e-19
+        }
+      ],
+      "prefixes": {
+        "10": {
+          "ci95_high_per_year": 4.0079140198314218e-16,
+          "ci95_low_per_year": -3.174998254884957e-17,
+          "detrended_peak_to_peak": 1.751073245672627e-11,
+          "detrended_rms": 3.1618085897485336e-12,
+          "fitted_change_over_history": 1.845207097171463e-12,
+          "fitted_change_per_myr": 1.8452070971714632e-10,
+          "fitted_intercept": -5.6928722225517625e-12,
+          "fitted_slope_per_year": 1.8452070971714631e-16,
+          "max_abs": 1.1127897660056123e-11,
+          "max_abs_worst_epoch_years": 700.0,
+          "p99_abs": 1.0619193032849582e-11,
+          "r_squared": 0.028134813072945852,
+          "range": 1.8867210972550762e-11,
+          "rms": 5.748208752707461e-12,
+          "signed_endpoint_change": -1.0891033677662116e-12
+        },
+        "100": {
+          "ci95_high_per_year": 3.0415988441937966e-16,
+          "ci95_low_per_year": 2.891757137048881e-16,
+          "detrended_peak_to_peak": 2.3961347638045458e-11,
+          "detrended_rms": 3.4870174330712128e-12,
+          "fitted_change_over_history": 2.9666779906213385e-11,
+          "fitted_change_per_myr": 2.966677990621339e-10,
+          "fitted_intercept": -6.642956079524882e-12,
+          "fitted_slope_per_year": 2.9666779906213387e-16,
+          "max_abs": 3.468431115086577e-11,
+          "max_abs_worst_epoch_years": 90200.0,
+          "p99_abs": 2.7535851838053555e-11,
+          "r_squared": 0.8580336932083863,
+          "range": 4.5812208810921896e-11,
+          "rms": 1.2358492481745837e-11,
+          "signed_endpoint_change": 2.2674870310353036e-11
+        },
+        "1000": {
+          "ci95_high_per_year": 2.897882329554366e-16,
+          "ci95_low_per_year": 2.8930833382060593e-16,
+          "detrended_peak_to_peak": 2.6807170777724857e-11,
+          "detrended_rms": 3.5338685649086847e-12,
+          "fitted_change_over_history": 2.8954828338802124e-10,
+          "fitted_change_per_myr": 2.8954828338802124e-10,
+          "fitted_intercept": -4.750591392854822e-12,
+          "fitted_slope_per_year": 2.8954828338802127e-16,
+          "max_abs": 2.9666649684530116e-10,
+          "max_abs_worst_epoch_years": 998700.0,
+          "p99_abs": 2.8074989555945966e-10,
+          "r_squared": 0.998216070244019,
+          "range": 3.077943945053573e-10,
+          "rms": 1.6311651521901066e-10,
+          "signed_endpoint_change": 2.85212945676745e-10
+        },
+        "30": {
+          "ci95_high_per_year": 3.1184330361278874e-16,
+          "ci95_low_per_year": 2.237115166363161e-16,
+          "detrended_peak_to_peak": 2.1245259851814866e-11,
+          "detrended_rms": 3.364357026623126e-12,
+          "fitted_change_over_history": 8.033322303736572e-12,
+          "fitted_change_per_myr": 2.6777741012455243e-10,
+          "fitted_intercept": -6.179838878285524e-12,
+          "fitted_slope_per_year": 2.677774101245524e-16,
+          "max_abs": 1.247381818652257e-11,
+          "max_abs_worst_epoch_years": 28300.0,
+          "p99_abs": 1.1145407707282875e-11,
+          "r_squared": 0.3235424246909193,
+          "range": 2.3601715846578692e-11,
+          "rms": 4.627304188436126e-12,
+          "signed_endpoint_change": 1.4356709896780969e-12
+        },
+        "300": {
+          "ci95_high_per_year": 3.0559235536183233e-16,
+          "ci95_low_per_year": 3.028007224476334e-16,
+          "detrended_peak_to_peak": 2.4504211690110966e-11,
+          "detrended_rms": 3.3772910864655164e-12,
+          "fitted_change_over_history": 9.125896167141986e-11,
+          "fitted_change_per_myr": 3.041965389047329e-10,
+          "fitted_intercept": -7.139266598559094e-12,
+          "fitted_slope_per_year": 3.0419653890473287e-16,
+          "max_abs": 9.507079698034362e-11,
+          "max_abs_worst_epoch_years": 298400.0,
+          "p99_abs": 8.470642468554589e-11,
+          "r_squared": 0.9838414323006135,
+          "range": 1.0619869464039974e-10,
+          "rms": 4.676945447498866e-11,
+          "signed_endpoint_change": 8.753989212029625e-11
+        }
+      },
+      "r_squared": 0.998216070244019,
+      "range_elapsed_exponent": 0.6166960324624978,
+      "residual_autocorrelation": {
+        "1": 0.5501952788084016,
+        "10": 0.009295049664544199,
+        "100": 0.15060666803180214,
+        "1000": 0.055732696283706355
+      },
+      "rms": 1.6311651521901066e-10,
+      "same_sign_block_count": 10,
+      "signed_endpoint_change": 2.85212945676745e-10
+    }
+  },
+  "manifest_path": "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json",
+  "manifest_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+  "no_stage4_command": true,
+  "preregistered_unlaunched_lanes": [
+    {
+      "configuration_fingerprint": "e6f51a8997b7c067e83c88049dedc4cf866576e91de721cb8eee1f9e5c97acec",
+      "duration_years": 100000.0,
+      "integrator": "whfast",
+      "keep_unsynchronized": 0,
+      "kind": "whfast_physical_control",
+      "lane_id": "m0_diag_phys_current_sync_0p5d_100k",
+      "megno": false,
+      "purpose": "current_sync",
+      "safe_mode": 1,
+      "step_or_epsilon": 0.5,
+      "variations": false
+    },
+    {
+      "configuration_fingerprint": "2806d7c6215d49b4b0f80eb30a5ffdad31c3af6e3fb3499317cf6768beda0fe9",
+      "duration_years": 100000.0,
+      "integrator": "whfast",
+      "keep_unsynchronized": 0,
+      "kind": "whfast_physical_control",
+      "lane_id": "m0_diag_phys_current_sync_0p25d_100k",
+      "megno": false,
+      "purpose": "current_sync",
+      "safe_mode": 1,
+      "step_or_epsilon": 0.25,
+      "variations": false
+    },
+    {
+      "configuration_fingerprint": "7ee3126b1cc80666809f97732e69b9062de87b94a1cd743a16da4685b7df91f9",
+      "duration_years": 100000.0,
+      "integrator": "whfast",
+      "keep_unsynchronized": 1,
+      "kind": "whfast_physical_control",
+      "lane_id": "m0_diag_phys_min_sync_0p5d_100k",
+      "megno": false,
+      "purpose": "min_sync",
+      "safe_mode": 0,
+      "step_or_epsilon": 0.5,
+      "variations": false
+    },
+    {
+      "configuration_fingerprint": "3d26473291e32bb8fb47e8e86a939c56ffc606e5133ed3cb5778f8d3aa1333c8",
+      "duration_years": 100000.0,
+      "integrator": "whfast",
+      "keep_unsynchronized": 1,
+      "kind": "whfast_physical_control",
+      "lane_id": "m0_diag_phys_min_sync_0p25d_100k",
+      "megno": false,
+      "purpose": "min_sync",
+      "safe_mode": 0,
+      "step_or_epsilon": 0.25,
+      "variations": false
+    },
+    {
+      "configuration_fingerprint": "2e41596b0ef503e8e3869016e13efbaff9d07a595cf7af075579e4c1696d1de0",
+      "duration_years": 10000.0,
+      "integrator": "ias15",
+      "keep_unsynchronized": null,
+      "kind": "ias15_physical_reference",
+      "lane_id": "m0_diag_phys_ias15_eps1e12_10k",
+      "megno": false,
+      "purpose": "independent_integrator_tolerance_control",
+      "safe_mode": null,
+      "step_or_epsilon": 1e-12,
+      "variations": false
+    },
+    {
+      "configuration_fingerprint": "77138f8d79554607729ca36e92734c779c30a46bda10f9ad5fadb526fa1b27d8",
+      "duration_years": 10000.0,
+      "integrator": "ias15",
+      "keep_unsynchronized": null,
+      "kind": "ias15_physical_reference",
+      "lane_id": "m0_diag_phys_ias15_eps1e13_10k",
+      "megno": false,
+      "purpose": "independent_integrator_tolerance_control",
+      "safe_mode": null,
+      "step_or_epsilon": 1e-13,
+      "variations": false
+    },
+    {
+      "configuration_fingerprint": "8d7d89972a9ab6da6aaa76020bfc26270f073cc504b78f73ddf256f2d113c52e",
+      "duration_years": 10000.0,
+      "integrator": "whfast",
+      "keep_unsynchronized": 0,
+      "kind": "whfast_reversibility",
+      "lane_id": "m0_diag_reversibility_current_sync_0p5d_10k",
+      "megno": false,
+      "purpose": "current_sync",
+      "safe_mode": 1,
+      "step_or_epsilon": 0.5,
+      "variations": false
+    },
+    {
+      "configuration_fingerprint": "9fae09c69d5cd527c76a7a41896e678eb62eb11fc10069e198656dae4623d732",
+      "duration_years": 10000.0,
+      "integrator": "whfast",
+      "keep_unsynchronized": 0,
+      "kind": "whfast_reversibility",
+      "lane_id": "m0_diag_reversibility_current_sync_0p25d_10k",
+      "megno": false,
+      "purpose": "current_sync",
+      "safe_mode": 1,
+      "step_or_epsilon": 0.25,
+      "variations": false
+    },
+    {
+      "configuration_fingerprint": "6a0a37d6947746c6d244d08d3d566ab399c3e63b8f77ee566ba4716fdf5ff30e",
+      "duration_years": 10000.0,
+      "integrator": "whfast",
+      "keep_unsynchronized": 1,
+      "kind": "whfast_reversibility",
+      "lane_id": "m0_diag_reversibility_min_sync_0p5d_10k",
+      "megno": false,
+      "purpose": "min_sync",
+      "safe_mode": 0,
+      "step_or_epsilon": 0.5,
+      "variations": false
+    },
+    {
+      "configuration_fingerprint": "449724d1bde7099dd11ff8e3a0d9b46a7f97af90aaf010404258ad8583983d9b",
+      "duration_years": 10000.0,
+      "integrator": "whfast",
+      "keep_unsynchronized": 1,
+      "kind": "whfast_reversibility",
+      "lane_id": "m0_diag_reversibility_min_sync_0p25d_10k",
+      "megno": false,
+      "purpose": "min_sync",
+      "safe_mode": 0,
+      "step_or_epsilon": 0.25,
+      "variations": false
+    }
+  ],
+  "primary_mechanism": "BLOCKED",
+  "production_configuration_must_change": null,
+  "reversibility_method_validation": {
+    "absolute_case_results": {
+      "two_body_current_sync_0p25d": {
+        "callback_stats": {
+          "callback_invocations": 2920,
+          "nonfinite_result_count": 0,
+          "real_gr_accel_norm_count": 2920,
+          "real_gr_accel_norm_max": 6.054716203406332e-09,
+          "real_gr_accel_norm_mean": 6.054716203368158e-09,
+          "real_gr_accel_norm_sum": 1.767977131383502e-05,
+          "tangent_gr_accel_norm_count": 0,
+          "tangent_gr_accel_norm_max": 0.0,
+          "tangent_gr_accel_norm_mean": null,
+          "tangent_gr_accel_norm_sum": 0.0
+        },
+        "configuration": {
+          "backend": "compiled_c",
+          "backward_steps": 1460,
+          "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+          "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+          "coordinates": "jacobi",
+          "corrector": 0,
+          "corrector2": 0,
+          "duration_days": 365.0,
+          "expected_callback_invocations": 2920,
+          "forward_steps": 1460,
+          "gr_scale": 1.0,
+          "gravitational_constant": "6.67430e-11",
+          "include_central_response": true,
+          "integrator": "whfast",
+          "keep_unsynchronized": 0,
+          "kernel": "default",
+          "kind": "compiled_gr_two_body_reversibility_validation",
+          "masses_kg": [
+            "1.9884098713264225e30",
+            "3.3009873694619664e23"
+          ],
+          "megno": false,
+          "model_id": "analytic_sun_mercury_two_body",
+          "purpose": "current_sync",
+          "safe_mode": 1,
+          "schema_version": 1,
+          "separation_m": "57909050000",
+          "speed_of_light_m_per_s": "299792458",
+          "step_days": 0.25,
+          "variations": false
+        },
+        "configuration_fingerprint": "d924a59c05cd36e99dd0f43ae57b7e5be43f0e7b8f2a5448ad8c5a48329b8fec",
+        "forward_time_seconds": 31536000.0,
+        "metrics": {
+          "angular_momentum_vector_relative_difference": 2.6421456320068288e-15,
+          "center_of_mass_position_error_m": 1.2190712696961355e-09,
+          "center_of_mass_velocity_error_m_per_s": 4.042142865254477e-17,
+          "corrected_energy_relative_difference": -5.334070209944746e-15,
+          "global_scaled_rms": 3.6693814031443077e-13,
+          "orbital_element_errors": {
+            "mercury": {
+              "eccentricity_abs": 2.442490468886887e-15,
+              "mean_longitude_abs_rad": 1.3435987073454838e-13,
+              "semimajor_axis_relative": 5.401662225919171e-15
+            }
+          },
+          "per_body": {
+            "mercury": {
+              "position_error_m": 0.00684109564113353,
+              "scaled_rms": 5.189288945846225e-13,
+              "velocity_error_m_per_s": 6.021763414277088e-09
+            },
+            "sun": {
+              "position_error_m": 1.475984013633133e-09,
+              "scaled_rms": 8.68120029943656e-20,
+              "velocity_error_m_per_s": 1.0069522358165749e-15
+            }
+          },
+          "worst_body": "mercury"
+        },
+        "passed": true,
+        "return_time_seconds": 0.0
+      },
+      "two_body_current_sync_0p5d": {
+        "callback_stats": {
+          "callback_invocations": 1460,
+          "nonfinite_result_count": 0,
+          "real_gr_accel_norm_count": 1460,
+          "real_gr_accel_norm_max": 6.054716203295487e-09,
+          "real_gr_accel_norm_mean": 6.0547162031431804e-09,
+          "real_gr_accel_norm_sum": 8.839885656589043e-06,
+          "tangent_gr_accel_norm_count": 0,
+          "tangent_gr_accel_norm_max": 0.0,
+          "tangent_gr_accel_norm_mean": null,
+          "tangent_gr_accel_norm_sum": 0.0
+        },
+        "configuration": {
+          "backend": "compiled_c",
+          "backward_steps": 730,
+          "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+          "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+          "coordinates": "jacobi",
+          "corrector": 0,
+          "corrector2": 0,
+          "duration_days": 365.0,
+          "expected_callback_invocations": 1460,
+          "forward_steps": 730,
+          "gr_scale": 1.0,
+          "gravitational_constant": "6.67430e-11",
+          "include_central_response": true,
+          "integrator": "whfast",
+          "keep_unsynchronized": 0,
+          "kernel": "default",
+          "kind": "compiled_gr_two_body_reversibility_validation",
+          "masses_kg": [
+            "1.9884098713264225e30",
+            "3.3009873694619664e23"
+          ],
+          "megno": false,
+          "model_id": "analytic_sun_mercury_two_body",
+          "purpose": "current_sync",
+          "safe_mode": 1,
+          "schema_version": 1,
+          "separation_m": "57909050000",
+          "speed_of_light_m_per_s": "299792458",
+          "step_days": 0.5,
+          "variations": false
+        },
+        "configuration_fingerprint": "747523505a55e9d566a9d90cf7ed82375dc94054bb415938b0e4741e0ac78287",
+        "forward_time_seconds": 31536000.0,
+        "metrics": {
+          "angular_momentum_vector_relative_difference": 3.302682040008536e-16,
+          "center_of_mass_position_error_m": 8.757065461048133e-10,
+          "center_of_mass_velocity_error_m_per_s": 3.5092928578416445e-17,
+          "corrected_energy_relative_difference": -7.620100299921066e-16,
+          "global_scaled_rms": 2.2635458239576355e-13,
+          "orbital_element_errors": {
+            "mercury": {
+              "eccentricity_abs": 2.8865798904951866e-15,
+              "mean_longitude_abs_rad": 8.171241461241152e-14,
+              "semimajor_axis_relative": 9.222350141813218e-16
+            }
+          },
+          "per_body": {
+            "mercury": {
+              "position_error_m": 0.004313185149843264,
+              "scaled_rms": 3.2011372032938224e-13,
+              "velocity_error_m_per_s": 3.7145616545599545e-09
+            },
+            "sun": {
+              "position_error_m": 1.8995023309217604e-10,
+              "scaled_rms": 5.552382196215476e-20,
+              "velocity_error_m_per_s": 6.446997409134426e-16
+            }
+          },
+          "worst_body": "mercury"
+        },
+        "passed": true,
+        "return_time_seconds": 0.0
+      },
+      "two_body_min_sync_0p25d": {
+        "callback_stats": {
+          "callback_invocations": 2920,
+          "nonfinite_result_count": 0,
+          "real_gr_accel_norm_count": 2920,
+          "real_gr_accel_norm_max": 6.054716203406467e-09,
+          "real_gr_accel_norm_mean": 6.054716203368274e-09,
+          "real_gr_accel_norm_sum": 1.767977131383536e-05,
+          "tangent_gr_accel_norm_count": 0,
+          "tangent_gr_accel_norm_max": 0.0,
+          "tangent_gr_accel_norm_mean": null,
+          "tangent_gr_accel_norm_sum": 0.0
+        },
+        "configuration": {
+          "backend": "compiled_c",
+          "backward_steps": 1460,
+          "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+          "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+          "coordinates": "jacobi",
+          "corrector": 0,
+          "corrector2": 0,
+          "duration_days": 365.0,
+          "expected_callback_invocations": 2920,
+          "forward_steps": 1460,
+          "gr_scale": 1.0,
+          "gravitational_constant": "6.67430e-11",
+          "include_central_response": true,
+          "integrator": "whfast",
+          "keep_unsynchronized": 1,
+          "kernel": "default",
+          "kind": "compiled_gr_two_body_reversibility_validation",
+          "masses_kg": [
+            "1.9884098713264225e30",
+            "3.3009873694619664e23"
+          ],
+          "megno": false,
+          "model_id": "analytic_sun_mercury_two_body",
+          "purpose": "min_sync",
+          "safe_mode": 0,
+          "schema_version": 1,
+          "separation_m": "57909050000",
+          "speed_of_light_m_per_s": "299792458",
+          "step_days": 0.25,
+          "variations": false
+        },
+        "configuration_fingerprint": "75565808e67a6ae65b55a9679d21305659b59dbbf7babbf726dc050e25ba1e66",
+        "forward_time_seconds": 31536000.0,
+        "metrics": {
+          "angular_momentum_vector_relative_difference": 7.596168692019633e-15,
+          "center_of_mass_position_error_m": 0.0,
+          "center_of_mass_velocity_error_m_per_s": 1.9721522630525295e-31,
+          "corrected_energy_relative_difference": -1.5240200599842132e-14,
+          "global_scaled_rms": 5.84849903498518e-13,
+          "orbital_element_errors": {
+            "mercury": {
+              "eccentricity_abs": 5.293955920339377e-23,
+              "mean_longitude_abs_rad": 2.0452596589085827e-13,
+              "semimajor_axis_relative": 1.501925594523867e-14
+            }
+          },
+          "per_body": {
+            "mercury": {
+              "position_error_m": 0.011384887818527622,
+              "scaled_rms": 8.271026654801887e-13,
+              "velocity_error_m_per_s": 9.597317726184674e-09
+            },
+            "sun": {
+              "position_error_m": 1.8900232701391077e-09,
+              "scaled_rms": 1.3730620344334786e-19,
+              "velocity_error_m_per_s": 1.5932377954873636e-15
+            }
+          },
+          "worst_body": "mercury"
+        },
+        "passed": true,
+        "return_time_seconds": 0.0
+      },
+      "two_body_min_sync_0p5d": {
+        "callback_stats": {
+          "callback_invocations": 1460,
+          "nonfinite_result_count": 0,
+          "real_gr_accel_norm_count": 1460,
+          "real_gr_accel_norm_max": 6.0547162032953726e-09,
+          "real_gr_accel_norm_mean": 6.054716203143135e-09,
+          "real_gr_accel_norm_sum": 8.839885656588977e-06,
+          "tangent_gr_accel_norm_count": 0,
+          "tangent_gr_accel_norm_max": 0.0,
+          "tangent_gr_accel_norm_mean": null,
+          "tangent_gr_accel_norm_sum": 0.0
+        },
+        "configuration": {
+          "backend": "compiled_c",
+          "backward_steps": 730,
+          "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+          "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+          "coordinates": "jacobi",
+          "corrector": 0,
+          "corrector2": 0,
+          "duration_days": 365.0,
+          "expected_callback_invocations": 1460,
+          "forward_steps": 730,
+          "gr_scale": 1.0,
+          "gravitational_constant": "6.67430e-11",
+          "include_central_response": true,
+          "integrator": "whfast",
+          "keep_unsynchronized": 1,
+          "kernel": "default",
+          "kind": "compiled_gr_two_body_reversibility_validation",
+          "masses_kg": [
+            "1.9884098713264225e30",
+            "3.3009873694619664e23"
+          ],
+          "megno": false,
+          "model_id": "analytic_sun_mercury_two_body",
+          "purpose": "min_sync",
+          "safe_mode": 0,
+          "schema_version": 1,
+          "separation_m": "57909050000",
+          "speed_of_light_m_per_s": "299792458",
+          "step_days": 0.5,
+          "variations": false
+        },
+        "configuration_fingerprint": "bbf617679acc483e8e0fd6973af3aa46efcdc530ead867f26e4e20eb7e56f59a",
+        "forward_time_seconds": 31536000.0,
+        "metrics": {
+          "angular_momentum_vector_relative_difference": 9.908046120025609e-16,
+          "center_of_mass_position_error_m": 1.8189894035458565e-12,
+          "center_of_mass_velocity_error_m_per_s": 4.930380657631324e-32,
+          "corrected_energy_relative_difference": -1.7145225674822398e-15,
+          "global_scaled_rms": 6.997260081762525e-14,
+          "orbital_element_errors": {
+            "mercury": {
+              "eccentricity_abs": 3.3306691003452492e-15,
+              "mean_longitude_abs_rad": 2.067303301293235e-14,
+              "semimajor_axis_relative": 1.7127221691938835e-15
+            }
+          },
+          "per_body": {
+            "mercury": {
+              "position_error_m": 0.0015493120006587855,
+              "scaled_rms": 9.895620107080298e-14,
+              "velocity_error_m_per_s": 1.1480037661673902e-09
+            },
+            "sun": {
+              "position_error_m": 2.567199426207445e-10,
+              "scaled_rms": 1.64077879289397e-20,
+              "velocity_error_m_per_s": 1.9034911231148452e-16
+            }
+          },
+          "worst_body": "mercury"
+        },
+        "passed": true,
+        "return_time_seconds": 0.0
+      }
+    },
+    "attempt_artifacts": [
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_v1/reversibility_method_validation_failed_attempt_1/summary.json",
+        "sha256": "99804ef7e5093f0cda3b1bc601e5e18289544616c047333baf6c15851e559ba4",
+        "size_bytes": 12101
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_v1/reversibility_method_validation/summary.json",
+        "sha256": "13fbef4e166b1a92f59424fead7c8029ccc0fd0a2c3b576ab863809d36a1bd28",
+        "size_bytes": 12385
+      }
+    ],
+    "passed": false,
+    "ratios": {
+      "current_sync": {
+        "coarse_scaled_rms": 2.2635458239576355e-13,
+        "fine_over_coarse": 1.6210767037747338,
+        "fine_scaled_rms": 3.6693814031443077e-13,
+        "limit": 4.0,
+        "passed": true
+      },
+      "min_sync": {
+        "coarse_scaled_rms": 6.997260081762525e-14,
+        "fine_over_coarse": 8.358270189539695,
+        "fine_scaled_rms": 5.84849903498518e-13,
+        "limit": 4.0,
+        "passed": false
+      }
+    }
+  },
+  "schema_version": 1,
+  "scientific_runtime_and_throughput": null,
+  "smallest_next_action": "In a separately preregistered follow-up, rerun only the four 365-day two-body method cases with a roundoff-aware reversibility scaling rule that retains the frozen absolute error, exact-time, callback, and nonfinite gates; do not launch an M0 trajectory until that gate passes.",
+  "step3_diagnosis_status": "BLOCKED",
+  "unavailable_figures": [
+    "full/current_sync/min_sync comparison",
+    "IAS15 comparison",
+    "10 kyr M0 reversibility comparison"
+  ]
+}
