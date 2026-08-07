@@ -1,0 +1,1030 @@
+{
+  "absolute_limits": {
+    "all_state_values_must_be_finite": true,
+    "angular_momentum_vector_relative_max": 1e-08,
+    "backward_time_abs_error_seconds_max": 0.0,
+    "callback_count_must_equal_expected": true,
+    "center_of_mass_position_scaled_max": 1e-08,
+    "center_of_mass_velocity_scaled_max": 1e-08,
+    "corrected_energy_relative_abs_max": 1e-08,
+    "forward_time_abs_error_seconds_max": 0.0,
+    "fractional_endpoint_steps_max": 0,
+    "global_scaled_cartesian_rms_max": 1e-08,
+    "nonfinite_callback_results_max": 0,
+    "per_body_position_scaled_norm_max": 1e-08,
+    "per_body_scaled_cartesian_rms_max": 1e-08,
+    "per_body_velocity_scaled_norm_max": 1e-08,
+    "source_note": "Manifest 13 froze 1e-8 for global scaled Cartesian RMS and did not freeze separate metric-specific numeric limits. Before this rerun, Step 3d0 applies that same original dimensionless absolute scale uniformly to every requested normalized return metric; no observed endpoint value was used."
+  },
+  "aggregate_artifact": {
+    "path": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1/aggregate_summary.json",
+    "sha256": "edbf1ba53e31ff9479d9d39e38178102847cdb354e6550dd3736888edeb5d363",
+    "size_bytes": 41705
+  },
+  "audit": {
+    "compiled_gr_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "git_dirty_after_preregistration": true,
+    "git_head": "d63177572df50caef198b43b35c0ca5a37f4ea9e",
+    "historical_validation_sha256": "13fbef4e166b1a92f59424fead7c8029ccc0fd0a2c3b576ab863809d36a1bd28",
+    "manifest_13_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+    "manifest_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+    "protected_files": {
+      "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+      "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+      "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+      "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+    },
+    "runtime": {
+      "rebound_build": "Feb 11 2026 17:34:38",
+      "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+      "rebound_header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+      "rebound_shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04",
+      "rebound_version": "4.6.0",
+      "reboundx_shared_library_sha256": "0f06a8fc47970fdd22dbc048bc31470b272147a335a2a991f5aaef45f1ffb0bb",
+      "reboundx_used": false,
+      "reboundx_version": "4.6.1"
+    },
+    "status": "PASS"
+  },
+  "cases": {
+    "m0_rev_roundoff_current_sync_0p25d_365d_v1": {
+      "absolute_checks": {
+        "angular_momentum_vector_relative": {
+          "absolute_margin": 9.999997357854368e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 3784802.729592369,
+          "passed": true,
+          "value": 2.6421456320068288e-15
+        },
+        "center_of_mass_position_scaled": {
+          "absolute_margin": 9.99999999999185e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 1227146225316.9875,
+          "passed": true,
+          "value": 8.14898811053823e-21
+        },
+        "center_of_mass_velocity_scaled": {
+          "absolute_margin": 9.999999999991474e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 1172761730982.239,
+          "passed": true,
+          "value": 8.526881237525174e-21
+        },
+        "corrected_energy_relative_abs": {
+          "absolute_margin": 9.99999466592979e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 1874740.977603965,
+          "passed": true,
+          "value": 5.334070209944746e-15
+        },
+        "global_scaled_cartesian_rms": {
+          "absolute_margin": 9.999633061859685e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 27252.549956870003,
+          "passed": true,
+          "value": 3.6693814031443077e-13
+        },
+        "mercury_position_scaled_norm": {
+          "absolute_margin": 9.999954270100176e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 218675.30955204202,
+          "passed": true,
+          "value": 4.572989982492799e-14
+        },
+        "mercury_scaled_cartesian_rms": {
+          "absolute_margin": 9.999481071105415e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 19270.462879128205,
+          "passed": true,
+          "value": 5.189288945846225e-13
+        },
+        "mercury_velocity_scaled_norm": {
+          "absolute_margin": 9.998729711858644e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 7872.229673278257,
+          "passed": true,
+          "value": 1.2702881413564842e-12
+        },
+        "sun_position_scaled_norm": {
+          "absolute_margin": 9.999999999990134e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 1013546686943.8851,
+          "passed": true,
+          "value": 9.866343730206134e-21
+        },
+        "sun_scaled_cartesian_rms": {
+          "absolute_margin": 9.999999999913188e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 115191444213.64215,
+          "passed": true,
+          "value": 8.68120029943656e-20
+        },
+        "sun_velocity_scaled_norm": {
+          "absolute_margin": 9.999999999787584e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 47077411369.85634,
+          "passed": true,
+          "value": 2.124160974238061e-19
+        }
+      },
+      "artifact_inventory": {
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1/m0_rev_roundoff_current_sync_0p25d_365d_v1/events.log",
+          "sha256": "725d84159f09af4c3b966e812a0a05c7abfc3cd377ef38d7a583fa11c181584d",
+          "size_bytes": 226
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1/m0_rev_roundoff_current_sync_0p25d_365d_v1/physical_state.csv",
+          "sha256": "beecbd79449290ad569eb3d276435cecbd2a326c448d0e84731bf8e23bd695ab",
+          "size_bytes": 2403
+        }
+      },
+      "backward_steps_executed": 1460,
+      "callback_stats": {
+        "callback_invocations": 2920,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 2920,
+        "real_gr_accel_norm_max": 6.054716203406332e-09,
+        "real_gr_accel_norm_mean": 6.054716203368158e-09,
+        "real_gr_accel_norm_sum": 1.767977131383502e-05,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "case_passed": true,
+      "comparison_particle_arrays_synchronized": true,
+      "configuration": {
+        "backend": "compiled_c",
+        "backward_steps": 1460,
+        "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "coordinates": "jacobi",
+        "corrector": 0,
+        "corrector2": 0,
+        "duration_days": 365.0,
+        "expected_callback_invocations": 2920,
+        "forward_steps": 1460,
+        "gr_scale": 1.0,
+        "gravitational_constant": "6.67430e-11",
+        "include_central_response": true,
+        "integrator": "whfast",
+        "keep_unsynchronized": 0,
+        "kernel": "default",
+        "kind": "compiled_gr_two_body_reversibility_validation",
+        "masses_kg": [
+          "1.9884098713264225e30",
+          "3.3009873694619664e23"
+        ],
+        "megno": false,
+        "model_id": "analytic_sun_mercury_two_body",
+        "purpose": "current_sync",
+        "safe_mode": 1,
+        "schema_version": 1,
+        "separation_m": "57909050000",
+        "speed_of_light_m_per_s": "299792458",
+        "step_days": 0.25,
+        "variations": false
+      },
+      "direction_reversal_procedure": "At the forward comparison point, temporarily set keep_unsynchronized=0, synchronize with the positive timestep so internal Jacobi coordinates are at the physical endpoint, restore the configured mode, then negate dt. After the backward leg, explicitly synchronize particle arrays before comparison.",
+      "forward_internal_is_synchronized": 1,
+      "forward_steps_executed": 1460,
+      "forward_time_seconds": 31536000.0,
+      "fractional_endpoint_steps": 0,
+      "integrity_checks": {
+        "backward_endpoint_exact": true,
+        "backward_steps_exact": true,
+        "callback_count_exact": true,
+        "forward_comparison_synchronized": true,
+        "forward_endpoint_exact": true,
+        "forward_state_finite": true,
+        "forward_steps_exact": true,
+        "initial_state_finite": true,
+        "no_fractional_endpoint_step": true,
+        "nonfinite_callback_zero": true,
+        "returned_comparison_synchronized": true,
+        "returned_state_finite": true,
+        "reversal_procedure_exact": true,
+        "state_schema_and_rows_valid": true
+      },
+      "manifest_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+      "metrics": {
+        "angular_momentum_vector_relative_difference": 2.6421456320068288e-15,
+        "center_of_mass_position_error_m": 1.2190712696961355e-09,
+        "center_of_mass_velocity_error_m_per_s": 4.042142865254477e-17,
+        "corrected_energy_relative_difference": -5.334070209944746e-15,
+        "global_scaled_rms": 3.6693814031443077e-13,
+        "orbital_element_errors": {
+          "mercury": {
+            "eccentricity_abs": 2.442490468886887e-15,
+            "mean_longitude_abs_rad": 1.3435987073454838e-13,
+            "semimajor_axis_relative": 5.401662225919171e-15
+          }
+        },
+        "per_body": {
+          "mercury": {
+            "position_error_m": 0.00684109564113353,
+            "scaled_rms": 5.189288945846225e-13,
+            "velocity_error_m_per_s": 6.021763414277088e-09
+          },
+          "sun": {
+            "position_error_m": 1.475984013633133e-09,
+            "scaled_rms": 8.68120029943656e-20,
+            "velocity_error_m_per_s": 1.0069522358165749e-15
+          }
+        },
+        "worst_body": "mercury"
+      },
+      "provenance": {
+        "created_utc": "2026-08-07T16:37:11.437712+00:00",
+        "git_head": "d63177572df50caef198b43b35c0ca5a37f4ea9e",
+        "hostname": "DESKTOP-D6CRLL9",
+        "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+        "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]"
+      },
+      "return_time_seconds": 0.0,
+      "returned_internal_is_synchronized": 1,
+      "run_fingerprint": "38c5ada427359db0530598866344abccb7fdba270fd0b13048f5c270208b89b2",
+      "run_id": "m0_rev_roundoff_current_sync_0p25d_365d_v1",
+      "runtime_seconds": 0.0005725660594180226,
+      "schema_version": 1,
+      "scientific_configuration_fingerprint": "d924a59c05cd36e99dd0f43ae57b7e5be43f0e7b8f2a5448ad8c5a48329b8fec",
+      "source_case_id": "two_body_current_sync_0p25d",
+      "state_audit": {
+        "finite": true,
+        "rows": 6,
+        "samples": 3,
+        "schema_valid": true
+      },
+      "status": "COMPLETED",
+      "throughput_steps_per_second": 5099848.221824389
+    },
+    "m0_rev_roundoff_current_sync_0p5d_365d_v1": {
+      "absolute_checks": {
+        "angular_momentum_vector_relative": {
+          "absolute_margin": 9.999999669731796e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 30278421.83673895,
+          "passed": true,
+          "value": 3.302682040008536e-16
+        },
+        "center_of_mass_position_scaled": {
+          "absolute_margin": 9.999999999994147e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 1708310522119.7542,
+          "passed": true,
+          "value": 5.8537367009784135e-21
+        },
+        "center_of_mass_velocity_scaled": {
+          "absolute_margin": 9.999999999992597e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 1350833531302.636,
+          "passed": true,
+          "value": 7.402836669561199e-21
+        },
+        "corrected_energy_relative_abs": {
+          "absolute_margin": 9.99999923798997e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 13123186.843227755,
+          "passed": true,
+          "value": 7.620100299921066e-16
+        },
+        "global_scaled_cartesian_rms": {
+          "absolute_margin": 9.999773645417605e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 44178.47385353909,
+          "passed": true,
+          "value": 2.2635458239576355e-13
+        },
+        "mercury_position_scaled_norm": {
+          "absolute_margin": 9.999971168138092e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 346838.5091361918,
+          "passed": true,
+          "value": 2.883186190860178e-14
+        },
+        "mercury_scaled_cartesian_rms": {
+          "absolute_margin": 9.99967988627967e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 31238.898444310547,
+          "passed": true,
+          "value": 3.2011372032938224e-13
+        },
+        "mercury_velocity_scaled_norm": {
+          "absolute_margin": 9.999216414977556e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 12761.856995196187,
+          "passed": true,
+          "value": 7.835850224433792e-13
+        },
+        "sun_position_scaled_norm": {
+          "absolute_margin": 9.99999999999873e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 7875635015799.402,
+          "passed": true,
+          "value": 1.2697388819998495e-21
+        },
+        "sun_scaled_cartesian_rms": {
+          "absolute_margin": 9.999999999944477e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 180102875605.6461,
+          "passed": true,
+          "value": 5.552382196215476e-20
+        },
+        "sun_velocity_scaled_norm": {
+          "absolute_margin": 9.999999999864002e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 73529895588.55437,
+          "passed": true,
+          "value": 1.3599910512529813e-19
+        }
+      },
+      "artifact_inventory": {
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1/m0_rev_roundoff_current_sync_0p5d_365d_v1/events.log",
+          "sha256": "434bc37fdc06f727a4df2f248cc530648fd1de1eef50e14cf59f3772b14db518",
+          "size_bytes": 224
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1/m0_rev_roundoff_current_sync_0p5d_365d_v1/physical_state.csv",
+          "sha256": "5bc117bd6fc840809754dc9e212fb1eed92d479c14a3eacda8d38665c9f336a1",
+          "size_bytes": 2393
+        }
+      },
+      "backward_steps_executed": 730,
+      "callback_stats": {
+        "callback_invocations": 1460,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 1460,
+        "real_gr_accel_norm_max": 6.054716203295487e-09,
+        "real_gr_accel_norm_mean": 6.0547162031431804e-09,
+        "real_gr_accel_norm_sum": 8.839885656589043e-06,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "case_passed": true,
+      "comparison_particle_arrays_synchronized": true,
+      "configuration": {
+        "backend": "compiled_c",
+        "backward_steps": 730,
+        "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "coordinates": "jacobi",
+        "corrector": 0,
+        "corrector2": 0,
+        "duration_days": 365.0,
+        "expected_callback_invocations": 1460,
+        "forward_steps": 730,
+        "gr_scale": 1.0,
+        "gravitational_constant": "6.67430e-11",
+        "include_central_response": true,
+        "integrator": "whfast",
+        "keep_unsynchronized": 0,
+        "kernel": "default",
+        "kind": "compiled_gr_two_body_reversibility_validation",
+        "masses_kg": [
+          "1.9884098713264225e30",
+          "3.3009873694619664e23"
+        ],
+        "megno": false,
+        "model_id": "analytic_sun_mercury_two_body",
+        "purpose": "current_sync",
+        "safe_mode": 1,
+        "schema_version": 1,
+        "separation_m": "57909050000",
+        "speed_of_light_m_per_s": "299792458",
+        "step_days": 0.5,
+        "variations": false
+      },
+      "direction_reversal_procedure": "At the forward comparison point, temporarily set keep_unsynchronized=0, synchronize with the positive timestep so internal Jacobi coordinates are at the physical endpoint, restore the configured mode, then negate dt. After the backward leg, explicitly synchronize particle arrays before comparison.",
+      "forward_internal_is_synchronized": 1,
+      "forward_steps_executed": 730,
+      "forward_time_seconds": 31536000.0,
+      "fractional_endpoint_steps": 0,
+      "integrity_checks": {
+        "backward_endpoint_exact": true,
+        "backward_steps_exact": true,
+        "callback_count_exact": true,
+        "forward_comparison_synchronized": true,
+        "forward_endpoint_exact": true,
+        "forward_state_finite": true,
+        "forward_steps_exact": true,
+        "initial_state_finite": true,
+        "no_fractional_endpoint_step": true,
+        "nonfinite_callback_zero": true,
+        "returned_comparison_synchronized": true,
+        "returned_state_finite": true,
+        "reversal_procedure_exact": true,
+        "state_schema_and_rows_valid": true
+      },
+      "manifest_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+      "metrics": {
+        "angular_momentum_vector_relative_difference": 3.302682040008536e-16,
+        "center_of_mass_position_error_m": 8.757065461048133e-10,
+        "center_of_mass_velocity_error_m_per_s": 3.5092928578416445e-17,
+        "corrected_energy_relative_difference": -7.620100299921066e-16,
+        "global_scaled_rms": 2.2635458239576355e-13,
+        "orbital_element_errors": {
+          "mercury": {
+            "eccentricity_abs": 2.8865798904951866e-15,
+            "mean_longitude_abs_rad": 8.171241461241152e-14,
+            "semimajor_axis_relative": 9.222350141813218e-16
+          }
+        },
+        "per_body": {
+          "mercury": {
+            "position_error_m": 0.004313185149843264,
+            "scaled_rms": 3.2011372032938224e-13,
+            "velocity_error_m_per_s": 3.7145616545599545e-09
+          },
+          "sun": {
+            "position_error_m": 1.8995023309217604e-10,
+            "scaled_rms": 5.552382196215476e-20,
+            "velocity_error_m_per_s": 6.446997409134426e-16
+          }
+        },
+        "worst_body": "mercury"
+      },
+      "provenance": {
+        "created_utc": "2026-08-07T16:37:11.420784+00:00",
+        "git_head": "d63177572df50caef198b43b35c0ca5a37f4ea9e",
+        "hostname": "DESKTOP-D6CRLL9",
+        "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+        "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]"
+      },
+      "return_time_seconds": 0.0,
+      "returned_internal_is_synchronized": 1,
+      "run_fingerprint": "1661ed739106f3e88e64e348157e56dbd1a9222bc14cfc856f0fd46db2113dde",
+      "run_id": "m0_rev_roundoff_current_sync_0p5d_365d_v1",
+      "runtime_seconds": 0.00034337490797042847,
+      "schema_version": 1,
+      "scientific_configuration_fingerprint": "747523505a55e9d566a9d90cf7ed82375dc94054bb415938b0e4741e0ac78287",
+      "source_case_id": "two_body_current_sync_0p5d",
+      "state_audit": {
+        "finite": true,
+        "rows": 6,
+        "samples": 3,
+        "schema_valid": true
+      },
+      "status": "COMPLETED",
+      "throughput_steps_per_second": 4251912.315403476
+    },
+    "m0_rev_roundoff_min_sync_0p25d_365d_v1": {
+      "absolute_checks": {
+        "angular_momentum_vector_relative": {
+          "absolute_margin": 9.999992403831308e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 1316453.123336476,
+          "passed": true,
+          "value": 7.596168692019633e-15
+        },
+        "center_of_mass_position_scaled": {
+          "absolute_margin": 1e-08,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": null,
+          "passed": true,
+          "value": 0.0
+        },
+        "center_of_mass_velocity_scaled": {
+          "absolute_margin": 1e-08,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 2.403704091384897e+26,
+          "passed": true,
+          "value": 4.16024586214291e-35
+        },
+        "corrected_energy_relative_abs": {
+          "absolute_margin": 9.9999847597994e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 656159.3421613878,
+          "passed": true,
+          "value": 1.5240200599842132e-14
+        },
+        "global_scaled_cartesian_rms": {
+          "absolute_margin": 9.999415150096502e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 17098.4041207512,
+          "passed": true,
+          "value": 5.84849903498518e-13
+        },
+        "mercury_position_scaled_norm": {
+          "absolute_margin": 9.9999238967255e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 131400.39066221306,
+          "passed": true,
+          "value": 7.610327450020064e-14
+        },
+        "mercury_scaled_cartesian_rms": {
+          "absolute_margin": 9.99917289733452e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 12090.397501251346,
+          "passed": true,
+          "value": 8.271026654801887e-13
+        },
+        "mercury_velocity_scaled_norm": {
+          "absolute_margin": 9.997975450369322e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 4939.370143597277,
+          "passed": true,
+          "value": 2.024549630677634e-12
+        },
+        "sun_position_scaled_norm": {
+          "absolute_margin": 9.999999999987366e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 791513380091.82,
+          "passed": true,
+          "value": 1.2634025212359575e-20
+        },
+        "sun_scaled_cartesian_rms": {
+          "absolute_margin": 9.999999999862693e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 72829921367.14326,
+          "passed": true,
+          "value": 1.3730620344334786e-19
+        },
+        "sun_velocity_scaled_norm": {
+          "absolute_margin": 9.999999999663907e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 29753690735.683693,
+          "passed": true,
+          "value": 3.360927586710098e-19
+        }
+      },
+      "artifact_inventory": {
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1/m0_rev_roundoff_min_sync_0p25d_365d_v1/events.log",
+          "sha256": "92c1baa0357e8f139f9f40c62aad16839a268c7a22c2e0ef36f7676f9aaaf8d2",
+          "size_bytes": 218
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1/m0_rev_roundoff_min_sync_0p25d_365d_v1/physical_state.csv",
+          "sha256": "0d34d6d4f09a8a68bacc92fa89290e604d95f99bb270f145414050349dd762f4",
+          "size_bytes": 2376
+        }
+      },
+      "backward_steps_executed": 1460,
+      "callback_stats": {
+        "callback_invocations": 2920,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 2920,
+        "real_gr_accel_norm_max": 6.054716203406467e-09,
+        "real_gr_accel_norm_mean": 6.054716203368274e-09,
+        "real_gr_accel_norm_sum": 1.767977131383536e-05,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "case_passed": true,
+      "comparison_particle_arrays_synchronized": true,
+      "configuration": {
+        "backend": "compiled_c",
+        "backward_steps": 1460,
+        "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "coordinates": "jacobi",
+        "corrector": 0,
+        "corrector2": 0,
+        "duration_days": 365.0,
+        "expected_callback_invocations": 2920,
+        "forward_steps": 1460,
+        "gr_scale": 1.0,
+        "gravitational_constant": "6.67430e-11",
+        "include_central_response": true,
+        "integrator": "whfast",
+        "keep_unsynchronized": 1,
+        "kernel": "default",
+        "kind": "compiled_gr_two_body_reversibility_validation",
+        "masses_kg": [
+          "1.9884098713264225e30",
+          "3.3009873694619664e23"
+        ],
+        "megno": false,
+        "model_id": "analytic_sun_mercury_two_body",
+        "purpose": "min_sync",
+        "safe_mode": 0,
+        "schema_version": 1,
+        "separation_m": "57909050000",
+        "speed_of_light_m_per_s": "299792458",
+        "step_days": 0.25,
+        "variations": false
+      },
+      "direction_reversal_procedure": "At the forward comparison point, temporarily set keep_unsynchronized=0, synchronize with the positive timestep so internal Jacobi coordinates are at the physical endpoint, restore the configured mode, then negate dt. After the backward leg, explicitly synchronize particle arrays before comparison.",
+      "forward_internal_is_synchronized": 1,
+      "forward_steps_executed": 1460,
+      "forward_time_seconds": 31536000.0,
+      "fractional_endpoint_steps": 0,
+      "integrity_checks": {
+        "backward_endpoint_exact": true,
+        "backward_steps_exact": true,
+        "callback_count_exact": true,
+        "forward_comparison_synchronized": true,
+        "forward_endpoint_exact": true,
+        "forward_state_finite": true,
+        "forward_steps_exact": true,
+        "initial_state_finite": true,
+        "no_fractional_endpoint_step": true,
+        "nonfinite_callback_zero": true,
+        "returned_comparison_synchronized": true,
+        "returned_state_finite": true,
+        "reversal_procedure_exact": true,
+        "state_schema_and_rows_valid": true
+      },
+      "manifest_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+      "metrics": {
+        "angular_momentum_vector_relative_difference": 7.596168692019633e-15,
+        "center_of_mass_position_error_m": 0.0,
+        "center_of_mass_velocity_error_m_per_s": 1.9721522630525295e-31,
+        "corrected_energy_relative_difference": -1.5240200599842132e-14,
+        "global_scaled_rms": 5.84849903498518e-13,
+        "orbital_element_errors": {
+          "mercury": {
+            "eccentricity_abs": 5.293955920339377e-23,
+            "mean_longitude_abs_rad": 2.0452596589085827e-13,
+            "semimajor_axis_relative": 1.501925594523867e-14
+          }
+        },
+        "per_body": {
+          "mercury": {
+            "position_error_m": 0.011384887818527622,
+            "scaled_rms": 8.271026654801887e-13,
+            "velocity_error_m_per_s": 9.597317726184674e-09
+          },
+          "sun": {
+            "position_error_m": 1.8900232701391077e-09,
+            "scaled_rms": 1.3730620344334786e-19,
+            "velocity_error_m_per_s": 1.5932377954873636e-15
+          }
+        },
+        "worst_body": "mercury"
+      },
+      "provenance": {
+        "created_utc": "2026-08-07T16:37:11.468227+00:00",
+        "git_head": "d63177572df50caef198b43b35c0ca5a37f4ea9e",
+        "hostname": "DESKTOP-D6CRLL9",
+        "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+        "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]"
+      },
+      "return_time_seconds": 0.0,
+      "returned_internal_is_synchronized": 0,
+      "run_fingerprint": "2f889cf15ab4d8f7542d14147874a36594d10ad5e9b122012213afcaf46f10ae",
+      "run_id": "m0_rev_roundoff_min_sync_0p25d_365d_v1",
+      "runtime_seconds": 0.00039574294351041317,
+      "schema_version": 1,
+      "scientific_configuration_fingerprint": "75565808e67a6ae65b55a9679d21305659b59dbbf7babbf726dc050e25ba1e66",
+      "source_case_id": "two_body_min_sync_0p25d",
+      "state_audit": {
+        "finite": true,
+        "rows": 6,
+        "samples": 3,
+        "schema_valid": true
+      },
+      "status": "COMPLETED",
+      "throughput_steps_per_second": 7378527.015790406
+    },
+    "m0_rev_roundoff_min_sync_0p5d_365d_v1": {
+      "absolute_checks": {
+        "angular_momentum_vector_relative": {
+          "absolute_margin": 9.999999009195388e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 10092807.278912982,
+          "passed": true,
+          "value": 9.908046120025609e-16
+        },
+        "center_of_mass_position_scaled": {
+          "absolute_margin": 9.999999999999989e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 822422991625903.0,
+          "passed": true,
+          "value": 1.2159193142485392e-23
+        },
+        "center_of_mass_velocity_scaled": {
+          "absolute_margin": 1e-08,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 9.614816365539588e+26,
+          "passed": true,
+          "value": 1.0400614655357275e-35
+        },
+        "corrected_energy_relative_abs": {
+          "absolute_margin": 9.999998285477433e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 5832527.485879002,
+          "passed": true,
+          "value": 1.7145225674822398e-15
+        },
+        "global_scaled_cartesian_rms": {
+          "absolute_margin": 9.999930027399183e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 142913.0814511774,
+          "passed": true,
+          "value": 6.997260081762525e-14
+        },
+        "mercury_position_scaled_norm": {
+          "absolute_margin": 9.999989643488951e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 965576.1437101711,
+          "passed": true,
+          "value": 1.0356511047979678e-14
+        },
+        "mercury_scaled_cartesian_rms": {
+          "absolute_margin": 9.999901043798929e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 101054.80901439434,
+          "passed": true,
+          "value": 9.895620107080298e-14
+        },
+        "mercury_velocity_scaled_norm": {
+          "absolute_margin": 9.999757829149027e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 41293.16125294088,
+          "passed": true,
+          "value": 2.4217085097324206e-13
+        },
+        "sun_position_scaled_norm": {
+          "absolute_margin": 9.999999999998285e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 5827278908401.859,
+          "passed": true,
+          "value": 1.716066822472123e-21
+        },
+        "sun_scaled_cartesian_rms": {
+          "absolute_margin": 9.999999999983592e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 609466677854.9849,
+          "passed": true,
+          "value": 1.64077879289397e-20
+        },
+        "sun_velocity_scaled_norm": {
+          "absolute_margin": 9.999999999959846e-09,
+          "finite": true,
+          "limit": 1e-08,
+          "limit_over_value": 249040849519.49298,
+          "passed": true,
+          "value": 4.0154055125070065e-20
+        }
+      },
+      "artifact_inventory": {
+        "events": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1/m0_rev_roundoff_min_sync_0p5d_365d_v1/events.log",
+          "sha256": "e9f195c9baf59786d0fd41c85885f8e57a0683b78d8fa9e737f6f771c010d175",
+          "size_bytes": 216
+        },
+        "state": {
+          "path": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1/m0_rev_roundoff_min_sync_0p5d_365d_v1/physical_state.csv",
+          "sha256": "783cbe594bf5c2fd9e9cbf422da477330ced068a382240762aebfd3bd3d2ae06",
+          "size_bytes": 2372
+        }
+      },
+      "backward_steps_executed": 730,
+      "callback_stats": {
+        "callback_invocations": 1460,
+        "nonfinite_result_count": 0,
+        "real_gr_accel_norm_count": 1460,
+        "real_gr_accel_norm_max": 6.0547162032953726e-09,
+        "real_gr_accel_norm_mean": 6.054716203143135e-09,
+        "real_gr_accel_norm_sum": 8.839885656588977e-06,
+        "tangent_gr_accel_norm_count": 0,
+        "tangent_gr_accel_norm_max": 0.0,
+        "tangent_gr_accel_norm_mean": null,
+        "tangent_gr_accel_norm_sum": 0.0
+      },
+      "case_passed": true,
+      "comparison_particle_arrays_synchronized": true,
+      "configuration": {
+        "backend": "compiled_c",
+        "backward_steps": 730,
+        "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+        "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "coordinates": "jacobi",
+        "corrector": 0,
+        "corrector2": 0,
+        "duration_days": 365.0,
+        "expected_callback_invocations": 1460,
+        "forward_steps": 730,
+        "gr_scale": 1.0,
+        "gravitational_constant": "6.67430e-11",
+        "include_central_response": true,
+        "integrator": "whfast",
+        "keep_unsynchronized": 1,
+        "kernel": "default",
+        "kind": "compiled_gr_two_body_reversibility_validation",
+        "masses_kg": [
+          "1.9884098713264225e30",
+          "3.3009873694619664e23"
+        ],
+        "megno": false,
+        "model_id": "analytic_sun_mercury_two_body",
+        "purpose": "min_sync",
+        "safe_mode": 0,
+        "schema_version": 1,
+        "separation_m": "57909050000",
+        "speed_of_light_m_per_s": "299792458",
+        "step_days": 0.5,
+        "variations": false
+      },
+      "direction_reversal_procedure": "At the forward comparison point, temporarily set keep_unsynchronized=0, synchronize with the positive timestep so internal Jacobi coordinates are at the physical endpoint, restore the configured mode, then negate dt. After the backward leg, explicitly synchronize particle arrays before comparison.",
+      "forward_internal_is_synchronized": 1,
+      "forward_steps_executed": 730,
+      "forward_time_seconds": 31536000.0,
+      "fractional_endpoint_steps": 0,
+      "integrity_checks": {
+        "backward_endpoint_exact": true,
+        "backward_steps_exact": true,
+        "callback_count_exact": true,
+        "forward_comparison_synchronized": true,
+        "forward_endpoint_exact": true,
+        "forward_state_finite": true,
+        "forward_steps_exact": true,
+        "initial_state_finite": true,
+        "no_fractional_endpoint_step": true,
+        "nonfinite_callback_zero": true,
+        "returned_comparison_synchronized": true,
+        "returned_state_finite": true,
+        "reversal_procedure_exact": true,
+        "state_schema_and_rows_valid": true
+      },
+      "manifest_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+      "metrics": {
+        "angular_momentum_vector_relative_difference": 9.908046120025609e-16,
+        "center_of_mass_position_error_m": 1.8189894035458565e-12,
+        "center_of_mass_velocity_error_m_per_s": 4.930380657631324e-32,
+        "corrected_energy_relative_difference": -1.7145225674822398e-15,
+        "global_scaled_rms": 6.997260081762525e-14,
+        "orbital_element_errors": {
+          "mercury": {
+            "eccentricity_abs": 3.3306691003452492e-15,
+            "mean_longitude_abs_rad": 2.067303301293235e-14,
+            "semimajor_axis_relative": 1.7127221691938835e-15
+          }
+        },
+        "per_body": {
+          "mercury": {
+            "position_error_m": 0.0015493120006587855,
+            "scaled_rms": 9.895620107080298e-14,
+            "velocity_error_m_per_s": 1.1480037661673902e-09
+          },
+          "sun": {
+            "position_error_m": 2.567199426207445e-10,
+            "scaled_rms": 1.64077879289397e-20,
+            "velocity_error_m_per_s": 1.9034911231148452e-16
+          }
+        },
+        "worst_body": "mercury"
+      },
+      "provenance": {
+        "created_utc": "2026-08-07T16:37:11.452896+00:00",
+        "git_head": "d63177572df50caef198b43b35c0ca5a37f4ea9e",
+        "hostname": "DESKTOP-D6CRLL9",
+        "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+        "python_version": "3.10.12 (main, Mar  3 2026, 11:56:32) [GCC 11.4.0]"
+      },
+      "return_time_seconds": 0.0,
+      "returned_internal_is_synchronized": 0,
+      "run_fingerprint": "12cfc417d1730d7e7fc64e79d1d00ec61c8ade738fb43cba42ed1c6b2f0d10a4",
+      "run_id": "m0_rev_roundoff_min_sync_0p5d_365d_v1",
+      "runtime_seconds": 0.00025729299522936344,
+      "schema_version": 1,
+      "scientific_configuration_fingerprint": "bbf617679acc483e8e0fd6973af3aa46efcdc530ead867f26e4e20eb7e56f59a",
+      "source_case_id": "two_body_min_sync_0p5d",
+      "state_audit": {
+        "finite": true,
+        "rows": 6,
+        "samples": 3,
+        "schema_valid": true
+      },
+      "status": "COMPLETED",
+      "throughput_steps_per_second": 5674464.626207508
+    }
+  },
+  "command": [
+    "/home/peacelovephysics/ephemeris/mini_ephemeris/src/mini_ephemeris/m0_reversibility_roundoff_gate.py",
+    "--manifest",
+    "ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json",
+    "run-all"
+  ],
+  "created_utc": "2026-08-07T16:37:11.472697+00:00",
+  "diagnostic_ratios": {
+    "current_sync": {
+      "affects_validity": false,
+      "coarse_0p5d_scaled_rms": 2.2635458239576355e-13,
+      "diagnostic_only": true,
+      "fine_0p25d_scaled_rms": 3.6693814031443077e-13,
+      "fine_over_coarse": 1.6210767037747338
+    },
+    "min_sync": {
+      "affects_validity": false,
+      "coarse_0p5d_scaled_rms": 6.997260081762525e-14,
+      "diagnostic_only": true,
+      "fine_0p25d_scaled_rms": 5.84849903498518e-13,
+      "fine_over_coarse": 8.358270189539695
+    }
+  },
+  "experiment_id": "m0_reversibility_roundoff_gate_v1",
+  "final_status": "REVERSIBILITY_GATE_PASSED",
+  "historical_comparison": {
+    "two_body_current_sync_0p25d": {
+      "absolute_difference": 0.0,
+      "historical_case_absolute_passed": true,
+      "historical_global_scaled_rms": 3.6693814031443077e-13,
+      "new_case_passed": true,
+      "new_global_scaled_rms": 3.6693814031443077e-13,
+      "same_callback_count": true,
+      "same_return_time": true
+    },
+    "two_body_current_sync_0p5d": {
+      "absolute_difference": 0.0,
+      "historical_case_absolute_passed": true,
+      "historical_global_scaled_rms": 2.2635458239576355e-13,
+      "new_case_passed": true,
+      "new_global_scaled_rms": 2.2635458239576355e-13,
+      "same_callback_count": true,
+      "same_return_time": true
+    },
+    "two_body_min_sync_0p25d": {
+      "absolute_difference": 0.0,
+      "historical_case_absolute_passed": true,
+      "historical_global_scaled_rms": 5.84849903498518e-13,
+      "new_case_passed": true,
+      "new_global_scaled_rms": 5.84849903498518e-13,
+      "same_callback_count": true,
+      "same_return_time": true
+    },
+    "two_body_min_sync_0p5d": {
+      "absolute_difference": 0.0,
+      "historical_case_absolute_passed": true,
+      "historical_global_scaled_rms": 6.997260081762525e-14,
+      "new_case_passed": true,
+      "new_global_scaled_rms": 6.997260081762525e-14,
+      "same_callback_count": true,
+      "same_return_time": true
+    }
+  },
+  "historical_manifest_13": {
+    "immutable": true,
+    "min_sync_ratio": 8.358270189539695,
+    "primary_mechanism": "BLOCKED",
+    "step3_status": "BLOCKED"
+  },
+  "manifest_path": "ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json",
+  "manifest_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+  "mathematical_basis": {
+    "historical_policy": "Manifest 13 and its BLOCKED result remain unchanged and correctly describe the frozen historical gate.",
+    "identity": "For an autonomous symmetric map with exact integer step counts, Phi(-h)^N Phi(h)^N = I in exact arithmetic.",
+    "interpretation": "Forward-backward return error measures floating-point roundoff, synchronization/reconstruction effects, and implementation asymmetry. It is not a truncation-order convergence estimate.",
+    "ratio_policy": "Compute and report each 0.25-day/0.5-day return-error ratio as a diagnostic only. No ratio enters case, mode, or final-status validity."
+  },
+  "million_year_energy_mechanism_classified": false,
+  "no_stage4_command": true,
+  "runtime_seconds": 0.06452690192963928,
+  "schema_version": 1,
+  "step3d_may_resume": true,
+  "synchronization_modes": {
+    "current_sync": true,
+    "min_sync": true
+  },
+  "throughput_cases_per_second": 61.98964897403003
+}

@@ -1,0 +1,271 @@
+{
+  "schema_version": 1,
+  "kind": "m0_reversibility_roundoff_gate_manifest",
+  "experiment_id": "m0_reversibility_roundoff_gate_v1",
+  "model_id": "analytic_sun_mercury_two_body",
+  "frozen_before_new_integrations": true,
+  "preregistered_utc": "2026-08-07T16:30:23Z",
+  "provenance": {
+    "starting_commit": "d63177572df50caef198b43b35c0ca5a37f4ea9e",
+    "validated_c_baseline_commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b",
+    "validated_c_annotated_tag": "gr-tangent-compiled-c-v1",
+    "manifest_13_path": "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json",
+    "manifest_13_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+    "manifest_13_summary_sha256": "6c7cdf074fdd436f58ca720bec87a9acb6b25d38d168227d3196638fd97ffb81",
+    "manifest_13_report_sha256": "6f33f93e15a8ba78ad216799926fff36221d5a9dee2b23e483485a2045a07018",
+    "historical_validation_summary_path": "output/stability/m0_integrator_roundoff_diagnosis_v1/reversibility_method_validation/summary.json",
+    "historical_validation_summary_sha256": "13fbef4e166b1a92f59424fead7c8029ccc0fd0a2c3b576ab863809d36a1bd28",
+    "historical_validation_summary_size_bytes": 12385,
+    "historical_failed_attempt_path": "output/stability/m0_integrator_roundoff_diagnosis_v1/reversibility_method_validation_failed_attempt_1/summary.json",
+    "historical_failed_attempt_sha256": "99804ef7e5093f0cda3b1bc601e5e18289544616c047333baf6c15851e559ba4",
+    "historical_failed_attempt_size_bytes": 12101,
+    "historical_manifest_13_primary_mechanism": "BLOCKED",
+    "historical_manifest_13_step3_status": "BLOCKED",
+    "historical_min_sync_fine_over_coarse_ratio": 8.358270189539695,
+    "historical_ratio_limit": 4.0,
+    "historical_result_is_immutable": true
+  },
+  "protected_files": {
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+  },
+  "runtime_identity": {
+    "python_version_family": "3.10",
+    "rebound_version": "4.6.0",
+    "rebound_build": "Feb 11 2026 17:34:38",
+    "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+    "rebound_shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04",
+    "rebound_header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+    "reboundx_version": "4.6.1",
+    "reboundx_shared_library_sha256": "0f06a8fc47970fdd22dbc048bc31470b272147a335a2a991f5aaef45f1ffb0bb",
+    "reboundx_used": false,
+    "compiled_gr_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067"
+  },
+  "paths": {
+    "project_root": "/home/peacelovephysics/ephemeris",
+    "python": "/home/peacelovephysics/ephemeris/.venv/bin/python",
+    "pythonpath": "/home/peacelovephysics/ephemeris/mini_ephemeris/src",
+    "manifest": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json",
+    "output_root": "/home/peacelovephysics/ephemeris/output/stability/m0_reversibility_roundoff_gate_v1",
+    "report_json": "/home/peacelovephysics/ephemeris/docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_summary.json",
+    "report_markdown": "/home/peacelovephysics/ephemeris/docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_report.md"
+  },
+  "execution_policy": {
+    "serial": true,
+    "fresh_collision_safe_outputs": true,
+    "preserve_failed_attempts": true,
+    "exactly_four_365_day_cases": true,
+    "no_decisive_m0_100k_control": true,
+    "no_ias15_m0_benchmark": true,
+    "no_10k_m0_reversibility_lane": true,
+    "no_0p125_day_1myr_lane": true,
+    "no_stage4_command": true,
+    "no_10myr_run": true,
+    "no_physics_or_protected_file_change": true,
+    "no_rebound_or_reboundx_change": true,
+    "no_historical_artifact_change": true,
+    "thresholds_frozen_before_new_results": true,
+    "exact_command": "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_reversibility_roundoff_gate --manifest ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json run-all"
+  },
+  "mathematical_basis": {
+    "identity": "For an autonomous symmetric map with exact integer step counts, Phi(-h)^N Phi(h)^N = I in exact arithmetic.",
+    "interpretation": "Forward-backward return error measures floating-point roundoff, synchronization/reconstruction effects, and implementation asymmetry. It is not a truncation-order convergence estimate.",
+    "ratio_policy": "Compute and report each 0.25-day/0.5-day return-error ratio as a diagnostic only. No ratio enters case, mode, or final-status validity.",
+    "historical_policy": "Manifest 13 and its BLOCKED result remain unchanged and correctly describe the frozen historical gate."
+  },
+  "scientific_configuration": {
+    "schema_version": 1,
+    "kind": "compiled_gr_two_body_reversibility_validation",
+    "model_id": "analytic_sun_mercury_two_body",
+    "body_names": [
+      "sun",
+      "mercury"
+    ],
+    "masses_kg": [
+      "1.9884098713264225e30",
+      "3.3009873694619664e23"
+    ],
+    "separation_m": "57909050000",
+    "backend": "compiled_c",
+    "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "gravitational_constant": "6.67430e-11",
+    "speed_of_light_m_per_s": "299792458",
+    "gr_scale": 1.0,
+    "include_central_response": true,
+    "integrator": "whfast",
+    "coordinates": "jacobi",
+    "kernel": "default",
+    "corrector": 0,
+    "corrector2": 0,
+    "duration_days": 365.0,
+    "variations": false,
+    "megno": false,
+    "gravity": "basic",
+    "boundary": "none",
+    "N_active": -1,
+    "force_is_velocity_dependent": false,
+    "reversal_procedure": "At the forward comparison point, temporarily set keep_unsynchronized=0, synchronize with the positive timestep so internal Jacobi coordinates are at the physical endpoint, restore the configured mode, then negate dt. After the backward leg, explicitly synchronize particle arrays before comparison."
+  },
+  "normalization": {
+    "position_scale_m": 149597870700.0,
+    "velocity_scale_m_per_s": 4740.470463533348,
+    "global_scaled_cartesian_rms": "RMS over both bodies and six components [dx/AU,dy/AU,dz/AU,dvx/(AU/JulianYear),dvy/(AU/JulianYear),dvz/(AU/JulianYear)].",
+    "per_body_scaled_cartesian_rms": "RMS over the same six scaled components for one body.",
+    "per_body_position_scaled_norm": "norm(delta_r)/AU.",
+    "per_body_velocity_scaled_norm": "norm(delta_v)/(AU/JulianYear).",
+    "corrected_energy_relative_abs": "abs(E_return-E_initial)/abs(E_initial), using 1 J only if E_initial is zero.",
+    "angular_momentum_vector_relative": "norm(L_return-L_initial)/max(norm(L_initial),1 SI unit).",
+    "center_of_mass_position_scaled": "norm(COM_r_return-COM_r_initial)/AU.",
+    "center_of_mass_velocity_scaled": "norm(COM_v_return-COM_v_initial)/(AU/JulianYear)."
+  },
+  "absolute_limits": {
+    "source_note": "Manifest 13 froze 1e-8 for global scaled Cartesian RMS and did not freeze separate metric-specific numeric limits. Before this rerun, Step 3d0 applies that same original dimensionless absolute scale uniformly to every requested normalized return metric; no observed endpoint value was used.",
+    "forward_time_abs_error_seconds_max": 0.0,
+    "backward_time_abs_error_seconds_max": 0.0,
+    "global_scaled_cartesian_rms_max": 1e-08,
+    "per_body_scaled_cartesian_rms_max": 1e-08,
+    "per_body_position_scaled_norm_max": 1e-08,
+    "per_body_velocity_scaled_norm_max": 1e-08,
+    "corrected_energy_relative_abs_max": 1e-08,
+    "angular_momentum_vector_relative_max": 1e-08,
+    "center_of_mass_position_scaled_max": 1e-08,
+    "center_of_mass_velocity_scaled_max": 1e-08,
+    "callback_count_must_equal_expected": true,
+    "nonfinite_callback_results_max": 0,
+    "all_state_values_must_be_finite": true,
+    "fractional_endpoint_steps_max": 0
+  },
+  "cases": [
+    {
+      "run_id": "m0_rev_roundoff_current_sync_0p5d_365d_v1",
+      "source_case_id": "two_body_current_sync_0p5d",
+      "scientific_configuration_fingerprint": "747523505a55e9d566a9d90cf7ed82375dc94054bb415938b0e4741e0ac78287",
+      "run_fingerprint": "1661ed739106f3e88e64e348157e56dbd1a9222bc14cfc856f0fd46db2113dde",
+      "configuration": {
+        "purpose": "current_sync",
+        "safe_mode": 1,
+        "keep_unsynchronized": 0,
+        "step_days": 0.5,
+        "forward_steps": 730,
+        "backward_steps": 730,
+        "expected_forward_time_seconds": 31536000.0,
+        "expected_backward_time_seconds": 0.0,
+        "expected_callback_invocations": 1460,
+        "expected_samples": 3,
+        "expected_state_rows": 6
+      }
+    },
+    {
+      "run_id": "m0_rev_roundoff_current_sync_0p25d_365d_v1",
+      "source_case_id": "two_body_current_sync_0p25d",
+      "scientific_configuration_fingerprint": "d924a59c05cd36e99dd0f43ae57b7e5be43f0e7b8f2a5448ad8c5a48329b8fec",
+      "run_fingerprint": "38c5ada427359db0530598866344abccb7fdba270fd0b13048f5c270208b89b2",
+      "configuration": {
+        "purpose": "current_sync",
+        "safe_mode": 1,
+        "keep_unsynchronized": 0,
+        "step_days": 0.25,
+        "forward_steps": 1460,
+        "backward_steps": 1460,
+        "expected_forward_time_seconds": 31536000.0,
+        "expected_backward_time_seconds": 0.0,
+        "expected_callback_invocations": 2920,
+        "expected_samples": 3,
+        "expected_state_rows": 6
+      }
+    },
+    {
+      "run_id": "m0_rev_roundoff_min_sync_0p5d_365d_v1",
+      "source_case_id": "two_body_min_sync_0p5d",
+      "scientific_configuration_fingerprint": "bbf617679acc483e8e0fd6973af3aa46efcdc530ead867f26e4e20eb7e56f59a",
+      "run_fingerprint": "12cfc417d1730d7e7fc64e79d1d00ec61c8ade738fb43cba42ed1c6b2f0d10a4",
+      "configuration": {
+        "purpose": "min_sync",
+        "safe_mode": 0,
+        "keep_unsynchronized": 1,
+        "step_days": 0.5,
+        "forward_steps": 730,
+        "backward_steps": 730,
+        "expected_forward_time_seconds": 31536000.0,
+        "expected_backward_time_seconds": 0.0,
+        "expected_callback_invocations": 1460,
+        "expected_samples": 3,
+        "expected_state_rows": 6
+      }
+    },
+    {
+      "run_id": "m0_rev_roundoff_min_sync_0p25d_365d_v1",
+      "source_case_id": "two_body_min_sync_0p25d",
+      "scientific_configuration_fingerprint": "75565808e67a6ae65b55a9679d21305659b59dbbf7babbf726dc050e25ba1e66",
+      "run_fingerprint": "2f889cf15ab4d8f7542d14147874a36594d10ad5e9b122012213afcaf46f10ae",
+      "configuration": {
+        "purpose": "min_sync",
+        "safe_mode": 0,
+        "keep_unsynchronized": 1,
+        "step_days": 0.25,
+        "forward_steps": 1460,
+        "backward_steps": 1460,
+        "expected_forward_time_seconds": 31536000.0,
+        "expected_backward_time_seconds": 0.0,
+        "expected_callback_invocations": 2920,
+        "expected_samples": 3,
+        "expected_state_rows": 6
+      }
+    }
+  ],
+  "gate_definition": {
+    "case_pass": "Every endpoint, exact-step, callback, finite-state, synchronization, schema, fingerprint, and absolute normalized return requirement must pass.",
+    "mode_pass": "Both timestep cases for the synchronization mode must pass.",
+    "ratio_is_diagnostic_only": true,
+    "ratio_must_not_determine_validity": true,
+    "final_statuses": [
+      "REVERSIBILITY_GATE_PASSED",
+      "REVERSIBILITY_GATE_FAILED",
+      "BLOCKED"
+    ],
+    "REVERSIBILITY_GATE_PASSED": "All four cases and both synchronization modes pass every absolute and integrity requirement.",
+    "REVERSIBILITY_GATE_FAILED": "At least one completed case fails an absolute, endpoint, reversal-procedure, callback, finite-state, schema, fingerprint, or integrity requirement.",
+    "BLOCKED": "A provenance/runtime audit fails, a case cannot complete, an artifact is unreadable, or another condition prevents all four cases from being evaluated."
+  },
+  "artifact_requirements": {
+    "case_files": [
+      "physical_state.csv",
+      "case_summary.json",
+      "events.log"
+    ],
+    "state_schema_version": 1,
+    "expected_samples_per_case": 3,
+    "expected_rows_per_case": 6,
+    "required_sample_labels": [
+      "initial",
+      "forward",
+      "returned"
+    ],
+    "aggregate_files": [
+      "aggregate_summary.json"
+    ],
+    "committed_files": [
+      "manifest 14",
+      "focused driver",
+      "focused tests",
+      "compact JSON summary",
+      "concise Markdown report"
+    ]
+  },
+  "runtime_and_disk": {
+    "historical_four_case_command_wall_seconds_upper_bound": 4.0,
+    "expected_new_command_wall_seconds": 4.0,
+    "expected_raw_disk_bytes": 1000000,
+    "required_disk_with_safety_bytes": 10000000,
+    "available_disk_bytes_before_launch": 837131141120
+  },
+  "continuation_policy": {
+    "resume_step3d_only_if": "REVERSIBILITY_GATE_PASSED",
+    "successor_scope": "Resume manifest-13 physical-only WHFast controls, IAS15 references, and M0 reversibility lanes while preserving every causal threshold except the superseded method-validation ratio gate.",
+    "never_provide_stage4_command": true,
+    "do_not_classify_million_year_energy_mechanism_here": true
+  }
+}
