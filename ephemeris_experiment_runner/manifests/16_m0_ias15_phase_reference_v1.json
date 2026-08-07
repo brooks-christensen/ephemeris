@@ -1,0 +1,255 @@
+{
+  "artifact_requirements": {
+    "archive_snapshots_per_scientific_lane": 11,
+    "committed_artifacts": "Manifest, focused source/tests, compact JSON/Markdown reports, and five deterministic PNG figures only.",
+    "ias15_lane_files": [
+      "progress_csv",
+      "physical_state_csv",
+      "simulationarchive",
+      "status_json",
+      "summary_json",
+      "events_log"
+    ],
+    "raw_output_policy": "Raw lane, benchmark, archive, log, and cache artifacts remain ignored beneath output_root.",
+    "scientific_lane_integrity": "Exactly 101 scientific samples and 1010 state rows at exact 100-year targets; exactly 11 readable archive snapshots; unique ordered rows; finite state; matching schema and configuration fingerprint; positive callback count; zero nonfinite callback results; exact artifact hashes; telemetry energy exactly reproducible from stored state rows."
+  },
+  "audit_before_preregistration": {
+    "artifact_audit": "PASS: all ten completed Step 3d lane summaries and all 51 inventoried lane artifacts matched size and SHA-256; schemas, fingerprints, counts, finite states, callback counters, archives, recomputed energy, and figures passed.",
+    "available_disk_bytes": 837095436288,
+    "git_head": "eb3809a28ab495f64bd383b6997a6496dd22505e",
+    "manifest_14_status": "REVERSIBILITY_GATE_PASSED",
+    "manifest_15_historical_result": {
+      "primary_mechanism": "BLOCKED",
+      "step3_diagnosis_status": "BLOCKED"
+    },
+    "worktree_clean": true
+  },
+  "benchmark": {
+    "configuration": {
+      "adaptive_mode": "PRS23",
+      "duration_years": 100.0,
+      "epsilon": 1e-09,
+      "exact_finish_time": 1,
+      "expected_samples": 2,
+      "expected_state_rows": 20,
+      "initial_dt_days": 1.0,
+      "integrator": "ias15",
+      "kind": "ias15_default_runtime_benchmark",
+      "megno": false,
+      "min_dt_seconds": 0.0,
+      "projected_duration_years": 10000.0,
+      "projected_runtime_limit_seconds": 3600.0,
+      "purpose": "project_default_10k_runtime",
+      "record_every_years": 100.0,
+      "variations": false
+    },
+    "configuration_fingerprint": "30396705943395e26e96a9d350f360e6001713a1636b6072ed9d168e357faa79",
+    "id": "m0_diag_phys_ias15_default_benchmark_100y",
+    "projection": "Multiply the observed 100-year wall time by 100 and require the projected 10-kyr time to be no more than 3600 seconds."
+  },
+  "causal_classification": {
+    "application": "After and only after IAS15 reference qualification, import manifest 15 classification_evidence unchanged, supersede only ias15_tolerance_converged with the manifest-16 qualification result, and call the unchanged manifest-13 classifier.",
+    "historical_raw_state_gate": "The manifest-13 global 1e-10 and per-body 5e-10 raw pointwise state gates remain reported as historical diagnostics and are not the manifest-16 qualification gate.",
+    "no_whfast_threshold_change": true,
+    "source_rules": "Every classification rule, WHFast threshold, long-history definition, state/energy definition, and Step 3 status rule is imported from manifest 13 through immutable manifest 15 without modification.",
+    "supersedes_only": "manifest 13 comparison_definitions.ias15_tolerance_convergence global_scaled_state_rms_max and per_body_scaled_state_rms_max as reference-qualification gates"
+  },
+  "common_configuration": {
+    "N_active": -1,
+    "backend": "compiled_c",
+    "body_names": [
+      "sun",
+      "mercury barycenter",
+      "venus barycenter",
+      "earth barycenter",
+      "mars barycenter",
+      "jupiter barycenter",
+      "saturn barycenter",
+      "uranus barycenter",
+      "neptune barycenter",
+      "pluto barycenter"
+    ],
+    "boundary": "none",
+    "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "force_is_velocity_dependent": false,
+    "gr_scale": 1.0,
+    "gravitational_constant": "6.67430e-11",
+    "gravity": "basic",
+    "include_central_response": true,
+    "initial_conditions_sha256": "bd9b632e1aa7410719bb85675ac7b939b8e9ff29ed577baed679629dab66acf7",
+    "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+    "model_id": "m0_grpot_emb_pluto_v1",
+    "model_scope": "full_with_pluto",
+    "physical_only": true,
+    "real_particle_count": 10,
+    "schema_version": 1,
+    "speed_of_light_m_per_s": "299792458",
+    "start_date": "2000-01-01T00:00:00+00:00"
+  },
+  "execution_policy": {
+    "fresh_collision_safe_outputs": true,
+    "no_0p125_day_lane": true,
+    "no_10myr": true,
+    "no_epsilon_1e14": true,
+    "no_historical_artifact_change": true,
+    "no_new_whfast_trajectory": true,
+    "no_physics_or_protected_file_change": true,
+    "no_rebound_or_reboundx_change": true,
+    "no_stage4": true,
+    "serial": true,
+    "thresholds_frozen_before_new_result": true
+  },
+  "experiment_id": "m0_ias15_phase_reference_v1",
+  "frozen_before_new_integrations": true,
+  "installed_runtime": {
+    "ias15_adaptive_mode": "prs23",
+    "ias15_default_epsilon": 1e-09,
+    "rebound": {
+      "header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+      "rebound_build": "Feb 11 2026 17:34:38",
+      "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+      "rebound_version": "4.6.0",
+      "shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04"
+    },
+    "reboundx_used": false,
+    "reboundx_version": "4.6.1",
+    "source_audit": {
+      "adaptive_mode": "PRS23 is the installed default. Its local derivative-based timescale selects dt_new proportional to sqrt(epsilon) for the PRS23 estimator; epsilon controls local adaptive stepping and is not a bound on accumulated global trajectory error.",
+      "default_epsilon": "The exact installed REBOUND 4.6.0 runtime initializes IAS15 epsilon to 1e-9; the upstream IAS15 documentation and Rein-Spiegel paper identify 1e-9 as the machine-precision-oriented default.",
+      "exact_finish_time": "REBOUND integrate exact_finish_time=1 temporarily shortens the final step to hit tmax, retries if IAS15 adapts it downward, then restores the previous proposed timestep.",
+      "finite_precision": "Rein and Spiegel state that epsilon is not the achieved precision and that smaller epsilon can increase accumulated random error by increasing timestep count; phase error may grow faster than energy error at the roundoff floor.",
+      "integrator_source_sha256": "10def32d01e174476575b6337ec4b7b80f8b7adf86b3abba21b60b06cad37582",
+      "local_vs_global": "The estimator is local. No source path turns epsilon into a global trajectory-error tolerance.",
+      "repository_commit": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+      "source_urls": [
+        "https://github.com/hannorein/rebound/blob/e3b07aa88dc4b004d82c03da070a89de5b699a2c/src/integrator_ias15.c",
+        "https://github.com/hannorein/rebound/blob/e3b07aa88dc4b004d82c03da070a89de5b699a2c/src/rebound.c",
+        "https://academic.oup.com/mnras/article/446/2/1424/2892331",
+        "https://arxiv.org/html/2401.02849"
+      ]
+    }
+  },
+  "kind": "m0_ias15_phase_reference_manifest",
+  "new_lane": {
+    "configuration": {
+      "adaptive_mode": "PRS23",
+      "archive_interval_years": 1000.0,
+      "duration_years": 10000.0,
+      "epsilon": 1e-09,
+      "exact_finish_time": 1,
+      "expected_archive_snapshots": 11,
+      "expected_callback_invocations": "adaptive_observed",
+      "expected_samples": 101,
+      "expected_state_rows": 1010,
+      "initial_dt_days": 1.0,
+      "integrator": "ias15",
+      "kind": "ias15_physical_reference",
+      "megno": false,
+      "min_dt_seconds": 0.0,
+      "purpose": "default_roundoff_phase_reference",
+      "record_every_years": 100.0,
+      "variations": false
+    },
+    "configuration_fingerprint": "659d223cfcd01a287b391c5b5ca63ee4d57f453a336b289d59a7dc6919d66896",
+    "id": "m0_diag_phys_ias15_default_10k",
+    "purpose": "Independent physical-only IAS15 reference at the exact installed default epsilon."
+  },
+  "offline_analysis_definitions": {
+    "angle_difference": "Principal wrapped difference atan2(sin(left-right),cos(left-right)).",
+    "element_frame": "J2000-ecliptic heliocentric osculating elements from mini_ephemeris.orbital_elements.heliocentric_elements_for_state.",
+    "growth": "For each absolute component after t=0, report the log-log slope of cumulative RMS against time. Separately least-squares fit amplitudes for fixed t^0.5 and t^1.5 shapes and report normalized RMS residuals; both models are descriptive only and neither is forced.",
+    "ias15_envelope": "At each matched epoch/body/scaled Cartesian component, take the maximum absolute value across the three pairwise default/1e-12/1e-13 differences; then calculate global and per-body RMS using manifest-13 AU and AU/JulianYear scaling.",
+    "matched_epochs": "Exact sample index and exact 100-year target time from 0 through 10000 years; no interpolation.",
+    "rtn": "For each non-Sun body and pair, subtract heliocentric left-minus-right Cartesian state. Build R=r_right/|r_right|, N=(r_right cross v_right)/|r_right cross v_right|, T=N cross R, then project position and velocity differences onto R,T,N.",
+    "step_distribution": "Because the exact installed runtime serializes no every-attempt trace, report distributions of abs(dt_last_done) and abs(proposed dt) over the ten positive-time persisted SimulationArchive snapshots. The 101 scientific endpoint samples are additionally recorded for the new lane."
+  },
+  "paths": {
+    "figure_directory": "/home/peacelovephysics/ephemeris/docs/validation/m0-ias15-phase-reference-v1/figures",
+    "kernel": "/home/peacelovephysics/ephemeris/data/de431_part-2.bsp",
+    "manifest": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json",
+    "output_root": "/home/peacelovephysics/ephemeris/output/stability/m0_ias15_phase_reference_v1",
+    "project_root": "/home/peacelovephysics/ephemeris",
+    "report_json": "/home/peacelovephysics/ephemeris/docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_summary.json",
+    "report_markdown": "/home/peacelovephysics/ephemeris/docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_report.md"
+  },
+  "preregistered_commands": [
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_ias15_phase_reference --manifest ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json audit",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_ias15_phase_reference --manifest ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json benchmark",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_ias15_phase_reference --manifest ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json run-lane",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_ias15_phase_reference --manifest ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json analyze"
+  ],
+  "provenance": {
+    "starting_commit": "eb3809a28ab495f64bd383b6997a6496dd22505e",
+    "validated_c_annotated_tag": "gr-tangent-compiled-c-v1",
+    "validated_c_baseline_commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b"
+  },
+  "protected_files": {
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+  },
+  "qualification_rules": {
+    "angular_history_pair_difference_max": 1e-10,
+    "angular_momentum_rel_drift_max_per_run": 1e-09,
+    "envelope": {
+      "global_over_whfast_0p5_vs_0p25_max": 0.1,
+      "whfast_denominator_global_scaled_rms_preregistered": 6.25175058609845e-06,
+      "whfast_denominator_worst_body": "earth barycenter",
+      "whfast_denominator_worst_body_scaled_rms_preregistered": 1.3772734166375417e-05,
+      "worst_ias_body_over_same_body_whfast_0p5_vs_0p25_max": 0.1
+    },
+    "frozen_ias15": {
+      "eccentricity_history_abs_max": 1e-09,
+      "energy_fitted_change_per_myr_abs_difference": 5e-11,
+      "energy_history_max_abs_difference": 5e-11,
+      "energy_stat_absolute_floor": 1e-12,
+      "energy_stat_relative_difference_max": 0.25,
+      "semimajor_axis_history_relative_max": 1e-09
+    },
+    "integrity": "Every default/1e-12/1e-13 lane must pass finite-state, callback, schema, fingerprint, archive, exact count/time, artifact hash, and energy-reconstruction checks.",
+    "phase": {
+      "orientation_angle_abs_rad_max": 1e-09,
+      "phase_angle_over_orientation_min": 10.0,
+      "transverse_position_variance_fraction_min": 0.9,
+      "worst_body_transverse_position_variance_fraction_min": 0.9
+    },
+    "qualification": "All integrity, frozen energy, frozen a/e, added conservative orientation, phase, angular-momentum, and 10%-of-WHFast envelope gates must pass. Raw-state convergence need not be monotonic once this complete scientific plateau gate passes.",
+    "reference_statuses": [
+      "IAS15_REFERENCE_QUALIFIED_AT_ROUNDOFF_PHASE_FLOOR",
+      "IAS15_REFERENCE_NOT_QUALIFIED",
+      "BLOCKED"
+    ],
+    "telemetry_reproduction_max_abs": 0.0
+  },
+  "schema_version": 1,
+  "source_artifacts": {
+    "manifest_13": {
+      "path": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json",
+      "sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240"
+    },
+    "manifest_14": {
+      "path": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json",
+      "sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188"
+    },
+    "manifest_15": {
+      "path": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+      "sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe"
+    },
+    "manifest_15_report": {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_report.md",
+      "sha256": "ab913e127b35e12cd8778915b04366625604398568ff11105be392b0a460f7db"
+    },
+    "manifest_15_summary": {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_summary.json",
+      "sha256": "0e4a39d17f6d79c4e886fda1c0be0a81174e6e190e14e260ae6ca2568c2c1481"
+    }
+  },
+  "step_accounting": {
+    "accepted_steps": "Use REBOUND Simulation.steps_done from the final serialized SimulationArchive snapshot.",
+    "force_evaluations": "For this physical-only model each compiled additional-force callback invocation is one observed force-callback evaluation; report the callback total as the force-evaluation count.",
+    "rejected_steps": null,
+    "rejected_steps_reason": "REBOUND 4.6.0 retries IAS15 step_try internally, exposes and serializes successful steps_done but no rejected-attempt counter, and varying predictor iterations prevent deriving rejected attempts from callback totals. Recovering exact rejected counts would require prohibited REBOUND or force-callback instrumentation."
+  }
+}
