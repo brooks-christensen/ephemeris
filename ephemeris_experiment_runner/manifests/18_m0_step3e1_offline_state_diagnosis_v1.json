@@ -1,0 +1,695 @@
+{
+  "allowed_final_statuses": [
+    "STEP3E1_OFFLINE_DIAGNOSIS_COMPLETE",
+    "STEP3E1_OFFLINE_DIAGNOSIS_INCONCLUSIVE",
+    "BLOCKED"
+  ],
+  "allowed_primary_classifications": [
+    "WINDOWED_OR_PHASE_DOMINATED",
+    "METRIC_OR_REPRESENTATION_ILL_CONDITIONED",
+    "POINTWISE_PREDICTABILITY_FLOOR",
+    "TRUE_NONPHASE_NONCONVERGENCE",
+    "MIXED_OR_INCONCLUSIVE",
+    "NOT_EVALUATED"
+  ],
+  "analysis_scope": {
+    "description": "Offline diagnosis of the Manifest 17 physical-state convergence failure using only three immutable stored WHFast trajectories and qualified Manifest 16 IAS15 evidence.",
+    "does_not_replace_manifest_17": true,
+    "does_not_validate_a_production_timestep": true,
+    "energy_mechanism_is_frozen_and_not_revisited": true,
+    "ias15_scope_years": 10000,
+    "integration_count": 0,
+    "trajectory_count": 0
+  },
+  "audit_gate": {
+    "completed_before_preregistration": true,
+    "fresh_output_root": true,
+    "fresh_report_root": true,
+    "reproduction_tolerances": {
+      "global_rms_ratio_abs": 5e-15,
+      "mercury_rms_ratio_abs": 5e-14,
+      "uranus_phase_orientation_ratio_abs": 5e-13,
+      "venus_orientation_rad_abs": 5e-19
+    },
+    "required_checks": [
+      "exact_clean_starting_commit",
+      "annotated_compiled_c_tag_and_commit_ancestry",
+      "historical_manifest_report_and_summary_hashes",
+      "protected_file_hashes",
+      "all_input_artifact_hashes",
+      "runtime_identity",
+      "identical_physics_except_timestep",
+      "exact_unique_strictly_ordered_epochs",
+      "finite_physical_and_tangent_states",
+      "archive_counts_and_endpoints",
+      "schema_and_fingerprint_integrity",
+      "zero_nonfinite_callbacks",
+      "four_manifest_17_failure_reproductions"
+    ]
+  },
+  "classification_rules": {
+    "evaluation": "Evaluate every evidence predicate below. Select a non-mixed primary classification only when exactly one classification's complete required predicate set is true and no required analysis or integrity check failed. Otherwise select MIXED_OR_INCONCLUSIVE. Select NOT_EVALUATED only with BLOCKED.",
+    "metric_or_representation_ill_conditioned": {
+      "required": [
+        "At least one frozen failed ratio is near-floor, cancellation-limited, or changes interpretation under a coordinate-free representation, or one frozen failed classical angle has condition amplification >= 10.",
+        "The corresponding coordinate-free or nonsingular fine defect is smaller than the coarse defect in the full aggregate and in at least 8 of 10 fixed windows.",
+        "The physical interpretation uses the unchanged stored states and no weakened threshold."
+      ],
+      "condition_amplification": "absolute wrapped classical-angle defect divided by max(coordinate-free angular defect, operational angular floor)",
+      "small_denominator": "denominator <= 10 times the applicable operational floor",
+      "window_cancellation": "a coarse window norm <= 0.25 times the median non-near-floor coarse window norm while adjacent fine windows remain non-near-floor"
+    },
+    "pointwise_predictability_floor": {
+      "required": [
+        "At least two early windows have aggregate defect cosine >= 0.5, positive projection, and identifiable positive Richardson order.",
+        "At least three consecutive later windows have cosine < 0.5, nonpositive projection, or fewer than 25 percent identifiable pointwise orders.",
+        "The transition window agrees within one 100 kyr window for the full system and at least two of Mercury, Venus, and Uranus.",
+        "Spearman correlation between log tangent norm and log raw defect envelope after the transition is >= 0.7 for the full system or the bodies establishing the transition.",
+        "Both phase-stripped methods and coordinate-free nonphase quantities show no persistent late nonphase nonconvergence.",
+        "Frozen orbital, invariant, secular-frequency, perihelion-rate, MEGNO, and LCN conclusions remain unchanged."
+      ]
+    },
+    "true_nonphase_nonconvergence": {
+      "required": [
+        "A coordinate-free shape or orientation fine/coarse aggregate ratio is >= 1 outside the operational floor.",
+        "The same physical component is >= 1 in at least three consecutive windows whose right endpoints are >= 500 kyr.",
+        "Both phase-stripping methods leave that component >= 1 in those windows.",
+        "The component is neither near-floor nor representation-conditioned.",
+        "Those windows retain positive coherent projection with cosine >= 0.5 or show a same-sign secular envelope slope in at least 8 of 10 windows."
+      ]
+    },
+    "windowed_or_phase_dominated": {
+      "required": [
+        "The global transverse-position squared fraction is >= 0.75 or both phase alignments remove >= 50 percent of the global fine-defect squared norm.",
+        "Both phase-stripped methods have full-history global fine/coarse ratio < 1, positive aggregate projection, and at least 8 of 10 global windows with ratio < 1.",
+        "Both phase-stripped methods restore Mercury fine/coarse ratio < 1 and coordinate-free shape and orientation fine defects are smaller than coarse defects for every inner planet.",
+        "The raw failed behavior is window dependent, defined as at least two ratio crossings of 1 or a maximum/minimum non-near-floor window ratio >= 2.",
+        "No coordinate-free nonphase component meets TRUE_NONPHASE_NONCONVERGENCE."
+      ]
+    }
+  },
+  "constraints": {
+    "forbidden": [
+      "launch_resume_or_regenerate_any_trajectory",
+      "benchmark_or_smoke_integration",
+      "ias15_integration",
+      "modify_validated_physics",
+      "modify_protected_python_oracle",
+      "modify_compiled_c_force_or_jacobian",
+      "modify_historical_manifests_reports_summaries_or_raw_outputs",
+      "weaken_or_reinterpret_manifest_17",
+      "validate_0p25_or_prefer_0p125",
+      "launch_or_provide_stage4_or_10myr_command",
+      "create_tag"
+    ],
+    "offline_only": true
+  },
+  "defect_definitions": {
+    "absolute_units": {
+      "position": [
+        "m",
+        "km"
+      ],
+      "velocity": [
+        "m_per_s",
+        "mm_per_s"
+      ]
+    },
+    "closure": "d_coarse + d_fine == state_0p5d - state_0p125d componentwise",
+    "closure_tolerance": "abs(residual) <= 8*float64_epsilon*max(abs(state_0p5d),abs(state_0p25d),abs(state_0p125d),1 native unit) componentwise",
+    "d_coarse": "state_0p5d - state_0p25d",
+    "d_fine": "state_0p25d - state_0p125d",
+    "epoch_selection": "all 10000 matched noninitial epochs; t=0 is excluded from every new defect aggregate",
+    "fractional_body_contribution": "sum of the body's six scaled squared defects divided by the full-system sum over the same selected epochs",
+    "global_scaled_rms": "sqrt(mean over selected epochs and all 10 bodies of (sum(position_delta/AU)^2 + sum(velocity_delta/(AU/Julian_year))^2)/6)",
+    "position_scaled_rms": "sqrt(mean of the three Cartesian position_delta/AU components)",
+    "quantiles": {
+      "fields": [
+        "median",
+        "rms",
+        "p90",
+        "p99",
+        "maximum"
+      ],
+      "numpy_method": "linear",
+      "worst_tie_rule": "earliest epoch"
+    },
+    "scales": {
+      "position_m": 149597870700,
+      "velocity_m_per_s": 4740.470463533349
+    },
+    "velocity_scaled_rms": "sqrt(mean of the three Cartesian velocity_delta/(AU/Julian_year) components)"
+  },
+  "derived_output_contract": {
+    "committed": {
+      "deterministic_figures": 7,
+      "markdown_reports": 1,
+      "strict_finite_json_summaries": 1
+    },
+    "uncommitted_compact_tables": {
+      "cumulative_metrics.csv": 110,
+      "epoch_body_metrics.csv": 100000,
+      "orbital_window_metrics.csv": 90,
+      "phase_stripped_window_metrics.csv": 220,
+      "window_metrics.csv": 110
+    }
+  },
+  "experiment_id": "m0_step3e1_offline_state_diagnosis_v1",
+  "figures": [
+    "global_per_body_rms_contributions.png",
+    "windowed_convergence_ratios.png",
+    "mercury_rtn_defects.png",
+    "venus_orientation_conditioning.png",
+    "uranus_phase_orientation.png",
+    "phase_stripped_state_defects.png",
+    "richardson_alignment_order.png"
+  ],
+  "fixed_time_partition": {
+    "cumulative": "For endpoint k*100000 years, k in 1..10, use epochs 0 < t <= k*100000 years.",
+    "window_count": 10,
+    "window_rule": "Window w in 0..9 contains w*100000 < t <= (w+1)*100000 years. A shared boundary belongs only to the window ending at that boundary.",
+    "window_rows": 1000,
+    "window_years": 100000
+  },
+  "historical_results_immutable": {
+    "manifest_13_primary_mechanism": "BLOCKED",
+    "manifest_13_step3_diagnosis_status": "BLOCKED",
+    "manifest_14_status": "REVERSIBILITY_GATE_PASSED",
+    "manifest_15_primary_mechanism": "BLOCKED",
+    "manifest_15_step3_diagnosis_status": "BLOCKED",
+    "manifest_16_ias15_reference_status": "IAS15_REFERENCE_QUALIFIED_AT_ROUNDOFF_PHASE_FLOOR",
+    "manifest_16_primary_mechanism": "SYSTEMATIC_WHFAST_STEP_BIAS",
+    "manifest_16_step3_diagnosis_status": "STEP3_NUMERICAL_FLOOR_CHARACTERIZED",
+    "manifest_17_status": "STEP3E_025_DAY_PRODUCTION_NOT_VALIDATED"
+  },
+  "manifest_17_observed_facts": {
+    "all_other_gates_passed": true,
+    "corrected_energy": {
+      "all_ten_blocks_passed": true,
+      "fitted_1myr_change": 1.14352955646e-09,
+      "q": 3.91351662034e-19,
+      "q_interval": [
+        3.65731943128e-19,
+        4.21538912824e-19
+      ]
+    },
+    "failed_physical_state_values": {
+      "global_rms_ratio": 0.5515481452458249,
+      "global_rms_ratio_limit": 0.5,
+      "mercury_rms_ratio": 1.0719155194074192,
+      "mercury_requires_strictly_less_than_one": true,
+      "uranus_phase_orientation_ratio": 0.8548370769855221,
+      "uranus_phase_orientation_ratio_minimum": 10,
+      "venus_orientation_limit_rad": 1e-09,
+      "venus_orientation_rad": 8.303454568370228e-08
+    }
+  },
+  "model_id": "m0_grpot_emb_pluto_v1",
+  "new_diagnostics_at_preregistration": {
+    "calculated": false,
+    "primary_classification": "NOT_EVALUATED",
+    "final_status_calculated": false
+  },
+  "numerical_floor": {
+    "aggregate_floor": "For an entity and selected epoch set, max(64*float64_epsilon, validated element/state round-trip scaled RMS, applicable IAS15 scaled envelope). IAS15 is applicable only to epochs t <= 10000 years.",
+    "angular_floor": "max(64*float64_epsilon radians, coordinate-free round-trip angular residual)",
+    "float64_epsilon": 2.220446049250313e-16,
+    "ias15_first_10k_scaled_envelope": {
+      "global": 1.0875556664310227e-08,
+      "per_body": {
+        "earth barycenter": 4.175442432153023e-09,
+        "jupiter barycenter": 3.259858792250234e-10,
+        "mars barycenter": 1.882194072905195e-09,
+        "mercury barycenter": 3.311774356579771e-08,
+        "neptune barycenter": 1.201286631513233e-10,
+        "pluto barycenter": 1.0599953114478348e-10,
+        "saturn barycenter": 2.1826674554532498e-10,
+        "sun": 3.088036653768074e-13,
+        "uranus barycenter": 1.510404740080174e-10,
+        "venus barycenter": 8.050653848095807e-09
+      }
+    },
+    "near_floor": "A magnitude is near-floor when it is <= 10 times the applicable operational floor.",
+    "outside_10k_rule": "Do not use or extrapolate the IAS15 envelope. Use only float64/stored-output precision and validated round-trip residuals.",
+    "ratio_rule": "If the aggregate denominator is near-floor, report numerator and denominator and mark the ratio NON_IDENTIFIABLE.",
+    "roundtrip_acceptance": {
+      "maximum_position_m": 0.1,
+      "maximum_scaled_state_rms": 1e-12,
+      "maximum_velocity_m_per_s": 1e-05
+    },
+    "stored_output": "CSV decimal parsing to IEEE-754 float64 must reproduce every stored finite value; no decimal truncation correction is applied."
+  },
+  "orbital_element_conventions": {
+    "coordinate_free": {
+      "eccentricity_vector": "cross(v,h)/mu-r/abs(r) in the J2000 ecliptic frame",
+      "inclination_components": "p=tan(i/2)*sin(Omega), q=tan(i/2)*cos(Omega)",
+      "longitude_periapsis_components": "k=e*cos(varpi), h=e*sin(varpi)",
+      "plane_orientation": "acos(clip(dot(h_hat_left,h_hat_right),-1,1))",
+      "unit_angular_momentum": "h_hat=cross(r,v)/abs(cross(r,v))"
+    },
+    "equinoctial_variables": "NOT_APPLICABLE: no repository equinoctial implementation exists at preregistration.",
+    "inverse_transform": {
+      "eccentric_anomaly_solver": "Newton iteration for E-e*sin(E)=M with wrapped M, absolute update tolerance 1e-14 rad, maximum 50 iterations; failure is BLOCKED.",
+      "frame": "Construct perifocal r and v from a,e,E and rotate Rz(Omega)*Rx(i)*Rz(omega) into J2000 ecliptic, then apply the inverse frozen obliquity rotation to repository equatorial Cartesian coordinates.",
+      "mu": "G*(sun_mass+body_mass) using repository G_SI",
+      "roundtrip": "Reconstruct each stored lane with its own unmodified elements and phase before any phase alignment; enforce numerical_floor.roundtrip_acceptance."
+    },
+    "reference_plane": "ecliptic_j2000",
+    "singularity_tests": {
+      "classical_node_poorly_conditioned": "sin(inclination) <= 1e-3",
+      "classical_periapsis_poorly_conditioned": "eccentricity <= 1e-2",
+      "nearly_circular_repository_epsilon": 1e-14,
+      "nearly_coplanar_repository_epsilon": 1e-14
+    },
+    "state_to_elements": "mini_ephemeris.orbital_elements.heliocentric_elements_for_state",
+    "wrapped_difference": "atan2(sin(left-right),cos(left-right)) in [-pi,pi]",
+    "unwrapping": "numpy.unwrap with period 2*pi and discontinuity pi, applied independently to each lane before trend fits"
+  },
+  "paths": {
+    "figure_directory": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3e1-offline-state-diagnosis-v1/figures",
+    "manifest": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/18_m0_step3e1_offline_state_diagnosis_v1.json",
+    "output_root": "/home/peacelovephysics/ephemeris/output/stability/m0_step3e1_offline_state_diagnosis_v1",
+    "project_root": "/home/peacelovephysics/ephemeris",
+    "report_json": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3e1-offline-state-diagnosis-v1/m0_step3e1_offline_state_diagnosis_summary.json",
+    "report_markdown": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3e1-offline-state-diagnosis-v1/m0_step3e1_offline_state_diagnosis_report.md"
+  },
+  "phase_stripping": {
+    "barycentric_rule": "Preserve each lane's stored barycentric Sun position and velocity. Reconstruct each non-Sun body's heliocentric state and add that lane's Sun state.",
+    "mean_anomaly_aligned": "For both members of each pair preserve each lane's a,e,i,Omega,omega and replace M with the matched 0.25-day M.",
+    "mean_longitude_aligned": "For both members preserve each lane's a,e,i,Omega,omega and set M=wrap(lambda_0p25-Omega_lane-omega_lane).",
+    "pair_reference": "The common phase is always from the 0.25-day lane for both the 0.5/0.25 and 0.25/0.125 comparisons.",
+    "reporting": "Report both methods without selecting a preferred result; calculate raw and stripped RMS, adjacent ratios, RTN components, and 1-squared_stripped/squared_raw. Negative removed fractions are retained."
+  },
+  "preregistration": {
+    "commit_message": "Preregister M0 Step 3e1 offline state diagnosis",
+    "frozen_before_new_diagnostics": true,
+    "starting_commit": "1d24b97047335bd1302ab5c7b26cb6b231ac5516"
+  },
+  "protected_files": {
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+  },
+  "resampling": {
+    "bootstrap_used": false,
+    "reason": "The fixed complete stored epoch set and fixed windows are analyzed deterministically."
+  },
+  "richardson_and_alignment": {
+    "aggregate_vector": "Flatten the six Manifest-17-scaled Cartesian components over the selected epochs and entity bodies.",
+    "cosine": "dot(d_coarse,d_fine)/(norm(d_coarse)*norm(d_fine))",
+    "identifiable_order": "p=-log2(alpha) only when both norms are above 10 times their operational floors, cosine>=0.5, and 0<alpha<1; otherwise ORDER_NOT_IDENTIFIABLE",
+    "orthogonal_residual_fraction": "norm(d_fine-alpha*d_coarse)^2/max(norm(d_fine)^2,operational_floor^2)",
+    "pointwise_order": "Apply the same conditions per epoch; summarize the distribution but never average excluded or non-identifiable epochs.",
+    "projection_coefficient": "alpha=dot(d_coarse,d_fine)/dot(d_coarse,d_coarse)"
+  },
+  "rtn_conventions": {
+    "basis": "At every epoch and body use the 0.25-day heliocentric r and v: R=r/abs(r), N=cross(r,v)/abs(cross(r,v)), T=cross(N,R).",
+    "basis_tolerances": {
+      "maximum_dot_error": 5e-14,
+      "maximum_norm_error": 5e-14,
+      "maximum_reconstruction_relative": 5e-14
+    },
+    "defect_state": "Project heliocentric body-minus-Sun position and velocity defects for both adjacent pairs into the identical R,T,N basis.",
+    "fractions": "For each position or velocity aggregate, component squared sum divided by the R+T+N squared sum.",
+    "sign": "Projected component is dot(left-minus-right defect, basis axis)."
+  },
+  "runtime_identity": {
+    "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+    "numpy_version": "2.2.6",
+    "python_version": "3.10.12",
+    "rebound_build": "Feb 11 2026 17:34:38",
+    "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+    "rebound_header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+    "rebound_shared_library_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04",
+    "rebound_version": "4.6.0",
+    "reboundx_version": "4.6.1"
+  },
+  "schema_version": 1,
+  "source_artifacts": {
+    "manifest_10": [
+      "ephemeris_experiment_runner/manifests/10_m0_timestep_convergence_v1.json",
+      "5a45bd7967eeba7694a2bf076af33290cf113eefa5379ec439773fda0ad04363"
+    ],
+    "manifest_11": [
+      "ephemeris_experiment_runner/manifests/11_m0_timestep_convergence_0p25_v1.json",
+      "c589820f11f6a7171d3b3b0f852ff58c9b7184b9c77426f9a61174a2163112da"
+    ],
+    "manifest_13": [
+      "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json",
+      "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240"
+    ],
+    "manifest_13_report": [
+      "docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_report.md",
+      "6f33f93e15a8ba78ad216799926fff36221d5a9dee2b23e483485a2045a07018"
+    ],
+    "manifest_13_summary": [
+      "docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_summary.json",
+      "6c7cdf074fdd436f58ca720bec87a9acb6b25d38d168227d3196638fd97ffb81"
+    ],
+    "manifest_14": [
+      "ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json",
+      "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188"
+    ],
+    "manifest_14_report": [
+      "docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_report.md",
+      "f742ad6b2e7baa36e2de68bb6f7b3c131426b4aa27b97519cd8e96d718af53b0"
+    ],
+    "manifest_14_summary": [
+      "docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_summary.json",
+      "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+    ],
+    "manifest_15": [
+      "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+      "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe"
+    ],
+    "manifest_15_report": [
+      "docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_report.md",
+      "ab913e127b35e12cd8778915b04366625604398568ff11105be392b0a460f7db"
+    ],
+    "manifest_15_summary": [
+      "docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_summary.json",
+      "0e4a39d17f6d79c4e886fda1c0be0a81174e6e190e14e260ae6ca2568c2c1481"
+    ],
+    "manifest_16": [
+      "ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json",
+      "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6"
+    ],
+    "manifest_16_report": [
+      "docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_report.md",
+      "fca2495afdb8d8ee73382546acb3ab3d9c983cedd7cf5d3aa6deeb3f9b64172a"
+    ],
+    "manifest_16_summary": [
+      "docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_summary.json",
+      "8f720e6cb160f943b55cdd4be9a982a504d0f4235707080eb0db46a51f2d3071"
+    ],
+    "manifest_17": [
+      "ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json",
+      "978ab813979ea6c728e113c1f473afabb54cd553d2097dd9d26add8391f5589b"
+    ],
+    "manifest_17_report": [
+      "docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_report.md",
+      "051b5a1c548c240581721bf82a647616ed822e6b2e4a30de402f7a15045f36b0"
+    ],
+    "manifest_17_summary": [
+      "docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_summary.json",
+      "4e971e965d3b02f6a69e1d8ae183e7228fd27a504ce020a529d39e112b7a25f4"
+    ],
+    "step3_report": [
+      "docs/validation/m0-timestep-convergence-v1/m0_timestep_convergence_report.md",
+      "f4f526766b74d7e82c09601403d8254ba8bf628729b5f27c6c094b305176ab2b"
+    ],
+    "step3_summary": [
+      "docs/validation/m0-timestep-convergence-v1/m0_timestep_convergence_summary.json",
+      "651bb6b3210a442dd2a740d20c72780b000e5120096b780aebe021c086e61b82"
+    ],
+    "step3b_report": [
+      "docs/validation/m0-timestep-convergence-0p25-v1/m0_timestep_convergence_0p25_report.md",
+      "dfa388e2036b0e2dfa60a3bd8617665b69ce9a885e09b68362de12d479f36b20"
+    ],
+    "step3b_summary": [
+      "docs/validation/m0-timestep-convergence-0p25-v1/m0_timestep_convergence_0p25_summary.json",
+      "76e4c4637870a6c8ba38613242efdbe03db88a3ad38d3687aaaa4707f13da20f"
+    ]
+  },
+  "stored_lanes": [
+    {
+      "artifact_inventory": {
+        "archive": [
+          "gr_tangent_archive_m0_conv_0p5d_1myr_s12345.bin",
+          "3ee131ed27f67797ffda168ead0d1a163291610599b0f3495f9d3b4c75aeb026",
+          63572
+        ],
+        "log": [
+          "../logs/m0_conv_0p5d_1myr_s12345.log",
+          "ece5c45daceb26fa33a571a80e41b6fab5e89ac075884d4bc6b6a48df9030827",
+          848023
+        ],
+        "progress": [
+          "gr_tangent_progress_m0_conv_0p5d_1myr_s12345.csv",
+          "004d167ced5b0b3b071fc8ec020c02187eab7310132f9f5f52b8a9f0fae53039",
+          6304065
+        ],
+        "restart": [
+          "gr_tangent_restart_m0_conv_0p5d_1myr_s12345.json",
+          "8530e88f82b237c089ca494e536da3a47b1b7fb9e1c3fb5c3d915f02c70cdde8",
+          396
+        ],
+        "state": [
+          "gr_tangent_state_m0_conv_0p5d_1myr_s12345.csv",
+          "367ae71cb5cfcfa6e2379a3966e8d526597b1b021b8ccb5a9c52057bb1b7da15",
+          36829342
+        ],
+        "status": [
+          "gr_tangent_status_m0_conv_0p5d_1myr_s12345.json",
+          "b11fe98f4a876052ae7f19f680160e6e3e78a7246b8e049115e2968bba2c1bb9",
+          619
+        ],
+        "summary": [
+          "gr_tangent_summary_m0_conv_0p5d_1myr_s12345.json",
+          "818f7a3fa3962858034ff1fdec8e72b46d13a941bcc7838626f24d2bdd35dcf3",
+          10988
+        ]
+      },
+      "configuration_fingerprint": "68fb88378722f7408b60bb1251c6755611da521fa7f26fcafc10736c7b2da59e",
+      "expected_archive_snapshots": 11,
+      "expected_callback_invocations": 730500000,
+      "expected_samples": 10001,
+      "expected_state_rows": 100010,
+      "manifest": "ephemeris_experiment_runner/manifests/10_m0_timestep_convergence_v1.json",
+      "output_dir": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345",
+      "run_id": "m0_conv_0p5d_1myr_s12345",
+      "step_days": 0.5
+    },
+    {
+      "artifact_inventory": {
+        "archive": [
+          "gr_tangent_archive_m0_conv_0p25d_1myr_s12345.bin",
+          "1aebd60e2671a4b7b1b1dbe6453e48d10fd460daa31e167f4d86b5fe9c7d6def",
+          63572
+        ],
+        "log": [
+          "../logs/m0_conv_0p25d_1myr_s12345.log",
+          "679c6a6ec9bb7ecc5fb9786602704ebf77d7d4945cf6a25443cb124b2ad4f8b9",
+          861942
+        ],
+        "progress": [
+          "gr_tangent_progress_m0_conv_0p25d_1myr_s12345.csv",
+          "18d03ef44fbe30b3f4087fdf19a9a9de5e58ccd5d0ac2eea8d64d8fc16b9e4b2",
+          6304578
+        ],
+        "restart": [
+          "gr_tangent_restart_m0_conv_0p25d_1myr_s12345.json",
+          "bed38fdd46309aa0d4a845d8c392149245f8055f8c8c1d6ce0f16542831a4a64",
+          398
+        ],
+        "state": [
+          "gr_tangent_state_m0_conv_0p25d_1myr_s12345.csv",
+          "154cbaa5360d506fca5237fd22fa3c8489577bbf1c272ac5232b11c37a2b9c73",
+          36828273
+        ],
+        "status": [
+          "gr_tangent_status_m0_conv_0p25d_1myr_s12345.json",
+          "f4ac049417f3b94c68de2a3321bc89b037d39b0d3c13cbc6eee61ad26e0acf2d",
+          618
+        ],
+        "summary": [
+          "gr_tangent_summary_m0_conv_0p25d_1myr_s12345.json",
+          "7d0a2e58d724979d2e6e44034fc37513eb124bc2791f3e3db35713d47b2b28c8",
+          11012
+        ]
+      },
+      "configuration_fingerprint": "3e79729659677339dd5a4cd64c9f8d217af3d97a863786b9388b6a5b8b42533c",
+      "expected_archive_snapshots": 11,
+      "expected_callback_invocations": 1461000000,
+      "expected_samples": 10001,
+      "expected_state_rows": 100010,
+      "manifest": "ephemeris_experiment_runner/manifests/11_m0_timestep_convergence_0p25_v1.json",
+      "output_dir": "/home/peacelovephysics/ephemeris/output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345",
+      "run_id": "m0_conv_0p25d_1myr_s12345",
+      "step_days": 0.25
+    },
+    {
+      "artifact_inventory": {
+        "archive": [
+          "gr_tangent_archive_m0_step3e_tangent_whfast_0125d_1myr.bin",
+          "6a3248c560491ca0d8dfd35e84ac669df15161afc7728ae57b0c94b33a68f143",
+          63572
+        ],
+        "log": [
+          "../logs/m0_step3e_tangent_whfast_0125d_1myr.log",
+          "690a5e5bd03ade0756462608e0faf03050fe2554d3811ea596c8acfe9db32c0a",
+          965784
+        ],
+        "progress": [
+          "gr_tangent_progress_m0_step3e_tangent_whfast_0125d_1myr.csv",
+          "8ecaede9ffee20670bae9a6c51ca61317291934f9eea8f3c1fe1656abbb2b66d",
+          6318065
+        ],
+        "restart": [
+          "gr_tangent_restart_m0_step3e_tangent_whfast_0125d_1myr.json",
+          "41c059ac669dd1108c40dfe7715412aca6b1e91c997b4afe321e9d612524733c",
+          429
+        ],
+        "state": [
+          "gr_tangent_state_m0_step3e_tangent_whfast_0125d_1myr.csv",
+          "189efdb5b775622360a1273ddeb96014946af315134f204efce093e31be276bf",
+          36828876
+        ],
+        "status": [
+          "gr_tangent_status_m0_step3e_tangent_whfast_0125d_1myr.json",
+          "52d3ffddf75076c6c8ee58d2bf54866d5a576248eb5992b8ed2d5fd590bfa681",
+          622
+        ],
+        "summary": [
+          "gr_tangent_summary_m0_step3e_tangent_whfast_0125d_1myr.json",
+          "c5810f5a7e25b7703a6aad4538cbd8d5396eeeb398cb41cf62405a17422a5f8b",
+          11246
+        ]
+      },
+      "configuration_fingerprint": "1064be4cb34530ca032ac958c99ae46c33def89fd2aaea8decc82f647649f50e",
+      "expected_archive_snapshots": 11,
+      "expected_callback_invocations": 2922000000,
+      "expected_samples": 10001,
+      "expected_state_rows": 100010,
+      "manifest": "ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json",
+      "output_dir": "/home/peacelovephysics/ephemeris/output/stability/m0_step3e_whfast_0125d_convergence_v1/m0_step3e_tangent_whfast_0125d_1myr",
+      "run_id": "m0_step3e_tangent_whfast_0125d_1myr",
+      "step_days": 0.125
+    }
+  ],
+  "time_behavior": {
+    "defect_envelope": "Per epoch scaled Euclidean defect magnitude; window envelope is p99 with numpy linear quantiles.",
+    "fixed_window_slope": "Ordinary least squares slope of signed RTN components and absolute/phase-stripped envelopes against time_years within each fixed window.",
+    "growth_categories": {
+      "bounded_or_oscillatory": "at least two signed slope reversals and final-window p99 <= 2 times the maximum p99 of the first three windows",
+      "secular": "same nonzero signed slope sign in at least 8 of 10 windows and final-window p99 > 2 times the maximum p99 of the first three windows",
+      "transition": "first window satisfying the preregistered late Richardson-loss predicate"
+    },
+    "tangent_comparison": "Use stored Manifest-17-scaled tangent norms, MEGNO, and finite-time LCN only; report Spearman rank correlations and adjacent-lane differences."
+  },
+  "ias15_evidence_artifacts": {
+    "m0_diag_phys_ias15_default_10k": {
+      "archive": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_ias15_phase_reference_v1/m0_diag_phys_ias15_default_10k/simulationarchive.bin",
+        "e3ba4e01f330efc707c633d7f88c86125155646ab02991b2d74a057100755432",
+        139140
+      ],
+      "events": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_ias15_phase_reference_v1/m0_diag_phys_ias15_default_10k/events.log",
+        "1733d748e196d467303c1253cd7bba7acd9f839e7adeed39725a62ffdfaeff33",
+        307
+      ],
+      "progress": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_ias15_phase_reference_v1/m0_diag_phys_ias15_default_10k/progress.csv",
+        "1480b36d9d4db1e31f4405f2c3695c12bf8472bfd936fb4081c79f9962d634ad",
+        48147
+      ],
+      "state": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_ias15_phase_reference_v1/m0_diag_phys_ias15_default_10k/physical_state.csv",
+        "a4d31fed7976fd3e2a94f1a662fa64b713554df96fcda29b8af093af0b28fa09",
+        248708
+      ],
+      "status": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_ias15_phase_reference_v1/m0_diag_phys_ias15_default_10k/status.json",
+        "c0da139e7e8731cbfa26780233eba4eb460665bc01eb6343e71088902529ba28",
+        351
+      ]
+    },
+    "m0_diag_phys_ias15_eps1e12_10k": {
+      "archive": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/simulationarchive.bin",
+        "de9eb3f9bc4513d77024388fb85972a8489aa644827cfcfb231b6cd38689c8e6",
+        139140
+      ],
+      "events": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/events.log",
+        "452034afe28164e4da0331a2f794e7895e3ecfd2938107d8b3cd8aed6a16e2ee",
+        449
+      ],
+      "progress": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/progress.csv",
+        "f99769331a7065c846b4399d453c88ce54492898df8dbb6a0614be5dce8e2495",
+        48754
+      ],
+      "state": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/physical_state.csv",
+        "c95024d866dbc1de92f0f6a708b6a1f71f34a3b9b7407d62f492f80837d28c9f",
+        248736
+      ],
+      "status": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/status.json",
+        "d8d3b692cae30a4367cdf670f6e20497896d6afaf1b3cde15f2f78634c390142",
+        369
+      ]
+    },
+    "m0_diag_phys_ias15_eps1e13_10k": {
+      "archive": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/simulationarchive.bin",
+        "a79e2957e28f25acd4b508e166c577c18e74da8162034e07babe042ac43382c2",
+        139140
+      ],
+      "events": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/events.log",
+        "ee3585efcd2dbbc0a3294feed6854bf2f062aa9c29f119b36161252c2431b282",
+        449
+      ],
+      "progress": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/progress.csv",
+        "24208438c5bb93bbdb64b3bb11d180c39553e1631408b5b42d6bed3b910283f4",
+        48810
+      ],
+      "state": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/physical_state.csv",
+        "87084590631f040fe25821c2876c1dee41b281ff245621fae7603b2a63515c83",
+        248688
+      ],
+      "status": [
+        "/home/peacelovephysics/ephemeris/output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/status.json",
+        "9e37c2411293a347bc4b66cc2cd2e4a341e9f32efe2dbf5e41261b48d1060037",
+        369
+      ]
+    }
+  },
+  "shared_physics_and_runtime_configuration": {
+    "archive_interval_years": 100000,
+    "backend": "compiled_c",
+    "bodies_in_order": [
+      "sun",
+      "mercury barycenter",
+      "venus barycenter",
+      "earth barycenter",
+      "mars barycenter",
+      "jupiter barycenter",
+      "saturn barycenter",
+      "uranus barycenter",
+      "neptune barycenter",
+      "pluto barycenter"
+    ],
+    "c_artifact_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "c_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "coordinates": "WHFast Jacobi; stored inertial Cartesian telemetry is solar-system barycentric ICRF/J2000 equatorial SI",
+    "duration_years": 1000000,
+    "gr_scale": 1,
+    "include_central_response": true,
+    "initial_conditions_sha256": "bd9b632e1aa7410719bb85675ac7b939b8e9ff29ed577baed679629dab66acf7",
+    "integrator": "whfast",
+    "kernel": "default",
+    "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+    "megno_seed": 12345,
+    "model_scope": "full_with_pluto",
+    "record_every_years": 100,
+    "ri_whfast": {
+      "corrector": 0,
+      "corrector2": 0,
+      "is_synchronized_at_archives": 1,
+      "keep_unsynchronized": 0,
+      "safe_mode": 1
+    },
+    "runner_schema_version": 2,
+    "start_date": "2000-01-01T00:00:00+00:00",
+    "state_sample_schema_version": 1,
+    "tangent_initialization": "identical REBOUND MEGNO first-variation initialization from seed 12345",
+    "units": "m, kg, s"
+  }
+}
