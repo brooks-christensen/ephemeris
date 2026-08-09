@@ -1,0 +1,564 @@
+{
+  "allowed_final_statuses": [
+    "STEP3F0_CONFIGURATION_AUDIT_COMPLETE",
+    "STEP3F0_CONFIGURATION_AUDIT_INCONCLUSIVE",
+    "BLOCKED"
+  ],
+  "allowed_primary_findings": [
+    "MATERIAL_MISCONFIGURATION_CONFIRMED",
+    "COMBINED_LANE_CAPABILITY_CONSTRAINT_CONFIRMED",
+    "NO_MATERIAL_CONFIGURATION_DEFECT_FOUND",
+    "MIXED_OR_INCONCLUSIVE",
+    "NOT_EVALUATED"
+  ],
+  "assessment_contract": {
+    "must_distinguish": [
+      "one-time initialization",
+      "per-timestep",
+      "per-output",
+      "per-checkpoint",
+      "restart-only"
+    ],
+    "required_fields": [
+      "supported_coordinates",
+      "supported_kernel",
+      "feasible_corrector",
+      "synchronization_behavior",
+      "output_handling",
+      "additional_force_compatibility",
+      "validation_observables",
+      "canonical_physical_trajectory_eligibility",
+      "analytic_gr_tangent_eligibility"
+    ],
+    "separate_architectures": [
+      "historical combined physical+tangent/MEGNO lane",
+      "literature-recommended high-accuracy physical WHFast or WHCKL lane",
+      "proposed tangent and MEGNO diagnostic lane"
+    ]
+  },
+  "audit_questions": [
+    "material configuration mistake or undocumented default",
+    "variation or MEGNO capability constraints versus physical WHCKL",
+    "synchronization caused by output telemetry checkpoint archive or restart",
+    "effective safe_mode keep_unsynchronized corrector kernel and coordinates",
+    "scope of historical findings to combined lane versus WHFast generally",
+    "technical necessity versus optionality of split physical and tangent lanes"
+  ],
+  "classification_rules": {
+    "COMBINED_LANE_CAPABILITY_CONSTRAINT_CONFIRMED": "Direct REBOUND 4.6.0 source/runtime evidence that physical+tangent/MEGNO cannot use literature-recommended physical configuration without lane separation or loss of required tangent functionality.",
+    "MATERIAL_MISCONFIGURATION_CONFIRMED": "Direct evidence that an effective setting or runtime path contradicted intended configuration or authoritative guidance in a way capable of affecting completed integrations.",
+    "MIXED_OR_INCONCLUSIVE": "Multiple material findings coexist or exact historical behavior cannot be recovered safely.",
+    "NOT_EVALUATED": "Allowed only with BLOCKED.",
+    "NO_MATERIAL_CONFIGURATION_DEFECT_FOUND": "Every material effective setting is recovered and no mismatch capable of explaining the concern is identified.",
+    "causation_rule": "Configuration evidence alone cannot establish causation; any causal link requiring stepping must remain an unanswered controlled-experiment question.",
+    "single_primary_rule": true
+  },
+  "constraints": {
+    "forbidden": [
+      "integrate or step any simulation",
+      "launch resume regenerate or advance a trajectory",
+      "benchmark smoke or IAS15 run",
+      "modify physical model or production runner behavior",
+      "modify Python oracle or compiled C callback",
+      "modify historical manifests reports summaries archives hashes or statuses",
+      "change dependencies",
+      "delete apparent transient Step 3e1 files",
+      "weaken Manifest 17 or reinterpret Manifest 18",
+      "validate 0.25 or 0.125 day",
+      "assume WHCKL tangent support or MEGNO synchronization",
+      "infer causation from inspection",
+      "launch Stage 4 or provide a 10 Myr command",
+      "create tag"
+    ],
+    "offline_read_only_evidence": true
+  },
+  "effective_settings_matrix": {
+    "columns": [
+      "lane_id",
+      "manifests",
+      "setting",
+      "requested_value",
+      "rebound_default",
+      "effective_initial",
+      "effective_after_gr_attachment",
+      "effective_after_tangent_megno",
+      "earliest_archive",
+      "later_or_final_archive",
+      "after_checkpoint_restoration",
+      "evidence_source",
+      "confidence",
+      "discrepancy_or_caveat"
+    ],
+    "confidence_values": [
+      "DIRECT",
+      "CORROBORATED",
+      "INFERRED",
+      "UNAVAILABLE"
+    ],
+    "do_not_infer_defaults": true,
+    "expected_rows": 777,
+    "format": "strict UTF-8 CSV long form",
+    "missing_value": "NOT_AVAILABLE",
+    "not_applicable_value": "NOT_APPLICABLE",
+    "setting_count": 37,
+    "settings": [
+      "sim.integrator",
+      "sim.dt",
+      "ri_whfast.coordinates",
+      "ri_whfast.kernel",
+      "ri_whfast.corrector",
+      "ri_whfast.corrector2",
+      "ri_whfast.safe_mode",
+      "ri_whfast.keep_unsynchronized",
+      "ri_whfast.recalculate_coordinates_this_timestep",
+      "ri_whfast.is_synchronized",
+      "sim.gravity",
+      "sim.collision",
+      "sim.boundary",
+      "sim.N",
+      "sim.N_active",
+      "sim.N_var",
+      "sim.N_var_config",
+      "variational_configurations",
+      "megno.initialized",
+      "megno.seed",
+      "sim.force_is_velocity_dependent",
+      "sim.additional_forces",
+      "callback.library_sha256",
+      "gr.coefficient_scale",
+      "gr.include_central_response",
+      "physical.body_order",
+      "physical.masses",
+      "physical.barycentric_mass_convention",
+      "physical.units",
+      "physical.input_frame",
+      "output.scientific_cadence",
+      "output.checkpoint_cadence",
+      "output.archive_cadence",
+      "integration.exact_finish_time",
+      "integration.output_targets_integer_steps",
+      "restart.archive_synchronization_state",
+      "restart.callback_reattachment"
+    ],
+    "unique_lane_count": 21
+  },
+  "evidence_hierarchy": [
+    "exact REBOUND 4.6.0 and REBOUNDx 4.6.1 source",
+    "historical archives or guarded zero-step historical construction",
+    "historical runner and committed manifests",
+    "version-matched official documentation",
+    "peer-reviewed primary literature",
+    "current official documentation with explicit version caveat",
+    "conversation as nonauthoritative questions only"
+  ],
+  "expected_outputs": {
+    "committed": [
+      "Manifest 19 preregistration",
+      "offline audit implementation",
+      "focused no-step tests",
+      "strict-finite compact JSON summary",
+      "complete Markdown report",
+      "777-row deterministic effective-settings CSV matrix"
+    ],
+    "figures": 0,
+    "integration_steps": 0,
+    "new_archives": 0,
+    "raw_trajectories": 0
+  },
+  "experiment_id": "m0_step3f0_whfast_configuration_audit_v1",
+  "historical_artifacts": {
+    "manifest_13": [
+      "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json",
+      "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240"
+    ],
+    "manifest_13_report": [
+      "docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_report.md",
+      "6f33f93e15a8ba78ad216799926fff36221d5a9dee2b23e483485a2045a07018"
+    ],
+    "manifest_13_summary": [
+      "docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_summary.json",
+      "6c7cdf074fdd436f58ca720bec87a9acb6b25d38d168227d3196638fd97ffb81"
+    ],
+    "manifest_14": [
+      "ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json",
+      "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188"
+    ],
+    "manifest_14_report": [
+      "docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_report.md",
+      "f742ad6b2e7baa36e2de68bb6f7b3c131426b4aa27b97519cd8e96d718af53b0"
+    ],
+    "manifest_14_summary": [
+      "docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_summary.json",
+      "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba"
+    ],
+    "manifest_15": [
+      "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json",
+      "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe"
+    ],
+    "manifest_15_report": [
+      "docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_report.md",
+      "ab913e127b35e12cd8778915b04366625604398568ff11105be392b0a460f7db"
+    ],
+    "manifest_15_summary": [
+      "docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_summary.json",
+      "0e4a39d17f6d79c4e886fda1c0be0a81174e6e190e14e260ae6ca2568c2c1481"
+    ],
+    "manifest_16": [
+      "ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json",
+      "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6"
+    ],
+    "manifest_16_report": [
+      "docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_report.md",
+      "fca2495afdb8d8ee73382546acb3ab3d9c983cedd7cf5d3aa6deeb3f9b64172a"
+    ],
+    "manifest_16_summary": [
+      "docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_summary.json",
+      "8f720e6cb160f943b55cdd4be9a982a504d0f4235707080eb0db46a51f2d3071"
+    ],
+    "manifest_17": [
+      "ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json",
+      "978ab813979ea6c728e113c1f473afabb54cd553d2097dd9d26add8391f5589b"
+    ],
+    "manifest_17_report": [
+      "docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_report.md",
+      "051b5a1c548c240581721bf82a647616ed822e6b2e4a30de402f7a15045f36b0"
+    ],
+    "manifest_17_summary": [
+      "docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_summary.json",
+      "4e971e965d3b02f6a69e1d8ae183e7228fd27a504ce020a529d39e112b7a25f4"
+    ],
+    "manifest_18": [
+      "ephemeris_experiment_runner/manifests/18_m0_step3e1_offline_state_diagnosis_v1.json",
+      "088b55fa40cf0ccb7fa50f42d41f017fcdf560d7a8f7a7dfa69678717544021d"
+    ],
+    "manifest_18_report": [
+      "docs/validation/m0-step3e1-offline-state-diagnosis-v1/m0_step3e1_offline_state_diagnosis_report.md",
+      "978b6cd20f670086d3820961a98236fefe3e8ee56dada5932b34543b2c80c006"
+    ],
+    "manifest_18_summary": [
+      "docs/validation/m0-step3e1-offline-state-diagnosis-v1/m0_step3e1_offline_state_diagnosis_summary.json",
+      "9eb86ddbcff2d0cd199dcbcfa224399c9ecec2c4ce5d33fc09c91b1dee2e2c85"
+    ]
+  },
+  "historical_lanes": [
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "ias15_benchmark_eps1e12_100y"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "ias15_benchmark_eps1e13_100y"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_phys_current_sync_0p25d_100k"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_phys_current_sync_0p5d_100k"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_phys_ias15_eps1e12_10k"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_phys_ias15_eps1e13_10k"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_phys_min_sync_0p25d_100k"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_phys_min_sync_0p5d_100k"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_reversibility_current_sync_0p25d_10k"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_reversibility_current_sync_0p5d_10k"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_reversibility_min_sync_0p25d_10k"
+    },
+    {
+      "manifests": [
+        13,
+        15
+      ],
+      "run_id": "m0_diag_reversibility_min_sync_0p5d_10k"
+    },
+    {
+      "manifests": [
+        14
+      ],
+      "run_id": "m0_rev_roundoff_current_sync_0p25d_365d_v1"
+    },
+    {
+      "manifests": [
+        14
+      ],
+      "run_id": "m0_rev_roundoff_current_sync_0p5d_365d_v1"
+    },
+    {
+      "manifests": [
+        14
+      ],
+      "run_id": "m0_rev_roundoff_min_sync_0p25d_365d_v1"
+    },
+    {
+      "manifests": [
+        14
+      ],
+      "run_id": "m0_rev_roundoff_min_sync_0p5d_365d_v1"
+    },
+    {
+      "manifests": [
+        16
+      ],
+      "run_id": "m0_diag_phys_ias15_default_10k"
+    },
+    {
+      "manifests": [
+        16
+      ],
+      "run_id": "m0_diag_phys_ias15_default_benchmark_100y"
+    },
+    {
+      "manifests": [
+        18
+      ],
+      "origin_manifest": 10,
+      "run_id": "m0_conv_0p5d_1myr_s12345"
+    },
+    {
+      "manifests": [
+        18
+      ],
+      "origin_manifest": 11,
+      "run_id": "m0_conv_0p25d_1myr_s12345"
+    },
+    {
+      "manifests": [
+        17,
+        18
+      ],
+      "run_id": "m0_step3e_tangent_whfast_0125d_1myr"
+    }
+  ],
+  "historical_results_immutable": {
+    "manifest_13": "BLOCKED",
+    "manifest_14": "REVERSIBILITY_GATE_PASSED",
+    "manifest_15": "BLOCKED",
+    "manifest_16_primary_mechanism": "SYSTEMATIC_WHFAST_STEP_BIAS",
+    "manifest_16_reference": "IAS15_REFERENCE_QUALIFIED_AT_ROUNDOFF_PHASE_FLOOR",
+    "manifest_16_step3_diagnosis": "STEP3_NUMERICAL_FLOOR_CHARACTERIZED",
+    "manifest_17": "STEP3E_025_DAY_PRODUCTION_NOT_VALIDATED",
+    "manifest_18_primary_classification": "TRUE_NONPHASE_NONCONVERGENCE",
+    "manifest_18_scope": "historical combined standard-kernel WHFast physical+tangent/MEGNO configuration only",
+    "manifest_18_status": "STEP3E1_OFFLINE_DIAGNOSIS_COMPLETE"
+  },
+  "initial_integrity_facts": {
+    "compiled_c_tag": "gr-tangent-compiled-c-v1",
+    "compiled_c_tag_commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b",
+    "compiled_c_tag_kind": "annotated",
+    "head": "35a4d3ae6a717f7d40e4c4db0bd1e78b0c169ce4",
+    "python_oracle_v2_commit": "9933bc5e3d9bfe9ec07e72929c22e4406f12b441",
+    "runtime": {
+      "callback_build_metadata_sha256": "6ad9e3bed8f2c9a41d5a098c3ff1c5a3f9cb430db615efa8e2a208719106b917",
+      "callback_library_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+      "callback_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+      "librebound_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04",
+      "libreboundx_sha256": "0f06a8fc47970fdd22dbc048bc31470b272147a335a2a991f5aaef45f1ffb0bb",
+      "numpy": "2.2.6",
+      "python": "3.10.12",
+      "python_compiler": "GCC 11.4.0",
+      "rebound": "4.6.0",
+      "rebound_build": "Feb 11 2026 17:34:38",
+      "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+      "rebound_header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+      "reboundx": "4.6.1"
+    },
+    "step3e1_preregistration_commit": "7d9876fca811a593c1ac265727b907a038bb54fd",
+    "step3e_starting_commit": "1d24b97047335bd1302ab5c7b26cb6b231ac5516",
+    "transient_repository_hygiene": {
+      ".codex-step3e1-manifest-update.json": {
+        "exists": false,
+        "tracked": false
+      },
+      ".codex-step3e1-manifest.patch": {
+        "exists": false,
+        "tracked": false
+      }
+    },
+    "worktree_clean": true
+  },
+  "literature_review": {
+    "claim_fields": [
+      "title",
+      "authors",
+      "year",
+      "doi_or_official_url",
+      "software_version_or_commit",
+      "symbol_or_section",
+      "paraphrase",
+      "direct_applicability",
+      "scope_caveat"
+    ],
+    "prohibited_sources": [
+      "blogs",
+      "Stack Overflow",
+      "secondary tutorials",
+      "AI summaries",
+      "undocumented assumptions"
+    ],
+    "required_topics": [
+      "original WHFast method and implementation",
+      "REBOUND 4.6.0 WHFast source and reference",
+      "advanced WHFast kernels and correctors",
+      "high-order kernels correctors and secular-frequency accuracy",
+      "variational equations and MEGNO",
+      "REBOUNDx gr_potential",
+      "long-term Solar-System WHFast or WHCKL applications",
+      "statistical versus pointwise convergence of chaotic Solar-System integrations"
+    ]
+  },
+  "model_id": "m0_grpot_emb_pluto_v1",
+  "operational_claims_to_resolve": [
+    "kernel semantics and variation support",
+    "coordinate variation support and unsupported-combination behavior",
+    "MEGNO initialization side effects",
+    "per-step versus per-output synchronization",
+    "safe_mode and keep_unsynchronized conditions",
+    "corrector compatibility and application points",
+    "lazy-kernel additional-force compatibility",
+    "Python accessor synchronization behavior",
+    "archive serialization and restore fidelity",
+    "callback reattachment and restored flags",
+    "gr_potential mean-motion caveat",
+    "exact_finish_time and output divisibility"
+  ],
+  "paths": {
+    "manifest": "ephemeris_experiment_runner/manifests/19_m0_step3f0_whfast_configuration_audit_v1.json",
+    "output_root": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f0_whfast_configuration_audit_v1",
+    "project_root": "/home/peacelovephysics/ephemeris",
+    "report": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f0-whfast-configuration-audit-v1/m0_step3f0_whfast_configuration_audit_report.md",
+    "report_root": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f0-whfast-configuration-audit-v1",
+    "settings_matrix": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f0-whfast-configuration-audit-v1/m0_step3f0_effective_settings_matrix.csv",
+    "summary": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f0-whfast-configuration-audit-v1/m0_step3f0_whfast_configuration_audit_summary.json"
+  },
+  "preregistration": {
+    "final_status_calculated": false,
+    "integration_or_force_evaluation_count": 0,
+    "new_configuration_findings_calculated": false,
+    "primary_finding": "NOT_EVALUATED",
+    "starting_commit": "35a4d3ae6a717f7d40e4c4db0bd1e78b0c169ce4"
+  },
+  "protected_files": {
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+  },
+  "required_source_symbols": [
+    "reb_integrator_whfast_init",
+    "reb_integrator_whfast_part1",
+    "reb_integrator_whfast_part2",
+    "reb_integrator_whfast_synchronize",
+    "reb_whfast_calculate_jerk",
+    "reb_simulation_init_megno_seed",
+    "reb_simulation_update_megno",
+    "reb_simulation_integrate",
+    "reb_simulation_step",
+    "reb_simulation_save_to_file",
+    "reb_simulationarchive_create_from_file",
+    "reb_simulation_update_tree",
+    "force_is_velocity_dependent",
+    "recalculate_coordinates_this_timestep",
+    "is_synchronized",
+    "safe_mode",
+    "keep_unsynchronized"
+  ],
+  "schema_version": 1,
+  "source_selection": {
+    "allowed_domains": [
+      "github.com/hannorein/rebound",
+      "github.com/dtamayo/reboundx",
+      "rebound.readthedocs.io",
+      "reboundx.readthedocs.io",
+      "ui.adsabs.harvard.edu",
+      "doi.org",
+      "academic.oup.com",
+      "iopscience.iop.org",
+      "arxiv.org"
+    ],
+    "exact_release_required": true,
+    "installation_or_dependency_change_forbidden": true,
+    "local_source_preferred": true,
+    "retrieval_record_fields": [
+      "url",
+      "tag_or_commit",
+      "retrieval_date",
+      "sha256"
+    ],
+    "temporary_official_tagged_source_allowed": true
+  },
+  "zero_step_probe_policy": {
+    "allowed": [
+      "instantiate an already-separable historical builder",
+      "attach the validated compiled callback",
+      "initialize first variations and MEGNO",
+      "inspect configuration fields",
+      "load existing archives and checkpoints",
+      "restore existing checkpoints",
+      "destroy in-memory simulations"
+    ],
+    "builder_refactor_forbidden": true,
+    "forbidden": [
+      "Simulation.integrate",
+      "Simulation.step",
+      "equivalent stepping functions",
+      "force evaluation benchmark",
+      "runner entrypoint capable of an integration loop",
+      "create or modify a trajectory archive"
+    ],
+    "required_guard": "Monkeypatch integrate, step, known runner entrypoints, and ctypes-exposed stepping symbols to raise before any call; assert zero calls and unchanged archive hashes."
+  }
+}
