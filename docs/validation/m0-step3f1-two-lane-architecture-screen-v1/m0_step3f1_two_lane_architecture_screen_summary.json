@@ -1,0 +1,3706 @@
+{
+  "conservation": {
+    "P": {
+      "angular_momentum": {
+        "endpoint": 2.189311785932846e-13,
+        "fitted_change_over_10k": 1.7438357761578418e-13,
+        "fitted_trend_per_year": 1.7438357761578418e-17,
+        "max_abs": 2.3157702284416023e-13,
+        "p99_abs": 2.247798815593146e-13,
+        "rms": 1.4714865940241835e-13,
+        "windows": [
+          {
+            "end_years": 1000,
+            "max_abs": 5.990968713852336e-14,
+            "rms": 3.793430529050703e-14
+          },
+          {
+            "end_years": 2000,
+            "max_abs": 9.705685462547057e-14,
+            "rms": 6.987538810761524e-14
+          },
+          {
+            "end_years": 3000,
+            "max_abs": 1.3135870715597077e-13,
+            "rms": 1.1475824957993476e-13
+          },
+          {
+            "end_years": 4000,
+            "max_abs": 1.5728268787026584e-13,
+            "rms": 1.2069731088423358e-13
+          },
+          {
+            "end_years": 5000,
+            "max_abs": 1.7814833088421065e-13,
+            "rms": 1.5481796194841068e-13
+          },
+          {
+            "end_years": 6000,
+            "max_abs": 1.9079417513508628e-13,
+            "rms": 1.584448069008256e-13
+          },
+          {
+            "end_years": 7000,
+            "max_abs": 1.672412902178304e-13,
+            "rms": 1.5414449826782332e-13
+          },
+          {
+            "end_years": 8000,
+            "max_abs": 2.3157702284416023e-13,
+            "rms": 1.873135332056818e-13
+          },
+          {
+            "end_years": 9000,
+            "max_abs": 2.2225071270913947e-13,
+            "rms": 1.9183368256417073e-13
+          },
+          {
+            "end_years": 10000,
+            "max_abs": 2.247798815593146e-13,
+            "rms": 1.9978305319325114e-13
+          }
+        ],
+        "worst_epoch_years": 8000.0
+      },
+      "energy": {
+        "endpoint": 3.270906372470473e-13,
+        "fitted_change_over_10k": 2.0745411976547557e-13,
+        "fitted_trend_per_year": 2.0745411976547558e-17,
+        "max_abs": 3.7719734648363945e-13,
+        "p99_abs": 3.460902072921492e-13,
+        "rms": 2.371242283924413e-13,
+        "windows": [
+          {
+            "end_years": 1000,
+            "max_abs": 1.1772282616180747e-13,
+            "rms": 6.931693067225549e-14
+          },
+          {
+            "end_years": 2000,
+            "max_abs": 2.1942640699147023e-13,
+            "rms": 1.3557250592422007e-13
+          },
+          {
+            "end_years": 3000,
+            "max_abs": 3.028754989542705e-13,
+            "rms": 2.590573232390378e-13
+          },
+          {
+            "end_years": 4000,
+            "max_abs": 2.846210100874079e-13,
+            "rms": 2.2614847017949343e-13
+          },
+          {
+            "end_years": 5000,
+            "max_abs": 3.3528653020767947e-13,
+            "rms": 2.7252245510284043e-13
+          },
+          {
+            "end_years": 6000,
+            "max_abs": 3.231789610612911e-13,
+            "rms": 2.48629050996504e-13
+          },
+          {
+            "end_years": 7000,
+            "max_abs": 2.2911246230858097e-13,
+            "rms": 1.9916900181464714e-13
+          },
+          {
+            "end_years": 8000,
+            "max_abs": 3.7719734648363945e-13,
+            "rms": 2.7678712810461986e-13
+          },
+          {
+            "end_years": 9000,
+            "max_abs": 3.447863152302304e-13,
+            "rms": 2.8944907220705406e-13
+          },
+          {
+            "end_years": 10000,
+            "max_abs": 3.388256658043161e-13,
+            "rms": 3.0052978861172757e-13
+          }
+        ],
+        "worst_epoch_years": 8000.0
+      },
+      "telemetry_angular_max_abs_difference": 0.0,
+      "telemetry_energy_max_abs_difference": 0.0
+    },
+    "T": {
+      "angular_momentum": {
+        "endpoint": -7.634928466466171e-14,
+        "fitted_change_over_10k": 1.702843576018464e-14,
+        "fitted_trend_per_year": 1.7028435760184639e-18,
+        "max_abs": 1.7909676920302633e-13,
+        "p99_abs": 1.4764023162897314e-13,
+        "rms": 6.641828905551036e-14,
+        "windows": [
+          {
+            "end_years": 1000,
+            "max_abs": 7.002636253922388e-14,
+            "rms": 4.179667943082866e-14
+          },
+          {
+            "end_years": 2000,
+            "max_abs": 1.1918708206450295e-13,
+            "rms": 9.973507769011721e-14
+          },
+          {
+            "end_years": 3000,
+            "max_abs": 1.2535193113680482e-13,
+            "rms": 8.885709400291363e-14
+          },
+          {
+            "end_years": 4000,
+            "max_abs": 1.1017691803575406e-13,
+            "rms": 7.755214454439531e-14
+          },
+          {
+            "end_years": 5000,
+            "max_abs": 3.8253678858898824e-14,
+            "rms": 2.0866541136963155e-14
+          },
+          {
+            "end_years": 6000,
+            "max_abs": 5.990968713852336e-14,
+            "rms": 3.435756991585313e-14
+          },
+          {
+            "end_years": 7000,
+            "max_abs": 5.72224452352123e-14,
+            "rms": 2.6379309537512013e-14
+          },
+          {
+            "end_years": 8000,
+            "max_abs": 6.433573262632984e-14,
+            "rms": 4.300339569898527e-14
+          },
+          {
+            "end_years": 9000,
+            "max_abs": 8.093340320560413e-14,
+            "rms": 3.116966535505295e-14
+          },
+          {
+            "end_years": 10000,
+            "max_abs": 1.7909676920302633e-13,
+            "rms": 1.1755211827158257e-13
+          }
+        ],
+        "worst_epoch_years": 9400.0
+      },
+      "energy": {
+        "endpoint": -1.3092939004609884e-12,
+        "fitted_change_over_10k": -3.720699772746814e-13,
+        "fitted_trend_per_year": -3.720699772746814e-17,
+        "max_abs": 3.184104415205596e-12,
+        "p99_abs": 3.178143765779682e-12,
+        "rms": 1.8591410115999333e-12,
+        "windows": [
+          {
+            "end_years": 1000,
+            "max_abs": 2.905257784249543e-12,
+            "rms": 1.8780103016724204e-12
+          },
+          {
+            "end_years": 2000,
+            "max_abs": 2.0899527049612023e-12,
+            "rms": 1.6326377419389613e-12
+          },
+          {
+            "end_years": 3000,
+            "max_abs": 3.0188826639310343e-12,
+            "rms": 1.825259177639983e-12
+          },
+          {
+            "end_years": 4000,
+            "max_abs": 2.79312306692453e-12,
+            "rms": 2.0734659695490815e-12
+          },
+          {
+            "end_years": 5000,
+            "max_abs": 2.0748648111018566e-12,
+            "rms": 1.497418629433241e-12
+          },
+          {
+            "end_years": 6000,
+            "max_abs": 2.7329577617817076e-12,
+            "rms": 1.6632136924178786e-12
+          },
+          {
+            "end_years": 7000,
+            "max_abs": 2.7778489027706246e-12,
+            "rms": 1.9818914781114833e-12
+          },
+          {
+            "end_years": 8000,
+            "max_abs": 2.1594315248320156e-12,
+            "rms": 1.7094080008972906e-12
+          },
+          {
+            "end_years": 9000,
+            "max_abs": 3.184104415205596e-12,
+            "rms": 2.1189119861941664e-12
+          },
+          {
+            "end_years": 10000,
+            "max_abs": 3.178143765779682e-12,
+            "rms": 2.1767252398962047e-12
+          }
+        ],
+        "worst_epoch_years": 8200.0
+      },
+      "telemetry_angular_max_abs_difference": 0.0,
+      "telemetry_energy_max_abs_difference": 0.0
+    }
+  },
+  "decision_statement": "Both proposed lanes failed material assigned screens. Lane P missed its frozen IAS15 physical threshold and callback-accounting integrity gate; Lane T missed carrier-consistency and tangent/MEGNO continuity gates.",
+  "derived_artifacts": {
+    "configuration_table": {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_lane_configuration.csv",
+      "sha256": "6e616bc62588c91d9f873397782ff4c33ad98a52fbdf743179a27ede241dae50",
+      "size_bytes": 784
+    },
+    "figures": [
+      {
+        "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/figures/physical_defects_vs_ias15.png",
+        "sha256": "60079b491828b86db546e613ecb7b72fa7e032790504a77110763cc46c9b41dc",
+        "size_bytes": 67038
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/figures/coordinate_free_phase_stripped_by_body.png",
+        "sha256": "7e8ce60c7d0bab5798c024adc6d943ec365f4229a7112f547491e2bca3b0b80a",
+        "size_bytes": 53224
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/figures/energy_angular_momentum_histories.png",
+        "sha256": "36a06d0994857bd4e75442f64d1c3f89be149b0d4087f1c2706c279b12abdb5b",
+        "size_bytes": 154093
+      },
+      {
+        "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/figures/tangent_megno_lcn_histories.png",
+        "sha256": "9438555c2c7e49e6a872b00f98e03d2a47a9e2997bca4fa8db1e904e457900f6",
+        "size_bytes": 85485
+      }
+    ],
+    "metrics_table": {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_metrics.csv",
+      "sha256": "3b71c9394e484080f5d180f39a0cbfffdeb4899bd9c87401e365c388c18b9acc",
+      "size_bytes": 29623
+    },
+    "report": {
+      "path": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_two_lane_architecture_screen_report.md",
+      "sha256": "ce0606a468e8969600956cdb4c5a39b5dfe170a73b8acb71c55a6cf5ecf3aedf",
+      "size_bytes": 8732
+    }
+  },
+  "essential_unresolved_metric_count": 1,
+  "explicit_constraints": {
+    "manifest17_not_validated": true,
+    "manifest18_historical_combined_lane_conclusion_preserved": true,
+    "stage4_unauthorized": true,
+    "step3f1_does_not_validate_0p25_day": true,
+    "ten_myr_unauthorized": true
+  },
+  "final_status": "STEP3F1_TWO_LANE_SCREEN_FAILED",
+  "gates": {
+    "carrier_T_vs_IAS15": {
+      "checks": {
+        "earth barycenter": true,
+        "global": true,
+        "jupiter barycenter": true,
+        "mars barycenter": true,
+        "mercury barycenter": true,
+        "neptune barycenter": true,
+        "pluto barycenter": false,
+        "saturn barycenter": true,
+        "sun": true,
+        "uranus barycenter": true,
+        "venus barycenter": true
+      },
+      "passed": false
+    },
+    "carrier_T_vs_P": {
+      "checks": {
+        "earth barycenter": true,
+        "global": true,
+        "jupiter barycenter": true,
+        "mars barycenter": true,
+        "mercury barycenter": true,
+        "neptune barycenter": false,
+        "pluto barycenter": false,
+        "saturn barycenter": true,
+        "sun": true,
+        "uranus barycenter": true,
+        "venus barycenter": true
+      },
+      "passed": false
+    },
+    "conservation": {
+      "checks": {
+        "P:angular_max": true,
+        "P:angular_telemetry_recomputed": true,
+        "P:energy_max": true,
+        "P:energy_telemetry_recomputed": true,
+        "P:energy_trend": true,
+        "T:angular_max": true,
+        "T:angular_telemetry_recomputed": true,
+        "T:energy_max": true,
+        "T:energy_telemetry_recomputed": true,
+        "T:energy_trend": true,
+        "pair_angular_history": true,
+        "pair_energy_history": true
+      },
+      "pair_angular_history_max_abs_difference": 3.7210396708201586e-13,
+      "pair_angular_worst_epoch_years": 9400.0,
+      "pair_energy_history_max_abs_difference": 3.507283376266887e-12,
+      "pair_energy_worst_epoch_years": 8200.0,
+      "passed": true
+    },
+    "integrity": {
+      "checks": {
+        "P": false,
+        "T": true
+      },
+      "passed": false
+    },
+    "lane_P_assigned": {
+      "passed": false
+    },
+    "lane_T_assigned": {
+      "passed": false
+    },
+    "mercury_perihelion_pairs": {
+      "checks": {
+        "P_vs_IAS15": true,
+        "T_vs_IAS15": true,
+        "T_vs_P": true,
+        "T_vs_old_T": true
+      },
+      "passed": true
+    },
+    "orbit_P_vs_IAS15": {
+      "checks": {
+        "earth barycenter:angular_momentum_direction_rad_max": false,
+        "earth barycenter:eccentricity_absolute_max": true,
+        "earth barycenter:eccentricity_vector_norm_max": true,
+        "earth barycenter:inclination_component_norm_max": true,
+        "earth barycenter:semimajor_axis_relative_max": true,
+        "jupiter barycenter:angular_momentum_direction_rad_max": false,
+        "jupiter barycenter:eccentricity_absolute_max": true,
+        "jupiter barycenter:eccentricity_vector_norm_max": true,
+        "jupiter barycenter:inclination_component_norm_max": true,
+        "jupiter barycenter:semimajor_axis_relative_max": true,
+        "mars barycenter:angular_momentum_direction_rad_max": false,
+        "mars barycenter:eccentricity_absolute_max": true,
+        "mars barycenter:eccentricity_vector_norm_max": true,
+        "mars barycenter:inclination_component_norm_max": true,
+        "mars barycenter:semimajor_axis_relative_max": true,
+        "mercury barycenter:angular_momentum_direction_rad_max": false,
+        "mercury barycenter:eccentricity_absolute_max": true,
+        "mercury barycenter:eccentricity_vector_norm_max": true,
+        "mercury barycenter:inclination_component_norm_max": true,
+        "mercury barycenter:semimajor_axis_relative_max": true,
+        "neptune barycenter:angular_momentum_direction_rad_max": false,
+        "neptune barycenter:eccentricity_absolute_max": true,
+        "neptune barycenter:eccentricity_vector_norm_max": true,
+        "neptune barycenter:inclination_component_norm_max": true,
+        "neptune barycenter:semimajor_axis_relative_max": true,
+        "persistent_nonphase_failures": false,
+        "pluto barycenter:angular_momentum_direction_rad_max": false,
+        "pluto barycenter:eccentricity_absolute_max": true,
+        "pluto barycenter:eccentricity_vector_norm_max": true,
+        "pluto barycenter:inclination_component_norm_max": true,
+        "pluto barycenter:semimajor_axis_relative_max": true,
+        "saturn barycenter:angular_momentum_direction_rad_max": false,
+        "saturn barycenter:eccentricity_absolute_max": true,
+        "saturn barycenter:eccentricity_vector_norm_max": true,
+        "saturn barycenter:inclination_component_norm_max": true,
+        "saturn barycenter:semimajor_axis_relative_max": true,
+        "uranus barycenter:angular_momentum_direction_rad_max": false,
+        "uranus barycenter:eccentricity_absolute_max": true,
+        "uranus barycenter:eccentricity_vector_norm_max": true,
+        "uranus barycenter:inclination_component_norm_max": true,
+        "uranus barycenter:semimajor_axis_relative_max": true,
+        "venus barycenter:angular_momentum_direction_rad_max": false,
+        "venus barycenter:eccentricity_absolute_max": true,
+        "venus barycenter:eccentricity_vector_norm_max": true,
+        "venus barycenter:inclination_component_norm_max": true,
+        "venus barycenter:semimajor_axis_relative_max": true
+      },
+      "passed": false
+    },
+    "orbit_T_vs_IAS15": {
+      "checks": {
+        "earth barycenter:angular_momentum_direction_rad_max": false,
+        "earth barycenter:eccentricity_absolute_max": true,
+        "earth barycenter:eccentricity_vector_norm_max": true,
+        "earth barycenter:inclination_component_norm_max": true,
+        "earth barycenter:semimajor_axis_relative_max": true,
+        "jupiter barycenter:angular_momentum_direction_rad_max": false,
+        "jupiter barycenter:eccentricity_absolute_max": true,
+        "jupiter barycenter:eccentricity_vector_norm_max": true,
+        "jupiter barycenter:inclination_component_norm_max": true,
+        "jupiter barycenter:semimajor_axis_relative_max": true,
+        "mars barycenter:angular_momentum_direction_rad_max": false,
+        "mars barycenter:eccentricity_absolute_max": true,
+        "mars barycenter:eccentricity_vector_norm_max": true,
+        "mars barycenter:inclination_component_norm_max": true,
+        "mars barycenter:semimajor_axis_relative_max": true,
+        "mercury barycenter:angular_momentum_direction_rad_max": false,
+        "mercury barycenter:eccentricity_absolute_max": true,
+        "mercury barycenter:eccentricity_vector_norm_max": true,
+        "mercury barycenter:inclination_component_norm_max": true,
+        "mercury barycenter:semimajor_axis_relative_max": true,
+        "neptune barycenter:angular_momentum_direction_rad_max": false,
+        "neptune barycenter:eccentricity_absolute_max": true,
+        "neptune barycenter:eccentricity_vector_norm_max": true,
+        "neptune barycenter:inclination_component_norm_max": true,
+        "neptune barycenter:semimajor_axis_relative_max": true,
+        "persistent_nonphase_failures": false,
+        "pluto barycenter:angular_momentum_direction_rad_max": false,
+        "pluto barycenter:eccentricity_absolute_max": true,
+        "pluto barycenter:eccentricity_vector_norm_max": true,
+        "pluto barycenter:inclination_component_norm_max": true,
+        "pluto barycenter:semimajor_axis_relative_max": true,
+        "saturn barycenter:angular_momentum_direction_rad_max": false,
+        "saturn barycenter:eccentricity_absolute_max": true,
+        "saturn barycenter:eccentricity_vector_norm_max": true,
+        "saturn barycenter:inclination_component_norm_max": true,
+        "saturn barycenter:semimajor_axis_relative_max": true,
+        "uranus barycenter:angular_momentum_direction_rad_max": false,
+        "uranus barycenter:eccentricity_absolute_max": true,
+        "uranus barycenter:eccentricity_vector_norm_max": true,
+        "uranus barycenter:inclination_component_norm_max": true,
+        "uranus barycenter:semimajor_axis_relative_max": true,
+        "venus barycenter:angular_momentum_direction_rad_max": false,
+        "venus barycenter:eccentricity_absolute_max": true,
+        "venus barycenter:eccentricity_vector_norm_max": true,
+        "venus barycenter:inclination_component_norm_max": true,
+        "venus barycenter:semimajor_axis_relative_max": true
+      },
+      "passed": false
+    },
+    "orbit_T_vs_P": {
+      "checks": {
+        "earth barycenter:angular_momentum_direction_rad_max": false,
+        "earth barycenter:eccentricity_absolute_max": true,
+        "earth barycenter:eccentricity_vector_norm_max": true,
+        "earth barycenter:inclination_component_norm_max": true,
+        "earth barycenter:semimajor_axis_relative_max": true,
+        "jupiter barycenter:angular_momentum_direction_rad_max": false,
+        "jupiter barycenter:eccentricity_absolute_max": true,
+        "jupiter barycenter:eccentricity_vector_norm_max": true,
+        "jupiter barycenter:inclination_component_norm_max": true,
+        "jupiter barycenter:semimajor_axis_relative_max": true,
+        "mars barycenter:angular_momentum_direction_rad_max": false,
+        "mars barycenter:eccentricity_absolute_max": true,
+        "mars barycenter:eccentricity_vector_norm_max": true,
+        "mars barycenter:inclination_component_norm_max": true,
+        "mars barycenter:semimajor_axis_relative_max": true,
+        "mercury barycenter:angular_momentum_direction_rad_max": false,
+        "mercury barycenter:eccentricity_absolute_max": true,
+        "mercury barycenter:eccentricity_vector_norm_max": true,
+        "mercury barycenter:inclination_component_norm_max": true,
+        "mercury barycenter:semimajor_axis_relative_max": true,
+        "neptune barycenter:angular_momentum_direction_rad_max": false,
+        "neptune barycenter:eccentricity_absolute_max": true,
+        "neptune barycenter:eccentricity_vector_norm_max": true,
+        "neptune barycenter:inclination_component_norm_max": true,
+        "neptune barycenter:semimajor_axis_relative_max": true,
+        "persistent_nonphase_failures": false,
+        "pluto barycenter:angular_momentum_direction_rad_max": false,
+        "pluto barycenter:eccentricity_absolute_max": true,
+        "pluto barycenter:eccentricity_vector_norm_max": true,
+        "pluto barycenter:inclination_component_norm_max": true,
+        "pluto barycenter:semimajor_axis_relative_max": true,
+        "saturn barycenter:angular_momentum_direction_rad_max": false,
+        "saturn barycenter:eccentricity_absolute_max": true,
+        "saturn barycenter:eccentricity_vector_norm_max": true,
+        "saturn barycenter:inclination_component_norm_max": true,
+        "saturn barycenter:semimajor_axis_relative_max": true,
+        "uranus barycenter:angular_momentum_direction_rad_max": false,
+        "uranus barycenter:eccentricity_absolute_max": true,
+        "uranus barycenter:eccentricity_vector_norm_max": true,
+        "uranus barycenter:inclination_component_norm_max": true,
+        "uranus barycenter:semimajor_axis_relative_max": true,
+        "venus barycenter:angular_momentum_direction_rad_max": false,
+        "venus barycenter:eccentricity_absolute_max": true,
+        "venus barycenter:eccentricity_vector_norm_max": true,
+        "venus barycenter:inclination_component_norm_max": true,
+        "venus barycenter:semimajor_axis_relative_max": true
+      },
+      "passed": false
+    },
+    "orbit_T_vs_old_T": {
+      "checks": {
+        "earth barycenter:angular_momentum_direction_rad_max": false,
+        "earth barycenter:eccentricity_absolute_max": true,
+        "earth barycenter:eccentricity_vector_norm_max": true,
+        "earth barycenter:inclination_component_norm_max": true,
+        "earth barycenter:semimajor_axis_relative_max": true,
+        "jupiter barycenter:angular_momentum_direction_rad_max": false,
+        "jupiter barycenter:eccentricity_absolute_max": true,
+        "jupiter barycenter:eccentricity_vector_norm_max": true,
+        "jupiter barycenter:inclination_component_norm_max": true,
+        "jupiter barycenter:semimajor_axis_relative_max": true,
+        "mars barycenter:angular_momentum_direction_rad_max": false,
+        "mars barycenter:eccentricity_absolute_max": true,
+        "mars barycenter:eccentricity_vector_norm_max": true,
+        "mars barycenter:inclination_component_norm_max": true,
+        "mars barycenter:semimajor_axis_relative_max": true,
+        "mercury barycenter:angular_momentum_direction_rad_max": false,
+        "mercury barycenter:eccentricity_absolute_max": true,
+        "mercury barycenter:eccentricity_vector_norm_max": true,
+        "mercury barycenter:inclination_component_norm_max": true,
+        "mercury barycenter:semimajor_axis_relative_max": true,
+        "neptune barycenter:angular_momentum_direction_rad_max": false,
+        "neptune barycenter:eccentricity_absolute_max": true,
+        "neptune barycenter:eccentricity_vector_norm_max": true,
+        "neptune barycenter:inclination_component_norm_max": true,
+        "neptune barycenter:semimajor_axis_relative_max": true,
+        "persistent_nonphase_failures": false,
+        "pluto barycenter:angular_momentum_direction_rad_max": false,
+        "pluto barycenter:eccentricity_absolute_max": true,
+        "pluto barycenter:eccentricity_vector_norm_max": true,
+        "pluto barycenter:inclination_component_norm_max": true,
+        "pluto barycenter:semimajor_axis_relative_max": true,
+        "saturn barycenter:angular_momentum_direction_rad_max": false,
+        "saturn barycenter:eccentricity_absolute_max": true,
+        "saturn barycenter:eccentricity_vector_norm_max": true,
+        "saturn barycenter:inclination_component_norm_max": true,
+        "saturn barycenter:semimajor_axis_relative_max": true,
+        "uranus barycenter:angular_momentum_direction_rad_max": false,
+        "uranus barycenter:eccentricity_absolute_max": true,
+        "uranus barycenter:eccentricity_vector_norm_max": true,
+        "uranus barycenter:inclination_component_norm_max": true,
+        "uranus barycenter:semimajor_axis_relative_max": true,
+        "venus barycenter:angular_momentum_direction_rad_max": false,
+        "venus barycenter:eccentricity_absolute_max": true,
+        "venus barycenter:eccentricity_vector_norm_max": true,
+        "venus barycenter:inclination_component_norm_max": true,
+        "venus barycenter:semimajor_axis_relative_max": true
+      },
+      "passed": false
+    },
+    "raw_P_vs_IAS15": {
+      "checks": {
+        "earth barycenter": true,
+        "global": true,
+        "jupiter barycenter": true,
+        "mars barycenter": true,
+        "mercury barycenter": true,
+        "neptune barycenter": true,
+        "pluto barycenter": true,
+        "saturn barycenter": false,
+        "sun": true,
+        "uranus barycenter": true,
+        "venus barycenter": true
+      },
+      "passed": false
+    },
+    "sync_T_vs_old_T": {
+      "checks": {
+        "earth barycenter": true,
+        "global": true,
+        "jupiter barycenter": false,
+        "mars barycenter": true,
+        "mercury barycenter": true,
+        "neptune barycenter": false,
+        "pluto barycenter": false,
+        "saturn barycenter": true,
+        "sun": false,
+        "uranus barycenter": false,
+        "venus barycenter": true
+      },
+      "passed": false
+    },
+    "tangent": {
+      "checks": {
+        "direction_discrepancy_rms": false,
+        "final_accumulated_lcn_difference": true,
+        "final_direction_cosine": false,
+        "final_megno_difference": false,
+        "lcn_history_rms_difference": true,
+        "megno_history_rms_difference": false,
+        "tangent_log_norm_difference": false
+      },
+      "passed": false
+    }
+  },
+  "historical_results_preserved": {
+    "manifest_13": "BLOCKED",
+    "manifest_14": "REVERSIBILITY_GATE_PASSED",
+    "manifest_15": "BLOCKED",
+    "manifest_16_primary_mechanism": "SYSTEMATIC_WHFAST_STEP_BIAS",
+    "manifest_16_reference": "IAS15_REFERENCE_QUALIFIED_AT_ROUNDOFF_PHASE_FLOOR",
+    "manifest_16_step3_diagnosis": "STEP3_NUMERICAL_FLOOR_CHARACTERIZED",
+    "manifest_17": "STEP3E_025_DAY_PRODUCTION_NOT_VALIDATED",
+    "manifest_18_primary_classification": "TRUE_NONPHASE_NONCONVERGENCE",
+    "manifest_18_scope": "Historical combined standard-kernel WHFast physical+tangent/continuous-MEGNO configuration only.",
+    "manifest_18_status": "STEP3E1_OFFLINE_DIAGNOSIS_COMPLETE",
+    "manifest_19_primary_finding": "COMBINED_LANE_CAPABILITY_CONSTRAINT_CONFIRMED",
+    "manifest_19_status": "STEP3F0_CONFIGURATION_AUDIT_COMPLETE",
+    "production_validation": false
+  },
+  "integrity": {
+    "frozen_reference_artifacts_verified": 22,
+    "lanes": {
+      "P": {
+        "archive_snapshots": 11,
+        "artifacts": {
+          "archive": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/simulationarchive.bin",
+            "sha256": "e7aa5c5b3f1b84a5055ad844f1c64ab61dd3f7c7d3676869f02a2df0491dfa5f",
+            "size_bytes": 32780
+          },
+          "events": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/events.log",
+            "sha256": "ae2af6ce950c39b604572184207e12563bc0812c05cb898b178855bc701a8b2a",
+            "size_bytes": 486
+          },
+          "progress": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/progress.csv",
+            "sha256": "16013a2bc40f10b602366f296a1f14b4c57f7c096bb0feaa30c3b6c2419e5f51",
+            "size_bytes": 52582
+          },
+          "restart_check": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/restart_check.json",
+            "sha256": "2e2007adce888f5646a76a37962feaae5b52e3968da204b1097344150256cca0",
+            "size_bytes": 1304
+          },
+          "state": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/state.csv",
+            "sha256": "8697d0984c8edf721acfd0e3a11493dd4530ade23622e12e5b8a08c4983eabdd",
+            "size_bytes": 382406
+          },
+          "status": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/status.json",
+            "sha256": "a07ef068a4f879c6eb8349de60e1278f513c5f5bdf4920c3d04fef659a60d11d",
+            "size_bytes": 546
+          },
+          "summary": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/summary.json",
+            "sha256": "f104fc67a1ee16c8f061ad3f84641eb32baacc53c8ed493bf65016d2d243b847",
+            "size_bytes": 8485
+          }
+        },
+        "callback_invocations": 29226432,
+        "live_map_preserved": true,
+        "nonfinite_result_count": 0,
+        "passed": false,
+        "preregistered_callback_accounting_passed": false,
+        "restart": {
+          "archive_is_synchronized_at_restore": 0,
+          "archive_sha256_after": "e7aa5c5b3f1b84a5055ad844f1c64ab61dd3f7c7d3676869f02a2df0491dfa5f",
+          "archive_sha256_before": "e7aa5c5b3f1b84a5055ad844f1c64ab61dd3f7c7d3676869f02a2df0491dfa5f",
+          "callback_accounting_passed": false,
+          "callback_invocations": 292264,
+          "callback_reattached": true,
+          "checkpoint_years": 1000,
+          "continuation_steps": 146100,
+          "expected_callback_invocations": 292232,
+          "fresh_process_pid": 1490,
+          "lane": "P",
+          "lane_id": "m0_step3f1_physical_whckl_0p25d_10k",
+          "lcn_exact_float64": true,
+          "manifest_sha256": "46b19b54f278f6e174f7aa10d6fa6e2ed68e25394fc7839d1acecbcde601a65c",
+          "megno_exact_float64": true,
+          "nonfinite_result_count": 0,
+          "physical_state_exact_float64": true,
+          "reference_artifacts_verified": 22,
+          "schema_version": 1,
+          "settings": {
+            "N": 10,
+            "N_real": 10,
+            "N_var": 0,
+            "N_var_config": 0,
+            "coordinates": "jacobi",
+            "corrector": 17,
+            "corrector2": 0,
+            "dt_seconds": 21600.0,
+            "force_is_velocity_dependent": 0,
+            "integrator": "whfast",
+            "is_synchronized": 0,
+            "keep_unsynchronized": 1,
+            "kernel": "lazy",
+            "recalculate_coordinates_this_timestep": 0,
+            "safe_mode": 0
+          },
+          "status": "FAIL",
+          "target_years": 1100,
+          "variation_state_exact_float64": true
+        },
+        "scientific_samples": 101,
+        "state_rows": 1010,
+        "steps": 14610000,
+        "trajectory_complete": true
+      },
+      "T": {
+        "archive_snapshots": 11,
+        "artifacts": {
+          "archive": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/simulationarchive.bin",
+            "sha256": "555a0234ee652ed79795d06dff509090ece4c40b18e6b919558f7b9a62a56e89",
+            "size_bytes": 61396
+          },
+          "events": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/events.log",
+            "sha256": "62518d86c1f68b8763327313fd55c3ff8784772f5a437bb948a32dee33f8bc86",
+            "size_bytes": 462
+          },
+          "progress": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/progress.csv",
+            "sha256": "7f23e7cf4b7f285092fa527b1369974a3b5e8dc0ec8e6a58c2f80fa24ae1f225",
+            "size_bytes": 60538
+          },
+          "restart_check": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/restart_check.json",
+            "sha256": "8e0f5d2b268e271dd0bb20a71f1ee3f598606652dfc06595e5ad5dfad5a828f8",
+            "size_bytes": 1306
+          },
+          "state": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/state.csv",
+            "sha256": "f10a965a78fa315d018522f566c77cf534e6c6742160fe3243f008b547a204e7",
+            "size_bytes": 492802
+          },
+          "status": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/status.json",
+            "sha256": "c2ba1ec0e9becd2c8e509bc28d1c71f96311c2a02289585580534b44f8aa940a",
+            "size_bytes": 508
+          },
+          "summary": {
+            "path": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/summary.json",
+            "sha256": "0efa29ac2b99c5ad6bc18c33c75ef3a3af97f2f35c1c8b96ddb52157149967ab",
+            "size_bytes": 8082
+          }
+        },
+        "callback_invocations": 14610000,
+        "live_map_preserved": true,
+        "nonfinite_result_count": 0,
+        "passed": true,
+        "preregistered_callback_accounting_passed": true,
+        "restart": {
+          "archive_is_synchronized_at_restore": 0,
+          "archive_sha256_after": "555a0234ee652ed79795d06dff509090ece4c40b18e6b919558f7b9a62a56e89",
+          "archive_sha256_before": "555a0234ee652ed79795d06dff509090ece4c40b18e6b919558f7b9a62a56e89",
+          "callback_accounting_passed": true,
+          "callback_invocations": 146100,
+          "callback_reattached": true,
+          "checkpoint_years": 1000,
+          "continuation_steps": 146100,
+          "expected_callback_invocations": 146100,
+          "fresh_process_pid": 1699,
+          "lane": "T",
+          "lane_id": "m0_step3f1_tangent_whfast_0p25d_10k",
+          "lcn_exact_float64": true,
+          "manifest_sha256": "46b19b54f278f6e174f7aa10d6fa6e2ed68e25394fc7839d1acecbcde601a65c",
+          "megno_exact_float64": true,
+          "nonfinite_result_count": 0,
+          "physical_state_exact_float64": true,
+          "reference_artifacts_verified": 22,
+          "schema_version": 1,
+          "settings": {
+            "N": 20,
+            "N_real": 10,
+            "N_var": 10,
+            "N_var_config": 1,
+            "coordinates": "jacobi",
+            "corrector": 0,
+            "corrector2": 0,
+            "dt_seconds": 21600.0,
+            "force_is_velocity_dependent": 0,
+            "integrator": "whfast",
+            "is_synchronized": 0,
+            "keep_unsynchronized": 1,
+            "kernel": "default",
+            "recalculate_coordinates_this_timestep": 0,
+            "safe_mode": 0
+          },
+          "status": "PASS",
+          "target_years": 1100,
+          "variation_state_exact_float64": true
+        },
+        "scientific_samples": 101,
+        "state_rows": 1010,
+        "steps": 14610000,
+        "trajectory_complete": true
+      }
+    },
+    "passed": false,
+    "protected_files_verified": 4
+  },
+  "kind": "m0_step3f1_two_lane_architecture_screen_summary",
+  "manifest_path": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json",
+  "manifest_sha256": "46b19b54f278f6e174f7aa10d6fa6e2ed68e25394fc7839d1acecbcde601a65c",
+  "physical": {
+    "mercury_perihelion": {
+      "IAS15": {
+        "confidence_95_half_width_arcsec_per_century": 0.26877552401664284,
+        "fit_residual_rms_arcsec": 39.29412399237699,
+        "rate_arcsec_per_century": 566.9120319737376,
+        "standard_error_arcsec_per_century": 0.13545671870397386
+      },
+      "P": {
+        "confidence_95_half_width_arcsec_per_century": 0.26877552421124645,
+        "fit_residual_rms_arcsec": 39.29412402082741,
+        "rate_arcsec_per_century": 566.9120319812813,
+        "standard_error_arcsec_per_century": 0.1354567188020496
+      },
+      "T": {
+        "confidence_95_half_width_arcsec_per_century": 0.26877552513434655,
+        "fit_residual_rms_arcsec": 39.2941241557817,
+        "rate_arcsec_per_century": 566.9120318337386,
+        "standard_error_arcsec_per_century": 0.13545671926727096
+      },
+      "old_T": {
+        "confidence_95_half_width_arcsec_per_century": 0.2687755246166592,
+        "fit_residual_rms_arcsec": 39.29412408009747,
+        "rate_arcsec_per_century": 566.9120318357591,
+        "standard_error_arcsec_per_century": 0.13545671900636835
+      }
+    },
+    "mercury_perihelion_pair_difference": {
+      "P_vs_IAS15": 7.543690117017832e-09,
+      "T_vs_IAS15": 1.3999897419125773e-07,
+      "T_vs_P": 1.4754266430827556e-07,
+      "T_vs_old_T": 2.02044247998856e-09
+    },
+    "orbital": {
+      "P_vs_IAS15": {
+        "per_body": {
+          "earth barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.5246085643960683e-12,
+            "eccentricity_vector_norm_max": 1.7653266579264958e-12,
+            "inclination_component_norm_max": 7.368720810048798e-14,
+            "semimajor_axis_relative_max": 2.0705977062452992e-12
+          },
+          "jupiter barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.011854654566548e-12,
+            "eccentricity_vector_norm_max": 3.0348718534613767e-12,
+            "inclination_component_norm_max": 1.0338950445508382e-13,
+            "semimajor_axis_relative_max": 1.1491335539771062e-12
+          },
+          "mars barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.450323360354446e-12,
+            "eccentricity_vector_norm_max": 3.5131620659082987e-12,
+            "inclination_component_norm_max": 5.266317140738258e-14,
+            "semimajor_axis_relative_max": 2.846500551224371e-12
+          },
+          "mercury barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 8.34943225669349e-13,
+            "eccentricity_vector_norm_max": 1.08876399523835e-12,
+            "inclination_component_norm_max": 1.7441449484797044e-13,
+            "semimajor_axis_relative_max": 6.798186548196411e-13
+          },
+          "neptune barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 6.345427655540803e-12,
+            "eccentricity_vector_norm_max": 8.6779721752891e-12,
+            "inclination_component_norm_max": 1.0595005705051131e-13,
+            "semimajor_axis_relative_max": 8.254967829293765e-12
+          },
+          "pluto barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 9.805961598274848e-12,
+            "eccentricity_vector_norm_max": 9.957409635073713e-12,
+            "inclination_component_norm_max": 6.754219715774568e-13,
+            "semimajor_axis_relative_max": 9.825383661665777e-12
+          },
+          "saturn barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.0926124588417352e-11,
+            "eccentricity_vector_norm_max": 1.0996033733191737e-11,
+            "inclination_component_norm_max": 1.5308964068725496e-13,
+            "semimajor_axis_relative_max": 2.647610660547476e-12
+          },
+          "uranus barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 6.326730805916725e-12,
+            "eccentricity_vector_norm_max": 6.7065413985769705e-12,
+            "inclination_component_norm_max": 7.578246401900527e-14,
+            "semimajor_axis_relative_max": 7.710254712083847e-12
+          },
+          "venus barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.3946040502976764e-12,
+            "eccentricity_vector_norm_max": 1.7721149596811527e-12,
+            "inclination_component_norm_max": 8.678048293127865e-14,
+            "semimajor_axis_relative_max": 1.3932035748307765e-12
+          }
+        },
+        "persistent_nonphase_failures": [
+          {
+            "first_three_window_endpoint_years": 7000,
+            "metric": "angular_momentum_direction_rad_max"
+          }
+        ],
+        "phase_aligned": {
+          "mean_anomaly": {
+            "global_scaled_rms": 9.794113909338613e-10,
+            "per_body_scaled_rms": {
+              "earth barycenter": 9.09368473499557e-11,
+              "jupiter barycenter": 3.3661017184012495e-11,
+              "mars barycenter": 1.5552550662280315e-11,
+              "mercury barycenter": 9.142261125561985e-12,
+              "neptune barycenter": 3.0186472004019226e-09,
+              "pluto barycenter": 1.6963123740436029e-10,
+              "saturn barycenter": 4.94702161116014e-10,
+              "sun": 2.145539201517815e-12,
+              "uranus barycenter": 3.2194553767081686e-10,
+              "venus barycenter": 3.0553109805784306e-10
+            }
+          },
+          "mean_longitude": {
+            "global_scaled_rms": 2.2046030270166264e-11,
+            "per_body_scaled_rms": {
+              "earth barycenter": 2.717592471913895e-12,
+              "jupiter barycenter": 4.3552749358013086e-12,
+              "mars barycenter": 2.9085593567651216e-12,
+              "mercury barycenter": 3.2637315900778078e-12,
+              "neptune barycenter": 3.666768507924014e-11,
+              "pluto barycenter": 4.872397624807026e-11,
+              "saturn barycenter": 2.7292950226344776e-11,
+              "sun": 2.145539201517815e-12,
+              "uranus barycenter": 1.841551229659207e-11,
+              "venus barycenter": 2.7612610407910516e-12
+            }
+          }
+        },
+        "rtn": {
+          "earth barycenter": {
+            "position_rms_m": {
+              "N": 0.00849668558278741,
+              "R": 27.92153978131238,
+              "T": 2353.5575549117984
+            },
+            "transverse_position_squared_fraction": 0.99985927605452,
+            "velocity_rms_m_per_s": {
+              "N": 1.5998336102365737e-09,
+              "R": 0.0004687818904674549,
+              "T": 1.2694578810299709e-08
+            }
+          },
+          "jupiter barycenter": {
+            "position_rms_m": {
+              "N": 0.05303922566565733,
+              "R": 26.147394625935753,
+              "T": 647.4436320012759
+            },
+            "transverse_position_squared_fraction": 0.9983716530536121,
+            "velocity_rms_m_per_s": {
+              "N": 9.129669642598503e-10,
+              "R": 1.094376603948698e-05,
+              "T": 1.0795423847426746e-08
+            }
+          },
+          "mars barycenter": {
+            "position_rms_m": {
+              "N": 0.007871919626932138,
+              "R": 32.35060521082205,
+              "T": 458.00357622099136
+            },
+            "transverse_position_squared_fraction": 0.9950356118382315,
+            "velocity_rms_m_per_s": {
+              "N": 7.996819838061448e-10,
+              "R": 4.9165345689189155e-05,
+              "T": 1.3519781605974657e-08
+            }
+          },
+          "mercury barycenter": {
+            "position_rms_m": {
+              "N": 0.009004819429125952,
+              "R": 349.3495078498959,
+              "T": 2391.587720934909
+            },
+            "transverse_position_squared_fraction": 0.9791080836594742,
+            "velocity_rms_m_per_s": {
+              "N": 6.64645860543352e-09,
+              "R": 0.0021362958588482034,
+              "T": 1.739755069193707e-08
+            }
+          },
+          "neptune barycenter": {
+            "position_rms_m": {
+              "N": 0.30432216302177634,
+              "R": 2.57005675002513,
+              "T": 204.88711716163908
+            },
+            "transverse_position_squared_fraction": 0.9998404731378627,
+            "velocity_rms_m_per_s": {
+              "N": 4.0662836140179636e-10,
+              "R": 2.477096519479189e-07,
+              "T": 7.754881158831415e-09
+            }
+          },
+          "pluto barycenter": {
+            "position_rms_m": {
+              "N": 0.3826645129715338,
+              "R": 18.605403456588242,
+              "T": 99.10896232326249
+            },
+            "transverse_position_squared_fraction": 0.9659444307408028,
+            "velocity_rms_m_per_s": {
+              "N": 1.962127369471847e-09,
+              "R": 8.920532526956237e-08,
+              "T": 8.030461469479884e-09
+            }
+          },
+          "saturn barycenter": {
+            "position_rms_m": {
+              "N": 0.11369518910131954,
+              "R": 22.575082515861602,
+              "T": 1237.7117099272625
+            },
+            "transverse_position_squared_fraction": 0.9996674275649204,
+            "velocity_rms_m_per_s": {
+              "N": 7.652741121280492e-10,
+              "R": 8.37777801120154e-06,
+              "T": 2.4904315217257632e-08
+            }
+          },
+          "uranus barycenter": {
+            "position_rms_m": {
+              "N": 0.1289702304738018,
+              "R": 3.105971885265758,
+              "T": 93.53498264520879
+            },
+            "transverse_position_squared_fraction": 0.9988966441197252,
+            "velocity_rms_m_per_s": {
+              "N": 3.330697641748571e-10,
+              "R": 2.2253441047971177e-07,
+              "T": 7.978566704234171e-09
+            }
+          },
+          "venus barycenter": {
+            "position_rms_m": {
+              "N": 0.004842146273149808,
+              "R": 6.956150340387572,
+              "T": 2605.5455968179826
+            },
+            "transverse_position_squared_fraction": 0.9999928724925661,
+            "velocity_rms_m_per_s": {
+              "N": 1.6953900601080051e-09,
+              "R": 0.000843299749768072,
+              "T": 1.4925368712959127e-08
+            }
+          }
+        },
+        "windows": [
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 4.944308851229096e-13,
+            "eccentricity_vector_norm_max": 6.39844610545485e-13,
+            "end_years_inclusive": 1000,
+            "inclination_component_norm_max": 6.107517382082979e-14,
+            "semimajor_axis_relative_max": 3.1751282037811656e-13,
+            "start_years_exclusive": 0
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 8.966022368994686e-13,
+            "eccentricity_vector_norm_max": 1.1428553181587603e-12,
+            "end_years_inclusive": 2000,
+            "inclination_component_norm_max": 4.584150215472332e-14,
+            "semimajor_axis_relative_max": 6.402810187758307e-13,
+            "start_years_exclusive": 1000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.575115038399133e-12,
+            "eccentricity_vector_norm_max": 2.1100674873449245e-12,
+            "end_years_inclusive": 3000,
+            "inclination_component_norm_max": 1.492251789634562e-13,
+            "semimajor_axis_relative_max": 2.777060172283483e-12,
+            "start_years_exclusive": 2000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 2.679316837839174e-12,
+            "eccentricity_vector_norm_max": 2.774202411610674e-12,
+            "end_years_inclusive": 4000,
+            "inclination_component_norm_max": 2.329416018114852e-13,
+            "semimajor_axis_relative_max": 3.209709997434237e-12,
+            "start_years_exclusive": 3000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.745392884724197e-12,
+            "eccentricity_vector_norm_max": 3.808829531453243e-12,
+            "end_years_inclusive": 5000,
+            "inclination_component_norm_max": 2.1713155582165935e-13,
+            "semimajor_axis_relative_max": 5.007545591933336e-12,
+            "start_years_exclusive": 4000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 5.2301149522371304e-12,
+            "eccentricity_vector_norm_max": 5.274586800209633e-12,
+            "end_years_inclusive": 6000,
+            "inclination_component_norm_max": 4.744979342837695e-13,
+            "semimajor_axis_relative_max": 4.952355657914961e-12,
+            "start_years_exclusive": 5000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 5.399999891686491e-12,
+            "eccentricity_vector_norm_max": 6.401341936713468e-12,
+            "end_years_inclusive": 7000,
+            "inclination_component_norm_max": 4.3694106509769853e-13,
+            "semimajor_axis_relative_max": 5.388249808296774e-12,
+            "start_years_exclusive": 6000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 6.471080615799707e-12,
+            "eccentricity_vector_norm_max": 6.958234036714366e-12,
+            "end_years_inclusive": 8000,
+            "inclination_component_norm_max": 5.407380435965737e-13,
+            "semimajor_axis_relative_max": 7.30326927110633e-12,
+            "start_years_exclusive": 7000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.0926124588417352e-11,
+            "eccentricity_vector_norm_max": 1.0996033733191737e-11,
+            "end_years_inclusive": 9000,
+            "inclination_component_norm_max": 6.754219715774568e-13,
+            "semimajor_axis_relative_max": 9.825383661665777e-12,
+            "start_years_exclusive": 8000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 8.173416804480027e-12,
+            "eccentricity_vector_norm_max": 1.0771257125163669e-11,
+            "end_years_inclusive": 10000,
+            "inclination_component_norm_max": 5.880778091676831e-13,
+            "semimajor_axis_relative_max": 7.289349504787782e-12,
+            "start_years_exclusive": 9000
+          }
+        ]
+      },
+      "T_vs_IAS15": {
+        "per_body": {
+          "earth barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.9802322387695312e-08,
+            "eccentricity_absolute_max": 2.997900504231321e-10,
+            "eccentricity_vector_norm_max": 4.2198939658017755e-10,
+            "inclination_component_norm_max": 1.4824380210917258e-11,
+            "semimajor_axis_relative_max": 2.1064491359960112e-10
+          },
+          "jupiter barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.346173311711496e-10,
+            "eccentricity_vector_norm_max": 1.4945448961544506e-10,
+            "inclination_component_norm_max": 2.3992068792481674e-12,
+            "semimajor_axis_relative_max": 6.622080173850492e-11
+          },
+          "mars barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.6671841684967603e-10,
+            "eccentricity_vector_norm_max": 2.3232110024139335e-10,
+            "inclination_component_norm_max": 1.785249582435432e-12,
+            "semimajor_axis_relative_max": 1.1732642659628893e-10
+          },
+          "mercury barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 6.36524166708341e-11,
+            "eccentricity_vector_norm_max": 8.372019786843073e-11,
+            "inclination_component_norm_max": 6.703048530949359e-12,
+            "semimajor_axis_relative_max": 1.0034582590860328e-10
+          },
+          "neptune barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 2.0325464228365675e-10,
+            "eccentricity_vector_norm_max": 2.764295517962836e-10,
+            "inclination_component_norm_max": 1.4155554364733025e-12,
+            "semimajor_axis_relative_max": 2.8585414425087955e-10
+          },
+          "pluto barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 2.389289044391063e-10,
+            "eccentricity_vector_norm_max": 2.442111946633357e-10,
+            "inclination_component_norm_max": 2.262621295912349e-11,
+            "semimajor_axis_relative_max": 2.5229516912689364e-10
+          },
+          "saturn barycenter": {
+            "angular_momentum_direction_rad_max": 2.580956827951785e-08,
+            "apsidal_direction_rad_max": 2.9802322387695312e-08,
+            "eccentricity_absolute_max": 3.5668137193800575e-10,
+            "eccentricity_vector_norm_max": 4.844189707434141e-10,
+            "inclination_component_norm_max": 5.995578766148842e-12,
+            "semimajor_axis_relative_max": 3.0021594436997877e-10
+          },
+          "uranus barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.4973616097035958e-10,
+            "eccentricity_vector_norm_max": 1.788477181302265e-10,
+            "inclination_component_norm_max": 8.577920879936775e-13,
+            "semimajor_axis_relative_max": 1.9914628637400482e-10
+          },
+          "venus barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 1.0848209096909347e-07,
+            "eccentricity_absolute_max": 3.342667557679202e-10,
+            "eccentricity_vector_norm_max": 3.872870885486682e-10,
+            "inclination_component_norm_max": 2.1513852714017903e-11,
+            "semimajor_axis_relative_max": 2.2648187383667178e-10
+          }
+        },
+        "persistent_nonphase_failures": [
+          {
+            "first_three_window_endpoint_years": 7000,
+            "metric": "angular_momentum_direction_rad_max"
+          }
+        ],
+        "phase_aligned": {
+          "mean_anomaly": {
+            "global_scaled_rms": 4.8115456752006965e-08,
+            "per_body_scaled_rms": {
+              "earth barycenter": 2.619476872928875e-08,
+              "jupiter barycenter": 2.0070425903458867e-09,
+              "mars barycenter": 9.232407789140754e-10,
+              "mercury barycenter": 4.0294481811792115e-10,
+              "neptune barycenter": 9.857346308032009e-08,
+              "pluto barycenter": 4.750621698851884e-09,
+              "saturn barycenter": 2.3768831854784313e-08,
+              "sun": 5.4026577213732175e-11,
+              "uranus barycenter": 9.352826786659362e-09,
+              "venus barycenter": 1.0985459131075819e-07
+            }
+          },
+          "mean_longitude": {
+            "global_scaled_rms": 7.434484904821877e-10,
+            "per_body_scaled_rms": {
+              "earth barycenter": 4.199067834623179e-10,
+              "jupiter barycenter": 2.1650120789746988e-10,
+              "mars barycenter": 1.3743380809035243e-10,
+              "mercury barycenter": 9.850567493016778e-11,
+              "neptune barycenter": 9.635800435830884e-10,
+              "pluto barycenter": 1.50163192610926e-09,
+              "saturn barycenter": 1.2356149979323735e-09,
+              "sun": 5.4026577213732175e-11,
+              "uranus barycenter": 4.789268141409274e-10,
+              "venus barycenter": 5.770195414522953e-10
+            }
+          }
+        },
+        "rtn": {
+          "earth barycenter": {
+            "position_rms_m": {
+              "N": 1.5501648019691006,
+              "R": 3105.320324724359,
+              "T": 263992.53841883055
+            },
+            "transverse_position_squared_fraction": 0.9998616530693277,
+            "velocity_rms_m_per_s": {
+              "N": 2.695715759823064e-07,
+              "R": 0.05273616513221682,
+              "T": 3.2049608385041407e-06
+            }
+          },
+          "jupiter barycenter": {
+            "position_rms_m": {
+              "N": 1.2249618020317488,
+              "R": 609.8701840158727,
+              "T": 15163.366260247489
+            },
+            "transverse_position_squared_fraction": 0.998384959807073,
+            "velocity_rms_m_per_s": {
+              "N": 2.1152802254161094e-08,
+              "R": 0.00025623737299068736,
+              "T": 5.980943683303207e-07
+            }
+          },
+          "mars barycenter": {
+            "position_rms_m": {
+              "N": 0.24296955564951492,
+              "R": 5552.1067230126555,
+              "T": 78530.15664313536
+            },
+            "transverse_position_squared_fraction": 0.9950263266860712,
+            "velocity_rms_m_per_s": {
+              "N": 1.9453438037221913e-08,
+              "R": 0.0084336595450119,
+              "T": 1.0485938671038e-06
+            }
+          },
+          "mercury barycenter": {
+            "position_rms_m": {
+              "N": 0.16371343093361154,
+              "R": 7826.3778152792065,
+              "T": 53536.392633426374
+            },
+            "transverse_position_squared_fraction": 0.9790762309554323,
+            "velocity_rms_m_per_s": {
+              "N": 1.2322734461089578e-07,
+              "R": 0.04767371057085677,
+              "T": 6.917447488818879e-07
+            }
+          },
+          "neptune barycenter": {
+            "position_rms_m": {
+              "N": 0.3491866494992273,
+              "R": 12.29193943378323,
+              "T": 443.6097215290311
+            },
+            "transverse_position_squared_fraction": 0.9992321869956535,
+            "velocity_rms_m_per_s": {
+              "N": 4.59651465591176e-09,
+              "R": 5.826134444063868e-07,
+              "T": 2.1990186096623079e-07
+            }
+          },
+          "pluto barycenter": {
+            "position_rms_m": {
+              "N": 3.172425166114749,
+              "R": 64.02217959407423,
+              "T": 365.6475257207223
+            },
+            "transverse_position_squared_fraction": 0.9701836390046391,
+            "velocity_rms_m_per_s": {
+              "N": 6.096288791578999e-08,
+              "R": 4.4338107674220286e-07,
+              "T": 2.0701226131157394e-07
+            }
+          },
+          "saturn barycenter": {
+            "position_rms_m": {
+              "N": 5.7716256347121995,
+              "R": 652.5843817975459,
+              "T": 30500.823344367007
+            },
+            "transverse_position_squared_fraction": 0.9995424006312104,
+            "velocity_rms_m_per_s": {
+              "N": 3.764055989270249e-08,
+              "R": 0.00020649130114286496,
+              "T": 1.305021400776911e-06
+            }
+          },
+          "uranus barycenter": {
+            "position_rms_m": {
+              "N": 0.6239873069620127,
+              "R": 17.20872106446478,
+              "T": 264.3644211182441
+            },
+            "transverse_position_squared_fraction": 0.9957750357308995,
+            "velocity_rms_m_per_s": {
+              "N": 4.0999127349849636e-09,
+              "R": 6.554016606924193e-07,
+              "T": 2.2306543966700615e-07
+            }
+          },
+          "venus barycenter": {
+            "position_rms_m": {
+              "N": 1.5353663997453904,
+              "R": 284.14368181574355,
+              "T": 100159.96007295066
+            },
+            "transverse_position_squared_fraction": 0.9999919518343509,
+            "velocity_rms_m_per_s": {
+              "N": 5.002041246612866e-07,
+              "R": 0.0324173931347807,
+              "T": 4.70487370834104e-06
+            }
+          }
+        },
+        "windows": [
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 6.409218728659072e-11,
+            "eccentricity_vector_norm_max": 7.139999975619425e-11,
+            "end_years_inclusive": 1000,
+            "inclination_component_norm_max": 6.163869273558169e-12,
+            "semimajor_axis_relative_max": 1.0623043022973443e-10,
+            "start_years_exclusive": 0
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 9.615142276125921e-11,
+            "eccentricity_vector_norm_max": 1.0522988679676088e-10,
+            "end_years_inclusive": 2000,
+            "inclination_component_norm_max": 6.5527436125700376e-12,
+            "semimajor_axis_relative_max": 9.202431468960447e-11,
+            "start_years_exclusive": 1000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 1.18762036663278e-10,
+            "eccentricity_vector_norm_max": 1.4532107682946993e-10,
+            "end_years_inclusive": 3000,
+            "inclination_component_norm_max": 7.164781627364176e-12,
+            "semimajor_axis_relative_max": 1.0070389848627147e-10,
+            "start_years_exclusive": 2000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.7050853784450481e-10,
+            "eccentricity_vector_norm_max": 2.0107224268960217e-10,
+            "end_years_inclusive": 4000,
+            "inclination_component_norm_max": 8.884114612213947e-12,
+            "semimajor_axis_relative_max": 1.4003400272500804e-10,
+            "start_years_exclusive": 3000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 2.2018205314555672e-10,
+            "eccentricity_vector_norm_max": 2.536262308934365e-10,
+            "end_years_inclusive": 5000,
+            "inclination_component_norm_max": 1.1570777518358771e-11,
+            "semimajor_axis_relative_max": 1.527242336041212e-10,
+            "start_years_exclusive": 4000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 2.1559785727542913e-10,
+            "eccentricity_vector_norm_max": 3.0166799496036385e-10,
+            "end_years_inclusive": 6000,
+            "inclination_component_norm_max": 1.3967900154818664e-11,
+            "semimajor_axis_relative_max": 1.8654783546775525e-10,
+            "start_years_exclusive": 5000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 2.6124559460161123e-10,
+            "eccentricity_vector_norm_max": 3.3239775230568543e-10,
+            "end_years_inclusive": 7000,
+            "inclination_component_norm_max": 1.7272487014180448e-11,
+            "semimajor_axis_relative_max": 2.20536158104535e-10,
+            "start_years_exclusive": 6000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.3631464974037684e-10,
+            "eccentricity_vector_norm_max": 3.9373028807362704e-10,
+            "end_years_inclusive": 8000,
+            "inclination_component_norm_max": 2.262621295912349e-11,
+            "semimajor_axis_relative_max": 2.333600268518949e-10,
+            "start_years_exclusive": 7000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.5668137193800575e-10,
+            "eccentricity_vector_norm_max": 4.6202452415865513e-10,
+            "end_years_inclusive": 9000,
+            "inclination_component_norm_max": 1.9967179058389096e-11,
+            "semimajor_axis_relative_max": 2.6615204249353823e-10,
+            "start_years_exclusive": 8000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.342667557679202e-10,
+            "eccentricity_vector_norm_max": 4.844189707434141e-10,
+            "end_years_inclusive": 10000,
+            "inclination_component_norm_max": 2.1513852714017903e-11,
+            "semimajor_axis_relative_max": 3.0021594436997877e-10,
+            "start_years_exclusive": 9000
+          }
+        ]
+      },
+      "T_vs_P": {
+        "per_body": {
+          "earth barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.9802322387695312e-08,
+            "eccentricity_absolute_max": 2.987121817260574e-10,
+            "eccentricity_vector_norm_max": 4.2126710359312487e-10,
+            "inclination_component_norm_max": 1.4831404871724726e-11,
+            "semimajor_axis_relative_max": 2.0938871066846518e-10
+          },
+          "jupiter barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.3281786781504934e-10,
+            "eccentricity_vector_norm_max": 1.4688858155745449e-10,
+            "inclination_component_norm_max": 2.3000919913970164e-12,
+            "semimajor_axis_relative_max": 6.612856456295563e-11
+          },
+          "mars barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 1.6678060321684285e-10,
+            "eccentricity_vector_norm_max": 2.2993371652302806e-10,
+            "inclination_component_norm_max": 1.7957635912958893e-12,
+            "semimajor_axis_relative_max": 1.1597695102615229e-10
+          },
+          "mercury barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 6.391481788270426e-11,
+            "eccentricity_vector_norm_max": 8.426744221056966e-11,
+            "inclination_component_norm_max": 6.67872394993596e-12,
+            "semimajor_axis_relative_max": 1.0048877187102487e-10
+          },
+          "neptune barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.9802322387695312e-08,
+            "eccentricity_absolute_max": 2.0872829853413322e-10,
+            "eccentricity_vector_norm_max": 2.8018096975378027e-10,
+            "inclination_component_norm_max": 1.4963878606400412e-12,
+            "semimajor_axis_relative_max": 2.887039146687184e-10
+          },
+          "pluto barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 2.439945190335635e-10,
+            "eccentricity_vector_norm_max": 2.4889783049728614e-10,
+            "inclination_component_norm_max": 2.3065652339110856e-11,
+            "semimajor_axis_relative_max": 2.5818130961924915e-10
+          },
+          "saturn barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 3.457552473495884e-10,
+            "eccentricity_vector_norm_max": 4.775713175918413e-10,
+            "inclination_component_norm_max": 5.8521671401980326e-12,
+            "semimajor_axis_relative_max": 2.9804799190584885e-10
+          },
+          "uranus barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 1.560628917762763e-10,
+            "eccentricity_vector_norm_max": 1.8131535421452076e-10,
+            "inclination_component_norm_max": 8.964610883369371e-13,
+            "semimajor_axis_relative_max": 2.0187001173793505e-10
+          },
+          "venus barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 1.0950072449966577e-07,
+            "eccentricity_absolute_max": 3.328721517176225e-10,
+            "eccentricity_vector_norm_max": 3.866387766862873e-10,
+            "inclination_component_norm_max": 2.146229469983834e-11,
+            "semimajor_axis_relative_max": 2.2728606313632883e-10
+          }
+        },
+        "persistent_nonphase_failures": [
+          {
+            "first_three_window_endpoint_years": 7000,
+            "metric": "angular_momentum_direction_rad_max"
+          }
+        ],
+        "phase_aligned": {
+          "mean_anomaly": {
+            "global_scaled_rms": 4.8565437906968657e-08,
+            "per_body_scaled_rms": {
+              "earth barycenter": 2.6188635022831214e-08,
+              "jupiter barycenter": 1.977802138102296e-09,
+              "mars barycenter": 9.178338394582254e-10,
+              "mercury barycenter": 4.059640237058458e-10,
+              "neptune barycenter": 1.0075790207702745e-07,
+              "pluto barycenter": 4.85099238570698e-09,
+              "saturn barycenter": 2.338698814596079e-08,
+              "sun": 5.519953826432027e-11,
+              "uranus barycenter": 9.58428585292028e-09,
+              "venus barycenter": 1.099124847532139e-07
+            }
+          },
+          "mean_longitude": {
+            "global_scaled_rms": 7.517245193732455e-10,
+            "per_body_scaled_rms": {
+              "earth barycenter": 4.202174798270315e-10,
+              "jupiter barycenter": 2.136255806251746e-10,
+              "mars barycenter": 1.3750755730208786e-10,
+              "mercury barycenter": 1.0004859995965282e-10,
+              "neptune barycenter": 9.915880059735033e-10,
+              "pluto barycenter": 1.5376940559973108e-09,
+              "saturn barycenter": 1.2146505936497352e-09,
+              "sun": 5.519953826432027e-11,
+              "uranus barycenter": 4.898765031617909e-10,
+              "venus barycenter": 5.775889845577292e-10
+            }
+          }
+        },
+        "rtn": {
+          "earth barycenter": {
+            "position_rms_m": {
+              "N": 1.553766603933821,
+              "R": 3081.242919195112,
+              "T": 262074.68461287074
+            },
+            "transverse_position_squared_fraction": 0.9998617892525509,
+            "velocity_rms_m_per_s": {
+              "N": 2.6995215723905524e-07,
+              "R": 0.052355365277915136,
+              "T": 3.2051865173323918e-06
+            }
+          },
+          "jupiter barycenter": {
+            "position_rms_m": {
+              "N": 1.2003396212416066,
+              "R": 635.8445384023844,
+              "T": 15807.342356500465
+            },
+            "transverse_position_squared_fraction": 0.9983845869490215,
+            "velocity_rms_m_per_s": {
+              "N": 2.066946311023703e-08,
+              "R": 0.0002671228784961063,
+              "T": 5.888014009185085e-07
+            }
+          },
+          "mars barycenter": {
+            "position_rms_m": {
+              "N": 0.244238975416099,
+              "R": 5584.17657260148,
+              "T": 78983.842301489
+            },
+            "transverse_position_squared_fraction": 0.9950263370885265,
+            "velocity_rms_m_per_s": {
+              "N": 1.943002324061181e-08,
+              "R": 0.008482367375086768,
+              "T": 1.0437147646681705e-06
+            }
+          },
+          "mercury barycenter": {
+            "position_rms_m": {
+              "N": 0.16915032087286605,
+              "R": 8166.009610752453,
+              "T": 55864.02421422566
+            },
+            "transverse_position_squared_fraction": 0.9790794416823824,
+            "velocity_rms_m_per_s": {
+              "N": 1.2067044268074876e-07,
+              "R": 0.04975419432403846,
+              "T": 7.001656670133723e-07
+            }
+          },
+          "neptune barycenter": {
+            "position_rms_m": {
+              "N": 0.609419861476247,
+              "R": 13.001278624610991,
+              "T": 607.4028039886451
+            },
+            "transverse_position_squared_fraction": 0.9995410426342254,
+            "velocity_rms_m_per_s": {
+              "N": 4.659189851078308e-09,
+              "R": 7.730442940027569e-07,
+              "T": 2.2580503720730245e-07
+            }
+          },
+          "pluto barycenter": {
+            "position_rms_m": {
+              "N": 3.2400362265551506,
+              "R": 50.55203516075642,
+              "T": 295.3759656890127
+            },
+            "transverse_position_squared_fraction": 0.9714294475104099,
+            "velocity_rms_m_per_s": {
+              "N": 6.214129270143336e-08,
+              "R": 4.0492868283350784e-07,
+              "T": 2.1319556591020645e-07
+            }
+          },
+          "saturn barycenter": {
+            "position_rms_m": {
+              "N": 5.671633446394285,
+              "R": 631.2664160678054,
+              "T": 29289.836594530596
+            },
+            "transverse_position_squared_fraction": 0.9995356720503066,
+            "velocity_rms_m_per_s": {
+              "N": 3.700857653534463e-08,
+              "R": 0.0001982946094430234,
+              "T": 1.283358099354433e-06
+            }
+          },
+          "uranus barycenter": {
+            "position_rms_m": {
+              "N": 0.6307694514119964,
+              "R": 17.63569265351639,
+              "T": 280.94050775864537
+            },
+            "transverse_position_squared_fraction": 0.9960699202831876,
+            "velocity_rms_m_per_s": {
+              "N": 4.207991699760676e-09,
+              "R": 6.955360671501122e-07,
+              "T": 2.281666760279597e-07
+            }
+          },
+          "venus barycenter": {
+            "position_rms_m": {
+              "N": 1.5362374103579923,
+              "R": 290.6527586758019,
+              "T": 102672.85860453016
+            },
+            "transverse_position_squared_fraction": 0.9999919860571114,
+            "velocity_rms_m_per_s": {
+              "N": 5.003626110825216e-07,
+              "R": 0.03323070692942508,
+              "T": 4.707643838688367e-06
+            }
+          }
+        },
+        "windows": [
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 6.409987124422756e-11,
+            "eccentricity_vector_norm_max": 7.14024916576128e-11,
+            "end_years_inclusive": 1000,
+            "inclination_component_norm_max": 6.150771900470737e-12,
+            "semimajor_axis_relative_max": 1.0626906680958233e-10,
+            "start_years_exclusive": 0
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 9.630953760192407e-11,
+            "eccentricity_vector_norm_max": 1.0534775530177617e-10,
+            "end_years_inclusive": 2000,
+            "inclination_component_norm_max": 6.573236928367272e-12,
+            "semimajor_axis_relative_max": 9.200929547404648e-11,
+            "start_years_exclusive": 1000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.1915342584128963e-10,
+            "eccentricity_vector_norm_max": 1.4489923455066258e-10,
+            "end_years_inclusive": 3000,
+            "inclination_component_norm_max": 7.192686498120448e-12,
+            "semimajor_axis_relative_max": 1.0087632910378201e-10,
+            "start_years_exclusive": 2000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.6951679643328887e-10,
+            "eccentricity_vector_norm_max": 2.0117610110408213e-10,
+            "end_years_inclusive": 4000,
+            "inclination_component_norm_max": 8.91723328622849e-12,
+            "semimajor_axis_relative_max": 1.414619944872534e-10,
+            "start_years_exclusive": 3000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 2.184753836176334e-10,
+            "eccentricity_vector_norm_max": 2.5309676278651245e-10,
+            "end_years_inclusive": 5000,
+            "inclination_component_norm_max": 1.1630870228259979e-11,
+            "semimajor_axis_relative_max": 1.5587769600582151e-10,
+            "start_years_exclusive": 4000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 2.1627463361872934e-10,
+            "eccentricity_vector_norm_max": 3.0009119493887026e-10,
+            "end_years_inclusive": 6000,
+            "inclination_component_norm_max": 1.4014334751055738e-11,
+            "semimajor_axis_relative_max": 1.8626561947997908e-10,
+            "start_years_exclusive": 5000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 2.5584559470992474e-10,
+            "eccentricity_vector_norm_max": 3.2909004437927823e-10,
+            "end_years_inclusive": 7000,
+            "inclination_component_norm_max": 1.7571164974838537e-11,
+            "semimajor_axis_relative_max": 2.255278972953798e-10,
+            "start_years_exclusive": 6000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.2984356912457713e-10,
+            "eccentricity_vector_norm_max": 3.887907228713588e-10,
+            "end_years_inclusive": 8000,
+            "inclination_component_norm_max": 2.3065652339110856e-11,
+            "semimajor_axis_relative_max": 2.3238684078165745e-10,
+            "start_years_exclusive": 7000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.457552473495884e-10,
+            "eccentricity_vector_norm_max": 4.5530545295504887e-10,
+            "end_years_inclusive": 9000,
+            "inclination_component_norm_max": 1.995545357244912e-11,
+            "semimajor_axis_relative_max": 2.644401627614762e-10,
+            "start_years_exclusive": 8000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.328721517176225e-10,
+            "eccentricity_vector_norm_max": 4.775713175918413e-10,
+            "end_years_inclusive": 10000,
+            "inclination_component_norm_max": 2.146229469983834e-11,
+            "semimajor_axis_relative_max": 2.9804799190584885e-10,
+            "start_years_exclusive": 9000
+          }
+        ]
+      },
+      "T_vs_old_T": {
+        "per_body": {
+          "earth barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.461387426684226e-12,
+            "eccentricity_vector_norm_max": 3.5194364366279543e-12,
+            "inclination_component_norm_max": 2.0064576605420376e-13,
+            "semimajor_axis_relative_max": 2.5839929925143086e-12
+          },
+          "jupiter barycenter": {
+            "angular_momentum_direction_rad_max": 2.580956827951785e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 2.188665915170418e-11,
+            "eccentricity_vector_norm_max": 2.5796614520321645e-11,
+            "inclination_component_norm_max": 3.208033996686143e-13,
+            "semimajor_axis_relative_max": 1.975355570141009e-11
+          },
+          "mars barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 5.520847667916939e-12,
+            "eccentricity_vector_norm_max": 8.708413811903837e-12,
+            "inclination_component_norm_max": 3.212652053219413e-13,
+            "semimajor_axis_relative_max": 4.159675037402186e-12
+          },
+          "mercury barycenter": {
+            "angular_momentum_direction_rad_max": 2.580956827951785e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 4.3560433038436486e-12,
+            "eccentricity_vector_norm_max": 4.496832925603908e-12,
+            "inclination_component_norm_max": 3.0490409341698244e-13,
+            "semimajor_axis_relative_max": 2.2441799349367133e-12
+          },
+          "neptune barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 9.9098108191642e-11,
+            "eccentricity_vector_norm_max": 1.1587015309142004e-10,
+            "inclination_component_norm_max": 3.0444561236288847e-13,
+            "semimajor_axis_relative_max": 1.1466518851323262e-10
+          },
+          "pluto barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 9.981390713953431e-11,
+            "eccentricity_vector_norm_max": 1.0434748853871121e-10,
+            "inclination_component_norm_max": 1.1773812017640784e-11,
+            "semimajor_axis_relative_max": 1.2979528772169043e-10
+          },
+          "saturn barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 6.987641021360957e-11,
+            "eccentricity_vector_norm_max": 1.024105515303411e-10,
+            "inclination_component_norm_max": 8.663725595961513e-13,
+            "semimajor_axis_relative_max": 8.871761991980139e-11
+          },
+          "uranus barycenter": {
+            "angular_momentum_direction_rad_max": 2.580956827951785e-08,
+            "apsidal_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 9.80916181614333e-11,
+            "eccentricity_vector_norm_max": 1.0965102764462382e-10,
+            "inclination_component_norm_max": 5.326460108611593e-13,
+            "semimajor_axis_relative_max": 1.1632290488335532e-10
+          },
+          "venus barycenter": {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "apsidal_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 3.351807546791985e-12,
+            "eccentricity_vector_norm_max": 4.708996144427048e-12,
+            "inclination_component_norm_max": 1.5387173892048906e-13,
+            "semimajor_axis_relative_max": 3.6053852390554428e-12
+          }
+        },
+        "persistent_nonphase_failures": [
+          {
+            "first_three_window_endpoint_years": 7000,
+            "metric": "angular_momentum_direction_rad_max"
+          }
+        ],
+        "phase_aligned": {
+          "mean_anomaly": {
+            "global_scaled_rms": 1.3543921151117686e-08,
+            "per_body_scaled_rms": {
+              "earth barycenter": 2.045439925962497e-10,
+              "jupiter barycenter": 2.1733762560688912e-10,
+              "mars barycenter": 4.669308879747131e-11,
+              "mercury barycenter": 3.740605234932086e-11,
+              "neptune barycenter": 4.2347826196940706e-08,
+              "pluto barycenter": 2.217355191147761e-09,
+              "saturn barycenter": 4.02746602413808e-09,
+              "sun": 3.08787727204799e-11,
+              "uranus barycenter": 4.365399989076942e-09,
+              "venus barycenter": 8.672642863584536e-10
+            }
+          },
+          "mean_longitude": {
+            "global_scaled_rms": 2.8947366691634243e-10,
+            "per_body_scaled_rms": {
+              "earth barycenter": 3.114054920829361e-11,
+              "jupiter barycenter": 3.8841684785652095e-11,
+              "mars barycenter": 3.059611105094645e-11,
+              "mercury barycenter": 3.164616555523275e-11,
+              "neptune barycenter": 4.72217943645392e-10,
+              "pluto barycenter": 7.277714308656539e-10,
+              "saturn barycenter": 1.7657494962224462e-10,
+              "sun": 3.08787727204799e-11,
+              "uranus barycenter": 2.1860689131750884e-10,
+              "venus barycenter": 3.117370746177048e-11
+            }
+          }
+        },
+        "rtn": {
+          "earth barycenter": {
+            "position_rms_m": {
+              "N": 0.02437233899408758,
+              "R": 41.41255543054124,
+              "T": 3451.0023935643026
+            },
+            "transverse_position_squared_fraction": 0.9998560170211928,
+            "velocity_rms_m_per_s": {
+              "N": 2.6682140449679157e-09,
+              "R": 0.0006881683029251273,
+              "T": 2.2299440540342584e-08
+            }
+          },
+          "jupiter barycenter": {
+            "position_rms_m": {
+              "N": 0.12346366292272556,
+              "R": 372.16955535065483,
+              "T": 9186.757669047587
+            },
+            "transverse_position_squared_fraction": 0.9983615052997454,
+            "velocity_rms_m_per_s": {
+              "N": 2.3627959839051106e-09,
+              "R": 0.0001553789422738233,
+              "T": 7.430372887787402e-08
+            }
+          },
+          "mars barycenter": {
+            "position_rms_m": {
+              "N": 0.03196154117228419,
+              "R": 175.64082270600318,
+              "T": 2474.0774772527125
+            },
+            "transverse_position_squared_fraction": 0.9949853453121462,
+            "velocity_rms_m_per_s": {
+              "N": 3.5898724562289625e-09,
+              "R": 0.00026576965222438676,
+              "T": 3.7219725075398625e-08
+            }
+          },
+          "mercury barycenter": {
+            "position_rms_m": {
+              "N": 0.011978900481359118,
+              "R": 403.20471537339347,
+              "T": 2750.2297076318787
+            },
+            "transverse_position_squared_fraction": 0.9789584595666059,
+            "velocity_rms_m_per_s": {
+              "N": 8.893404566036595e-09,
+              "R": 0.0024422604807084647,
+              "T": 6.0445410961196e-08
+            }
+          },
+          "neptune barycenter": {
+            "position_rms_m": {
+              "N": 0.31483378399965745,
+              "R": 7.470934197984605,
+              "T": 646.2168687092807
+            },
+            "transverse_position_squared_fraction": 0.9998661230945858,
+            "velocity_rms_m_per_s": {
+              "N": 1.207212797516478e-09,
+              "R": 7.869202219263195e-07,
+              "T": 1.0359102060866444e-07
+            }
+          },
+          "pluto barycenter": {
+            "position_rms_m": {
+              "N": 1.4561912243561803,
+              "R": 88.12209673523816,
+              "T": 511.8269645180661
+            },
+            "transverse_position_squared_fraction": 0.9712026996767745,
+            "velocity_rms_m_per_s": {
+              "N": 2.827730304562885e-08,
+              "R": 5.181625480735939e-07,
+              "T": 9.714109493497829e-08
+            }
+          },
+          "saturn barycenter": {
+            "position_rms_m": {
+              "N": 0.6195768792786868,
+              "R": 51.99010809192567,
+              "T": 2314.877042451315
+            },
+            "transverse_position_squared_fraction": 0.9994957705357626,
+            "velocity_rms_m_per_s": {
+              "N": 4.2876866703512945e-09,
+              "R": 1.5663441902362497e-05,
+              "T": 1.6239503854158233e-07
+            }
+          },
+          "uranus barycenter": {
+            "position_rms_m": {
+              "N": 0.42177015225027137,
+              "R": 28.768519373307967,
+              "T": 814.2496261651252
+            },
+            "transverse_position_squared_fraction": 0.998752986045171,
+            "velocity_rms_m_per_s": {
+              "N": 1.9872734278965972e-09,
+              "R": 1.936589436822378e-06,
+              "T": 1.0606510010242183e-07
+            }
+          },
+          "venus barycenter": {
+            "position_rms_m": {
+              "N": 0.011729570261924149,
+              "R": 16.176584296925252,
+              "T": 5903.183386911652
+            },
+            "transverse_position_squared_fraction": 0.9999924907239939,
+            "velocity_rms_m_per_s": {
+              "N": 3.62080787705195e-09,
+              "R": 0.0019106200192091124,
+              "T": 3.440791087587944e-08
+            }
+          }
+        },
+        "windows": [
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 8.14744105515075e-13,
+            "eccentricity_vector_norm_max": 1.1167143859089317e-12,
+            "end_years_inclusive": 1000,
+            "inclination_component_norm_max": 8.254908299500077e-14,
+            "semimajor_axis_relative_max": 1.0351230255391461e-12,
+            "start_years_exclusive": 0
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 3.617939281497229e-12,
+            "eccentricity_vector_norm_max": 4.3446711558408424e-12,
+            "end_years_inclusive": 2000,
+            "inclination_component_norm_max": 3.00073159639871e-13,
+            "semimajor_axis_relative_max": 3.8200037210231386e-12,
+            "start_years_exclusive": 1000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 9.500372710746774e-12,
+            "eccentricity_vector_norm_max": 1.2576862636283197e-11,
+            "end_years_inclusive": 3000,
+            "inclination_component_norm_max": 8.547607473288106e-13,
+            "semimajor_axis_relative_max": 1.5653717252230287e-11,
+            "start_years_exclusive": 2000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 1.6303668484707323e-11,
+            "eccentricity_vector_norm_max": 1.7482275044104322e-11,
+            "end_years_inclusive": 4000,
+            "inclination_component_norm_max": 1.4888447018650138e-12,
+            "semimajor_axis_relative_max": 1.8221370876455712e-11,
+            "start_years_exclusive": 3000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 2.6626423288433898e-11,
+            "eccentricity_vector_norm_max": 3.0898619276903895e-11,
+            "end_years_inclusive": 5000,
+            "inclination_component_norm_max": 2.1002241068065587e-12,
+            "semimajor_axis_relative_max": 3.689353097712079e-11,
+            "start_years_exclusive": 4000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 3.6599973052275914e-11,
+            "eccentricity_vector_norm_max": 4.044685125011347e-11,
+            "end_years_inclusive": 6000,
+            "inclination_component_norm_max": 4.539105068653731e-12,
+            "semimajor_axis_relative_max": 3.8196372522188956e-11,
+            "start_years_exclusive": 5000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.580956827951785e-08,
+            "eccentricity_absolute_max": 6.510469940934627e-11,
+            "eccentricity_vector_norm_max": 6.592650233464148e-11,
+            "end_years_inclusive": 7000,
+            "inclination_component_norm_max": 4.530981595427047e-12,
+            "semimajor_axis_relative_max": 9.025707939687219e-11,
+            "start_years_exclusive": 6000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 6.813612868361574e-11,
+            "eccentricity_vector_norm_max": 8.024522251631134e-11,
+            "end_years_inclusive": 8000,
+            "inclination_component_norm_max": 6.182276608986264e-12,
+            "semimajor_axis_relative_max": 8.162390529785616e-11,
+            "start_years_exclusive": 7000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 9.981390713953431e-11,
+            "eccentricity_vector_norm_max": 1.0434748853871121e-10,
+            "end_years_inclusive": 9000,
+            "inclination_component_norm_max": 8.967352451329209e-12,
+            "semimajor_axis_relative_max": 1.2979528772169043e-10,
+            "start_years_exclusive": 8000
+          },
+          {
+            "angular_momentum_direction_rad_max": 2.1073424255447017e-08,
+            "eccentricity_absolute_max": 9.9098108191642e-11,
+            "eccentricity_vector_norm_max": 1.1587015309142004e-10,
+            "end_years_inclusive": 10000,
+            "inclination_component_norm_max": 1.1773812017640784e-11,
+            "semimajor_axis_relative_max": 1.1632290488335532e-10,
+            "start_years_exclusive": 9000
+          }
+        ]
+      }
+    },
+    "raw": {
+      "P_vs_IAS15": {
+        "global_scaled_rms": 6.397111863547947e-08,
+        "per_body": {
+          "earth barycenter": {
+            "position_vector_max_m": 6374.696306770317,
+            "scaled_rms": 4.08790413809753e-08,
+            "squared_error_contribution": 0.040835089872967044,
+            "velocity_vector_max_m_per_s": 0.0012666954742136243,
+            "worst_position_component": "y",
+            "worst_position_epoch_years": 10000.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          },
+          "jupiter barycenter": {
+            "position_vector_max_m": 1282.2706528557774,
+            "scaled_rms": 2.0018964773556607e-09,
+            "squared_error_contribution": 9.792990664861548e-05,
+            "velocity_vector_max_m_per_s": 2.294782488656952e-05,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9800.0,
+            "worst_velocity_component": "vy",
+            "worst_velocity_epoch_years": 9800.0
+          },
+          "mars barycenter": {
+            "position_vector_max_m": 987.5055975705304,
+            "scaled_rms": 4.4156036559375734e-09,
+            "squared_error_contribution": 0.0004764444565590354,
+            "velocity_vector_max_m_per_s": 0.00011676632684970224,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 10000.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9600.0
+          },
+          "mercury barycenter": {
+            "position_vector_max_m": 4491.394464405759,
+            "scaled_rms": 1.8409554407181878e-07,
+            "squared_error_contribution": 0.8281684152940881,
+            "velocity_vector_max_m_per_s": 0.004783507526806081,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 8200.0,
+            "worst_velocity_component": "vy",
+            "worst_velocity_epoch_years": 8200.0
+          },
+          "neptune barycenter": {
+            "position_vector_max_m": 538.236470234757,
+            "scaled_rms": 5.595487804332679e-10,
+            "squared_error_contribution": 7.650820569400309e-06,
+            "velocity_vector_max_m_per_s": 6.46430445774416e-07,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9700.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          },
+          "pluto barycenter": {
+            "position_vector_max_m": 244.26356480516804,
+            "scaled_rms": 2.7536083337593185e-10,
+            "squared_error_contribution": 1.852833714129155e-06,
+            "velocity_vector_max_m_per_s": 2.466649543494166e-07,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 8200.0,
+            "worst_velocity_component": "vy",
+            "worst_velocity_epoch_years": 8200.0
+          },
+          "saturn barycenter": {
+            "position_vector_max_m": 2561.678528363732,
+            "scaled_rms": 3.453510539594307e-09,
+            "squared_error_contribution": 0.0002914430352762559,
+            "velocity_vector_max_m_per_s": 1.7544771259644187e-05,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9700.0
+          },
+          "sun": {
+            "position_vector_max_m": 1.5712782167764223,
+            "scaled_rms": 2.1348912985636707e-12,
+            "squared_error_contribution": 1.1137395547821607e-10,
+            "velocity_vector_max_m_per_s": 2.512598643870633e-08,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9000.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 8800.0
+          },
+          "uranus barycenter": {
+            "position_vector_max_m": 163.36281196489617,
+            "scaled_rms": 2.56110212364977e-10,
+            "squared_error_contribution": 1.6028242419304673e-06,
+            "velocity_vector_max_m_per_s": 4.0422384651896097e-07,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 5700.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 5600.0
+          },
+          "venus barycenter": {
+            "position_vector_max_m": 4973.549079311656,
+            "scaled_rms": 7.297183311247616e-08,
+            "squared_error_contribution": 0.1301195708445614,
+            "velocity_vector_max_m_per_s": 0.0016131649049979746,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9600.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          }
+        }
+      },
+      "T_vs_IAS15": {
+        "global_scaled_rms": 2.155813467928617e-06,
+        "per_body": {
+          "earth barycenter": {
+            "position_vector_max_m": 454738.51742492197,
+            "scaled_rms": 4.5984064002030925e-06,
+            "squared_error_contribution": 0.4549800355906017,
+            "velocity_vector_max_m_per_s": 0.09034585347377319,
+            "worst_position_component": "y",
+            "worst_position_epoch_years": 10000.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          },
+          "jupiter barycenter": {
+            "position_vector_max_m": 27926.7990305206,
+            "scaled_rms": 4.688083905713245e-08,
+            "squared_error_contribution": 4.7289899425107195e-05,
+            "velocity_vector_max_m_per_s": 0.0004982953199789339,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9800.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9500.0
+          },
+          "mars barycenter": {
+            "position_vector_max_m": 145494.36296273582,
+            "scaled_rms": 7.57413512528855e-07,
+            "squared_error_contribution": 0.012343653899376094,
+            "velocity_vector_max_m_per_s": 0.017207664755487528,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9700.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9600.0
+          },
+          "mercury barycenter": {
+            "position_vector_max_m": 112008.87229327824,
+            "scaled_rms": 4.108303467329555e-06,
+            "squared_error_contribution": 0.36316389942632044,
+            "velocity_vector_max_m_per_s": 0.11823434165189196,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9700.0,
+            "worst_velocity_component": "vy",
+            "worst_velocity_epoch_years": 9700.0
+          },
+          "neptune barycenter": {
+            "position_vector_max_m": 667.5346621721868,
+            "scaled_rms": 1.2110676571091414e-09,
+            "squared_error_contribution": 3.1558361773252754e-08,
+            "velocity_vector_max_m_per_s": 8.169108383873981e-07,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 8300.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 8100.0
+          },
+          "pluto barycenter": {
+            "position_vector_max_m": 1282.5927890162661,
+            "scaled_rms": 9.9973179392656e-10,
+            "squared_error_contribution": 2.1505257467295003e-08,
+            "velocity_vector_max_m_per_s": 1.4102848722906217e-06,
+            "worst_position_component": "y",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9900.0
+          },
+          "saturn barycenter": {
+            "position_vector_max_m": 53723.07696032884,
+            "scaled_rms": 8.510751249275227e-08,
+            "squared_error_contribution": 0.00015585237792897197,
+            "velocity_vector_max_m_per_s": 0.0003631440921885769,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9400.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9200.0
+          },
+          "sun": {
+            "position_vector_max_m": 39.93627626219917,
+            "scaled_rms": 5.375845358741508e-11,
+            "squared_error_contribution": 6.218292877535863e-11,
+            "velocity_vector_max_m_per_s": 7.303303971539249e-07,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9600.0
+          },
+          "uranus barycenter": {
+            "position_vector_max_m": 738.4155476067195,
+            "scaled_rms": 7.248403878927127e-10,
+            "squared_error_contribution": 1.1304787592073417e-08,
+            "velocity_vector_max_m_per_s": 1.8127124902397626e-06,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9800.0
+          },
+          "venus barycenter": {
+            "position_vector_max_m": 173361.96905314797,
+            "scaled_rms": 2.805120132681754e-06,
+            "squared_error_contribution": 0.169309204375758,
+            "velocity_vector_max_m_per_s": 0.05621478209450595,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9600.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          }
+        }
+      },
+      "T_vs_P": {
+        "global_scaled_rms": 2.192768179405552e-06,
+        "per_body": {
+          "earth barycenter": {
+            "position_vector_max_m": 448363.821142571,
+            "scaled_rms": 4.565197046118622e-06,
+            "squared_error_contribution": 0.433444617874311,
+            "velocity_vector_max_m_per_s": 0.08907915800207959,
+            "worst_position_component": "y",
+            "worst_position_epoch_years": 10000.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          },
+          "jupiter barycenter": {
+            "position_vector_max_m": 29209.068274919213,
+            "scaled_rms": 4.887202577137765e-08,
+            "squared_error_contribution": 4.9674698717330934e-05,
+            "velocity_vector_max_m_per_s": 0.0005212431241545623,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9800.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9500.0
+          },
+          "mars barycenter": {
+            "position_vector_max_m": 146481.86845337693,
+            "scaled_rms": 7.617879804697374e-07,
+            "squared_error_contribution": 0.012069319707419908,
+            "velocity_vector_max_m_per_s": 0.017324431061752868,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9700.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9600.0
+          },
+          "mercury barycenter": {
+            "position_vector_max_m": 116028.23484011095,
+            "scaled_rms": 4.287589236089479e-06,
+            "squared_error_contribution": 0.38233222427636177,
+            "velocity_vector_max_m_per_s": 0.12247764653298603,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9700.0,
+            "worst_velocity_component": "vy",
+            "worst_velocity_epoch_years": 9700.0
+          },
+          "neptune barycenter": {
+            "position_vector_max_m": 1188.8097365508509,
+            "scaled_rms": 1.6585220584864357e-09,
+            "squared_error_contribution": 5.720803932455708e-08,
+            "velocity_vector_max_m_per_s": 1.42356694506895e-06,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9700.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          },
+          "pluto barycenter": {
+            "position_vector_max_m": 1174.0768618996603,
+            "scaled_rms": 8.000998771269722e-10,
+            "squared_error_contribution": 1.331382876186265e-08,
+            "velocity_vector_max_m_per_s": 1.2922174494109014e-06,
+            "worst_position_component": "y",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9900.0
+          },
+          "saturn barycenter": {
+            "position_vector_max_m": 51294.426541999106,
+            "scaled_rms": 8.172867264242148e-08,
+            "squared_error_contribution": 0.00013891957648781063,
+            "velocity_vector_max_m_per_s": 0.0003466861709773938,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9400.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9200.0
+          },
+          "sun": {
+            "position_vector_max_m": 40.41913550117061,
+            "scaled_rms": 5.4925593455418025e-11,
+            "squared_error_contribution": 6.274282595651726e-11,
+            "velocity_vector_max_m_per_s": 7.408759161220522e-07,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9600.0
+          },
+          "uranus barycenter": {
+            "position_vector_max_m": 649.706112171018,
+            "scaled_rms": 7.700457086292589e-10,
+            "squared_error_contribution": 1.2332399056147128e-08,
+            "velocity_vector_max_m_per_s": 1.5916868219324188e-06,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9800.0
+          },
+          "venus barycenter": {
+            "position_vector_max_m": 178335.51811320343,
+            "scaled_rms": 2.8754972429041443e-06,
+            "squared_error_contribution": 0.17196516094969208,
+            "velocity_vector_max_m_per_s": 0.05782794696852007,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9600.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          }
+        }
+      },
+      "T_vs_old_T": {
+        "global_scaled_rms": 8.755469825492287e-08,
+        "per_body": {
+          "earth barycenter": {
+            "position_vector_max_m": 6988.968021276919,
+            "scaled_rms": 6.000670895759988e-08,
+            "squared_error_contribution": 0.04697217888895205,
+            "velocity_vector_max_m_per_s": 0.001387221691812281,
+            "worst_position_component": "y",
+            "worst_position_epoch_years": 10000.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          },
+          "jupiter barycenter": {
+            "position_vector_max_m": 21932.527826483692,
+            "scaled_rms": 2.840943464126908e-08,
+            "squared_error_contribution": 0.01052849441514491,
+            "velocity_vector_max_m_per_s": 0.0003917484530874561,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9800.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9500.0
+          },
+          "mars barycenter": {
+            "position_vector_max_m": 4802.773901414194,
+            "scaled_rms": 2.3868067104260555e-08,
+            "squared_error_contribution": 0.007431484718643834,
+            "velocity_vector_max_m_per_s": 0.0005661604772492798,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9100.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9000.0
+          },
+          "mercury barycenter": {
+            "position_vector_max_m": 6842.957883339539,
+            "scaled_rms": 2.1046419007510215e-07,
+            "squared_error_contribution": 0.5778265773907042,
+            "velocity_vector_max_m_per_s": 0.00720037399626316,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9700.0,
+            "worst_velocity_component": "vy",
+            "worst_velocity_epoch_years": 9700.0
+          },
+          "neptune barycenter": {
+            "position_vector_max_m": 1216.8840817373673,
+            "scaled_rms": 1.764451898941595e-09,
+            "squared_error_contribution": 4.061259457307999e-05,
+            "velocity_vector_max_m_per_s": 1.4650592000476636e-06,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9700.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          },
+          "pluto barycenter": {
+            "position_vector_max_m": 1776.0685111567684,
+            "scaled_rms": 1.409051675341728e-09,
+            "squared_error_contribution": 2.589971171371151e-05,
+            "velocity_vector_max_m_per_s": 1.9607622453433737e-06,
+            "worst_position_component": "y",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9900.0
+          },
+          "saturn barycenter": {
+            "position_vector_max_m": 4770.682694806979,
+            "scaled_rms": 6.460815410637305e-09,
+            "squared_error_contribution": 0.0005445224063259534,
+            "velocity_vector_max_m_per_s": 3.244764141598328e-05,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9700.0
+          },
+          "sun": {
+            "position_vector_max_m": 27.992173816290446,
+            "scaled_rms": 3.072552724491918e-11,
+            "squared_error_contribution": 1.2315152009199374e-08,
+            "velocity_vector_max_m_per_s": 3.6475876842233234e-07,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9700.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9500.0
+          },
+          "uranus barycenter": {
+            "position_vector_max_m": 2098.6340852736976,
+            "scaled_rms": 2.230762542818156e-09,
+            "squared_error_contribution": 6.491540573084329e-05,
+            "velocity_vector_max_m_per_s": 5.157788642659491e-06,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9900.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 9800.0
+          },
+          "venus barycenter": {
+            "position_vector_max_m": 11085.384665065088,
+            "scaled_rms": 1.6532898335986595e-07,
+            "squared_error_contribution": 0.3565653021530595,
+            "velocity_vector_max_m_per_s": 0.003597563506672005,
+            "worst_position_component": "x",
+            "worst_position_epoch_years": 9600.0,
+            "worst_velocity_component": "vx",
+            "worst_velocity_epoch_years": 10000.0
+          }
+        }
+      }
+    },
+    "secular_frequencies": {
+      "IAS15": {
+        "earth barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.89209308806323,
+            "frequency_cycles_per_year": 0.0001496080965185673,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "jupiter barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.9007747300514,
+            "frequency_cycles_per_year": 0.00014961479531639768,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "mars barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.89113250734007,
+            "frequency_cycles_per_year": 0.00014960735532973773,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "mercury barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.872905735989,
+            "frequency_cycles_per_year": 0.0001495932914629545,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "neptune barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 5576.154756326847,
+            "frequency_cycles_per_year": 0.004302588546548493,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "pluto barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 5570.468232647962,
+            "frequency_cycles_per_year": 0.004298200796796267,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.91912728246746,
+            "frequency_cycles_per_year": 0.0001496289562364718,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "saturn barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.91216376452772,
+            "frequency_cycles_per_year": 0.00014962358315164176,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "uranus barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 5577.283258581945,
+            "frequency_cycles_per_year": 0.004303459304461377,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "venus barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.88795097537582,
+            "frequency_cycles_per_year": 0.00014960490044396281,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        }
+      },
+      "P": {
+        "earth barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.8920930880238,
+            "frequency_cycles_per_year": 0.0001496080965185369,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "jupiter barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.90077473003475,
+            "frequency_cycles_per_year": 0.00014961479531638483,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "mars barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.89113250733135,
+            "frequency_cycles_per_year": 0.00014960735532973098,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "mercury barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.87290573599142,
+            "frequency_cycles_per_year": 0.00014959329146295634,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "neptune barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 5576.154756292852,
+            "frequency_cycles_per_year": 0.004302588546522262,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "pluto barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 5570.468232613474,
+            "frequency_cycles_per_year": 0.004298200796769656,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.91912728251253,
+            "frequency_cycles_per_year": 0.00014962895623650657,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "saturn barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.9121637645313,
+            "frequency_cycles_per_year": 0.00014962358315164453,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "uranus barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 5577.283258545022,
+            "frequency_cycles_per_year": 0.004303459304432888,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "venus barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.8879509753136,
+            "frequency_cycles_per_year": 0.0001496049004439148,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        }
+      },
+      "T": {
+        "earth barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.89209308949023,
+            "frequency_cycles_per_year": 0.0001496080965196684,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "jupiter barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.90077473011942,
+            "frequency_cycles_per_year": 0.00014961479531645018,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "mars barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.89113250786528,
+            "frequency_cycles_per_year": 0.00014960735533014297,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "mercury barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.87290573636716,
+            "frequency_cycles_per_year": 0.00014959329146324628,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "neptune barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 5576.154757053882,
+            "frequency_cycles_per_year": 0.004302588547109477,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "pluto barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 5570.468233353353,
+            "frequency_cycles_per_year": 0.00429820079734055,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.91912728304968,
+            "frequency_cycles_per_year": 0.00014962895623692104,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "saturn barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.9121637645756,
+            "frequency_cycles_per_year": 0.0001496235831516787,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "uranus barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 5577.283259363219,
+            "frequency_cycles_per_year": 0.0043034593050642125,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        },
+        "venus barycenter": {
+          "eccentricity_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": 193.88795097376584,
+            "frequency_cycles_per_year": 0.00014960490044272056,
+            "nyquist_cycles_per_year": 0.005
+          },
+          "inclination_mode": {
+            "alias_risk": true,
+            "fourier_resolution_cycles_per_year": 0.0001,
+            "frequency_arcsec_per_year": -129.60000000000002,
+            "frequency_cycles_per_year": -0.0001,
+            "nyquist_cycles_per_year": 0.005
+          }
+        }
+      }
+    }
+  },
+  "primary_finding": "BOTH_LANES_UNQUALIFIED",
+  "reference_handling": {
+    "frozen_whfast_0p5_vs_0p25_global_scaled_rms": 6.25175058609845e-06,
+    "frozen_whfast_0p5_vs_0p25_per_body_scaled_rms": {
+      "earth barycenter": 1.3772734166375417e-05,
+      "jupiter barycenter": 1.5157052640382743e-07,
+      "mars barycenter": 2.309582918016025e-06,
+      "mercury barycenter": 1.097281965916816e-05,
+      "neptune barycenter": 1.461127973693386e-09,
+      "pluto barycenter": 6.368847088043389e-10,
+      "saturn barycenter": 2.6069057784171915e-07,
+      "sun": 1.711038172524467e-10,
+      "uranus barycenter": 4.953102295900144e-09,
+      "venus barycenter": 8.679155641967369e-06
+    },
+    "historical_tangent_0p25_vs_ias15_global_scaled_rms_10k": 2.1476246761873134e-06,
+    "historical_tangent_0p25_vs_ias15_per_body_scaled_rms_10k": {
+      "earth barycenter": 4.540457701093374e-06,
+      "jupiter barycenter": 2.070995876981556e-08,
+      "mars barycenter": 7.807402310231827e-07,
+      "mercury barycenter": 4.008813933689793e-06,
+      "neptune barycenter": 6.217664514893718e-10,
+      "pluto barycenter": 4.77185227732978e-10,
+      "saturn barycenter": 9.150869946758344e-08,
+      "sun": 3.8749450960392765e-11,
+      "uranus barycenter": 1.8048236610359667e-09,
+      "venus barycenter": 2.9695471508843226e-06
+    },
+    "ias15_global_scaled_rms_envelope": 1.0875556664310227e-08,
+    "ias15_per_body_scaled_rms_envelope": {
+      "earth barycenter": 4.175442432153023e-09,
+      "jupiter barycenter": 3.259858792250234e-10,
+      "mars barycenter": 1.882194072905195e-09,
+      "mercury barycenter": 3.311774356579771e-08,
+      "neptune barycenter": 1.201286631513233e-10,
+      "pluto barycenter": 1.0599953114478348e-10,
+      "saturn barycenter": 2.1826674554532498e-10,
+      "sun": 3.088036653768074e-13,
+      "uranus barycenter": 1.510404740080174e-10,
+      "venus barycenter": 8.050653848095807e-09
+    },
+    "lane": "m0_diag_phys_ias15_default_10k",
+    "not_exact_truth_below_envelope": true,
+    "qualified_interval_years": [
+      0,
+      10000
+    ],
+    "timestamps": "101 exact stored samples at 100-year cadence; no interpolation or resampling"
+  },
+  "runtime": {
+    "P": {
+      "runtime_seconds": 25.672862,
+      "throughput_years_per_wall_second": 389.5163694643784
+    },
+    "T": {
+      "runtime_seconds": 48.53372,
+      "throughput_years_per_wall_second": 206.04231449804382
+    }
+  },
+  "runtime_identity": {
+    "callback_abi": {
+      "api_version": 1,
+      "c_offsetof_additional_forces": 2208,
+      "c_offsetof_extras": 2280,
+      "c_sizeof_reb_particle": 128,
+      "c_sizeof_reb_simulation": 2288,
+      "python_offsetof_additional_forces": 2208,
+      "python_offsetof_extras": 2280,
+      "python_sizeof_reb_particle": 128,
+      "python_sizeof_reb_simulation": 2288
+    },
+    "callback_library_path": "/home/peacelovephysics/ephemeris/mini_ephemeris/build/gr_tangent_c/libmini_ephemeris_gr_tangent.so",
+    "callback_library_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "callback_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "librebound_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/librebound.cpython-310-x86_64-linux-gnu.so",
+    "librebound_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04",
+    "libreboundx_path": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/libreboundx.cpython-310-x86_64-linux-gnu.so",
+    "libreboundx_sha256": "0f06a8fc47970fdd22dbc048bc31470b272147a335a2a991f5aaef45f1ffb0bb",
+    "numpy": "2.2.6",
+    "python": "3.10.12",
+    "python_compiler": "GCC 11.4.0",
+    "rebound": "4.6.0",
+    "rebound_build": "Feb 11 2026 17:34:38",
+    "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c"
+  },
+  "schema_version": 1,
+  "scope": "Architecture screen only; no production qualification or Stage 4 authorization.",
+  "smallest_successor_action": "Stop and perform a separately preregistered source-only and offline audit of the shared diagnostic-copy/synchronization representation against the frozen IAS15 state rows. This requires no new scientific integration and must resolve the order-17 copy callback accounting and coordinate-direction estimator floor before any architecture retest.",
+  "tangent": {
+    "direction_discrepancy_max": 0.07221112115498704,
+    "direction_discrepancy_rms": 0.05567299988050962,
+    "final_accumulated_lcn_difference": 1.4496347675030484e-09,
+    "final_direction_cosine": 0.9977591856187851,
+    "final_lcn_1_per_year": -2.4444785349579583e-13,
+    "final_left_norm": 45.19665800088984,
+    "final_megno": 2.2094827302421858,
+    "final_megno_difference": 0.2037540715743864,
+    "final_right_norm": 45.541329635161354,
+    "lcn_history_accumulated_rms_difference": 1.2417387253250444e-07,
+    "megno_history_rms_difference": 0.18952416805965203,
+    "minimum_direction_cosine": 0.9973927769907699,
+    "minimum_direction_cosine_epoch_years": 4500.0,
+    "new_tangent_log_norm_fitted_growth_per_year": 0.00033910513407372074,
+    "norm_relative_difference_max": 0.009950728711313063,
+    "norm_relative_difference_rms": 0.005139786823639046,
+    "norm_relative_difference_worst_epoch_years": 500.0,
+    "tangent_log_norm_difference_final": 0.007597111221177233,
+    "tangent_log_norm_difference_max": 0.010000568113464281
+  },
+  "tangent_lane_reuse": {
+    "executed_fresh": true,
+    "historical_role": "One-factor synchronization control only; never treated as an identical-contract reuse.",
+    "reason": "Historical lane used safe_mode=1 and keep_unsynchronized=0; the preregistered Lane T uses safe_mode=0 and keep_unsynchronized=1. These are material effective settings, so the prefix is not contract-identical.",
+    "reused": false
+  },
+  "thresholds": {
+    "all_physical_pairs": {
+      "angular_momentum_direction_rad_max": 1e-08,
+      "basis": "Ten times Manifest 16's frozen IAS15 nonphase/orientation scales, while retaining Manifest 10's Mercury-rate threshold.",
+      "eccentricity_absolute_max": 1e-08,
+      "eccentricity_vector_norm_max": 1e-08,
+      "inclination_component_norm_max": 1e-08,
+      "mercury_perihelion_rate_difference_arcsec_per_century_max": 0.001,
+      "persistent_nonphase_failures_allowed": 0,
+      "semimajor_axis_relative_max": 1e-08
+    },
+    "conservation": {
+      "angular_momentum_rel_drift_max_per_lane": 1e-09,
+      "corrected_energy_max_abs_per_lane": 1e-07,
+      "corrected_energy_trend": "abs(fitted_change_over_10k) <= max(0.25*max_abs,1e-10)",
+      "nonfinite_callback_results": 0,
+      "pair_angular_history_max_abs_difference": 1e-10,
+      "pair_corrected_energy_history_max_abs_difference": 1e-10
+    },
+    "lane_p_vs_ias15": {
+      "basis": "Ten times the qualified componentwise IAS15 phase envelope, with the historical 5e-10 per-body pointwise floor. This is a screen threshold, not a production threshold.",
+      "global_scaled_rms_max": 1.0875556664310227e-07,
+      "per_body_scaled_rms_max": {
+        "earth barycenter": 4.175442432153023e-08,
+        "jupiter barycenter": 3.259858792250234e-09,
+        "mars barycenter": 1.882194072905195e-08,
+        "mercury barycenter": 3.311774356579771e-07,
+        "neptune barycenter": 1.201286631513233e-09,
+        "pluto barycenter": 1.0599953114478348e-09,
+        "saturn barycenter": 2.1826674554532497e-09,
+        "sun": 5e-10,
+        "uranus barycenter": 1.510404740080174e-09,
+        "venus barycenter": 8.050653848095807e-08
+      }
+    },
+    "lane_t_carrier_vs_ias15_and_lane_p": {
+      "basis": "The frozen 0.5-day versus 0.25-day 10-kyr WHFast discrepancy scale from Manifest 16; raw Cartesian phase is not the sole veto.",
+      "global_scaled_rms_max": 6.25175058609845e-06,
+      "per_body_scaled_rms_max": {
+        "earth barycenter": 1.3772734166375417e-05,
+        "jupiter barycenter": 1.5157052640382743e-07,
+        "mars barycenter": 2.309582918016025e-06,
+        "mercury barycenter": 1.097281965916816e-05,
+        "neptune barycenter": 1.461127973693386e-09,
+        "pluto barycenter": 6.368847088043389e-10,
+        "saturn barycenter": 2.6069057784171915e-07,
+        "sun": 1.711038172524467e-10,
+        "uranus barycenter": 4.953102295900144e-09,
+        "venus barycenter": 8.679155641967369e-06
+      }
+    },
+    "restart": {
+      "callback_reattached": true,
+      "checkpoint_years": 1000,
+      "continuation_years": 100,
+      "live_map_is_synchronized": 0,
+      "megno_lcn_exact_float64_lane_t": true,
+      "physical_state_exact_float64": true,
+      "settings_exact": true,
+      "target_years": 1100,
+      "variation_state_exact_float64_lane_t": true
+    },
+    "tangent_sync_control": {
+      "basis": "Frozen Manifest 10 tangent/MEGNO/LCN gates; the direction RMS is the discrepancy implied by cosine 0.9999 and log-norm is a scale-free screen-only extension.",
+      "direction_discrepancy_rms_max": 0.01414213562373095,
+      "final_accumulated_lcn_difference_max": 0.001,
+      "final_direction_cosine_min": 0.9999,
+      "final_megno_difference_max": 0.001,
+      "lcn_history_rms_difference_max": 0.001,
+      "megno_history_rms_difference_max": 0.001,
+      "physical_global_scaled_rms_max": 2.1476246761873134e-07,
+      "physical_per_body_rule": "max(10*IAS15 per-body envelope, 0.1*historical old-tangent-vs-IAS15 per-body RMS)",
+      "tangent_log_norm_difference_max": 0.001
+    },
+    "tangent_sync_raw": {
+      "global_scaled_rms_max": 2.1476246761873134e-07,
+      "per_body_scaled_rms_max": {
+        "earth barycenter": 4.540457701093374e-07,
+        "jupiter barycenter": 3.259858792250234e-09,
+        "mars barycenter": 7.807402310231828e-08,
+        "mercury barycenter": 4.0088139336897936e-07,
+        "neptune barycenter": 1.201286631513233e-09,
+        "pluto barycenter": 1.0599953114478348e-09,
+        "saturn barycenter": 9.150869946758345e-09,
+        "sun": 3.874945096039277e-12,
+        "uranus barycenter": 1.510404740080174e-09,
+        "venus barycenter": 2.969547150884323e-07
+      }
+    },
+    "unresolved_metric_policy": {
+      "essential_metrics": "Physical scaled state, coordinate-free/nonsingular histories, conservation, Lane T tangent/MEGNO/LCN continuity, carrier consistency, integrity, and restart closure.",
+      "secular_frequency_and_absolute_perihelion_rate": "Known before integration to be resolution-limited at 10 kyr and 100-year cadence; report estimates and uncertainty but treat them as contextual, nonessential metrics."
+    }
+  },
+  "unresolved_metrics": [
+    {
+      "essential": true,
+      "lane": "all physical pairs",
+      "metric": "angular_momentum_direction",
+      "reason": "the frozen arccos(dot) estimator has a binary64 floor above the 1e-8 threshold"
+    },
+    {
+      "body": "mercury barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mercury barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "venus barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "venus barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "earth barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "earth barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mars barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mars barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "jupiter barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "jupiter barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "saturn barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "saturn barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "uranus barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "uranus barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "neptune barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "neptune barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "pluto barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "pluto barycenter",
+      "essential": false,
+      "lane": "P",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mercury barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mercury barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "venus barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "venus barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "earth barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "earth barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mars barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mars barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "jupiter barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "jupiter barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "saturn barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "saturn barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "uranus barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "uranus barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "neptune barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "neptune barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "pluto barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "pluto barycenter",
+      "essential": false,
+      "lane": "T",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mercury barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mercury barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "venus barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "venus barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "earth barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "earth barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mars barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "mars barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "jupiter barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "jupiter barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "saturn barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "saturn barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "uranus barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "uranus barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "neptune barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "neptune barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "pluto barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "eccentricity_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "body": "pluto barycenter",
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "secular_frequency",
+      "mode": "inclination_mode",
+      "reason": "below two Fourier bins or above 0.8 Nyquist"
+    },
+    {
+      "essential": false,
+      "lane": "P",
+      "metric": "absolute_mercury_perihelion_rate",
+      "reason": "95-percent interval exceeds pair threshold"
+    },
+    {
+      "essential": false,
+      "lane": "T",
+      "metric": "absolute_mercury_perihelion_rate",
+      "reason": "95-percent interval exceeds pair threshold"
+    },
+    {
+      "essential": false,
+      "lane": "IAS15",
+      "metric": "absolute_mercury_perihelion_rate",
+      "reason": "95-percent interval exceeds pair threshold"
+    },
+    {
+      "essential": false,
+      "lane": "old_T",
+      "metric": "absolute_mercury_perihelion_rate",
+      "reason": "95-percent interval exceeds pair threshold"
+    }
+  ]
+}
