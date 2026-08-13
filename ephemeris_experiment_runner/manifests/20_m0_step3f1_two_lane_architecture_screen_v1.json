@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "kind": "m0_step3f1_two_lane_architecture_screen_manifest",
+  "experiment_id": "m0_step3f1_two_lane_architecture_screen_v1",
+  "model_id": "m0_grpot_emb_pluto_v1",
+  "allowed_final_statuses": [
+    "STEP3F1_TWO_LANE_SCREEN_PASSED",
+    "STEP3F1_TWO_LANE_SCREEN_FAILED",
+    "STEP3F1_TWO_LANE_SCREEN_INCONCLUSIVE",
+    "BLOCKED"
+  ],
+  "allowed_primary_findings": [
+    "TWO_LANE_ARCHITECTURE_SUPPORTED",
+    "PHYSICAL_WHCKL_LANE_UNQUALIFIED",
+    "TANGENT_LANE_UNQUALIFIED",
+    "BOTH_LANES_UNQUALIFIED",
+    "MIXED_OR_INCONCLUSIVE",
+    "NOT_EVALUATED"
+  ],
+  "preregistration": {
+    "starting_commit": "61cf42f9f8ea5d816bfd514853c61a08e529a1e6",
+    "frozen_before_new_trajectory_results": true,
+    "new_lane_results_inspected": false,
+    "final_status": "BLOCKED",
+    "primary_finding": "NOT_EVALUATED",
+    "commit_message": "Preregister M0 Step 3f1 two-lane architecture screen"
+  },
+  "frozen_historical_results": {
+    "manifest_13": "BLOCKED",
+    "manifest_14": "REVERSIBILITY_GATE_PASSED",
+    "manifest_15": "BLOCKED",
+    "manifest_16_reference": "IAS15_REFERENCE_QUALIFIED_AT_ROUNDOFF_PHASE_FLOOR",
+    "manifest_16_primary_mechanism": "SYSTEMATIC_WHFAST_STEP_BIAS",
+    "manifest_16_step3_diagnosis": "STEP3_NUMERICAL_FLOOR_CHARACTERIZED",
+    "manifest_17": "STEP3E_025_DAY_PRODUCTION_NOT_VALIDATED",
+    "manifest_18_status": "STEP3E1_OFFLINE_DIAGNOSIS_COMPLETE",
+    "manifest_18_primary_classification": "TRUE_NONPHASE_NONCONVERGENCE",
+    "manifest_18_scope": "Historical combined standard-kernel WHFast physical+tangent/continuous-MEGNO configuration only.",
+    "manifest_19_status": "STEP3F0_CONFIGURATION_AUDIT_COMPLETE",
+    "manifest_19_primary_finding": "COMBINED_LANE_CAPABILITY_CONSTRAINT_CONFIRMED",
+    "production_validation": false
+  },
+  "provenance": {
+    "compiled_c_tag": "gr-tangent-compiled-c-v1",
+    "compiled_c_tag_kind": "annotated",
+    "compiled_c_tag_commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b",
+    "python_oracle_tag": "gr-tangent-python-oracle-v2",
+    "python_oracle_commit": "9933bc5e3d9bfe9ec07e72929c22e4406f12b441",
+    "step3f0_preregistration_commit": "45d3c996dfaae161aeab79fd098f0d81bc90f886",
+    "step3f0_closeout_commit": "61cf42f9f8ea5d816bfd514853c61a08e529a1e6"
+  },
+  "runtime_identity": {
+    "python": "3.10.12",
+    "python_compiler": "GCC 11.4.0",
+    "numpy": "2.2.6",
+    "rebound": "4.6.0",
+    "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+    "rebound_build": "Feb 11 2026 17:34:38",
+    "rebound_header_sha256": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+    "librebound_sha256": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04",
+    "reboundx": "4.6.1",
+    "libreboundx_sha256": "0f06a8fc47970fdd22dbc048bc31470b272147a335a2a991f5aaef45f1ffb0bb",
+    "callback_source_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "callback_library_sha256": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+    "callback_build_metadata_sha256": "6ad9e3bed8f2c9a41d5a098c3ff1c5a3f9cb430db615efa8e2a208719106b917",
+    "callback_api_version": 1,
+    "c_sizeof_reb_simulation": 2288,
+    "c_sizeof_reb_particle": 128
+  },
+  "protected_files": {
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+  },
+  "source_artifacts": {
+    "manifest_16": ["ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json", "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6"],
+    "manifest_16_summary": ["docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_summary.json", "8f720e6cb160f943b55cdd4be9a982a504d0f4235707080eb0db46a51f2d3071"],
+    "manifest_16_report": ["docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_report.md", "fca2495afdb8d8ee73382546acb3ab3d9c983cedd7cf5d3aa6deeb3f9b64172a"],
+    "manifest_17": ["ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json", "978ab813979ea6c728e113c1f473afabb54cd553d2097dd9d26add8391f5589b"],
+    "manifest_17_summary": ["docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_summary.json", "4e971e965d3b02f6a69e1d8ae183e7228fd27a504ce020a529d39e112b7a25f4"],
+    "manifest_17_report": ["docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_report.md", "051b5a1c548c240581721bf82a647616ed822e6b2e4a30de402f7a15045f36b0"],
+    "manifest_18": ["ephemeris_experiment_runner/manifests/18_m0_step3e1_offline_state_diagnosis_v1.json", "088b55fa40cf0ccb7fa50f42d41f017fcdf560d7a8f7a7dfa69678717544021d"],
+    "manifest_18_summary": ["docs/validation/m0-step3e1-offline-state-diagnosis-v1/m0_step3e1_offline_state_diagnosis_summary.json", "9eb86ddbcff2d0cd199dcbcfa224399c9ecec2c4ce5d33fc09c91b1dee2e2c85"],
+    "manifest_18_report": ["docs/validation/m0-step3e1-offline-state-diagnosis-v1/m0_step3e1_offline_state_diagnosis_report.md", "978b6cd20f670086d3820961a98236fefe3e8ee56dada5932b34543b2c80c006"],
+    "manifest_19": ["ephemeris_experiment_runner/manifests/19_m0_step3f0_whfast_configuration_audit_v1.json", "28d8c390690be7c1b98cfea1b5e22615926dc149b6e7c88640d8db4e5074b521"],
+    "manifest_19_summary": ["docs/validation/m0-step3f0-whfast-configuration-audit-v1/m0_step3f0_whfast_configuration_audit_summary.json", "eadf9945e7a2a172bede58d4eba10e8b1ad3dca2f5607e9826ec43dd9079d225"],
+    "manifest_19_report": ["docs/validation/m0-step3f0-whfast-configuration-audit-v1/m0_step3f0_whfast_configuration_audit_report.md", "982efe29c4461fc6344b98cc40f41a76ebc5267e3bc5956cb0a2f4387b6d84e7"],
+    "manifest_19_matrix": ["docs/validation/m0-step3f0-whfast-configuration-audit-v1/m0_step3f0_effective_settings_matrix.csv", "06864e3d40f0b65c6dc68193fbbe02fe4420ad4974dee28d116d98c200aef3dd"]
+  },
+  "common_physical_contract": {
+    "start_date": "2000-01-01T00:00:00+00:00",
+    "model_scope": "full_with_pluto",
+    "body_names": [
+      "sun",
+      "mercury barycenter",
+      "venus barycenter",
+      "earth barycenter",
+      "mars barycenter",
+      "jupiter barycenter",
+      "saturn barycenter",
+      "uranus barycenter",
+      "neptune barycenter",
+      "pluto barycenter"
+    ],
+    "initial_conditions_sha256": "bd9b632e1aa7410719bb85675ac7b939b8e9ff29ed577baed679629dab66acf7",
+    "kernel_sha256": "a354082a26441d25dbeea252a41c00d5eaa2370daf39cb3239de039392b11ee4",
+    "units": "SI m kg s",
+    "stored_frame": "solar-system barycentric ICRF/J2000 equatorial",
+    "element_frame": "heliocentric J2000 ecliptic",
+    "integrator": "whfast",
+    "coordinates": "jacobi",
+    "step_days": 0.25,
+    "step_seconds": 21600.0,
+    "duration_years": 10000,
+    "total_steps": 14610000,
+    "scientific_cadence_years": 100,
+    "steps_per_scientific_sample": 146100,
+    "scientific_samples": 101,
+    "state_rows": 1010,
+    "archive_cadence_years": 1000,
+    "steps_per_archive": 1461000,
+    "archive_snapshots": 11,
+    "targets": "target_seconds = sample_index * 146100 * 21600; integer step counts only",
+    "exact_finish_time": 1,
+    "fractional_endpoint_steps": false,
+    "gr_scale": 1.0,
+    "include_central_response": true,
+    "force_is_velocity_dependent": false,
+    "random_perturbation": false,
+    "additional_bodies_or_physics": false
+  },
+  "lane_contracts": {
+    "P": {
+      "id": "m0_step3f1_physical_whckl_0p25d_10k",
+      "configuration_fingerprint": "2ce26d3f71e34d603f479915ba12d8b62bcbfd8a7cd765629e30967bb30382fd",
+      "responsibility": "candidate canonical physical trajectory for architecture screening only",
+      "kernel": "lazy",
+      "corrector": 17,
+      "corrector2": 0,
+      "safe_mode": 0,
+      "keep_unsynchronized": 1,
+      "recalculate_coordinates_this_timestep": 0,
+      "variations": false,
+      "megno": false,
+      "lcn": false,
+      "megno_seed": null,
+      "callback_mode": "physical_only",
+      "expected_callback_invocations": 29223232,
+      "callback_accounting": "Two lazy-kernel acceleration evaluations per step, 32 order-17 corrector evaluations at first map entry, and 32 inverse-corrector evaluations at each of 100 positive-time output synchronizations.",
+      "diagnostic_copy": "Read the synchronized inertial particle representation from a simulation copy; never synchronize or rebuild the live internal map for diagnostics."
+    },
+    "T": {
+      "id": "m0_step3f1_tangent_whfast_0p25d_10k",
+      "configuration_fingerprint": "597950f7403e7316df4bb847e0e02874d0b4353b1e7c27065eac38985c2f6f20",
+      "responsibility": "native first-variation, MEGNO, and finite-time LCN diagnostics",
+      "kernel": "default",
+      "corrector": 0,
+      "corrector2": 0,
+      "safe_mode": 0,
+      "keep_unsynchronized": 1,
+      "recalculate_coordinates_this_timestep": 0,
+      "variations": true,
+      "variation_order": 1,
+      "variation_testparticle": -1,
+      "megno": true,
+      "lcn": true,
+      "megno_seed": 12345,
+      "callback_mode": "physical_and_analytic_jacobian",
+      "expected_callback_invocations": 14610000,
+      "callback_accounting": "One standard-kernel additional-force evaluation per step; the MEGNO-only gravity variation refresh does not call additional_forces.",
+      "diagnostic_copy": "Read the synchronized inertial particle and first-variation representation from a simulation copy; preserve the live internal map."
+    }
+  },
+  "tangent_reuse_decision": {
+    "reuse": false,
+    "historical_lane": "m0_conv_0p25d_1myr_s12345 first 10 kyr",
+    "reason": "Historical lane used safe_mode=1 and keep_unsynchronized=0; the preregistered Lane T uses safe_mode=0 and keep_unsynchronized=1. These are material effective settings, so the prefix is not contract-identical.",
+    "historical_lane_role": "One-factor synchronization control only; never treated as an identical-contract reuse."
+  },
+  "step3f0_source_contract": {
+    "variation_kernel_constraint": "REBOUND 4.6.0 reb_integrator_whfast_init rejects nonstandard kernels when native variations are present.",
+    "tangent_sync_behavior": "reb_integrator_whfast_step temporarily synchronizes x/v/a for continuous MEGNO and restores p_jh with safe_mode=0, keep_unsynchronized=1.",
+    "live_map_behavior": "reb_integrator_whfast_synchronize copies and restores p_jh and leaves is_synchronized=0 when keep_unsynchronized=1.",
+    "corrector_behavior": "Order-17 correctors are supported for Jacobi coordinates; inverse correctors construct output coordinates during synchronization.",
+    "lazy_force_behavior": "The lazy kernel invokes reb_simulation_update_acceleration for both its normal and recalculated kick, so the validated arbitrary position-only callback participates in both evaluations.",
+    "archive_behavior": "SimulationArchive serializes WHFast fields, particles, p_jh, variations, and MEGNO without forcing synchronization; function pointers require reattachment."
+  },
+  "reference_contract": {
+    "lane": "m0_diag_phys_ias15_default_10k",
+    "qualified_interval_years": [0, 10000],
+    "timestamps": "101 exact stored samples at 100-year cadence; no interpolation or resampling",
+    "not_exact_truth_below_envelope": true,
+    "ias15_global_scaled_rms_envelope": 1.0875556664310227e-08,
+    "ias15_per_body_scaled_rms_envelope": {
+      "sun": 3.088036653768074e-13,
+      "mercury barycenter": 3.311774356579771e-08,
+      "venus barycenter": 8.050653848095807e-09,
+      "earth barycenter": 4.175442432153023e-09,
+      "mars barycenter": 1.882194072905195e-09,
+      "jupiter barycenter": 3.259858792250234e-10,
+      "saturn barycenter": 2.1826674554532498e-10,
+      "uranus barycenter": 1.510404740080174e-10,
+      "neptune barycenter": 1.201286631513233e-10,
+      "pluto barycenter": 1.0599953114478348e-10
+    },
+    "frozen_whfast_0p5_vs_0p25_global_scaled_rms": 6.25175058609845e-06,
+    "frozen_whfast_0p5_vs_0p25_per_body_scaled_rms": {
+      "sun": 1.711038172524467e-10,
+      "mercury barycenter": 1.097281965916816e-05,
+      "venus barycenter": 8.679155641967369e-06,
+      "earth barycenter": 1.3772734166375417e-05,
+      "mars barycenter": 2.309582918016025e-06,
+      "jupiter barycenter": 1.5157052640382743e-07,
+      "saturn barycenter": 2.6069057784171915e-07,
+      "uranus barycenter": 4.953102295900144e-09,
+      "neptune barycenter": 1.461127973693386e-09,
+      "pluto barycenter": 6.368847088043389e-10
+    },
+    "historical_tangent_0p25_vs_ias15_global_scaled_rms_10k": 2.1476246761873134e-06,
+    "historical_tangent_0p25_vs_ias15_per_body_scaled_rms_10k": {
+      "sun": 3.8749450960392765e-11,
+      "mercury barycenter": 4.008813933689793e-06,
+      "venus barycenter": 2.9695471508843226e-06,
+      "earth barycenter": 4.540457701093374e-06,
+      "mars barycenter": 7.807402310231827e-07,
+      "jupiter barycenter": 2.070995876981556e-08,
+      "saturn barycenter": 9.150869946758344e-08,
+      "uranus barycenter": 1.8048236610359667e-09,
+      "neptune barycenter": 6.217664514893718e-10,
+      "pluto barycenter": 4.77185227732978e-10
+    }
+  },
+  "comparison_definitions": {
+    "matching": "Match all 101 samples by exact integer sample index, exact step count, time_seconds, and time_years; no interpolation.",
+    "physical_scaling": "Equal weight for every selected epoch, real body, and six Cartesian components; positions divided by AU and velocities by AU/JulianYear.",
+    "per_body_contribution": "Body sum of six scaled squared defects divided by the global sum over the identical epochs.",
+    "rtn": "Heliocentric left-minus-right state projected into the right/reference lane R,T,N basis at each epoch.",
+    "phase_alignment": "Report raw, shared-mean-anomaly, and shared-mean-longitude reconstructions using the right/reference phase; neither stripped representation is selected after inspection.",
+    "orbital_elements": "Repository J2000-ecliptic heliocentric osculating elements with G*(M_sun+M_body), principal wrapped angular differences, and fixed initial semimajor-axis denominator.",
+    "nonsingular": "Use eccentricity vector, unit angular-momentum vector, k=e*cos(varpi), h=e*sin(varpi), p=tan(i/2)*sin(Omega), and q=tan(i/2)*cos(Omega).",
+    "windows": "Ten fixed windows, each containing (w*1000, (w+1)*1000] years; cumulative endpoints are 1000 through 10000 years.",
+    "persistent_failure": "The same essential metric exceeds its threshold in at least three consecutive windows with right endpoints at or after 5000 years.",
+    "secular_frequency": "NAFF-lite Hann-windowed complex FFT with three-bin log-power refinement on z_e and z_i; flag unresolved when below two Fourier bins or above 0.8 Nyquist.",
+    "mercury_perihelion": "Centered unweighted OLS of unwrapped longitude of perihelion over 0-10000 years with standard-error and 95-percent interval; pair differences are screened but absolute rate is unresolved when its interval exceeds the pair threshold.",
+    "energy": "Recompute E_corrected=E_Newtonian-(3*s*G^2*M_sun^2/c^2)*sum(m_i/r_i_sun^2) from state rows; report max, RMS, p99, endpoint, centered OLS trend, and ten windows.",
+    "angular_momentum": "Recompute the Cartesian total angular-momentum vector and relative norm drift from state rows.",
+    "tangent": "Use AU and AU/JulianYear scaling, full-system direction cosine/discrepancy, scaled norm, log growth, and relative norm difference.",
+    "lcn": "Compare finite-time LCN after multiplication by 10000 years so the difference is dimensionless."
+  },
+  "screen_thresholds": {
+    "lane_p_vs_ias15": {
+      "global_scaled_rms_max": 1.0875556664310227e-07,
+      "per_body_scaled_rms_max": {
+        "sun": 5e-10,
+        "mercury barycenter": 3.311774356579771e-07,
+        "venus barycenter": 8.050653848095807e-08,
+        "earth barycenter": 4.175442432153023e-08,
+        "mars barycenter": 1.882194072905195e-08,
+        "jupiter barycenter": 3.259858792250234e-09,
+        "saturn barycenter": 2.1826674554532498e-09,
+        "uranus barycenter": 1.510404740080174e-09,
+        "neptune barycenter": 1.201286631513233e-09,
+        "pluto barycenter": 1.0599953114478348e-09
+      },
+      "basis": "Ten times the qualified componentwise IAS15 phase envelope, with the historical 5e-10 per-body pointwise floor. This is a screen threshold, not a production threshold."
+    },
+    "lane_t_carrier_vs_ias15_and_lane_p": {
+      "global_scaled_rms_max": 6.25175058609845e-06,
+      "per_body_scaled_rms_max": {
+        "sun": 1.711038172524467e-10,
+        "mercury barycenter": 1.097281965916816e-05,
+        "venus barycenter": 8.679155641967369e-06,
+        "earth barycenter": 1.3772734166375417e-05,
+        "mars barycenter": 2.309582918016025e-06,
+        "jupiter barycenter": 1.5157052640382743e-07,
+        "saturn barycenter": 2.6069057784171915e-07,
+        "uranus barycenter": 4.953102295900144e-09,
+        "neptune barycenter": 1.461127973693386e-09,
+        "pluto barycenter": 6.368847088043389e-10
+      },
+      "basis": "The frozen 0.5-day versus 0.25-day 10-kyr WHFast discrepancy scale from Manifest 16; raw Cartesian phase is not the sole veto."
+    },
+    "all_physical_pairs": {
+      "semimajor_axis_relative_max": 1e-08,
+      "eccentricity_absolute_max": 1e-08,
+      "eccentricity_vector_norm_max": 1e-08,
+      "inclination_component_norm_max": 1e-08,
+      "angular_momentum_direction_rad_max": 1e-08,
+      "mercury_perihelion_rate_difference_arcsec_per_century_max": 0.001,
+      "persistent_nonphase_failures_allowed": 0,
+      "basis": "Ten times Manifest 16's frozen IAS15 nonphase/orientation scales, while retaining Manifest 10's Mercury-rate threshold."
+    },
+    "tangent_sync_control": {
+      "physical_global_scaled_rms_max": 2.1476246761873135e-07,
+      "physical_per_body_rule": "max(10*IAS15 per-body envelope, 0.1*historical old-tangent-vs-IAS15 per-body RMS)",
+      "final_direction_cosine_min": 0.9999,
+      "direction_discrepancy_rms_max": 0.01414213562373095,
+      "tangent_log_norm_difference_max": 0.001,
+      "final_megno_difference_max": 0.001,
+      "megno_history_rms_difference_max": 0.001,
+      "final_accumulated_lcn_difference_max": 0.001,
+      "lcn_history_rms_difference_max": 0.001,
+      "basis": "Frozen Manifest 10 tangent/MEGNO/LCN gates; the direction RMS is the discrepancy implied by cosine 0.9999 and log-norm is a scale-free screen-only extension."
+    },
+    "conservation": {
+      "corrected_energy_max_abs_per_lane": 1e-07,
+      "corrected_energy_trend": "abs(fitted_change_over_10k) <= max(0.25*max_abs,1e-10)",
+      "pair_corrected_energy_history_max_abs_difference": 1e-10,
+      "angular_momentum_rel_drift_max_per_lane": 1e-09,
+      "pair_angular_history_max_abs_difference": 1e-10,
+      "nonfinite_callback_results": 0
+    },
+    "restart": {
+      "checkpoint_years": 1000,
+      "continuation_years": 100,
+      "target_years": 1100,
+      "physical_state_exact_float64": true,
+      "variation_state_exact_float64_lane_t": true,
+      "megno_lcn_exact_float64_lane_t": true,
+      "settings_exact": true,
+      "live_map_is_synchronized": 0,
+      "callback_reattached": true
+    },
+    "unresolved_metric_policy": {
+      "secular_frequency_and_absolute_perihelion_rate": "Known before integration to be resolution-limited at 10 kyr and 100-year cadence; report estimates and uncertainty but treat them as contextual, nonessential metrics.",
+      "essential_metrics": "Physical scaled state, coordinate-free/nonsingular histories, conservation, Lane T tangent/MEGNO/LCN continuity, carrier consistency, integrity, and restart closure."
+    }
+  },
+  "classification_rules": {
+    "TWO_LANE_ARCHITECTURE_SUPPORTED": "All integrity/restart checks pass; Lane P passes every essential physical, nonphase, conservation, and secular-history screen; Lane T passes tangent/MEGNO/LCN and carrier-consistency screens; no persistent coordinate-free contradiction remains.",
+    "PHYSICAL_WHCKL_LANE_UNQUALIFIED": "Lane P fails a material essential physical gate while Lane T's assigned gates pass.",
+    "TANGENT_LANE_UNQUALIFIED": "Lane P passes and Lane T fails tangent/MEGNO/LCN or carrier-consistency gates.",
+    "BOTH_LANES_UNQUALIFIED": "Both lanes fail material assigned gates.",
+    "MIXED_OR_INCONCLUSIVE": "An essential metric is unavailable, a required threshold lacks preregistered support, or multiple classifications remain comparably supported.",
+    "NOT_EVALUATED": "Allowed only with BLOCKED.",
+    "pass_scope": "A pass supports the two-lane architecture only. It does not validate 0.25 day, authorize 100 kyr, authorize Stage 4, or authorize 10 Myr."
+  },
+  "restart_contract": {
+    "fresh_process": true,
+    "source": "SimulationArchive snapshot exactly at 1000 years",
+    "branch": "Restore, verify serialized configuration and is_synchronized, reattach the same callback and flags, integrate exactly 146100 full steps to 1100 years, and compare with the main-lane 1100-year sample.",
+    "new_archive": false,
+    "historical_artifact_write": false,
+    "expected_branch_callbacks": {
+      "P": 292232,
+      "T": 146100
+    }
+  },
+  "runtime_safeguards": {
+    "authorized_lane_ids": [
+      "m0_step3f1_physical_whckl_0p25d_10k",
+      "m0_step3f1_tangent_whfast_0p25d_10k"
+    ],
+    "maximum_duration_years": 10000,
+    "only_step_days": 0.25,
+    "exact_lane_count": 2,
+    "ias15_execution": false,
+    "allowed_integrator": "whfast",
+    "forbidden_steps_days": [0.125, 0.0625],
+    "forbidden_historical_output_roots": true,
+    "serial": true,
+    "fresh_collision_safe_outputs": true,
+    "available_disk_bytes_before_preregistration": 836956233728,
+    "disk_required_bytes": 100000000,
+    "historical_runtime_basis_seconds_for_0p25_day_10k": 49.213711325859185,
+    "lane_runtime_ceiling_seconds": {
+      "P": 300,
+      "T": 180
+    },
+    "no_dependency_change": true,
+    "no_stage4": true,
+    "no_10myr_command_or_run": true
+  },
+  "telemetry_contract": {
+    "schema_version": 1,
+    "progress_rows_per_lane": 101,
+    "state_rows_per_lane": 1010,
+    "required_per_sample": [
+      "sample_index exact_step_count time_seconds time_years",
+      "live is_synchronized kernel coordinates correctors safe_mode keep_unsynchronized",
+      "all real masses positions velocities",
+      "all Lane T first-variation positions velocities",
+      "Lane T MEGNO and finite-time LCN",
+      "Newtonian GR-potential and corrected energy",
+      "angular-momentum vector and relative drift",
+      "callback and nonfinite counters",
+      "schema version lane id artifact id configuration fingerprint"
+    ],
+    "partial_files": "CSV telemetry is written to .partial files with fsync; final names appear only by atomic rename after complete validation.",
+    "sidecars": "Status and checkpoint identity JSON are written atomically.",
+    "live_map_check": "Record is_synchronized before and after sampling and require no change."
+  },
+  "artifact_requirements": {
+    "per_lane": [
+      "progress.csv",
+      "state.csv",
+      "simulationarchive.bin",
+      "status.json",
+      "summary.json",
+      "events.log",
+      "restart_check.json"
+    ],
+    "committed": [
+      "Manifest 20",
+      "focused source and tests",
+      "strict-finite compact JSON summary",
+      "complete Markdown report",
+      "deterministic metrics CSV",
+      "deterministic lane-configuration CSV",
+      "four deterministic PNG figures"
+    ],
+    "raw_policy": "Raw lane trajectories, archives, operational sidecars, logs, and scratch arrays remain ignored under output_root."
+  },
+  "figures": [
+    "physical_defects_vs_ias15.png",
+    "coordinate_free_phase_stripped_by_body.png",
+    "energy_angular_momentum_histories.png",
+    "tangent_megno_lcn_histories.png"
+  ],
+  "paths": {
+    "project_root": "/home/peacelovephysics/ephemeris",
+    "manifest": "/home/peacelovephysics/ephemeris/ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json",
+    "kernel": "/home/peacelovephysics/ephemeris/data/de431_part-2.bsp",
+    "output_root": "/home/peacelovephysics/ephemeris/output/stability/m0_step3f1_two_lane_architecture_screen_v1",
+    "report_root": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1",
+    "summary": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_two_lane_architecture_screen_summary.json",
+    "report": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_two_lane_architecture_screen_report.md",
+    "metrics_table": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_metrics.csv",
+    "configuration_table": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_lane_configuration.csv",
+    "figure_directory": "/home/peacelovephysics/ephemeris/docs/validation/m0-step3f1-two-lane-architecture-screen-v1/figures"
+  },
+  "preregistered_commands": [
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3f1_two_lane --manifest ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json audit",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3f1_two_lane --manifest ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json zero-step",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3f1_two_lane --manifest ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json run-lane --lane P",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3f1_two_lane --manifest ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json run-lane --lane T",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3f1_two_lane --manifest ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json restart-check --lane P",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3f1_two_lane --manifest ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json restart-check --lane T",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3f1_two_lane --manifest ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json analyze",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m mini_ephemeris.m0_step3f1_two_lane --manifest ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json verify"
+  ],
+  "forbidden_operations": [
+    "duration greater than 10000 years",
+    "timestep other than 0.25 day",
+    "IAS15 execution or reference regeneration",
+    "0.125-day or 0.0625-day lane",
+    "ensemble or random perturbation",
+    "physical model force Jacobian oracle dependency or historical artifact modification",
+    "production validation Stage 4 tag or 10 Myr command/run"
+  ]
+}
