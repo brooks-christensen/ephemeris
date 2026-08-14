@@ -1,0 +1,257 @@
+{
+  "schema_version": 1,
+  "kind": "m0_step3g1a_v2_foundation_preregistration",
+  "experiment_id": "m0_step3g1a_v2_foundation_v1",
+  "purpose": "Preregister the isolated, non-dynamical v2 model, state, pure force/JVP interface, deterministic timebase, observer-ownership, and accounting foundation required before WHCKL primitive implementation.",
+  "paths": {
+    "manifest": "ephemeris_experiment_runner/manifests/22_m0_step3g1a_v2_foundation_v1.json",
+    "implementation_root": "mini_ephemeris/src/mini_ephemeris/v2",
+    "documentation_root": "docs/validation/m0-step3g1a-v2-foundation-v1"
+  },
+  "preregistration": {
+    "created_utc": "2026-08-14T02:41:36Z",
+    "required_parent_commit": "e7b7ace3c4d348a018eeb83872c3c7f03e8ad322",
+    "required_branch": "v2-whckl-tangent-core",
+    "conclusion_free": true,
+    "commit_message": "Preregister M0 Step 3g1a v2 foundation",
+    "required_closeout_message": "Complete M0 Step 3g1a v2 foundation"
+  },
+  "controlled_baseline": {
+    "head_before_branch_creation": "e7b7ace3c4d348a018eeb83872c3c7f03e8ad322",
+    "worktree_clean": true,
+    "compiled_c_tag": {
+      "name": "gr-tangent-compiled-c-v1",
+      "kind": "annotated",
+      "tag_object": "e12153e5c4384e5c16795e29c33b7572392121b1",
+      "commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b"
+    },
+    "step3g0_preregistration_commit": "89a57748cdf5b16915f213dd72dd820e52295539",
+    "step3g0_closeout_commit": "e7b7ace3c4d348a018eeb83872c3c7f03e8ad322",
+    "safe_step3g0_integrity_tests": 19
+  },
+  "protected_sources": {
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+  },
+  "protected_manifests": {
+    "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+    "ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+    "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+    "ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json": "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6",
+    "ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json": "978ab813979ea6c728e113c1f473afabb54cd553d2097dd9d26add8391f5589b",
+    "ephemeris_experiment_runner/manifests/18_m0_step3e1_offline_state_diagnosis_v1.json": "088b55fa40cf0ccb7fa50f42d41f017fcdf560d7a8f7a7dfa69678717544021d",
+    "ephemeris_experiment_runner/manifests/19_m0_step3f0_whfast_configuration_audit_v1.json": "28d8c390690be7c1b98cfea1b5e22615926dc149b6e7c88640d8db4e5074b521",
+    "ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json": "46b19b54f278f6e174f7aa10d6fa6e2ed68e25394fc7839d1acecbcde601a65c",
+    "ephemeris_experiment_runner/manifests/21_m0_step3g0_verification_architecture_audit_v1.json": "b81495b1b561ba10bddb9002912c9fdd03cb37113da29ecd479f03cb1e9614f9"
+  },
+  "inherited_evidence_contract": {
+    "source": "ephemeris_experiment_runner/manifests/21_m0_step3g0_verification_architecture_audit_v1.json",
+    "source_sha256": "b81495b1b561ba10bddb9002912c9fdd03cb37113da29ecd479f03cb1e9614f9",
+    "required_unchanged_sets": [
+      "protected_files",
+      "historical_documents",
+      "frozen_archives",
+      "frozen_historical_conclusions",
+      "protected tags and their annotated targets"
+    ]
+  },
+  "strict_scope": {
+    "implemented": [
+      "immutable model representation and canonical fingerprint",
+      "public inertial Cartesian, canonical Jacobi q-p, canonical Jacobi tangent dq-dp, and immutable observer-snapshot contracts",
+      "private live-map ownership boundary",
+      "pure backend-independent force and JVP semantic interfaces",
+      "synthetic analytic force and JVP providers used by tests only",
+      "exact rational epoch and macro-step integer timebase",
+      "typed evaluation and accounting domains",
+      "foundation documentation, traceability, and deterministic reporting"
+    ],
+    "explicitly_deferred": [
+      "all physical force and JVP implementations",
+      "Jacobi coordinate transforms",
+      "Kepler drift",
+      "kick map",
+      "lazy kernel",
+      "order-17 corrector",
+      "WHCKL physical or tangent composition",
+      "tangent rescaling",
+      "MEGNO and LCN",
+      "checkpoint persistence and restart execution",
+      "any dynamics, trajectory, or archive"
+    ]
+  },
+  "implementation_requirements": {
+    "V2-MODEL-001": "BodyId is authoritative; CompiledLayout declares and validates one unique ordered ID for every body and a present central body.",
+    "V2-MODEL-002": "The immutable model validates finite positive masses and constants, explicit units/effects/schema/provenance, defensive copying, and canonical deterministic serialization.",
+    "V2-MODEL-003": "SHA-256 fingerprints change for every material model field and are independent of mapping insertion order, locale, hash seed, identity, and address.",
+    "V2-STATE-001": "Distinct immutable public types encode inertial Cartesian x-v, canonical Jacobi q-p, and canonical tangent dq-dp semantics without implicit velocity-to-momentum conversion.",
+    "V2-STATE-002": "State dimensions, finiteness, units, and layout fingerprints are validated; public storage retains no writable aliases.",
+    "V2-KERNEL-001": "Pure force and JVP protocols are deterministic, side-effect free, layout checked, coordinate explicit, and keep force values distinct from JVPs.",
+    "V2-KERNEL-002": "JVP output is semantically linear in tangent direction; foundations expose no hot-loop allocation promise or physical provider.",
+    "V2-TIME-001": "Exact rational epoch and interval plus integer index define macro-step time directly; binary64 conversion occurs only at an explicit boundary.",
+    "V2-OWN-001": "Live mutable state remains private; observers receive detached immutable snapshots and cannot influence future state or accounting.",
+    "V2-COUNT-001": "Map-stage, corrector/synchronization, observer-only, and serialization/restart accounting domains are distinct typed values.",
+    "V2-DIAG-ANGLE-001": "Finding G0-001 is carried forward: future orientation observers must use robust atan2 primary and chord cross-check, reject zero vectors, and never use the historical acos gate implementation.",
+    "V2-THRESH-SCOPE-001": "Finding G0-002 is carried forward: a threshold-use contract must bind map, trajectory, tangent seed, normalization, coordinates, rescaling history, timestamps, and intended comparison class before compatibility can pass.",
+    "V2-ISOLATION-001": "The v2 foundation imports neither REBOUND nor REBOUNDx, registers no import-time hooks, accesses no M0 globals, and exposes no integration or trajectory entrypoint."
+  },
+  "high_finding_traceability": {
+    "G0-001": {
+      "requirement": "V2-DIAG-ANGLE-001",
+      "acceptance_tests": [
+        "test_high_finding_angle_requirement_is_explicit",
+        "test_traceability_carries_both_high_findings"
+      ],
+      "scope_note": "Step 3g1a specifies and traces the observer contract; observer implementation remains deferred."
+    },
+    "G0-002": {
+      "requirement": "V2-THRESH-SCOPE-001",
+      "acceptance_tests": [
+        "test_threshold_scope_rejects_mismatched_contexts",
+        "test_traceability_carries_both_high_findings"
+      ],
+      "scope_note": "The foundation implements applicability typing only; it invents no scientific threshold."
+    }
+  },
+  "test_inventory": {
+    "model": [
+      "immutability and defensive copying",
+      "BodyId uniqueness, explicit ordering, and central identity",
+      "unit, shape, mass, constant, and nonfinite rejection",
+      "canonical serialization and SHA-256 stability",
+      "material-field fingerprint sensitivity",
+      "mapping-order, locale, and PYTHONHASHSEED independence"
+    ],
+    "state": [
+      "coordinate type separation and q-p/dq-dp semantics",
+      "shape, finiteness, unit, and layout mismatch rejection",
+      "immutable public storage with no writable aliases"
+    ],
+    "force_jvp": [
+      "synthetic-only deterministic provider",
+      "bitwise input preservation and no side effects",
+      "JVP linearity and exact zero-direction result",
+      "output domain/shape and model-layout rejection"
+    ],
+    "timebase": [
+      "exact canonical round trip and hashing",
+      "negative and very large integer indices",
+      "invalid rational interval and bounds rejection",
+      "documented deterministic binary64 conversion",
+      "direct index versus accumulated-float drift",
+      "fresh-process hash-seed and locale consistency"
+    ],
+    "ownership": [
+      "detached immutable snapshot",
+      "source mutation/destruction cannot change snapshot",
+      "observer cannot obtain or return live state",
+      "typed accounting domains cannot be interchanged"
+    ],
+    "isolation": [
+      "no REBOUND or REBOUNDx import",
+      "no integration, timestep, trajectory, archive, MEGNO, LCN, or WHCKL primitive symbol",
+      "Manifest 13-21 and protected hashes unchanged",
+      "safe allowlisted Step 3g0 checks pass",
+      "strict JSON, compile/import, deterministic regeneration, and git diff checks"
+    ]
+  },
+  "acceptance_gates": [
+    "every V2-MODEL, V2-STATE, V2-KERNEL, V2-TIME, V2-OWN, V2-COUNT, V2-DIAG, V2-THRESH, and V2-ISOLATION requirement has passing focused evidence",
+    "both Step 3g0 high findings have explicit requirements, tests, and traceability rows",
+    "all public APIs have docstrings, type annotations, and explicit invariants",
+    "fresh-process deterministic checks pass under multiple hash seeds and available locales",
+    "all inherited Manifest 21 hashes remain exact",
+    "no forbidden dynamics operation or production physical force evaluation occurs",
+    "complete review records and resolves every material foundation defect",
+    "summary, report, API specification, test inventory, traceability, and hash inventory agree",
+    "closeout commit leaves a clean worktree and descends from this preregistration"
+  ],
+  "deterministic_regeneration": {
+    "canonical_json": "UTF-8, sorted keys, compact separators for hashed configuration payloads; strict finite JSON with sorted keys and two-space indentation plus trailing newline for reports.",
+    "csv": "UTF-8, fixed column order, LF line endings, deterministic row ordering.",
+    "artifact_hashes": "SHA-256 over exact file bytes; summary excludes its own hash.",
+    "fresh_process": "Run artifact generation and canonical model/timebase probes in separate interpreters with at least two PYTHONHASHSEED values and available distinct locales; outputs must be byte-identical."
+  },
+  "review_focus": [
+    "nested and array mutability",
+    "writable aliases",
+    "body identity/index conflation",
+    "velocity/momentum ambiguity",
+    "serialization and float-format determinism",
+    "process-state hash dependence",
+    "hidden imports and globals",
+    "observer access to live buffers",
+    "accounting mixed into force/JVP calls",
+    "future hot-loop allocation compatibility",
+    "claims beyond foundation-only evidence"
+  ],
+  "expected_artifacts": [
+    "m0_step3g1a_v2_foundation_report.md",
+    "m0_step3g1a_v2_foundation_summary.json",
+    "v2_foundation_api_ownership_specification.md",
+    "requirements_traceability.csv",
+    "test_inventory.json",
+    "review_findings.json"
+  ],
+  "result_vocabulary": {
+    "final_status": [
+      "STEP3G1A_V2_FOUNDATION_COMPLETE",
+      "STEP3G1A_V2_FOUNDATION_INCOMPLETE",
+      "STEP3G1A_BLOCKED"
+    ],
+    "primary_finding": [
+      "V2_FOUNDATION_READY_FOR_PRIMITIVES",
+      "V2_FOUNDATION_NOT_READY",
+      "V2_FOUNDATION_REQUIREMENTS_CONFLICT",
+      "V2_FOUNDATION_NOT_EVALUATED"
+    ],
+    "success_verification_envelope": "FOUNDATION_ONLY_NO_DYNAMICS_EXECUTED"
+  },
+  "classification_rules": {
+    "STEP3G1A_V2_FOUNDATION_COMPLETE": "Every preregistered foundation contract and focused gate passes, protected evidence remains exact, no forbidden operation occurs, and closeout is clean.",
+    "STEP3G1A_V2_FOUNDATION_INCOMPLETE": "Implementation or review completes but one or more preregistered requirements or gates remains unresolved without a baseline-integrity block.",
+    "STEP3G1A_BLOCKED": "The required baseline, inherited evidence, branch state, no-dynamics guarantee, or required source/specification cannot be established.",
+    "V2_FOUNDATION_READY_FOR_PRIMITIVES": "The isolated foundation is complete and supports beginning only the next preregistered primitive layer.",
+    "V2_FOUNDATION_NOT_READY": "A specific unresolved foundation defect prevents primitive implementation.",
+    "V2_FOUNDATION_REQUIREMENTS_CONFLICT": "Two frozen foundation requirements cannot both be satisfied without reinterpretation.",
+    "V2_FOUNDATION_NOT_EVALUATED": "Permitted only with STEP3G1A_BLOCKED."
+  },
+  "prohibited_operations": [
+    "Simulation.integrate or Simulation.step",
+    "REBOUND or REBOUNDx simulation construction or import in v2",
+    "project integration entrypoint",
+    "Kepler drift or kick map implementation or execution",
+    "Jacobi coordinate transform implementation or execution",
+    "lazy kernel, order-17 corrector, WHCKL step, or tangent-map composition",
+    "MEGNO, LCN, or tangent-rescaling implementation",
+    "physical Solar-System force or JVP experiment",
+    "IAS15 or any trajectory/timestep experiment",
+    "archive creation or modification",
+    "dependency or protected/historical source modification",
+    "production runner behavior change",
+    "Stage 4 or 10 Myr command",
+    "tag creation or movement"
+  ],
+  "commit_and_ancestry_requirements": {
+    "preregistration_is_single_file_commit": true,
+    "closeout_is_separate_reviewed_commit": true,
+    "amend_or_squash_forbidden": true,
+    "both_commits_descend_from": "e7b7ace3c4d348a018eeb83872c3c7f03e8ad322",
+    "branch_must_remain": "v2-whckl-tangent-core",
+    "tag_creation_forbidden": true
+  },
+  "successor_boundary": {
+    "allowed_only_after_success": "Step 3g1b may implement only isolated inertial/Jacobi transforms and their canonical tangent maps.",
+    "still_forbidden_in_step3g1b_prompt": [
+      "Kepler drift",
+      "kick map",
+      "lazy kernel",
+      "corrector",
+      "WHCKL composition",
+      "MEGNO or LCN",
+      "Solar-System trajectory"
+    ]
+  }
+}
