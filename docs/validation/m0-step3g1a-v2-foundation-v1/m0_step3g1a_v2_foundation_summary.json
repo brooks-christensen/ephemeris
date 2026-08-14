@@ -1,0 +1,141 @@
+{
+  "artifact_inventory_sha256": {
+    "m0_step3g1a_v2_foundation_report.md": "e44d7a0776917cdb6dc66b8a7744ce083adf2b7e5fbf044772fe06678f68a675",
+    "requirements_traceability.csv": "6954ad320f6d21879dc0ac18d2116fe581aac5c57b84a07c1fc2caa30e268aae",
+    "review_findings.json": "4dad28da79566b12d1ebf4e9b0e9633f49ad835e2402c9f6f51e90bffba3b523",
+    "test_inventory.json": "02d12c2345626fded3fb3bed2731ef7261b568be78b3fe1cd0b67ae56296cea0",
+    "v2_foundation_api_ownership_specification.md": "5568a495d3d672af6375497b377d77aebd697e3cd8f10e50877df9f0e4692469"
+  },
+  "branch": "v2-whckl-tangent-core",
+  "final_status": "STEP3G1A_V2_FOUNDATION_INCOMPLETE",
+  "forbidden_operations": {
+    "dynamics_executed": false,
+    "ias15_executed": false,
+    "megno_or_lcn_implemented": false,
+    "physical_force_or_jvp_experiment": true,
+    "protected_physical_force_or_jvp_reevaluated": true,
+    "rebound_or_reboundx_imported_by_v2": false,
+    "tag_created_or_moved": false,
+    "trajectory_or_archive_created": false,
+    "whckl_primitive_implemented": false
+  },
+  "high_findings": {
+    "G0-001": "V2-DIAG-ANGLE-001",
+    "G0-002": "V2-THRESH-SCOPE-001"
+  },
+  "implemented_contracts": [
+    "immutable_model_and_layout",
+    "semantic_state_and_tangent_types",
+    "pure_force_and_jvp_protocols_synthetic_only",
+    "deterministic_integer_timebase",
+    "detached_observer_snapshot",
+    "typed_accounting_domains",
+    "typed_threshold_applicability"
+  ],
+  "integrity": {
+    "manifest21_inherited_historical_and_archive_ledger_verified_by_safe_tests": true,
+    "protected_manifests_13_21": {
+      "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json": {
+        "expected_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+        "observed_sha256": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240"
+      },
+      "ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json": {
+        "expected_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+        "observed_sha256": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188"
+      },
+      "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json": {
+        "expected_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+        "observed_sha256": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe"
+      },
+      "ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json": {
+        "expected_sha256": "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6",
+        "observed_sha256": "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6"
+      },
+      "ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json": {
+        "expected_sha256": "978ab813979ea6c728e113c1f473afabb54cd553d2097dd9d26add8391f5589b",
+        "observed_sha256": "978ab813979ea6c728e113c1f473afabb54cd553d2097dd9d26add8391f5589b"
+      },
+      "ephemeris_experiment_runner/manifests/18_m0_step3e1_offline_state_diagnosis_v1.json": {
+        "expected_sha256": "088b55fa40cf0ccb7fa50f42d41f017fcdf560d7a8f7a7dfa69678717544021d",
+        "observed_sha256": "088b55fa40cf0ccb7fa50f42d41f017fcdf560d7a8f7a7dfa69678717544021d"
+      },
+      "ephemeris_experiment_runner/manifests/19_m0_step3f0_whfast_configuration_audit_v1.json": {
+        "expected_sha256": "28d8c390690be7c1b98cfea1b5e22615926dc149b6e7c88640d8db4e5074b521",
+        "observed_sha256": "28d8c390690be7c1b98cfea1b5e22615926dc149b6e7c88640d8db4e5074b521"
+      },
+      "ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json": {
+        "expected_sha256": "46b19b54f278f6e174f7aa10d6fa6e2ed68e25394fc7839d1acecbcde601a65c",
+        "observed_sha256": "46b19b54f278f6e174f7aa10d6fa6e2ed68e25394fc7839d1acecbcde601a65c"
+      },
+      "ephemeris_experiment_runner/manifests/21_m0_step3g0_verification_architecture_audit_v1.json": {
+        "expected_sha256": "b81495b1b561ba10bddb9002912c9fdd03cb37113da29ecd479f03cb1e9614f9",
+        "observed_sha256": "b81495b1b561ba10bddb9002912c9fdd03cb37113da29ecd479f03cb1e9614f9"
+      }
+    },
+    "protected_sources": {
+      "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": {
+        "expected_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "observed_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+      },
+      "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": {
+        "expected_sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+        "observed_sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff"
+      },
+      "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": {
+        "expected_sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+        "observed_sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9"
+      },
+      "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": {
+        "expected_sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+        "observed_sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+      }
+    }
+  },
+  "kind": "m0_step3g1a_v2_foundation_summary",
+  "preregistration_commit": "d8947b3ee48250a0576ebf648b857bfa6c401200",
+  "primary_finding": "V2_FOUNDATION_NOT_READY",
+  "remaining_risks": [
+    "The success envelope was not earned because protected physical kernels were reevaluated in an overbroad inherited test command.",
+    "No v2 dynamics or physical provider has been validated.",
+    "Canonical coordinate transforms and tangent maps remain unimplemented.",
+    "The immutable semantic force API is not the future caller-owned-buffer hot-loop ABI.",
+    "Checkpoint/restart execution and state wire schemas remain future gates."
+  ],
+  "required_start_commit": "e7b7ace3c4d348a018eeb83872c3c7f03e8ad322",
+  "review": {
+    "finding_count": 7,
+    "severity_counts": {
+      "CRITICAL": 0,
+      "HIGH": 1,
+      "INFORMATIONAL": 1,
+      "LOW": 1,
+      "MEDIUM": 4
+    },
+    "unresolved_material_findings": 1
+  },
+  "schema_version": 1,
+  "smallest_successor": "Fresh preregistered Step 3g1a source-only requalification; do not begin Step 3g1b.",
+  "source_inventory_sha256": {
+    "ephemeris_experiment_runner/manifests/22_m0_step3g1a_v2_foundation_v1.json": "185948f1e95987f28aa80decbc0b423fa8455f31e43a661a60202d9abc3d4dd8",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_reporting.py": "720385f6cc6021ef6b940dfa8dc0a21719d116ee5f169919c2515fbcf2dc043f",
+    "mini_ephemeris/src/mini_ephemeris/v2/__init__.py": "412f9fd9a79b38d1d3145c5aeb0478b967c4b8bf76a8bec08ba996752e24710c",
+    "mini_ephemeris/src/mini_ephemeris/v2/accounting.py": "4acc1fcac8fa2edd9ac6d1f9d14135063a3aa2c4d089af8cc2b2e0e97708fc62",
+    "mini_ephemeris/src/mini_ephemeris/v2/canonical.py": "42a76030bad788716b3fdfc8c05d4943bf8b1832679c9d85d7a8e36cf9b5061c",
+    "mini_ephemeris/src/mini_ephemeris/v2/errors.py": "ad79b8815f5c2019f1b0de0ff2e09f8fd5bb551bc8ed7baadeee43f709b42145",
+    "mini_ephemeris/src/mini_ephemeris/v2/kernels.py": "d0efca5eef6111a3e95ca0bffae8df9ee5b6efac0c007a5c85e883ca6209dd58",
+    "mini_ephemeris/src/mini_ephemeris/v2/model.py": "9c39f91b2209528292249e8c46a44e66b122d732b1dc80abfe81fdf18529c276",
+    "mini_ephemeris/src/mini_ephemeris/v2/ownership.py": "0e269103bb84d4165b1380643dbdbbcd03d166561b5c65fde293b8e75bca030b",
+    "mini_ephemeris/src/mini_ephemeris/v2/state.py": "daf103dab0d0a40df4b00361c550d87d02532f47c019e2c72c81924f16180982",
+    "mini_ephemeris/src/mini_ephemeris/v2/thresholds.py": "10467ce838c901c801a9cd99be3035b33a401195c7cb27efeabc8aa00c66fee3",
+    "mini_ephemeris/src/mini_ephemeris/v2/timebase.py": "d4e67810f1a45d69605d1bef5a73fd92edd5fc47321da466f35e277cda35fa7c",
+    "mini_ephemeris/tests/test_m0_step3g1a_artifacts.py": "76d1aa0a14a5e54b57dd54c763ea11f7c80a07ba665b9e490151b130b1169df3",
+    "mini_ephemeris/tests/test_v2_foundation.py": "e89c40659b2d2a89ffd8b19e8b2959277b3ac6a687731452b955ef8a4d1aa2f9"
+  },
+  "test_counts": {
+    "overbroad_step3g0_command_executed": 19,
+    "qualifying_source_only_step3g0": 0,
+    "step3g1a": 35,
+    "total_qualifying": 35
+  },
+  "verification_envelope": null
+}

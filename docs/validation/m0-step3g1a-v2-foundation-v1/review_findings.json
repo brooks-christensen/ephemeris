@@ -1,0 +1,85 @@
+{
+  "findings": [
+    {
+      "area": "canonical provenance and snapshot metadata",
+      "finding": "The first pass coerced arbitrary objects with str(), which could embed identity-dependent representations.",
+      "finding_id": "G1A-R001",
+      "regression_tests": [
+        "test_invalid_ids_masses_constants_units_and_provenance_rejected",
+        "test_snapshot_detaches_from_mutable_source"
+      ],
+      "resolution": "Require nonempty trimmed strings before sorting or serialization.",
+      "severity": "MEDIUM",
+      "status": "RESOLVED"
+    },
+    {
+      "area": "numeric input validation",
+      "finding": "The first pass accepted booleans and coercible numeric strings at selected binary64 boundaries.",
+      "finding_id": "G1A-R002",
+      "regression_tests": [
+        "test_invalid_ids_masses_constants_units_and_provenance_rejected",
+        "test_shape_nonfinite_and_unit_validation"
+      ],
+      "resolution": "Require real non-boolean inputs, then finite-check normalized binary64 values.",
+      "severity": "MEDIUM",
+      "status": "RESOLVED"
+    },
+    {
+      "area": "synthetic JVP zero fixture",
+      "finding": "Multiplication by a negative fixture coefficient emitted negative signed zero for a zero direction.",
+      "finding_id": "G1A-R003",
+      "regression_tests": [
+        "test_jvp_linearity_and_exact_zero_direction"
+      ],
+      "resolution": "Canonicalize fixture zero results to positive exact zero and inspect float.hex().",
+      "severity": "LOW",
+      "status": "RESOLVED"
+    },
+    {
+      "area": "public API annotations",
+      "finding": "Custom public constructors omitted explicit None return annotations.",
+      "finding_id": "G1A-R004",
+      "regression_tests": [
+        "test_public_api_docstrings_and_annotations"
+      ],
+      "resolution": "Annotate every custom constructor and add an AST-wide public API gate.",
+      "severity": "MEDIUM",
+      "status": "RESOLVED"
+    },
+    {
+      "area": "future hot-loop allocation",
+      "finding": "The immutable semantic API allocates return values and must not become the optimized map-loop ABI.",
+      "finding_id": "G1A-R005",
+      "regression_tests": [
+        "test_public_api_docstrings_and_annotations"
+      ],
+      "resolution": "Document a separate future private caller-owned-buffer evaluate_into boundary; do not implement it in Step 3g1a.",
+      "severity": "INFORMATIONAL",
+      "status": "RESOLVED_BY_SCOPE"
+    },
+    {
+      "area": "state unit semantics",
+      "finding": "Explicit SI field names initially accepted arbitrary unit-system identifiers.",
+      "finding_id": "G1A-R006",
+      "regression_tests": [
+        "test_shape_nonfinite_and_unit_validation",
+        "test_canonical_state_tangent_layout_compatibility"
+      ],
+      "resolution": "Require si_v1 for concrete public state types and add a canonical state/tangent compatibility gate.",
+      "severity": "MEDIUM",
+      "status": "RESOLVED"
+    },
+    {
+      "area": "execution scope and provenance",
+      "finding": "The final broad Step 3g0 wildcard command reevaluated protected physical force/JVP functions, contrary to the Step 3g1a static source-only boundary.",
+      "finding_id": "G1A-X001",
+      "regression_tests": [],
+      "resolution": "Not resolvable within this execution history; require a fresh preregistered source-only requalification and do not advance to Step 3g1b.",
+      "severity": "HIGH",
+      "status": "UNRESOLVED_REQUIRES_FRESH_REQUALIFICATION"
+    }
+  ],
+  "kind": "m0_step3g1a_review_findings",
+  "schema_version": 1,
+  "unresolved_material_findings": 1
+}

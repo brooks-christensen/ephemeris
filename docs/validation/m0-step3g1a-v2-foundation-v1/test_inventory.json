@@ -1,0 +1,258 @@
+{
+  "commands": [
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m unittest discover -s mini_ephemeris/tests -p test_v2_foundation.py -v",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m unittest discover -s mini_ephemeris/tests -p test_m0_step3g1a_artifacts.py -v",
+    "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m unittest discover -s mini_ephemeris/tests -p test_m0_step3g0*.py -v"
+  ],
+  "execution_deviation": "The executed Step 3g0 wildcard included protected physical force/JVP evaluations and is retained for provenance, not counted as a qualifying source-only gate.",
+  "kind": "m0_step3g1a_test_inventory",
+  "safe_allowlist_only": false,
+  "schema_version": 1,
+  "tests": [
+    {
+      "class": "Step3g1aArtifactTests",
+      "dynamics_executed": false,
+      "id": "test_m0_step3g1a_artifacts.Step3g1aArtifactTests.test_artifact_and_source_hash_inventories_are_exact",
+      "source": "mini_ephemeris/tests/test_m0_step3g1a_artifacts.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "Step3g1aArtifactTests",
+      "dynamics_executed": false,
+      "id": "test_m0_step3g1a_artifacts.Step3g1aArtifactTests.test_manifest_summary_report_and_api_scope_agree",
+      "source": "mini_ephemeris/tests/test_m0_step3g1a_artifacts.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "Step3g1aArtifactTests",
+      "dynamics_executed": false,
+      "id": "test_m0_step3g1a_artifacts.Step3g1aArtifactTests.test_protected_sources_and_manifests_remain_exact",
+      "source": "mini_ephemeris/tests/test_m0_step3g1a_artifacts.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "Step3g1aArtifactTests",
+      "dynamics_executed": false,
+      "id": "test_m0_step3g1a_artifacts.Step3g1aArtifactTests.test_regeneration_is_byte_identical_in_fresh_destinations",
+      "source": "mini_ephemeris/tests/test_m0_step3g1a_artifacts.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "Step3g1aArtifactTests",
+      "dynamics_executed": false,
+      "id": "test_m0_step3g1a_artifacts.Step3g1aArtifactTests.test_required_artifacts_and_strict_json",
+      "source": "mini_ephemeris/tests/test_m0_step3g1a_artifacts.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "Step3g1aArtifactTests",
+      "dynamics_executed": false,
+      "id": "test_m0_step3g1a_artifacts.Step3g1aArtifactTests.test_review_resolutions_inventory_and_forbidden_operations",
+      "source": "mini_ephemeris/tests/test_m0_step3g1a_artifacts.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "Step3g1aArtifactTests",
+      "dynamics_executed": false,
+      "id": "test_m0_step3g1a_artifacts.Step3g1aArtifactTests.test_traceability_preserves_step3g0_and_covers_both_high_findings",
+      "source": "mini_ephemeris/tests/test_m0_step3g1a_artifacts.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "HighFindingContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.HighFindingContractTests.test_both_high_findings_have_named_tests_and_requirements",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "HighFindingContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.HighFindingContractTests.test_high_finding_angle_requirement_is_explicit",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "HighFindingContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.HighFindingContractTests.test_threshold_scope_rejects_mismatched_contexts",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "IsolationAndFreshProcessTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.IsolationAndFreshProcessTests.test_fresh_process_hash_seed_and_locale_consistency",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "IsolationAndFreshProcessTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.IsolationAndFreshProcessTests.test_public_api_docstrings_and_annotations",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "IsolationAndFreshProcessTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.IsolationAndFreshProcessTests.test_source_has_no_hidden_dynamics_or_dependency_imports",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "IsolationAndFreshProcessTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.IsolationAndFreshProcessTests.test_v2_imports_no_rebound_and_exposes_no_primitive_entrypoint",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "KernelProtocolTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.KernelProtocolTests.test_force_is_deterministic_and_inputs_remain_bitwise_unchanged",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "KernelProtocolTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.KernelProtocolTests.test_jvp_linearity_and_exact_zero_direction",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "KernelProtocolTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.KernelProtocolTests.test_layout_and_unit_mismatches_are_rejected_before_provider",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "KernelProtocolTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.KernelProtocolTests.test_wrong_output_semantics_are_rejected",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "ModelContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.ModelContractTests.test_body_identity_and_explicit_order",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "ModelContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.ModelContractTests.test_canonical_serialization_ignores_mapping_and_collection_order",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "ModelContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.ModelContractTests.test_duplicate_missing_and_unknown_body_rejected",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "ModelContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.ModelContractTests.test_fingerprint_sensitive_to_every_material_field",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "ModelContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.ModelContractTests.test_invalid_ids_masses_constants_units_and_provenance_rejected",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "ModelContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.ModelContractTests.test_model_is_immutable_and_defensively_copies_inputs",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "OwnershipAndAccountingTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.OwnershipAndAccountingTests.test_accounting_domains_are_typed_and_disjoint",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "OwnershipAndAccountingTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.OwnershipAndAccountingTests.test_observer_only_receives_immutable_snapshot",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "OwnershipAndAccountingTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.OwnershipAndAccountingTests.test_snapshot_detaches_from_mutable_source",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "StateContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.StateContractTests.test_canonical_state_tangent_layout_compatibility",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "StateContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.StateContractTests.test_coordinate_types_are_semantically_distinct",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "StateContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.StateContractTests.test_numpy_inputs_are_detached_and_public_storage_is_immutable",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "StateContractTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.StateContractTests.test_shape_nonfinite_and_unit_validation",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "TimebaseTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.TimebaseTests.test_binary64_boundary_and_accumulation_drift",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "TimebaseTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.TimebaseTests.test_exact_roundtrip_equality_and_hashing",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "TimebaseTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.TimebaseTests.test_invalid_intervals_denominators_indices_and_bounds",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    },
+    {
+      "class": "TimebaseTests",
+      "dynamics_executed": false,
+      "id": "test_v2_foundation.TimebaseTests.test_negative_and_very_large_direct_indices",
+      "source": "mini_ephemeris/tests/test_v2_foundation.py",
+      "synthetic_or_static_only": true
+    }
+  ]
+}
