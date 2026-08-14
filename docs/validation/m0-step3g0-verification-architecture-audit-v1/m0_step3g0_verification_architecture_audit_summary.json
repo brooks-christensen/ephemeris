@@ -1,0 +1,270 @@
+{
+  "artifact_inventory_sha256": {
+    "code_review_findings.json": "cbe2dbe842902c011de2f751b70bdf29b029b80aeb4c0763fbfb2bce7dff1100",
+    "literature_novelty_matrix.csv": "c94543e91605eebd8346f7cfb1e963b9f7ea9da98b6736430be04e889b717f46",
+    "m0_step3g0_verification_architecture_audit_report.md": "6220aa3be23c3c509d23efb775f6e279f34f188a1afc8248f6dc38d3151708a3",
+    "physical_model_specification.md": "6ca2a5c3500c480db58de47d2b20e9ff245e9f8f307911e206765a62b1afb054",
+    "relativistic_model_hierarchy.md": "fc04a9cb22fc0f3579e9d3e4c8aa5f1fa303c356733911b1de891b47703cc006",
+    "requirements_traceability.csv": "6182d96c4b2f43e3dd7a21d3fc8049f5bde1c431896bdf8b4b0ca3a617d2fc8f",
+    "threshold_provenance.csv": "472bbc8e8672c3319a2fd9f827429ca58c14e9f42ad7be7664d95a78d0dd4c57",
+    "v2_architecture_decision_record.md": "23af61fde4d89901a51d239d473e21dccaa6b2e3d51bc0651e108b6d2e7b1ac4",
+    "v2_implementation_test_backlog.md": "1f62fde3aef259c61177c54df4b5852bc8be3c7c214e43478dcf875b55c0ee5b",
+    "whckl_tangent_map_specification.md": "08eaf4d50beaf5e1704213f82703ea977040c1488b6017f39282a0105a1f93a0"
+  },
+  "callback_accounting": {
+    "analysis_only": 0,
+    "checkpoint_serialization": 0,
+    "diagnostic_copy": 0,
+    "difference": 3200,
+    "first_map_forward_corrector": 32,
+    "historical_expected": 29223232,
+    "integrate_return_inverse_correctors": 3200,
+    "live_map": 29220000,
+    "pre_final_step_inverse_correctors": 3200,
+    "source_schedule_total": 29226432,
+    "total_steps": 14610000
+  },
+  "callback_classification": "CALLBACK_ACCOUNTING_EXACTLY_RECONCILED",
+  "code_review": {
+    "critical_findings": 0,
+    "finding_count": 11,
+    "production_repairs_made": 0,
+    "severity_counts": {
+      "CRITICAL": 0,
+      "HIGH": 2,
+      "INFORMATIONAL": 5,
+      "LOW": 0,
+      "MEDIUM": 4
+    }
+  },
+  "corrected_step3f1_interpretation": {
+    "different_map_tangent_megno_veto_supported": false,
+    "historical_primary_finding": "BOTH_LANES_UNQUALIFIED",
+    "historical_status": "STEP3F1_TWO_LANE_SCREEN_FAILED",
+    "lane_p_saturn_failure_remains": true,
+    "lane_t_carrier_and_other_integrity_findings_remain": true,
+    "plane_angle_veto_supported": false,
+    "status_changed": false
+  },
+  "diagnostic_conclusions": {
+    "atan2_chord_max_disagreement_rad": 5.144191857205088e-17,
+    "different_map_10k_interpretation": "PHYSICALLY_UNJUSTIFIED",
+    "historical_acos_max_rad": 2.1073424255447017e-08,
+    "megno_lcn_thresholds": "VALID_ONLY_FOR_SAME_MAP_REPRODUCIBILITY",
+    "plane_angle_gate": "ILL_CONDITIONED",
+    "plane_angle_method_defect": true,
+    "replacement_threshold_invented": false,
+    "robust_atan2_max_rad": 4.51049031315292e-11,
+    "tangent_direction_threshold": "VALID_ONLY_FOR_IMPLEMENTATION_EQUIVALENCE"
+  },
+  "experiment_id": "m0_step3g0_verification_architecture_audit_v1",
+  "final_status": "STEP3G0_VERIFICATION_ARCHITECTURE_AUDIT_COMPLETE",
+  "force_and_jacobian": {
+    "covariances_tested": [
+      "translation",
+      "rotation",
+      "reflection",
+      "Galilean_velocity_independence"
+    ],
+    "independent_oracles": [
+      "decimal_70_digit_analytic_and_central_difference",
+      "complex_step_formula",
+      "central_difference"
+    ],
+    "known_input_contract_gap": "Protected Python and C kernels treat coincidence as zero force; the C pointwise API can return success with nonfinite array output. No frozen state exercised this path.",
+    "python_c_deterministic_random_cases": 12,
+    "result": "PASS"
+  },
+  "historical_statuses_preserved": {
+    "manifest_13": "BLOCKED",
+    "manifest_14": "REVERSIBILITY_GATE_PASSED",
+    "manifest_15": "BLOCKED",
+    "manifest_16": [
+      "IAS15_REFERENCE_QUALIFIED_AT_ROUNDOFF_PHASE_FLOOR",
+      "SYSTEMATIC_WHFAST_STEP_BIAS",
+      "STEP3_NUMERICAL_FLOOR_CHARACTERIZED"
+    ],
+    "manifest_17": "STEP3E_025_DAY_PRODUCTION_NOT_VALIDATED",
+    "manifest_18": [
+      "STEP3E1_OFFLINE_DIAGNOSIS_COMPLETE",
+      "TRUE_NONPHASE_NONCONVERGENCE"
+    ],
+    "manifest_19": [
+      "STEP3F0_CONFIGURATION_AUDIT_COMPLETE",
+      "COMBINED_LANE_CAPABILITY_CONSTRAINT_CONFIRMED"
+    ],
+    "manifest_20": {
+      "angular_momentum_gate": "PASS",
+      "callback_difference": 3200,
+      "callback_expected": 29223232,
+      "callback_observed": 29226432,
+      "corrected_energy_gate": "PASS",
+      "lane_p_saturn_rms_observed": 3.454e-09,
+      "lane_p_saturn_rms_threshold": 2.183e-09,
+      "lane_t_direction_rms": 0.05567,
+      "lane_t_direction_rms_threshold": 0.01414,
+      "lane_t_final_direction_cosine": 0.997759,
+      "lane_t_final_direction_cosine_threshold": 0.9999,
+      "lane_t_megno_difference": 0.20375,
+      "lane_t_megno_difference_threshold": 0.001,
+      "lane_t_restart_all_state_exact": true,
+      "plane_angle_acos_floor_above_threshold": true,
+      "primary_finding": "BOTH_LANES_UNQUALIFIED",
+      "restart_physical_exact": true,
+      "status": "STEP3F1_TWO_LANE_SCREEN_FAILED"
+    }
+  },
+  "integrity": {
+    "frozen_archives_byte_identical_after_read": true,
+    "historical_documents_unchanged": true,
+    "preregistration_commit": "89a57748cdf5b16915f213dd72dd820e52295539",
+    "protected_files_unchanged": true,
+    "protected_hashes": {
+      "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": {
+        "expected_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23",
+        "observed_sha256": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+      },
+      "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": {
+        "expected_sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+        "observed_sha256": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff"
+      },
+      "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": {
+        "expected_sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+        "observed_sha256": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9"
+      },
+      "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": {
+        "expected_sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+        "observed_sha256": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5"
+      }
+    },
+    "required_start_commit": "997e5713aedb6e489c886e060af8fc6010b5c3b4"
+  },
+  "kind": "m0_step3g0_verification_architecture_audit_summary",
+  "model_id": "m0_grpot_emb_pluto_v1",
+  "novelty_classification": "NOVEL_COMBINATION_OR_EXTENSION",
+  "offline_recomputations": {
+    "conservation": {
+      "lane_p": {
+        "angular_momentum_norm_max_abs_relative_drift": 2.3157702284416023e-13,
+        "corrected_energy_max_abs_relative_drift": 3.7719734648363945e-13,
+        "initial_gr_potential_j": -2.6680420324219514e+27,
+        "newtonian_energy_max_abs_relative_drift": 2.0076108306729636e-09,
+        "samples": 101
+      },
+      "lane_t": {
+        "angular_momentum_norm_max_abs_relative_drift": 1.7909676920302633e-13,
+        "corrected_energy_max_abs_relative_drift": 3.184104415205596e-12,
+        "initial_gr_potential_j": -2.6680420324219514e+27,
+        "newtonian_energy_max_abs_relative_drift": 2.0094202603386918e-09,
+        "samples": 101
+      }
+    },
+    "initial_state": {
+      "analytic_gr_perihelion_rate_arcsec_per_century": 42.98066416845862,
+      "body_count": 10,
+      "center_of_mass_position_m": [
+        229.79821896530638,
+        -17.55115425623439,
+        -23.083735984382503
+      ],
+      "center_of_mass_velocity_m_per_s": [
+        2.2543658450111364e-06,
+        1.0946812576861336e-05,
+        3.6623346843730194e-06
+      ],
+      "mercury_initial_osculating_eccentricity": 0.2056302512708917,
+      "mercury_initial_osculating_semimajor_axis_m": 57909070249.50741,
+      "total_linear_momentum_kg_m_per_s": [
+        4.488618228246395e+24,
+        2.1795957644777905e+25,
+        7.291994002923041e+24
+      ],
+      "total_mass_kg": 1.991077995694271e+30
+    },
+    "orientation": {
+      "comparisons": 1818,
+      "metrics": {
+        "apsidal_direction": {
+          "acos_rad": {
+            "max": 1.0745380149674388e-07,
+            "worst_body": "venus barycenter",
+            "worst_epoch_years": 10000.0,
+            "zero_count": 564
+          },
+          "atan2_rad": {
+            "max": 1.0817398782414006e-07,
+            "worst_body": "venus barycenter",
+            "worst_epoch_years": 10000.0,
+            "zero_count": 9
+          },
+          "chord_rad": {
+            "max": 1.0817398783166162e-07,
+            "worst_body": "venus barycenter",
+            "worst_epoch_years": 10000.0,
+            "zero_count": 9
+          },
+          "max_atan2_chord_abs_difference": 5.355095238236948e-17
+        },
+        "orbital_plane": {
+          "acos_rad": {
+            "max": 2.1073424255447017e-08,
+            "worst_body": "mercury barycenter",
+            "worst_epoch_years": 0.0,
+            "zero_count": 666
+          },
+          "atan2_rad": {
+            "max": 4.51049031315292e-11,
+            "worst_body": "pluto barycenter",
+            "worst_epoch_years": 7300.0,
+            "zero_count": 9
+          },
+          "chord_rad": {
+            "max": 4.510494677284343e-11,
+            "worst_body": "pluto barycenter",
+            "worst_epoch_years": 7300.0,
+            "zero_count": 9
+          },
+          "max_atan2_chord_abs_difference": 5.144191857205088e-17
+        }
+      }
+    }
+  },
+  "primary_finding": "V2_CORE_SPECIFICATION_READY",
+  "production_qualified": false,
+  "remaining_risks": [
+    "The current M0 runner is not production-qualified.",
+    "WHCKL tangent, corrector, canonical symplecticity, and restart gates remain future implementation tests.",
+    "The position-only GR model has the documented O(GM/(a*c^2)) mean-motion error and omits full N-body 1PN physics.",
+    "A DE440/DE441 initial-condition sensitivity study and required production-physics ladder remain future work."
+  ],
+  "restart_callback_accounting": {
+    "continuation_steps": 146100,
+    "difference": 32,
+    "historical_expected": 292232,
+    "integrate_return_inverse_corrector": 32,
+    "live_map": 292200,
+    "pre_final_step_inverse_corrector": 32,
+    "source_schedule_total": 292264
+  },
+  "schema_version": 1,
+  "smallest_next_step": "Step 3g1: implement pure immutable model and force/JVP interfaces plus deterministic timebase and observer ownership, then primitive WHCKL/lazy/corrector unit maps; do not add MEGNO or a Solar-System trajectory until analytic, closure, canonical-symplecticity, reversibility, and restart gates pass.",
+  "test_result": {
+    "asan_ubsan_static_harness": "PASS",
+    "integration_guard": "PASS_ZERO_REAL_CALLS",
+    "new_nonintegration_unittests": 12,
+    "strict_c_harness": "PASS",
+    "strict_json_finite": "PASS"
+  },
+  "verification_envelope": "VERIFIED_WITHIN_DOCUMENTED_MODEL_AND_NUMERICAL_ENVELOPE",
+  "whckl_tangent_feasibility": {
+    "canonical_symplecticity_coordinates": "Jacobi_q_p",
+    "complete_derivative_graph": true,
+    "existing_gr_jvp_sufficient_for_position_only_gr_potential": true,
+    "hessian_or_higher_derivative_required": false,
+    "lazy_kernel_requires": [
+      "force",
+      "force_jvp_at_unshifted_position",
+      "force_jvp_at_shifted_position"
+    ]
+  }
+}
