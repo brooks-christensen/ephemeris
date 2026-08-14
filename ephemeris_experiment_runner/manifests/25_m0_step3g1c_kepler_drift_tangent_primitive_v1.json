@@ -1,0 +1,573 @@
+{
+  "schema_version": 1,
+  "kind": "m0_step3g1c_kepler_drift_tangent_primitive_preregistration",
+  "experiment_id": "m0_step3g1c_kepler_drift_tangent_primitive_v1",
+  "purpose": "Preregister implementation and qualification of one isolated noncollision bound-elliptic canonical Jacobi-pair Kepler flow and its fixed-parameter tangent action.",
+  "paths": {
+    "manifest": "ephemeris_experiment_runner/manifests/25_m0_step3g1c_kepler_drift_tangent_primitive_v1.json",
+    "implementation": "mini_ephemeris/src/mini_ephemeris/v2/kepler.py",
+    "qualification_helper": "mini_ephemeris/src/mini_ephemeris/m0_step3g1c_qualification.py",
+    "runner": "mini_ephemeris/src/mini_ephemeris/m0_step3g1c_qualification_runner.py",
+    "reporting": "mini_ephemeris/src/mini_ephemeris/m0_step3g1c_reporting.py",
+    "test": "mini_ephemeris/tests/test_v2_kepler.py",
+    "integrity_test": "mini_ephemeris/tests/test_m0_step3g1c_integrity.py",
+    "artifact_test": "mini_ephemeris/tests/test_m0_step3g1c_artifacts.py",
+    "documentation_root": "docs/validation/m0-step3g1c-kepler-drift-tangent-primitive-v1"
+  },
+  "preregistration": {
+    "created_utc": "2026-08-14T17:06:49Z",
+    "required_start_commit": "cfbc811495415e582bbcab9529041e6c7c2dbdc2",
+    "required_branch": "v2-whckl-tangent-core",
+    "conclusion_free": true,
+    "commit_message": "Preregister M0 Step 3g1c Kepler drift tangent primitive",
+    "required_closeout_message": "Qualify M0 Kepler drift tangent primitive"
+  },
+  "required_ancestry": {
+    "step3g0_closeout": "e7b7ace3c4d348a018eeb83872c3c7f03e8ad322",
+    "step3g1a_requalification_closeout": "c56055e6caca104b6d4e5b59a762046d84cbb0dc",
+    "step3g1b_preregistration": "20d156839da5bed8d966b3a64b42ee73d7db788f",
+    "step3g1b_closeout": "cfbc811495415e582bbcab9529041e6c7c2dbdc2"
+  },
+  "controlled_baseline": {
+    "head": "cfbc811495415e582bbcab9529041e6c7c2dbdc2",
+    "branch": "v2-whckl-tangent-core",
+    "worktree_clean": true,
+    "manifest_sha256_13_through_24": {
+      "13": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+      "14": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+      "15": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+      "16": "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6",
+      "17": "978ab813979ea6c728e113c1f473afabb54cd553d2097dd9d26add8391f5589b",
+      "18": "088b55fa40cf0ccb7fa50f42d41f017fcdf560d7a8f7a7dfa69678717544021d",
+      "19": "28d8c390690be7c1b98cfea1b5e22615926dc149b6e7c88640d8db4e5074b521",
+      "20": "46b19b54f278f6e174f7aa10d6fa6e2ed68e25394fc7839d1acecbcde601a65c",
+      "21": "b81495b1b561ba10bddb9002912c9fdd03cb37113da29ecd479f03cb1e9614f9",
+      "22": "185948f1e95987f28aa80decbc0b423fa8455f31e43a661a60202d9abc3d4dd8",
+      "23": "c6dc3f3a42cb36d433279b0a4158a29ee3b40e2def766530ea7c151939e9004c",
+      "24": "9cd388aca62dcbeb8ae81c3485c62830f845798f2ca3edfcc6d64d702f743f4c"
+    },
+    "baseline_static_safety_status": "PASS",
+    "baseline_exact_node_count": 47,
+    "baseline_exact_node_result": "47 passed"
+  },
+  "protected_sources": {
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+  },
+  "qualified_step3g1a_read_only_sha256": {
+    "mini_ephemeris/src/mini_ephemeris/v2/__init__.py": "412f9fd9a79b38d1d3145c5aeb0478b967c4b8bf76a8bec08ba996752e24710c",
+    "mini_ephemeris/src/mini_ephemeris/v2/accounting.py": "4acc1fcac8fa2edd9ac6d1f9d14135063a3aa2c4d089af8cc2b2e0e97708fc62",
+    "mini_ephemeris/src/mini_ephemeris/v2/canonical.py": "42a76030bad788716b3fdfc8c05d4943bf8b1832679c9d85d7a8e36cf9b5061c",
+    "mini_ephemeris/src/mini_ephemeris/v2/errors.py": "ad79b8815f5c2019f1b0de0ff2e09f8fd5bb551bc8ed7baadeee43f709b42145",
+    "mini_ephemeris/src/mini_ephemeris/v2/kernels.py": "d0efca5eef6111a3e95ca0bffae8df9ee5b6efac0c007a5c85e883ca6209dd58",
+    "mini_ephemeris/src/mini_ephemeris/v2/model.py": "9c39f91b2209528292249e8c46a44e66b122d732b1dc80abfe81fdf18529c276",
+    "mini_ephemeris/src/mini_ephemeris/v2/ownership.py": "0e269103bb84d4165b1380643dbdbbcd03d166561b5c65fde293b8e75bca030b",
+    "mini_ephemeris/src/mini_ephemeris/v2/state.py": "daf103dab0d0a40df4b00361c550d87d02532f47c019e2c72c81924f16180982",
+    "mini_ephemeris/src/mini_ephemeris/v2/thresholds.py": "10467ce838c901c801a9cd99be3035b33a401195c7cb27efeabc8aa00c66fee3",
+    "mini_ephemeris/src/mini_ephemeris/v2/timebase.py": "d4e67810f1a45d69605d1bef5a73fd92edd5fc47321da466f35e277cda35fa7c",
+    "mini_ephemeris/tests/test_v2_foundation.py": "e89c40659b2d2a89ffd8b19e8b2959277b3ac6a687731452b955ef8a4d1aa2f9"
+  },
+  "qualified_step3g1b_read_only_sha256": {
+    "mini_ephemeris/src/mini_ephemeris/v2/jacobi.py": "11774f2a625c634b4d3d2d0ac52b8b055da9a6cd31bdbbd303be30827126b14e",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification.py": "98ca761bc8ba09a3623fae437756ccf41a518f1efa84faccfcd10f5eb2f6d674",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py": "37f64bf73c39ad06f78a04bfc9b2c7bddb635842783a2fb0f3fd23dca9bff25c",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1b_reporting.py": "c8c3e77268cf188ec3932612b4fbe5fc2af943453f8748e8f19f6626208758d3",
+    "mini_ephemeris/tests/test_v2_jacobi.py": "1683a16f714d42ae668b72232fec2d53632c007282a7033fe7addcb0ca25047f",
+    "mini_ephemeris/tests/test_m0_step3g1b_integrity.py": "dacc5acede921dbafdacb22992873c0649952527ef91818e368fd715cc3f52c5",
+    "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py": "ba1ee8587d015bfbc4c7b6493b9079c2517e10a98903db54a7bf95f04f2cc097"
+  },
+  "inherited_integrity": {
+    "source": "ephemeris_experiment_runner/manifests/24_m0_step3g1b_canonical_jacobi_tangent_primitives_v1.json",
+    "required_unchanged_sets": [
+      "protected_sources",
+      "qualified_step3g1a_read_only_sha256",
+      "qualified_step3g1b_read_only_sha256",
+      "Manifest 23 inherited archives and trajectories",
+      "Manifest 21 historical documents",
+      "Step 3g1a and Step 3g1b committed artifacts",
+      "protected_tags"
+    ]
+  },
+  "protected_tags": {
+    "gr-tangent-compiled-c-v1": {
+      "kind": "annotated",
+      "tag_object": "e12153e5c4384e5c16795e29c33b7572392121b1",
+      "commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b"
+    },
+    "gr-tangent-python-oracle-v2": {
+      "kind": "annotated",
+      "tag_object": "9661c72f82c45351b6059e2c293a70addae561c3",
+      "commit": "9933bc5e3d9bfe9ec07e72929c22e4406f12b441"
+    }
+  },
+  "algorithm_sources": {
+    "controlling_specification": "docs/validation/m0-step3g0-verification-architecture-audit-v1/whckl_tangent_map_specification.md",
+    "controlling_adr": "docs/validation/m0-step3g0-verification-architecture-audit-v1/v2_architecture_decision_record.md",
+    "rebound_release": "4.6.0",
+    "rebound_source": "src/integrator_whfast.c lines 81-344 and 503-550 at tag 4.6.0",
+    "rebound_source_sha256": "912548c86d407889a993e9b26eb8ae5ee1055e99ada37c6e4f0533c2acb5b830",
+    "references": [
+      "Mikkola and Innanen, Symplectic Tangent Map for Planetary Motions, 1999, DOI 10.1023/A:1008312912468",
+      "Rein and Tamayo, WHFast, 2015, DOI 10.1093/mnras/stv1257, especially equations 16-31 and sections 3.2, 3.5, 3.6"
+    ],
+    "reconciliation": "NO_FORMULA_LEVEL_CONFLICT",
+    "center_of_mass_disposition": "The Step 3g0 graph assigns center-of-mass drift to complete Kepler/jump sequencing. This isolated relative-pair primitive advances no retained q_0,P_0 pair and makes no center-of-mass claim."
+  },
+  "canonical_hamiltonian": {
+    "coordinates": "one relative Jacobi pair (q,P) in body-minus-inner-center-of-mass orientation",
+    "hamiltonian": "H(q,P)=dot(P,P)/(2*reduced_mass_kg)-reduced_mass_kg*gravitational_parameter_m3_s2/|q|",
+    "equations": [
+      "dq/dt=P/reduced_mass_kg",
+      "dP/dt=-reduced_mass_kg*gravitational_parameter_m3_s2*q/|q|^3"
+    ],
+    "derived_internal_velocity": "v=P/reduced_mass_kg",
+    "fixed_during_tangent": [
+      "reduced_mass_kg",
+      "gravitational_parameter_m3_s2",
+      "duration_s",
+      "model, layout, pair identity, and plan fingerprint"
+    ],
+    "tangent_variables": "(delta_q,delta_P) only",
+    "parameter_and_time_sensitivities": false
+  },
+  "pair_plan_contract": {
+    "schema": "v2.canonical_kepler_pair_plan/1",
+    "construction": "Derive pair i>=1 from an exact PhysicalModel and the byte-qualified JacobiTransformPlan without modifying either.",
+    "inner_mass_kg": "JacobiTransformPlan.cumulative_masses_kg[i-1]",
+    "outer_mass_kg": "JacobiTransformPlan.masses_kg[i]",
+    "reduced_mass_kg": "inner_mass_kg*outer_mass_kg/(inner_mass_kg+outer_mass_kg)",
+    "gravitational_parameter_m3_s2": "PhysicalModel.gravitational_constant_si*(inner_mass_kg+outer_mass_kg)",
+    "identity": "BodyId, pair index, inner BodyIds, layout/model/Jacobi fingerprints, SI units, domain, solver policy, and canonical serialization are material plan fields.",
+    "state_schema": "v2.canonical_kepler_pair_state/1",
+    "tangent_schema": "v2.canonical_kepler_pair_tangent/1",
+    "state_flattening": "[q_x,q_y,q_z,P_x,P_y,P_z]",
+    "tangent_flattening": "[delta_q_x,delta_q_y,delta_q_z,delta_P_x,delta_P_y,delta_P_z]",
+    "units": {
+      "q": "m",
+      "P": "kg*m/s",
+      "duration": "s",
+      "reduced_mass": "kg",
+      "gravitational_parameter": "m^3/s^2",
+      "unit_system_id": "si_v1"
+    },
+    "ownership": "Frozen tuple-backed inputs and outputs, detached construction, no writable aliases, no mutation on success or failure."
+  },
+  "qualified_domain": {
+    "conic": "noncollision bound elliptic only",
+    "maximum_eccentricity": 0.92,
+    "maximum_absolute_phase_advance_rad": 6.276902121872407,
+    "maximum_absolute_period_fraction": 0.999,
+    "minimum_periapsis_m": "Explicit positive plan field; fixtures use 1.0e6 m.",
+    "minimum_dimensionless_angular_momentum": "128*u relative to sqrt(gravitational_parameter_m3_s2*semimajor_axis_m)",
+    "requirements": [
+      "finite positive reduced_mass_kg and gravitational_parameter_m3_s2",
+      "finite three-component canonical q and P",
+      "nonzero radius and periapsis >= plan minimum",
+      "negative specific energy",
+      "nondegenerate angular momentum",
+      "eccentricity <= 0.92",
+      "finite duration and absolute mean-motion phase <= 0.999*2*pi"
+    ],
+    "unsupported_and_rejected": [
+      "collision or sub-minimum periapsis",
+      "zero, negative, or nonfinite parameters",
+      "nonfinite, wrong-shape, wrong-unit, wrong-layout, or wrong-fingerprint state",
+      "parabolic and hyperbolic states",
+      "radial elliptic states",
+      "eccentricity or phase beyond the frozen limits",
+      "multiple complete orbital revolutions in one call"
+    ],
+    "claim_limit": "Only the tested bound-elliptic domain is qualified even though universal-variable functions are used."
+  },
+  "solver": {
+    "algorithm": "REBOUND 4.6.0 WHFast source-derived universal-variable Stiefel G-function solver restricted to beta>0.",
+    "invariants": [
+      "beta=2*gravitational_parameter_m3_s2/r0-|v0|^2",
+      "eta0=dot(q0,v0)",
+      "zeta0=gravitational_parameter_m3_s2-beta*r0",
+      "solve r0*X+eta0*G2(beta,X)+zeta0*G3(beta,X)-duration_s=0"
+    ],
+    "small_argument_treatment": "Scale z=beta*X^2 by exact divisions by four until |z|<=0.1, evaluate fixed binary64 inverse-factorial series through 1/34!, and undo scaling with the REBOUND half-angle recurrences.",
+    "initial_and_branch_order": [
+      "source second-order elliptic X guess",
+      "one Newton update",
+      "source 0.01*X_per_period branch to quartic Laguerre-Conway or Newton",
+      "source period bracket bisection fallback"
+    ],
+    "max_iterations": {
+      "newton": 32,
+      "quartic": 64,
+      "bisection": 96
+    },
+    "convergence": {
+      "unit_roundoff_u": 2.220446049250313e-16,
+      "residual_rule": "abs(F)<=128*u*max(abs(duration_s),abs(r0*X),abs(eta0*G2),abs(zeta0*G3),smallest positive normal seconds)",
+      "update_rule": "abs(delta_X)<=64*u*max(abs(X),abs(duration_s/r0),smallest positive normal X scale)",
+      "both_required": true,
+      "primal_only_branch_decisions": true
+    },
+    "diagnostics": [
+      "branch",
+      "iterations",
+      "residual_s",
+      "update_X",
+      "converged",
+      "universal_anomaly_X",
+      "beta_m2_per_s2",
+      "phase_advance_rad"
+    ],
+    "failure": "Raise typed KeplerConvergenceError after the frozen primary and bisection limits; return no physical or tangent result and never fall back to ODE integration.",
+    "zero_duration": "Return exact identity with branch zero_duration, zero iterations, and no root solve."
+  },
+  "physical_map": {
+    "coefficient_order": [
+      "f_hat=-gravitational_parameter_m3_s2*G2/r0",
+      "g=duration_s-gravitational_parameter_m3_s2*G3",
+      "fdot=-gravitational_parameter_m3_s2*G1/(r0*r)",
+      "gdot_hat=-gravitational_parameter_m3_s2*G2/r",
+      "q1=q0+(f_hat*q0+g*v0)",
+      "v1=v0+(fdot*q0+gdot_hat*v0)",
+      "P1=reduced_mass_kg*v1"
+    ],
+    "roundoff_policy": "Preserve REBOUND 4.6.0 increment-before-large-value operation order; algebraic reassociation is forbidden in reproducibility mode."
+  },
+  "tangent_map": {
+    "method": "Analytic Mikkola-Innanen/WHFast first variation with implicit differentiation of the single converged universal anomaly.",
+    "same_root": "Physical and tangent outputs use the identical primal solver result and G-function evaluation; tangent code performs no root solve.",
+    "canonical_conversion": "delta_v=delta_P/reduced_mass_kg on input and delta_P1=reduced_mass_kg*delta_v1 on output, with fixed reduced mass.",
+    "implicit_anomaly": "delta_X=-(X*delta_r0+G2*delta_eta0+G3*delta_zeta0+(eta0*G2_beta+zeta0*G3_beta)*delta_beta)/r",
+    "coefficient_derivatives": "Use source-order G1/G2/G3 beta derivatives, delta_r, delta_f_hat, delta_g, delta_fdot, and delta_gdot_hat from REBOUND 4.6.0 lines 293-330.",
+    "production_finite_differences": false,
+    "continuous_variational_ode": false,
+    "public_action": "Apply D Phi_duration_s(q,P) to one direction without materializing a dense matrix; qualification may apply six basis directions."
+  },
+  "independent_oracles": {
+    "zero_duration": "Exact canonical identity and zero-iteration diagnostics.",
+    "circular": "Independent three-dimensional rigid rotation at n=sqrt(gravitational_parameter_m3_s2/a^3), including non-axis-aligned planes and both time signs.",
+    "elliptic": "Test-only orbital-element reconstruction with independently bracketed scalar eccentric-anomaly Kepler equation; it calls no production Stumpff, anomaly, f/g, or tangent helper.",
+    "reference_solver": "Angle-reduced bisection for 160 iterations or until bracket width and residual are each <=8*u times their dimensioned scales, tighter than production acceptance.",
+    "composition": "Phi_h2(Phi_h1(z)) compared with Phi_(h1+h2)(z) only where all calls remain in-domain.",
+    "invariants": [
+      "canonical Hamiltonian and specific energy",
+      "angular-momentum vector and orbital plane",
+      "eccentricity/Laplace-Runge-Lenz vector",
+      "semimajor axis for noncircular cases"
+    ],
+    "production_helper_reuse_forbidden": true
+  },
+  "test_matrix": {
+    "semimajor_axis_m": 20000000.0,
+    "fixture_reduced_mass_kg": 2.0,
+    "fixture_gravitational_parameter_m3_s2": 400000000000000.0,
+    "eccentricities": [0.0, 0.1, 0.6, 0.9, 0.919],
+    "true_anomalies_rad": [0.0, 0.37, 1.4, 2.7, 3.05],
+    "orientations": [
+      "xy_aligned",
+      "non_axis_aligned_rotation_A",
+      "non_axis_aligned_rotation_B"
+    ],
+    "period_fractions": [-0.99, -0.5, -0.125, -0.001, 0.0, 0.001, 0.125, 0.5, 0.99],
+    "difficult_in_domain": [
+      "e=0.919 near apoapsis with period fraction +0.99",
+      "e=0.919 near periapsis with period fraction -0.99",
+      "near-zero positive and negative anomaly advances"
+    ],
+    "direction_classes": [
+      "six normalized canonical basis directions",
+      "mixed deterministic position-momentum direction",
+      "Hamiltonian flow direction",
+      "infinitesimal rotation generator",
+      "zero direction"
+    ]
+  },
+  "finite_difference": {
+    "forward_formula": "[Phi(z+epsilon*delta_z)-Phi(z)]/epsilon in state-scaled canonical coordinates",
+    "central_formula": "[Phi(z+epsilon*delta_z)-Phi(z-epsilon*delta_z)]/(2*epsilon)",
+    "epsilon_ladder_hex": [
+      "0x1.0000000000000p-10",
+      "0x1.0000000000000p-14",
+      "0x1.0000000000000p-18",
+      "0x1.0000000000000p-22",
+      "0x1.0000000000000p-26",
+      "0x1.0000000000000p-30",
+      "0x1.0000000000000p-34",
+      "0x1.0000000000000p-38",
+      "0x1.0000000000000p-42"
+    ],
+    "acceptance": [
+      "all values finite",
+      "minimum forward relative L2 error <=128*sqrt(u)*condition_scale",
+      "minimum central relative L2 error <=512*u^(2/3)*condition_scale",
+      "at least one of the first six forward errors <=0.25 times the first error",
+      "a post-minimum ladder value is >=2 times the minimum when the minimum is not the final point"
+    ],
+    "finest_point_monotonicity_required": false
+  },
+  "normalization_and_tolerances": {
+    "unit_roundoff_u": 2.220446049250313e-16,
+    "state_scales": "L=semimajor_axis_m and Q=reduced_mass_kg*sqrt(gravitational_parameter_m3_s2/L); normalize [q/L,P/Q].",
+    "condition_scale": "chi=(1+eccentricity)*(1+abs(phase_advance_rad))/(1-eccentricity)^2",
+    "physical_oracle_max_scaled": "<=8192*u*chi",
+    "composition_max_scaled": "<=32768*u*chi",
+    "invariant_relative_or_scaled": "<=65536*u*chi",
+    "physical_reversibility_max_scaled": "<=32768*u*chi",
+    "tangent_identity_relative": "<=65536*u*chi*max(1,cond2(M))",
+    "linearity_relative": "<=32768*u*chi*max(1,cond2(M))",
+    "flow_and_rotation_relative": "<=65536*u*chi*max(1,cond2(M))",
+    "symplectic_max_abs_and_frobenius": "<=65536*u*6*max(1,cond2(M)^2)",
+    "symplectic_norm_scaled": "<=65536*u*6*max(1,cond2(M))",
+    "tangent_reverse_matrix": "<=65536*u*6*max(1,cond2(M_forward)*cond2(M_reverse))",
+    "determinant": "Secondary diagnostic only; never substitutes for M^T*J*M-J.",
+    "tolerance_selection": "All formulas are frozen before implementation execution and scale with binary64 roundoff, orbital conditioning, state normalization, matrix conditioning, and solver residual."
+  },
+  "required_metrics": [
+    "maximum circular and elliptic physical-oracle scaled component and L2 errors with worst state and epoch",
+    "composition scaled maximum",
+    "Hamiltonian, specific energy, angular momentum, plane, eccentricity-vector, and semimajor-axis maxima",
+    "every forward and central finite-difference epsilon/error pair and observed cancellation floor",
+    "linearity, zero, flow-direction, rotational-covariance, and base-state-dependence metrics",
+    "forward and reverse 6x6 symplectic max, Frobenius, norm-scaled residual, condition number, and determinant",
+    "physical, directional tangent, matrix tangent, and momentum-reversal maxima",
+    "solver branch counts, iteration minimum/maximum, residual and update extrema"
+  ],
+  "exact_test_selection": {
+    "step3g1c_core_node_ids": [
+      "mini_ephemeris/tests/test_v2_kepler.py::PhysicalOracleTests::test_zero_duration_identity_without_root_iteration",
+      "mini_ephemeris/tests/test_v2_kepler.py::PhysicalOracleTests::test_circular_orbit_rigid_rotation_multiple_planes_and_signs",
+      "mini_ephemeris/tests/test_v2_kepler.py::PhysicalOracleTests::test_independent_elliptic_reference_matrix",
+      "mini_ephemeris/tests/test_v2_kepler.py::PhysicalOracleTests::test_composition_and_negative_duration",
+      "mini_ephemeris/tests/test_v2_kepler.py::PhysicalOracleTests::test_invariants_across_frozen_matrix",
+      "mini_ephemeris/tests/test_v2_kepler.py::SolverDomainTests::test_stumpff_small_argument_and_solver_diagnostics",
+      "mini_ephemeris/tests/test_v2_kepler.py::SolverDomainTests::test_rejects_invalid_parameters_states_conics_and_domain",
+      "mini_ephemeris/tests/test_v2_kepler.py::SolverDomainTests::test_nonconvergence_is_typed_and_returns_no_partial_result",
+      "mini_ephemeris/tests/test_v2_kepler.py::TangentMapTests::test_zero_linearity_determinism_and_base_state_dependence",
+      "mini_ephemeris/tests/test_v2_kepler.py::TangentMapTests::test_forward_and_central_finite_difference_ladders",
+      "mini_ephemeris/tests/test_v2_kepler.py::TangentMapTests::test_flow_direction_and_rotational_covariance",
+      "mini_ephemeris/tests/test_v2_kepler.py::TangentMapTests::test_full_six_by_six_symplecticity",
+      "mini_ephemeris/tests/test_v2_kepler.py::TangentMapTests::test_physical_tangent_and_time_reversal",
+      "mini_ephemeris/tests/test_v2_kepler.py::OwnershipIsolationTests::test_inputs_outputs_immutable_detached_and_nonmutating_on_success",
+      "mini_ephemeris/tests/test_v2_kepler.py::OwnershipIsolationTests::test_nonmutation_on_failure_and_fingerprint_unit_shape_rejection",
+      "mini_ephemeris/tests/test_v2_kepler.py::OwnershipIsolationTests::test_observer_accounting_noninterference_and_determinism",
+      "mini_ephemeris/tests/test_v2_kepler.py::OwnershipIsolationTests::test_source_has_no_forbidden_dependencies_or_operations"
+    ],
+    "step3g1c_integrity_node_ids": [
+      "mini_ephemeris/tests/test_m0_step3g1c_integrity.py::Step3g1cIntegrityTests::test_manifest_commit_branch_and_required_ancestry",
+      "mini_ephemeris/tests/test_m0_step3g1c_integrity.py::Step3g1cIntegrityTests::test_prior_qualified_and_inherited_integrity_is_exact",
+      "mini_ephemeris/tests/test_m0_step3g1c_integrity.py::Step3g1cIntegrityTests::test_guard_rejects_only_harmless_sentinels",
+      "mini_ephemeris/tests/test_m0_step3g1c_integrity.py::Step3g1cIntegrityTests::test_static_import_node_and_subprocess_closure",
+      "mini_ephemeris/tests/test_m0_step3g1c_integrity.py::Step3g1cIntegrityTests::test_guarded_fresh_process_hash_seed_determinism"
+    ],
+    "safe_step3g1a_regression_node_ids": [
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_body_identity_and_explicit_order",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_duplicate_missing_and_unknown_body_rejected",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_model_is_immutable_and_defensively_copies_inputs",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_invalid_ids_masses_constants_units_and_provenance_rejected",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_canonical_serialization_ignores_mapping_and_collection_order",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_fingerprint_sensitive_to_every_material_field",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_coordinate_types_are_semantically_distinct",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_canonical_state_tangent_layout_compatibility",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_shape_nonfinite_and_unit_validation",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_numpy_inputs_are_detached_and_public_storage_is_immutable",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_force_is_deterministic_and_inputs_remain_bitwise_unchanged",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_jvp_linearity_and_exact_zero_direction",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_layout_and_unit_mismatches_are_rejected_before_provider",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_wrong_output_semantics_are_rejected",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_exact_roundtrip_equality_and_hashing",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_negative_and_very_large_direct_indices",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_invalid_intervals_denominators_indices_and_bounds",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_binary64_boundary_and_accumulation_drift",
+      "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_snapshot_detaches_from_mutable_source",
+      "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_observer_only_receives_immutable_snapshot",
+      "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_accounting_domains_are_typed_and_disjoint",
+      "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_threshold_scope_rejects_mismatched_contexts",
+      "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_high_finding_angle_requirement_is_explicit",
+      "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_both_high_findings_have_named_tests_and_requirements",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_canonical_layout_mismatch_is_rejected"
+    ],
+    "safe_step3g1b_regression_node_ids": [
+      "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_one_body_identity_state_and_tangent",
+      "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_two_body_direct_formulas_and_inverse",
+      "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_three_body_hand_formulas_all_axes",
+      "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_dense_rational_oracle_general_fixture",
+      "mini_ephemeris/tests/test_v2_jacobi.py::RoundTripAndInvarianceTests::test_state_round_trips_both_directions_with_frozen_bounds",
+      "mini_ephemeris/tests/test_v2_jacobi.py::RoundTripAndInvarianceTests::test_tangent_round_trips_both_directions_with_frozen_bounds",
+      "mini_ephemeris/tests/test_v2_jacobi.py::RoundTripAndInvarianceTests::test_translation_and_mass_weighted_boost_invariance",
+      "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_invalid_masses_and_noncentral_first_plan_rejected",
+      "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_layout_reordering_and_model_fingerprint_mismatch_rejected",
+      "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_semantic_units_shapes_dtype_and_fingerprint_rejected",
+      "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_immutable_detached_outputs_and_deterministic_plan_serialization",
+      "mini_ephemeris/tests/test_v2_jacobi.py::TangentClosureTests::test_linearity_zero_and_base_state_independence",
+      "mini_ephemeris/tests/test_v2_jacobi.py::TangentClosureTests::test_independent_matrix_closure_and_finite_difference_ladder",
+      "mini_ephemeris/tests/test_v2_jacobi.py::SymplecticityTests::test_full_phase_space_forward_and_inverse_symplecticity",
+      "mini_ephemeris/tests/test_v2_jacobi.py::IsolationTests::test_runtime_source_is_linear_recurrence_without_dense_or_dynamics_surface",
+      "mini_ephemeris/tests/test_v2_jacobi.py::IsolationTests::test_plan_and_result_repeated_calls_are_deterministic",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_manifest_and_required_ancestry",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_step3g1a_sources_and_tests_are_byte_exact",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_protected_historical_archive_trajectory_and_tag_integrity",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_guard_rejects_only_harmless_sentinels",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_guarded_fresh_process_hash_seed_determinism",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_required_artifacts_and_strict_json",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_summary_report_manifest_and_convention_agree",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_exact_test_inventory_and_traceability_are_complete",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_numerical_metrics_satisfy_frozen_bounds",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_artifact_hash_inventory_is_exact"
+    ],
+    "artifact_node_ids": [
+      "mini_ephemeris/tests/test_m0_step3g1c_artifacts.py::Step3g1cArtifactTests::test_required_artifacts_and_strict_json",
+      "mini_ephemeris/tests/test_m0_step3g1c_artifacts.py::Step3g1cArtifactTests::test_summary_report_manifest_and_specs_agree",
+      "mini_ephemeris/tests/test_m0_step3g1c_artifacts.py::Step3g1cArtifactTests::test_exact_test_inventory_and_traceability_are_complete",
+      "mini_ephemeris/tests/test_m0_step3g1c_artifacts.py::Step3g1cArtifactTests::test_all_metric_artifacts_satisfy_frozen_bounds",
+      "mini_ephemeris/tests/test_m0_step3g1c_artifacts.py::Step3g1cArtifactTests::test_fresh_process_regeneration_is_byte_identical",
+      "mini_ephemeris/tests/test_m0_step3g1c_artifacts.py::Step3g1cArtifactTests::test_artifact_hash_inventory_is_exact"
+    ],
+    "expected_counts": {
+      "step3g1c_core": 17,
+      "step3g1c_integrity": 5,
+      "safe_step3g1a_regression": 25,
+      "safe_step3g1b_regression": 26,
+      "pre_artifact_total": 73,
+      "artifact": 6,
+      "total": 79
+    },
+    "selection_rule": "Only these literal node IDs may be passed to pytest; wildcard, directory, marker, keyword, collection-driven, and uncontrolled discovery are forbidden."
+  },
+  "safety_contract": {
+    "lineage": "Extend the Manifest 23/24 synthetic namespace shell, deny-first MetaPathFinder, exact allowlist, ctypes.dlopen audit hook, /proc/self/maps checks, audited pytest identity, exact-node AST verification, and registered subprocess closure only for the exact Step 3g1c files.",
+    "pytest_site_packages": "/home/peacelovephysics/sheet-music-generator/.venv/lib/python3.10/site-packages",
+    "pytest_version": "8.4.2",
+    "pytest_plugin_autoload_disabled": true,
+    "forbidden_modules": [
+      "step3g1c_forbidden_sentinel",
+      "rebound",
+      "reboundx",
+      "protected and historical mini_ephemeris physical modules"
+    ],
+    "forbidden_library_markers": [
+      "step3g1c_forbidden_library_sentinel",
+      "libmini_ephemeris_gr_tangent",
+      "gr_potential_tangent.so",
+      "librebound",
+      "libreboundx"
+    ],
+    "permitted_subprocesses": {
+      "fresh_kepler_probe": 2,
+      "fresh_artifact_probe": 2,
+      "read_only_git_tag_and_ancestry_queries": true,
+      "all_other_child_processes_forbidden": true
+    },
+    "static_forbidden_runtime_surface": [
+      "finite differences or numerical ODE integration in v2/kepler.py",
+      "global mutable state or callback registration",
+      "REBOUND or REBOUNDx imports",
+      "force/JVP provider imports or calls",
+      "N-body, trajectory, archive, corrector, lazy, kick, WHCKL, MEGNO, LCN, restart, or synchronization entrypoints"
+    ]
+  },
+  "exact_commands": {
+    "static_safety_gate": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1c_qualification_runner.py --safety-audit",
+    "pre_artifact_campaign": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1c_qualification_runner.py --run-core",
+    "compilation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python -m py_compile mini_ephemeris/src/mini_ephemeris/v2/kepler.py mini_ephemeris/src/mini_ephemeris/m0_step3g1c_qualification.py mini_ephemeris/src/mini_ephemeris/m0_step3g1c_qualification_runner.py mini_ephemeris/src/mini_ephemeris/m0_step3g1c_reporting.py mini_ephemeris/tests/test_v2_kepler.py mini_ephemeris/tests/test_m0_step3g1c_integrity.py mini_ephemeris/tests/test_m0_step3g1c_artifacts.py",
+    "artifact_generation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1c_reporting.py",
+    "artifact_campaign": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1c_qualification_runner.py --run-artifacts",
+    "strict_json_validation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1c_reporting.py --validate",
+    "diff_check": "git diff --check"
+  },
+  "review_focus": [
+    "momentum versus velocity confusion",
+    "reduced mass versus gravitational parameter confusion",
+    "Hamiltonian scaling and force sign",
+    "negative-duration and orbital-revolution handling",
+    "small Stumpff or anomaly cancellation",
+    "update-only convergence or silent nonconvergence",
+    "physical/tangent branch or root mismatch",
+    "finite differences or separate variational ODE used in production",
+    "missing implicit anomaly derivative",
+    "fixed-rotation tangent behavior",
+    "wrong (q,P) variable order or dimensional normalization in symplectic tests",
+    "mutable or aliased outputs",
+    "production helper reuse in independent oracles",
+    "post-observation tolerance selection",
+    "claim beyond the frozen elliptic domain"
+  ],
+  "expected_artifacts": [
+    "m0_step3g1c_kepler_drift_tangent_primitive_report.md",
+    "m0_step3g1c_kepler_drift_tangent_primitive_summary.json",
+    "hamiltonian_supported_domain_specification.md",
+    "tangent_map_derivation.md",
+    "requirements_traceability.csv",
+    "qualifying_test_inventory.json",
+    "physical_oracle_metrics.json",
+    "finite_difference_metrics.json",
+    "invariant_metrics.json",
+    "reversibility_metrics.json",
+    "symplecticity_metrics.json",
+    "solver_metrics.json",
+    "code_review_findings.json",
+    "artifact_hashes.json"
+  ],
+  "deterministic_regeneration": {
+    "json": "UTF-8 strict finite JSON, sorted keys, two-space indentation, one trailing LF.",
+    "csv": "UTF-8 fixed columns and row order, LF line endings.",
+    "markdown": "UTF-8 fixed templates, one trailing LF.",
+    "artifact_hashes": "SHA-256 exact bytes; artifact_hashes.json excludes itself.",
+    "fresh_process": "Two guarded isolated interpreters with PYTHONHASHSEED 1/C and 8675309/C.UTF-8 emit byte-identical plan/state/tangent probes; two guarded fresh interpreters generate complete artifact directories matching each other and the committed destination byte for byte."
+  },
+  "result_vocabulary": {
+    "final_status": [
+      "STEP3G1C_KEPLER_DRIFT_TANGENT_COMPLETE",
+      "STEP3G1C_KEPLER_DRIFT_TANGENT_FAILED",
+      "STEP3G1C_BLOCKED"
+    ],
+    "primary_finding": [
+      "BOUND_ELLIPTIC_KEPLER_DRIFT_TANGENT_QUALIFIED",
+      "BOUND_ELLIPTIC_KEPLER_DRIFT_TANGENT_NOT_QUALIFIED",
+      "KEPLER_DRIFT_SPECIFICATION_CONFLICT",
+      "KEPLER_DRIFT_TANGENT_NOT_EVALUATED"
+    ],
+    "success_verification_envelope": "ISOLATED_TWO_BODY_BOUND_ELLIPTIC_MAP_ONLY_NO_NBODY_DYNAMICS"
+  },
+  "acceptance_gates": [
+    "Manifest 25 is a separate single-file commit before implementation or qualifying test execution.",
+    "All 73 preregistered core, integrity, and safe prior regression nodes pass, followed by all 6 artifact nodes.",
+    "Physical analytic/reference, composition, and invariant gates pass within frozen formulas.",
+    "Tangent linearity, finite-difference closure, flow-direction, rotation, base-state dependence, and zero gates pass.",
+    "Full forward and reverse 6x6 canonical symplecticity and physical/tangent/time reversibility pass.",
+    "Root convergence, typed failure, determinism, ownership, schema, unit, layout, and fingerprint gates pass.",
+    "Step 3g1a and Step 3g1b implementation plus every inherited protected/historical/archive/trajectory/tag hash remain exact.",
+    "Static safety, compilation, strict JSON, deterministic regeneration, artifact hashes, git diff --check, reviewed diff, and final clean worktree pass.",
+    "No forbidden operation, protected provider, N-body map, trajectory, or archive occurs."
+  ],
+  "classification_rules": {
+    "STEP3G1C_KEPLER_DRIFT_TANGENT_COMPLETE": "Every frozen mathematical, numerical, safety, integrity, ownership, review, regeneration, and closeout gate passes inside the isolated bound-elliptic pair envelope.",
+    "STEP3G1C_KEPLER_DRIFT_TANGENT_FAILED": "The campaign executes but one or more physical, tangent, solver, integrity, or artifact gate fails without invalidating the controlled baseline.",
+    "STEP3G1C_BLOCKED": "The baseline, controlling Hamiltonian/convention, preregistration ordering, inherited integrity, or no-N-body guarantee cannot be established before qualification.",
+    "BOUND_ELLIPTIC_KEPLER_DRIFT_TANGENT_QUALIFIED": "The isolated fixed-parameter canonical pair flow and its initial-state derivative are qualified only on the frozen noncollision elliptic domain.",
+    "BOUND_ELLIPTIC_KEPLER_DRIFT_TANGENT_NOT_QUALIFIED": "A specific implementation, numerical, safety, or evidentiary defect prevents primitive composition.",
+    "KEPLER_DRIFT_SPECIFICATION_CONFLICT": "The Step 3g0 specification/ADR conflicts with the requested Hamiltonian or canonical convention and implementation stopped before choosing silently.",
+    "KEPLER_DRIFT_TANGENT_NOT_EVALUATED": "Permitted only with STEP3G1C_BLOCKED for a non-specification baseline block."
+  },
+  "strict_prohibitions": [
+    "modifying any qualified Step 3g1a or Step 3g1b implementation, test, report, or artifact",
+    "modifying a protected source, historical manifest, archive, trajectory, or tag",
+    "accepting velocity where canonical momentum is required",
+    "mass, gravitational-parameter, duration, or parameter sensitivities",
+    "center-of-mass drift, multi-pair or N-body composition",
+    "interaction kick, physical force/JVP provider, lazy kernel, corrector, WHCKL step, or synchronization",
+    "REBOUND/REBOUNDx import or execution, IAS15, MEGNO, LCN, tangent rescaling, restart execution, or performance benchmark",
+    "Solar-System initial conditions, trajectory, archive, Stage 4, or 10 Myr command",
+    "tag creation or movement"
+  ],
+  "commit_and_closeout": {
+    "preregistration_single_file_commit": true,
+    "separate_reviewed_closeout_commit": true,
+    "amend_squash_forbidden": true,
+    "tag_creation_forbidden": true,
+    "branch_must_remain": "v2-whckl-tangent-core"
+  },
+  "successor_boundary": {
+    "allowed_only_after_success": "Propose Step 3g1d limited to the interaction-kick map and tangent action using a synthetic analytic force/JVP provider.",
+    "execution_in_this_step": false
+  }
+}
