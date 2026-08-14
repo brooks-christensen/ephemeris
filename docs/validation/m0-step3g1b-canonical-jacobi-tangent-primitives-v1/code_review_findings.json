@@ -1,0 +1,53 @@
+{
+  "findings": [
+    {
+      "finding": "The first reporting implementation omitted dense-oracle acceptance and treated finite invariance residuals as sufficient despite Manifest 24 numerical bounds.",
+      "finding_id": "G1B-R01",
+      "regression_nodes": [
+        "test_numerical_metrics_satisfy_frozen_bounds"
+      ],
+      "resolution": "The acceptance block now enforces both frozen bounds, and the artifact metric node independently checks the recorded residuals.",
+      "severity": "MEDIUM"
+    },
+    {
+      "finding": "The first artifact generation exposed a NumPy boolean scalar at the strict JSON boundary.",
+      "finding_id": "G1B-R02",
+      "regression_nodes": [
+        "test_required_artifacts_and_strict_json",
+        "test_fresh_process_regeneration_is_byte_identical"
+      ],
+      "resolution": "The JSON encoder now normalizes only NumPy scalar values through item(), retains allow_nan=False, and is covered by strict-JSON plus fresh-process artifact nodes.",
+      "severity": "LOW"
+    },
+    {
+      "finding": "The Step 3g0 external (x,v) adapter boundary is broader than this canonical (x,p) primitive.",
+      "finding_id": "G1B-R03",
+      "regression_nodes": [
+        "test_semantic_units_shapes_dtype_and_fingerprint_rejected",
+        "test_runtime_source_is_linear_recurrence_without_dense_or_dynamics_surface"
+      ],
+      "resolution": "The semantic input type, manifest, tests, and report prohibit velocity conversion and defer the adapter explicitly.",
+      "severity": "INFORMATIONAL"
+    }
+  ],
+  "focus": [
+    "A versus A^(-T) correctness",
+    "velocity used where momentum is required",
+    "cumulative-mass off-by-one or reassociation",
+    "relative-coordinate or momentum sign",
+    "common defective helper shared by implementation and oracle",
+    "body-ID/index conflation or silent reordering",
+    "mutable or aliased state and plan values",
+    "flattening inconsistency",
+    "unprincipled or post-observation tolerance changes",
+    "determinant-only symplecticity claim",
+    "nondeterministic fingerprints",
+    "hidden O(N^2) runtime work",
+    "claims beyond coordinate-transform evidence"
+  ],
+  "kind": "m0_step3g1b_code_review_findings",
+  "material_regressions_added": 1,
+  "review_status": "COMPLETE",
+  "schema_version": 1,
+  "unresolved_material_findings": 0
+}

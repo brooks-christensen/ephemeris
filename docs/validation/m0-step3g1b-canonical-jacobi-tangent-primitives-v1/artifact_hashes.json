@@ -1,0 +1,13 @@
+{
+  "kind": "m0_step3g1b_artifact_hashes",
+  "schema_version": 1,
+  "sha256": {
+    "canonical_convention_specification.md": "88056f0f75793b6f4675982b32d8fb47c85fce6466c328d7c69083a853168e5a",
+    "code_review_findings.json": "131841c1ab561022d48fd92309e651b46ff12ddf9365051bbfb7665e54a2f0ea",
+    "m0_step3g1b_canonical_jacobi_tangent_primitives_report.md": "85ef56f469837a47f26fe4b29171c5a6ffadbaa36ffdf0134e9339a344c4a90c",
+    "m0_step3g1b_canonical_jacobi_tangent_primitives_summary.json": "4e933f4978f532e672175fb474bafa3a627df27880ba852a58946c42f19cddde",
+    "numerical_metrics.json": "8f3367e53502cd4d334103911f66f3cbeb308087590db22742f3af8a9b5e025a",
+    "qualifying_test_inventory.json": "5e5977dc1abd6bb0ae3e42a0b110538ad8bb56cc3a30eaca091a8d7101170025",
+    "requirements_traceability.csv": "7ade7bbdfceb8d257b528e509a7b7cc6845469a73edd0d9073f3c5a63c64881d"
+  }
+}

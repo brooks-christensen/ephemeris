@@ -1,0 +1,290 @@
+{
+  "commands": {
+    "artifact_campaign": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py --run-artifacts",
+    "artifact_generation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_reporting.py",
+    "compilation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python -m py_compile mini_ephemeris/src/mini_ephemeris/v2/jacobi.py mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification.py mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py mini_ephemeris/src/mini_ephemeris/m0_step3g1b_reporting.py mini_ephemeris/tests/test_v2_jacobi.py mini_ephemeris/tests/test_m0_step3g1b_integrity.py mini_ephemeris/tests/test_m0_step3g1b_artifacts.py",
+    "diff_check": "git diff --check",
+    "pre_artifact_campaign": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py --run-core",
+    "static_safety_gate": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py --safety-audit",
+    "strict_json_validation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_reporting.py --validate"
+  },
+  "counts": {
+    "artifact": 6,
+    "pre_artifact_total": 47,
+    "safe_step3g1a_regression": 25,
+    "step3g1b_core": 16,
+    "step3g1b_integrity": 6,
+    "total": 53
+  },
+  "kind": "m0_step3g1b_qualifying_test_inventory",
+  "pytest_plugin_autoload_disabled": true,
+  "schema_version": 1,
+  "selection": "exact_pytest_node_ids_only",
+  "tests": [
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_one_body_identity_state_and_tangent",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_two_body_direct_formulas_and_inverse",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_three_body_hand_formulas_all_axes",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_dense_rational_oracle_general_fixture",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::RoundTripAndInvarianceTests::test_state_round_trips_both_directions_with_frozen_bounds",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::RoundTripAndInvarianceTests::test_tangent_round_trips_both_directions_with_frozen_bounds",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::RoundTripAndInvarianceTests::test_translation_and_mass_weighted_boost_invariance",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_invalid_masses_and_noncentral_first_plan_rejected",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_layout_reordering_and_model_fingerprint_mismatch_rejected",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_semantic_units_shapes_dtype_and_fingerprint_rejected",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_immutable_detached_outputs_and_deterministic_plan_serialization",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::TangentClosureTests::test_linearity_zero_and_base_state_independence",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::TangentClosureTests::test_independent_matrix_closure_and_finite_difference_ladder",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::SymplecticityTests::test_full_phase_space_forward_and_inverse_symplecticity",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::IsolationTests::test_runtime_source_is_linear_recurrence_without_dense_or_dynamics_surface",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_core",
+      "node_id": "mini_ephemeris/tests/test_v2_jacobi.py::IsolationTests::test_plan_and_result_repeated_calls_are_deterministic",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_integrity",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_manifest_and_required_ancestry",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_integrity",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_step3g1a_sources_and_tests_are_byte_exact",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_integrity",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_protected_historical_archive_trajectory_and_tag_integrity",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_integrity",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_guard_rejects_only_harmless_sentinels",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_integrity",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_static_import_node_and_subprocess_closure",
+      "result": "PASS"
+    },
+    {
+      "group": "step3g1b_integrity",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_guarded_fresh_process_hash_seed_determinism",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_body_identity_and_explicit_order",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_duplicate_missing_and_unknown_body_rejected",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_model_is_immutable_and_defensively_copies_inputs",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_invalid_ids_masses_constants_units_and_provenance_rejected",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_canonical_serialization_ignores_mapping_and_collection_order",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_fingerprint_sensitive_to_every_material_field",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_coordinate_types_are_semantically_distinct",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_canonical_state_tangent_layout_compatibility",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_shape_nonfinite_and_unit_validation",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_numpy_inputs_are_detached_and_public_storage_is_immutable",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_force_is_deterministic_and_inputs_remain_bitwise_unchanged",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_jvp_linearity_and_exact_zero_direction",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_layout_and_unit_mismatches_are_rejected_before_provider",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_wrong_output_semantics_are_rejected",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_exact_roundtrip_equality_and_hashing",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_negative_and_very_large_direct_indices",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_invalid_intervals_denominators_indices_and_bounds",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_binary64_boundary_and_accumulation_drift",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_snapshot_detaches_from_mutable_source",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_observer_only_receives_immutable_snapshot",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_accounting_domains_are_typed_and_disjoint",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_threshold_scope_rejects_mismatched_contexts",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_high_finding_angle_requirement_is_explicit",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_both_high_findings_have_named_tests_and_requirements",
+      "result": "PASS"
+    },
+    {
+      "group": "safe_step3g1a_regression",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_canonical_layout_mismatch_is_rejected",
+      "result": "PASS"
+    },
+    {
+      "group": "artifact",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_required_artifacts_and_strict_json",
+      "result": "PASS"
+    },
+    {
+      "group": "artifact",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_summary_report_manifest_and_convention_agree",
+      "result": "PASS"
+    },
+    {
+      "group": "artifact",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_exact_test_inventory_and_traceability_are_complete",
+      "result": "PASS"
+    },
+    {
+      "group": "artifact",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_numerical_metrics_satisfy_frozen_bounds",
+      "result": "PASS"
+    },
+    {
+      "group": "artifact",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_fresh_process_regeneration_is_byte_identical",
+      "result": "PASS"
+    },
+    {
+      "group": "artifact",
+      "node_id": "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_artifact_hash_inventory_is_exact",
+      "result": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "acceptance": {
+    "dense_oracle": true,
+    "finite_difference": true,
+    "invariance": true,
+    "state_round_trips": true,
+    "symplecticity": true,
+    "tangent_round_trips": true
+  },
+  "bounds": {
+    "dense_oracle_componentwise": 1.968446923181374e-11,
+    "invariance_internal": 7.207544118725646e-11,
+    "inverse_consistency": 1.3107695183197266e-10,
+    "state_componentwise": 3.936893846362748e-11,
+    "state_normwise": 5.162028405334491e-11,
+    "symplectic_absolute": 1.3107695183197266e-10,
+    "symplectic_norm_scaled": 3.410605131648481e-12,
+    "tangent_componentwise": 5.368491608676474e-12,
+    "tangent_normwise": 6.622739592607176e-12
+  },
+  "condition_numbers": {
+    "A_2": 5.024279582541096,
+    "phase_S_2": 6.19936841240436
+  },
+  "dense_oracle": {
+    "state": {
+      "l2": 1.5905664321074656e-15,
+      "max_abs": 8.881784197001252e-16
+    },
+    "tangent": {
+      "l2": 1.4372121183962107e-16,
+      "max_abs": 1.1102230246251565e-16
+    }
+  },
+  "finite_difference": {
+    "first_four_minimum_relative_l2_error": 8.646945080224787e-15,
+    "floor_bound": 7.047865906775269e-13,
+    "minimum_relative_l2_error": 8.646945080224787e-15,
+    "values": [
+      {
+        "epsilon": 0.0625,
+        "epsilon_hex": "0x1.0000000000000p-4",
+        "max_abs_error": 4.9682480351975755e-15,
+        "relative_l2_error": 8.646945080224787e-15
+      },
+      {
+        "epsilon": 0.00390625,
+        "epsilon_hex": "0x1.0000000000000p-8",
+        "max_abs_error": 1.149080830487037e-13,
+        "relative_l2_error": 1.9276895273775149e-13
+      },
+      {
+        "epsilon": 0.000244140625,
+        "epsilon_hex": "0x1.0000000000000p-12",
+        "max_abs_error": 1.024402784821632e-12,
+        "relative_l2_error": 2.1335495093578563e-12
+      },
+      {
+        "epsilon": 1.52587890625e-05,
+        "epsilon_hex": "0x1.0000000000000p-16",
+        "max_abs_error": 3.740419085573876e-11,
+        "relative_l2_error": 5.132393941169694e-11
+      },
+      {
+        "epsilon": 9.5367431640625e-07,
+        "epsilon_hex": "0x1.0000000000000p-20",
+        "max_abs_error": 3.866501563365432e-10,
+        "relative_l2_error": 5.727580331888274e-10
+      },
+      {
+        "epsilon": 5.960464477539063e-08,
+        "epsilon_hex": "0x1.0000000000000p-24",
+        "max_abs_error": 5.2219611690329515e-09,
+        "relative_l2_error": 9.582439132802666e-09
+      },
+      {
+        "epsilon": 3.725290298461914e-09,
+        "epsilon_hex": "0x1.0000000000000p-28",
+        "max_abs_error": 1.0207950892904272e-07,
+        "relative_l2_error": 1.4944233183502933e-07
+      },
+      {
+        "epsilon": 2.3283064365386963e-10,
+        "epsilon_hex": "0x1.0000000000000p-32",
+        "max_abs_error": 6.28796252580277e-07,
+        "relative_l2_error": 1.779943124546292e-06
+      },
+      {
+        "epsilon": 1.4551915228366852e-11,
+        "epsilon_hex": "0x1.0000000000000p-36",
+        "max_abs_error": 1.2976682780413418e-05,
+        "relative_l2_error": 3.1801387211952364e-05
+      },
+      {
+        "epsilon": 9.094947017729282e-13,
+        "epsilon_hex": "0x1.0000000000000p-40",
+        "max_abs_error": 0.00036370509530792017,
+        "relative_l2_error": 0.0006420393403921588
+      }
+    ]
+  },
+  "fixture": {
+    "body_count": 5,
+    "label": "synthetic_conditioning_fixture",
+    "mass_ratio_max_over_min": 256.0,
+    "masses_kg": [
+      0.125,
+      2.0,
+      32.0,
+      0.5,
+      8.0
+    ],
+    "maximum_mass_kg": 32.0,
+    "minimum_mass_kg": 0.125,
+    "solar_system_data": false
+  },
+  "invariance": {
+    "boost_internal_max_abs": 8.881784197001252e-16,
+    "translation_internal_max_abs": 8.881784197001252e-16
+  },
+  "kind": "m0_step3g1b_numerical_metrics",
+  "model_fingerprint": "2a65482a0337e353abb5cdb0065884dcdc41e4ba748b463ab99e6b595449c749",
+  "plan_fingerprint": "31e592a2d7365039f925071b15b99b783ab969e3d8b8cd6f7c73a9ed8b6b2054",
+  "round_trip": {
+    "state_forward_inverse": {
+      "l2": 2.8435583831733384e-15,
+      "max_abs": 1.7763568394002505e-15
+    },
+    "state_inverse_forward": {
+      "l2": 2.2783676128111804e-15,
+      "max_abs": 1.7763568394002505e-15
+    },
+    "tangent_forward_inverse": {
+      "l2": 4.531581184534698e-16,
+      "max_abs": 4.440892098500626e-16
+    },
+    "tangent_inverse_forward": {
+      "l2": 4.654501014455188e-16,
+      "max_abs": 4.440892098500626e-16
+    }
+  },
+  "schema_version": 1,
+  "symplecticity": {
+    "determinant_secondary": 1.0,
+    "forward": {
+      "frobenius": 4.624895359816103e-16,
+      "max_abs": 1.1102230246251565e-16,
+      "norm_scaled": 1.3620524684437401e-17
+    },
+    "inverse": {
+      "frobenius": 1.8102927449330055e-16,
+      "max_abs": 5.55813601160652e-17,
+      "norm_scaled": 5.3313934911163855e-18
+    },
+    "inverse_consistency_max_abs": 1.1102230246251565e-16
+  }
+}

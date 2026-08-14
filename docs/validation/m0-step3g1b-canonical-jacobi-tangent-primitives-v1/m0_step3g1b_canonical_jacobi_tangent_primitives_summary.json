@@ -1,0 +1,176 @@
+{
+  "branch": "v2-whckl-tangent-core",
+  "final_status": "STEP3G1B_JACOBI_TANGENT_PRIMITIVES_COMPLETE",
+  "forbidden_operations": {
+    "dynamical_map_implemented": false,
+    "integration_or_timestep_executed": false,
+    "megno_or_lcn_executed": false,
+    "physical_force_or_jvp_evaluated": false,
+    "rebound_or_reboundx_imported": false,
+    "solar_system_state_used": false,
+    "tag_created_or_moved": false,
+    "trajectory_or_archive_created": false,
+    "velocity_conversion_executed": false
+  },
+  "integrity": {
+    "annotated_tags_unchanged": true,
+    "archives_and_trajectories_unchanged": true,
+    "historical_manifests_and_artifacts_unchanged": true,
+    "protected_sources_unchanged": true,
+    "step3g1a_files_unchanged": true
+  },
+  "kind": "m0_step3g1b_canonical_jacobi_tangent_primitives_summary",
+  "metrics": {
+    "condition_numbers": {
+      "A_2": 5.024279582541096,
+      "phase_S_2": 6.19936841240436
+    },
+    "finite_difference": {
+      "first_four_minimum_relative_l2_error": 8.646945080224787e-15,
+      "floor_bound": 7.047865906775269e-13,
+      "minimum_relative_l2_error": 8.646945080224787e-15,
+      "values": [
+        {
+          "epsilon": 0.0625,
+          "epsilon_hex": "0x1.0000000000000p-4",
+          "max_abs_error": 4.9682480351975755e-15,
+          "relative_l2_error": 8.646945080224787e-15
+        },
+        {
+          "epsilon": 0.00390625,
+          "epsilon_hex": "0x1.0000000000000p-8",
+          "max_abs_error": 1.149080830487037e-13,
+          "relative_l2_error": 1.9276895273775149e-13
+        },
+        {
+          "epsilon": 0.000244140625,
+          "epsilon_hex": "0x1.0000000000000p-12",
+          "max_abs_error": 1.024402784821632e-12,
+          "relative_l2_error": 2.1335495093578563e-12
+        },
+        {
+          "epsilon": 1.52587890625e-05,
+          "epsilon_hex": "0x1.0000000000000p-16",
+          "max_abs_error": 3.740419085573876e-11,
+          "relative_l2_error": 5.132393941169694e-11
+        },
+        {
+          "epsilon": 9.5367431640625e-07,
+          "epsilon_hex": "0x1.0000000000000p-20",
+          "max_abs_error": 3.866501563365432e-10,
+          "relative_l2_error": 5.727580331888274e-10
+        },
+        {
+          "epsilon": 5.960464477539063e-08,
+          "epsilon_hex": "0x1.0000000000000p-24",
+          "max_abs_error": 5.2219611690329515e-09,
+          "relative_l2_error": 9.582439132802666e-09
+        },
+        {
+          "epsilon": 3.725290298461914e-09,
+          "epsilon_hex": "0x1.0000000000000p-28",
+          "max_abs_error": 1.0207950892904272e-07,
+          "relative_l2_error": 1.4944233183502933e-07
+        },
+        {
+          "epsilon": 2.3283064365386963e-10,
+          "epsilon_hex": "0x1.0000000000000p-32",
+          "max_abs_error": 6.28796252580277e-07,
+          "relative_l2_error": 1.779943124546292e-06
+        },
+        {
+          "epsilon": 1.4551915228366852e-11,
+          "epsilon_hex": "0x1.0000000000000p-36",
+          "max_abs_error": 1.2976682780413418e-05,
+          "relative_l2_error": 3.1801387211952364e-05
+        },
+        {
+          "epsilon": 9.094947017729282e-13,
+          "epsilon_hex": "0x1.0000000000000p-40",
+          "max_abs_error": 0.00036370509530792017,
+          "relative_l2_error": 0.0006420393403921588
+        }
+      ]
+    },
+    "invariance": {
+      "boost_internal_max_abs": 8.881784197001252e-16,
+      "translation_internal_max_abs": 8.881784197001252e-16
+    },
+    "mass_ratio_max_over_min": 256.0,
+    "round_trip": {
+      "state_forward_inverse": {
+        "l2": 2.8435583831733384e-15,
+        "max_abs": 1.7763568394002505e-15
+      },
+      "state_inverse_forward": {
+        "l2": 2.2783676128111804e-15,
+        "max_abs": 1.7763568394002505e-15
+      },
+      "tangent_forward_inverse": {
+        "l2": 4.531581184534698e-16,
+        "max_abs": 4.440892098500626e-16
+      },
+      "tangent_inverse_forward": {
+        "l2": 4.654501014455188e-16,
+        "max_abs": 4.440892098500626e-16
+      }
+    },
+    "symplecticity": {
+      "determinant_secondary": 1.0,
+      "forward": {
+        "frobenius": 4.624895359816103e-16,
+        "max_abs": 1.1102230246251565e-16,
+        "norm_scaled": 1.3620524684437401e-17
+      },
+      "inverse": {
+        "frobenius": 1.8102927449330055e-16,
+        "max_abs": 5.55813601160652e-17,
+        "norm_scaled": 5.3313934911163855e-18
+      },
+      "inverse_consistency_max_abs": 1.1102230246251565e-16
+    }
+  },
+  "preregistration_commit": "20d156839da5bed8d966b3a64b42ee73d7db788f",
+  "primary_finding": "CANONICAL_JACOBI_TRANSFORMS_QUALIFIED_FOR_PRIMITIVE_COMPOSITION",
+  "remaining_risks": [
+    "The future inertial (x,v) adapter and explicit velocity-to-momentum boundary remain unimplemented.",
+    "No Kepler drift, kick, corrector, WHCKL composition, or discrete tangent evolution is qualified.",
+    "The synthetic mass ratio of 256 does not establish conditioning for a Solar-System production mass hierarchy.",
+    "Binary64 transform round trips are bounded and are not mathematically exact for general inputs."
+  ],
+  "required_start_commit": "c56055e6caca104b6d4e5b59a762046d84cbb0dc",
+  "review": {
+    "claims_limited_to_coordinate_transform": true,
+    "unresolved_material_findings": 0
+  },
+  "safety": {
+    "exact_node_selection": true,
+    "forbidden_imports": [],
+    "forbidden_library_mappings": [],
+    "fresh_process_guarded": true,
+    "legacy_nbody_absent": true,
+    "legacy_package_init_bypassed": true,
+    "pytest_plugin_autoload_disabled": true,
+    "static_gate": "PASS"
+  },
+  "schema_version": 1,
+  "source_inventory_sha256": {
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification.py": "98ca761bc8ba09a3623fae437756ccf41a518f1efa84faccfcd10f5eb2f6d674",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py": "37f64bf73c39ad06f78a04bfc9b2c7bddb635842783a2fb0f3fd23dca9bff25c",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1b_reporting.py": "c8c3e77268cf188ec3932612b4fbe5fc2af943453f8748e8f19f6626208758d3",
+    "mini_ephemeris/src/mini_ephemeris/v2/jacobi.py": "11774f2a625c634b4d3d2d0ac52b8b055da9a6cd31bdbbd303be30827126b14e",
+    "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py": "ba1ee8587d015bfbc4c7b6493b9079c2517e10a98903db54a7bf95f04f2cc097",
+    "mini_ephemeris/tests/test_m0_step3g1b_integrity.py": "dacc5acede921dbafdacb22992873c0649952527ef91818e368fd715cc3f52c5",
+    "mini_ephemeris/tests/test_v2_jacobi.py": "1683a16f714d42ae668b72232fec2d53632c007282a7033fe7addcb0ca25047f"
+  },
+  "step3g1c_proposal": "two-body Kepler drift and its canonical tangent map only",
+  "test_counts": {
+    "artifact": 6,
+    "pre_artifact_total": 47,
+    "safe_step3g1a_regression": 25,
+    "step3g1b_core": 16,
+    "step3g1b_integrity": 6,
+    "total": 53
+  },
+  "verification_envelope": "COORDINATE_TRANSFORM_ONLY_NO_DYNAMICS_EXECUTED"
+}
