@@ -1,0 +1,434 @@
+{
+  "schema_version": 1,
+  "kind": "m0_step3g1a_v2_foundation_requalification_preregistration",
+  "experiment_id": "m0_step3g1a_v2_foundation_requalification_v1",
+  "purpose": "Requalify the byte-exact Step 3g1a v2 foundation with an explicitly enumerated source-only campaign that cannot import, load, invoke, or evaluate protected physical force or JVP kernels.",
+  "paths": {
+    "manifest": "ephemeris_experiment_runner/manifests/23_m0_step3g1a_v2_foundation_requalification_v1.json",
+    "implementation_root_read_only": "mini_ephemeris/src/mini_ephemeris/v2",
+    "documentation_root": "docs/validation/m0-step3g1a-v2-foundation-requalification-v1"
+  },
+  "preregistration": {
+    "created_utc": "2026-08-14T04:56:11Z",
+    "required_start_commit": "ea0732d5e2e125d3e7b1fb0165c5e579ba9aa3e9",
+    "required_branch": "v2-whckl-tangent-core",
+    "conclusion_free": true,
+    "commit_message": "Preregister M0 Step 3g1a requalification",
+    "required_closeout_message": "Requalify M0 Step 3g1a v2 foundation"
+  },
+  "required_ancestry": [
+    "e7b7ace3c4d348a018eeb83872c3c7f03e8ad322",
+    "d8947b3ee48250a0576ebf648b857bfa6c401200",
+    "ea0732d5e2e125d3e7b1fb0165c5e579ba9aa3e9"
+  ],
+  "historical_result_preservation": {
+    "manifest_22_sha256": "185948f1e95987f28aa80decbc0b423fa8455f31e43a661a60202d9abc3d4dd8",
+    "final_status": "STEP3G1A_V2_FOUNDATION_INCOMPLETE",
+    "primary_finding": "V2_FOUNDATION_NOT_READY",
+    "reinterpretation_forbidden": true,
+    "amend_squash_revert_cherry_pick_delete_or_relabel_forbidden": true
+  },
+  "protected_sources": {
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+  },
+  "protected_manifests": {
+    "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+    "ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+    "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+    "ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json": "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6",
+    "ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json": "978ab813979ea6c728e113c1f473afabb54cd553d2097dd9d26add8391f5589b",
+    "ephemeris_experiment_runner/manifests/18_m0_step3e1_offline_state_diagnosis_v1.json": "088b55fa40cf0ccb7fa50f42d41f017fcdf560d7a8f7a7dfa69678717544021d",
+    "ephemeris_experiment_runner/manifests/19_m0_step3f0_whfast_configuration_audit_v1.json": "28d8c390690be7c1b98cfea1b5e22615926dc149b6e7c88640d8db4e5074b521",
+    "ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json": "46b19b54f278f6e174f7aa10d6fa6e2ed68e25394fc7839d1acecbcde601a65c",
+    "ephemeris_experiment_runner/manifests/21_m0_step3g0_verification_architecture_audit_v1.json": "b81495b1b561ba10bddb9002912c9fdd03cb37113da29ecd479f03cb1e9614f9",
+    "ephemeris_experiment_runner/manifests/22_m0_step3g1a_v2_foundation_v1.json": "185948f1e95987f28aa80decbc0b423fa8455f31e43a661a60202d9abc3d4dd8"
+  },
+  "v2_implementation_sha256": {
+    "mini_ephemeris/src/mini_ephemeris/v2/__init__.py": "412f9fd9a79b38d1d3145c5aeb0478b967c4b8bf76a8bec08ba996752e24710c",
+    "mini_ephemeris/src/mini_ephemeris/v2/accounting.py": "4acc1fcac8fa2edd9ac6d1f9d14135063a3aa2c4d089af8cc2b2e0e97708fc62",
+    "mini_ephemeris/src/mini_ephemeris/v2/canonical.py": "42a76030bad788716b3fdfc8c05d4943bf8b1832679c9d85d7a8e36cf9b5061c",
+    "mini_ephemeris/src/mini_ephemeris/v2/errors.py": "ad79b8815f5c2019f1b0de0ff2e09f8fd5bb551bc8ed7baadeee43f709b42145",
+    "mini_ephemeris/src/mini_ephemeris/v2/kernels.py": "d0efca5eef6111a3e95ca0bffae8df9ee5b6efac0c007a5c85e883ca6209dd58",
+    "mini_ephemeris/src/mini_ephemeris/v2/model.py": "9c39f91b2209528292249e8c46a44e66b122d732b1dc80abfe81fdf18529c276",
+    "mini_ephemeris/src/mini_ephemeris/v2/ownership.py": "0e269103bb84d4165b1380643dbdbbcd03d166561b5c65fde293b8e75bca030b",
+    "mini_ephemeris/src/mini_ephemeris/v2/state.py": "daf103dab0d0a40df4b00361c550d87d02532f47c019e2c72c81924f16180982",
+    "mini_ephemeris/src/mini_ephemeris/v2/thresholds.py": "10467ce838c901c801a9cd99be3035b33a401195c7cb27efeabc8aa00c66fee3",
+    "mini_ephemeris/src/mini_ephemeris/v2/timebase.py": "d4e67810f1a45d69605d1bef5a73fd92edd5fc47321da466f35e277cda35fa7c"
+  },
+  "historical_step3g1a_sha256": {
+    "mini_ephemeris/src/mini_ephemeris/__init__.py": "5a4e28a560f35045e58b980500c96eac4351766f4655d18f35b2fc532b07a21b",
+    "mini_ephemeris/src/mini_ephemeris/nbody.py": "989ebc7d1c31f94f1efc046fd7876533aed3b4d9d3a1472a9166bd8df6b9a39c",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_reporting.py": "720385f6cc6021ef6b940dfa8dc0a21719d116ee5f169919c2515fbcf2dc043f",
+    "mini_ephemeris/tests/test_v2_foundation.py": "e89c40659b2d2a89ffd8b19e8b2959277b3ac6a687731452b955ef8a4d1aa2f9",
+    "mini_ephemeris/tests/test_m0_step3g1a_artifacts.py": "76d1aa0a14a5e54b57dd54c763ea11f7c80a07ba665b9e490151b130b1169df3",
+    "docs/validation/m0-step3g1a-v2-foundation-v1/m0_step3g1a_v2_foundation_report.md": "e44d7a0776917cdb6dc66b8a7744ce083adf2b7e5fbf044772fe06678f68a675",
+    "docs/validation/m0-step3g1a-v2-foundation-v1/m0_step3g1a_v2_foundation_summary.json": "ec65668c9b56e2a87bed78faf16db9eb844f7d8ccf7724e511d2f464b8ea2ac6",
+    "docs/validation/m0-step3g1a-v2-foundation-v1/v2_foundation_api_ownership_specification.md": "5568a495d3d672af6375497b377d77aebd697e3cd8f10e50877df9f0e4692469",
+    "docs/validation/m0-step3g1a-v2-foundation-v1/requirements_traceability.csv": "6954ad320f6d21879dc0ac18d2116fe581aac5c57b84a07c1fc2caa30e268aae",
+    "docs/validation/m0-step3g1a-v2-foundation-v1/test_inventory.json": "02d12c2345626fded3fb3bed2731ef7261b568be78b3fe1cd0b67ae56296cea0",
+    "docs/validation/m0-step3g1a-v2-foundation-v1/review_findings.json": "4dad28da79566b12d1ebf4e9b0e9633f49ad835e2402c9f6f51e90bffba3b523"
+  },
+  "inherited_integrity_ledger": {
+    "manifest_21_sha256": "b81495b1b561ba10bddb9002912c9fdd03cb37113da29ecd479f03cb1e9614f9",
+    "historical_documents": "Import the exact historical_documents mapping from Manifest 21 without reinterpretation and require every byte hash to match.",
+    "frozen_archives": {
+      "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p5d_100k/simulationarchive.bin": "816bdb9af6553d9d010e7c3fb910e97fd68fe5e8cb309344065a2f037ef1af05",
+      "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p25d_100k/simulationarchive.bin": "079130971f6c720090ed6247b3895429c978e23e48ba4ce1411f2ab530e02f28",
+      "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p5d_100k/simulationarchive.bin": "da6d3c965d79f771851a357ae18609d978183a6df4a10da84492a64dd59f9263",
+      "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p25d_100k/simulationarchive.bin": "e78a3b50d10a18b25e08aab9d5d785d939cdbcf6d53bd623b7f44780095d6d16",
+      "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/simulationarchive.bin": "de9eb3f9bc4513d77024388fb85972a8489aa644827cfcfb231b6cd38689c8e6",
+      "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/simulationarchive.bin": "a79e2957e28f25acd4b508e166c577c18e74da8162034e07babe042ac43382c2",
+      "output/stability/m0_ias15_phase_reference_v1/m0_diag_phys_ias15_default_10k/simulationarchive.bin": "e3ba4e01f330efc707c633d7f88c86125155646ab02991b2d74a057100755432",
+      "output/stability/m0_timestep_convergence_v1/m0_conv_2d_1myr_s12345/gr_tangent_archive_m0_conv_2d_1myr_s12345.bin": "cbe56d564e4df371f2ae40b5ca54de0e4d36d27a046ef04fba431acea58f4b05",
+      "output/stability/m0_timestep_convergence_v1/m0_conv_1d_1myr_s12345/gr_tangent_archive_m0_conv_1d_1myr_s12345.bin": "bbb4b3f5328f94057b0e5c16b73ec37249c8fa78dd4dd947d2f6f430de7f46bd",
+      "output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_archive_m0_conv_0p5d_1myr_s12345.bin": "3ee131ed27f67797ffda168ead0d1a163291610599b0f3495f9d3b4c75aeb026",
+      "output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_archive_m0_conv_0p25d_1myr_s12345.bin": "1aebd60e2671a4b7b1b1dbe6453e48d10fd460daa31e167f4d86b5fe9c7d6def",
+      "output/stability/m0_step3e_whfast_0125d_convergence_v1/m0_step3e_tangent_whfast_0125d_1myr/gr_tangent_archive_m0_step3e_tangent_whfast_0125d_1myr.bin": "6a3248c560491ca0d8dfd35e84ac669df15161afc7728ae57b0c94b33a68f143",
+      "output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/simulationarchive.bin": "e7aa5c5b3f1b84a5055ad844f1c64ab61dd3f7c7d3676869f02a2df0491dfa5f",
+      "output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/simulationarchive.bin": "555a0234ee652ed79795d06dff509090ece4c40b18e6b919558f7b9a62a56e89"
+    },
+    "frozen_trajectories": {
+      "output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/state.csv": "8697d0984c8edf721acfd0e3a11493dd4530ade23622e12e5b8a08c4983eabdd",
+      "output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/state.csv": "f10a965a78fa315d018522f566c77cf534e6c6742160fe3243f008b547a204e7"
+    }
+  },
+  "protected_tags": {
+    "gr-tangent-compiled-c-v1": {
+      "kind": "annotated",
+      "tag_object": "e12153e5c4384e5c16795e29c33b7572392121b1",
+      "commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b"
+    },
+    "gr-tangent-python-oracle-v2": {
+      "kind": "annotated",
+      "tag_object": "9661c72f82c45351b6059e2c293a70addae561c3",
+      "commit": "9933bc5e3d9bfe9ec07e72929c22e4406f12b441"
+    }
+  },
+  "scope_violation_repaired": {
+    "inherited_command": "PYTHONPATH=mini_ephemeris/src .venv/bin/python -m unittest discover -s mini_ephemeris/tests -p test_m0_step3g0*.py -v",
+    "selected_test_count": 19,
+    "why_invalid": "The wildcard collected both Step 3g0 files, imported historical M0 verification/reporting modules plus the protected Python oracle and compiled-C loader, and executed static protected physical force/JVP evaluations outside Manifest 22's source-only scope.",
+    "protected_evaluations": [
+      "test_gr_pair_and_jvp_against_decimal_oracle called the protected Python GR acceleration/JVP and independent static oracles",
+      "test_gr_jvp_central_difference_and_linearity called the static GR system oracle",
+      "test_gr_covariances_limits_and_no_backreaction called the static GR system oracle",
+      "test_python_c_equality_deterministic_random_cases called both the protected Python GR kernel and compiled-C pointwise backend",
+      "test_oracle_rejects_singular_and_nonfinite_inputs called the static GR system oracle",
+      "test_current_c_input_contract_gap_is_reproducible called the compiled-C pointwise backend",
+      "test_newtonian_two_body_and_momentum_closure evaluated a static physical Newtonian force fixture"
+    ],
+    "other_out_of_scope_loading": [
+      "Step 3g0 collection imported historical M0 verification and reporting harnesses",
+      "the integration guard test constructed a REBOUND Simulation but intercepted integrate before execution",
+      "read-only archive and deterministic-reporting tests loaded historical archive/diagnostic paths"
+    ],
+    "why_no_mutation_or_dynamics": "The no-integration guard intercepted all integration and stepping entrypoints, the force/JVP calls were static array evaluations, archive access was read-only, report regeneration used temporary destinations, and the worktree plus frozen hashes remained exact.",
+    "disposition": "All 19 Step 3g0 results remain historical provenance and contribute zero qualifying tests to Manifest 23."
+  },
+  "exact_test_selection": {
+    "historical_test_file": {
+      "path": "mini_ephemeris/tests/test_v2_foundation.py",
+      "sha256": "e89c40659b2d2a89ffd8b19e8b2959277b3ac6a687731452b955ef8a4d1aa2f9"
+    },
+    "foundation_node_ids": [
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_body_identity_and_explicit_order",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_duplicate_missing_and_unknown_body_rejected",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_model_is_immutable_and_defensively_copies_inputs",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_invalid_ids_masses_constants_units_and_provenance_rejected",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_canonical_serialization_ignores_mapping_and_collection_order",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_fingerprint_sensitive_to_every_material_field",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_coordinate_types_are_semantically_distinct",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_canonical_state_tangent_layout_compatibility",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_shape_nonfinite_and_unit_validation",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_numpy_inputs_are_detached_and_public_storage_is_immutable",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_force_is_deterministic_and_inputs_remain_bitwise_unchanged",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_jvp_linearity_and_exact_zero_direction",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_layout_and_unit_mismatches_are_rejected_before_provider",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_wrong_output_semantics_are_rejected",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_exact_roundtrip_equality_and_hashing",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_negative_and_very_large_direct_indices",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_invalid_intervals_denominators_indices_and_bounds",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_binary64_boundary_and_accumulation_drift",
+      "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_snapshot_detaches_from_mutable_source",
+      "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_observer_only_receives_immutable_snapshot",
+      "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_accounting_domains_are_typed_and_disjoint",
+      "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_threshold_scope_rejects_mismatched_contexts",
+      "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_high_finding_angle_requirement_is_explicit",
+      "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_both_high_findings_have_named_tests_and_requirements",
+      "mini_ephemeris/tests/test_v2_foundation.py::IsolationAndFreshProcessTests::test_source_has_no_hidden_dynamics_or_dependency_imports",
+      "mini_ephemeris/tests/test_v2_foundation.py::IsolationAndFreshProcessTests::test_public_api_docstrings_and_annotations"
+    ],
+    "requalification_test_file": "mini_ephemeris/tests/test_m0_step3g1a_requalification.py",
+    "requalification_node_ids": [
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_guard_rejects_sentinel_module",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_guard_rejects_sentinel_library_path",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_fresh_process_guarded_import_and_determinism",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_static_import_and_subprocess_closure_matches_manifest",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_v2_source_hashes_and_inventory_match_manifest",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_protected_historical_archive_and_trajectory_hashes_match",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_annotated_tags_resolve_exactly",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_manifest22_outcome_and_artifacts_remain_historical",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_canonical_layout_mismatch_is_rejected",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_no_forbidden_executable_surface_in_selected_sources"
+    ],
+    "artifact_test_file": "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py",
+    "artifact_node_ids": [
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py::RequalificationArtifactTests::test_required_artifacts_and_strict_json",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py::RequalificationArtifactTests::test_summary_report_and_manifest_agree",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py::RequalificationArtifactTests::test_exact_test_inventory_and_traceability_are_complete",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py::RequalificationArtifactTests::test_import_subprocess_audit_is_closed",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py::RequalificationArtifactTests::test_fresh_process_regeneration_is_byte_identical",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py::RequalificationArtifactTests::test_artifact_hash_inventory_is_exact"
+    ],
+    "excluded_historical_nodes": [
+      "mini_ephemeris/tests/test_v2_foundation.py::IsolationAndFreshProcessTests::test_fresh_process_hash_seed_and_locale_consistency",
+      "mini_ephemeris/tests/test_v2_foundation.py::IsolationAndFreshProcessTests::test_v2_imports_no_rebound_and_exposes_no_primitive_entrypoint",
+      "every node in mini_ephemeris/tests/test_m0_step3g1a_artifacts.py",
+      "every Step 3g0 node"
+    ],
+    "expected_counts": {
+      "historical_foundation": 26,
+      "requalification_integrity": 10,
+      "artifact": 6,
+      "total": 42
+    },
+    "selection_rule": "The runner passes only these literal node IDs to pytest.main; pytest discovery, collect-only directory scans, wildcards, markers, and keyword selection are forbidden."
+  },
+  "import_and_library_safety": {
+    "static_source_files": [
+      "mini_ephemeris/tests/test_v2_foundation.py",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py",
+      "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py",
+      "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_runner.py",
+      "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_reporting.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/__init__.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/accounting.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/canonical.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/errors.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/kernels.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/model.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/ownership.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/state.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/thresholds.py",
+      "mini_ephemeris/src/mini_ephemeris/v2/timebase.py"
+    ],
+    "approved_import_roots": [
+      "Python standard library",
+      "numpy",
+      "pytest and its already-installed transitive dependencies",
+      "mini_ephemeris.v2",
+      "mini_ephemeris.m0_step3g1a_requalification",
+      "mini_ephemeris.m0_step3g1a_requalification_runner",
+      "mini_ephemeris.m0_step3g1a_requalification_reporting"
+    ],
+    "historical_test_import_closure": [
+      "Python standard library: ast, dataclasses, json, math, os, pathlib, subprocess, sys, unittest",
+      "numpy",
+      "mini_ephemeris.v2 and its ten frozen modules"
+    ],
+    "forbidden_python_modules": [
+      "requalification_forbidden_sentinel",
+      "rebound",
+      "reboundx",
+      "mini_ephemeris.gr_potential_tangent",
+      "mini_ephemeris.gr_potential_tangent_c",
+      "mini_ephemeris.gr_tangent_c_validation",
+      "mini_ephemeris.gr_tangent_validation_matrix",
+      "mini_ephemeris.rebound_gr_tangent_cli",
+      "mini_ephemeris.m0_step3g0_verification",
+      "mini_ephemeris.m0_step3g0_reporting",
+      "all mini_ephemeris modules except the package shell, v2, and the three exact requalification helpers"
+    ],
+    "forbidden_library_markers": [
+      "requalification_forbidden_library_sentinel",
+      "libmini_ephemeris_gr_tangent",
+      "gr_potential_tangent.so",
+      "librebound",
+      "libreboundx"
+    ],
+    "package_bootstrap": "Execute the requalification runner and reporter by exact file path. Before any mini_ephemeris import, install a synthetic namespace shell whose __path__ points at the package directory; this prevents execution of the legacy package __init__.py and its mini_ephemeris.nbody import. Assert both legacy modules remain absent throughout every campaign and guarded subprocess.",
+    "dynamic_guard": "Install a deny-first MetaPathFinder and ctypes.dlopen audit hook before importing pytest or approved dependencies; after those dependencies load under the deny guard, activate a strict standard-library/approved/local-module allowlist. Inspect /proc/self/maps before and after each campaign. Subprocess probes install the same namespace shell and guard before importing v2 or reporting.",
+    "sentinel_rule": "Test the guard only with the harmless sentinel module and path strings listed above; never import or load an actual protected module or library.",
+    "static_gate": [
+      "parse every exact source with ast without importing it",
+      "require the exact v2 file inventory and frozen hashes",
+      "require every selected node to exist and no unregistered node to be passed to pytest",
+      "resolve every direct local import transitively within the exact source inventory",
+      "reject dynamic import or library-loading calls outside the guard helper",
+      "verify selected historical nodes contain no subprocess call or call to omitted subprocess helpers",
+      "verify all subprocess call sites and command templates match this manifest",
+      "verify the legacy package __init__.py would import nbody and prove the namespace bootstrap prevents both modules from loading"
+    ]
+  },
+  "permitted_subprocesses": {
+    "fresh_v2_probe": {
+      "count": 2,
+      "argv_template": [
+        "{sys.executable}",
+        "-I",
+        "-c",
+        "{frozen_guarded_v2_probe_source}",
+        "{repository_root}"
+      ],
+      "environments": [
+        {
+          "PYTHONHASHSEED": "1",
+          "LC_ALL": "C"
+        },
+        {
+          "PYTHONHASHSEED": "8675309",
+          "LC_ALL": "C.UTF-8"
+        }
+      ],
+      "purpose": "Guarded fresh-process model/timebase fingerprint and import/library determinism."
+    },
+    "fresh_artifact_probe": {
+      "count": 2,
+      "argv_template": [
+        "{sys.executable}",
+        "-I",
+        "-c",
+        "{frozen_guarded_artifact_probe_source}",
+        "{repository_root}",
+        "{temporary_destination}"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0",
+        "LC_ALL": "C"
+      },
+      "purpose": "Generate byte-identical artifacts in two fresh temporary destinations under the same protected import/library guard."
+    },
+    "git_tag_integrity": [
+      ["git", "cat-file", "-t", "gr-tangent-compiled-c-v1"],
+      ["git", "rev-parse", "gr-tangent-compiled-c-v1"],
+      ["git", "rev-list", "-n", "1", "gr-tangent-compiled-c-v1"],
+      ["git", "cat-file", "-t", "gr-tangent-python-oracle-v2"],
+      ["git", "rev-parse", "gr-tangent-python-oracle-v2"],
+      ["git", "rev-list", "-n", "1", "gr-tangent-python-oracle-v2"]
+    ],
+    "all_other_child_processes_forbidden": true
+  },
+  "exact_commands": {
+    "static_safety_gate": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_runner.py --safety-audit",
+    "foundation_campaign": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_runner.py --run-foundation",
+    "compilation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python -m py_compile mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_runner.py mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_reporting.py mini_ephemeris/src/mini_ephemeris/v2/__init__.py mini_ephemeris/src/mini_ephemeris/v2/accounting.py mini_ephemeris/src/mini_ephemeris/v2/canonical.py mini_ephemeris/src/mini_ephemeris/v2/errors.py mini_ephemeris/src/mini_ephemeris/v2/kernels.py mini_ephemeris/src/mini_ephemeris/v2/model.py mini_ephemeris/src/mini_ephemeris/v2/ownership.py mini_ephemeris/src/mini_ephemeris/v2/state.py mini_ephemeris/src/mini_ephemeris/v2/thresholds.py mini_ephemeris/src/mini_ephemeris/v2/timebase.py mini_ephemeris/tests/test_v2_foundation.py mini_ephemeris/tests/test_m0_step3g1a_requalification.py mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py",
+    "artifact_generation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_reporting.py",
+    "artifact_campaign": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_runner.py --run-artifacts",
+    "strict_json_validation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_reporting.py --validate",
+    "diff_check": "git diff --check"
+  },
+  "foundation_acceptance_contract": {
+    "model": [
+      "immutable model and body layout",
+      "stable body identifiers and explicit order",
+      "mass, units, shapes, finite-value, and identity validation",
+      "deterministic canonical serialization and SHA-256",
+      "material-field sensitivity and defensive copying"
+    ],
+    "state": [
+      "Cartesian versus canonical-Jacobi type separation",
+      "explicit q,p and delta_q,delta_p semantics",
+      "shape, layout, units, finiteness, immutability, and no writable aliases",
+      "explicit reordered state/tangent rejection added only in the requalification test layer"
+    ],
+    "synthetic_force_jvp": [
+      "synthetic provider only",
+      "input nonmutation and deterministic repeated results",
+      "JVP linearity and exact zero-direction result",
+      "coordinate, layout, unit, and semantic-output rejection",
+      "no observer, synchronization, accounting, or physical-provider side effects"
+    ],
+    "timebase": [
+      "exact rational representation and canonical round trip",
+      "integer macro-step direct addressing including negative and large indices",
+      "invalid interval and bound rejection",
+      "no iterative float accumulation",
+      "guarded fresh-process hash-seed and locale determinism"
+    ],
+    "ownership_accounting_and_high_findings": [
+      "detached immutable snapshots and observer noninterference",
+      "four disjoint typed accounting domains",
+      "G0-001 explicit atan2/chord/zero-vector contract",
+      "G0-002 exact threshold applicability typing"
+    ]
+  },
+  "independent_source_review": [
+    "nested mutability and writable NumPy aliases",
+    "body-ID/index conflation",
+    "velocity/momentum ambiguity",
+    "nondeterministic serialization or hashing",
+    "hidden globals, imports, or executable entrypoints",
+    "observer access to live buffers",
+    "accounting side effects in force/JVP protocols",
+    "test assertions weaker than documented contracts",
+    "requirements without a passing exact node",
+    "claims beyond foundation-only evidence"
+  ],
+  "deterministic_regeneration": {
+    "json": "UTF-8 strict finite JSON, sorted keys, two-space indentation, and one trailing LF.",
+    "csv": "UTF-8, fixed columns and row order, LF line endings.",
+    "markdown": "UTF-8 fixed template with one trailing LF.",
+    "artifact_hashes": "SHA-256 over exact bytes; artifact_hashes.json excludes itself.",
+    "fresh_process": "Two isolated guarded interpreters generate complete artifact sets in separate temporary directories; filenames and bytes must match each other and the committed destination exactly."
+  },
+  "expected_artifacts": [
+    "m0_step3g1a_v2_foundation_requalification_report.md",
+    "m0_step3g1a_v2_foundation_requalification_summary.json",
+    "qualifying_test_inventory.json",
+    "import_subprocess_safety_audit.json",
+    "requirements_traceability.csv",
+    "artifact_hashes.json"
+  ],
+  "result_vocabulary": {
+    "final_status": [
+      "STEP3G1A_REQUALIFICATION_COMPLETE",
+      "STEP3G1A_REQUALIFICATION_FAILED",
+      "STEP3G1A_REQUALIFICATION_BLOCKED"
+    ],
+    "primary_finding": [
+      "V2_FOUNDATION_REQUALIFIED_READY_FOR_PRIMITIVES",
+      "V2_FOUNDATION_REQUALIFICATION_NOT_READY",
+      "V2_FOUNDATION_REQUALIFICATION_NOT_EVALUATED"
+    ],
+    "success_verification_envelope": "FOUNDATION_ONLY_REQUALIFIED_WITHOUT_DYNAMICS_OR_PROTECTED_KERNEL_EVALUATION"
+  },
+  "acceptance_gates": [
+    "Manifest 23 is committed separately before the static gate or any qualifying test executes",
+    "the exact starting commit, branch, ancestry, protected hashes, historical records, archives, trajectories, and annotated tags are established",
+    "the static import/subprocess safety gate passes before pytest execution",
+    "all 36 foundation and requalification-integrity nodes pass and all 6 artifact nodes pass",
+    "both Step 3g0 high findings retain named passing coverage",
+    "guarded fresh-process model/timebase and artifact regeneration are deterministic",
+    "no protected module or compiled library is imported or loaded and no protected physical force/JVP is invoked or evaluated",
+    "no physical force model, transform, primitive, dynamics, trajectory, archive, MEGNO, or LCN operation occurs",
+    "the ten v2 implementation modules and all historical Step 3g1a files remain byte-exact",
+    "the independent source-only review finds no unresolved material implementation defect or unsupported claim",
+    "strict JSON, exact artifact hashes, compilation, import validation, git diff --check, and final clean-worktree checks pass"
+  ],
+  "classification_rules": {
+    "STEP3G1A_REQUALIFICATION_COMPLETE": "Every frozen safety, foundation, integrity, review, regeneration, and closeout gate passes without protected imports, library loads, kernel evaluations, or dynamics.",
+    "STEP3G1A_REQUALIFICATION_FAILED": "The campaign executes but a foundation contract, exact test, review, integrity, or artifact gate fails without invalidating the controlled baseline.",
+    "STEP3G1A_REQUALIFICATION_BLOCKED": "The required baseline, history, preregistration ordering, static safety proof, or protected integrity cannot be established before qualifying execution.",
+    "V2_FOUNDATION_REQUALIFIED_READY_FOR_PRIMITIVES": "The byte-exact foundation is requalified only for beginning a separately preregistered isolated primitive layer.",
+    "V2_FOUNDATION_REQUALIFICATION_NOT_READY": "A specific foundation or evidentiary defect prevents primitive work.",
+    "V2_FOUNDATION_REQUALIFICATION_NOT_EVALUATED": "Permitted only with STEP3G1A_REQUALIFICATION_BLOCKED."
+  },
+  "strict_prohibitions": [
+    "modifying any mini_ephemeris/v2 implementation module",
+    "modifying an existing Step 3g1a test, report, artifact, manifest, archive, or trajectory",
+    "importing, loading, invoking, or evaluating a protected physical Python or compiled-C force/JVP kernel",
+    "importing REBOUND or REBOUNDx",
+    "running an inherited Step 3g0 node",
+    "implementing or executing a physical force model, Jacobi transform, tangent transform, Kepler drift, kick, lazy kernel, corrector, WHCKL map, MEGNO, LCN, timestep, trajectory, IAS15 run, archive, Stage 4, or 10 Myr operation",
+    "changing validated equations, dependencies, REBOUND, REBOUNDx, the Python oracle, or compiled-C callback",
+    "creating or moving a tag"
+  ],
+  "successor_boundary": {
+    "allowed_only_after_success": "A proposed Step 3g1b prompt may cover only isolated inertial/Jacobi coordinate transforms and their canonical tangent maps.",
+    "execution_in_this_campaign": false
+  }
+}
