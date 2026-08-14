@@ -1,0 +1,551 @@
+{
+  "schema_version": 1,
+  "kind": "m0_step3g0_verification_architecture_audit_preregistration",
+  "experiment_id": "m0_step3g0_verification_architecture_audit_v1",
+  "model_id": "m0_grpot_emb_pluto_v1",
+  "purpose": "Preregister a nonintegrating verification, diagnostic-validity, novelty, and clean-slate v2 architecture audit for the existing M0 model and numerical implementation.",
+  "paths": {
+    "manifest": "ephemeris_experiment_runner/manifests/21_m0_step3g0_verification_architecture_audit_v1.json",
+    "output_root": "output/stability/m0_step3g0_verification_architecture_audit_v1",
+    "documentation_root": "docs/validation/m0-step3g0-verification-architecture-audit-v1"
+  },
+  "preregistration": {
+    "created_utc": "2026-08-14T00:08:59Z",
+    "required_parent_commit": "997e5713aedb6e489c886e060af8fc6010b5c3b4",
+    "commit_message": "Preregister M0 Step 3g0 verification and architecture audit",
+    "conclusion_free": true,
+    "required_closeout_message": "Complete M0 Step 3g0 verification and architecture audit"
+  },
+  "initial_integrity_baseline": {
+    "head": "997e5713aedb6e489c886e060af8fc6010b5c3b4",
+    "branch": "gr-tangent-compiled-c-port",
+    "worktree_clean": true,
+    "step3f1_preregistration_commit": "02b99d5df2fc04c450b4367e78cbe02428dc1da6",
+    "compiled_c_tag": {
+      "name": "gr-tangent-compiled-c-v1",
+      "kind": "annotated",
+      "tag_object": "e12153e5c4384e5c16795e29c33b7572392121b1",
+      "commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b"
+    },
+    "python_oracle_tag": {
+      "name": "gr-tangent-python-oracle-v2",
+      "kind": "annotated",
+      "tag_object": "9661c72f82c45351b6059e2c293a70addae561c3",
+      "commit": "9933bc5e3d9bfe9ec07e72929c22e4406f12b441"
+    },
+    "step3f1_transient_candidates_found": 0,
+    "required_ancestor_commits": [
+      "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b",
+      "d63177572df50caef198b43b35c0ca5a37f4ea9e",
+      "2b30b92d9169c3f5732f2e495faab1986b7a6789",
+      "eb3809a28ab495f64bd383b6997a6496dd22505e",
+      "bf77df7caa4f41639924a5bdfdee8e4f93015636",
+      "1d24b97047335bd1302ab5c7b26cb6b231ac5516",
+      "7d9876fca811a593c1ac265727b907a038bb54fd",
+      "35a4d3ae6a717f7d40e4c4db0bd1e78b0c169ce4",
+      "45d3c996dfaae161aeab79fd098f0d81bc90f886",
+      "61cf42f9f8ea5d816bfd514853c61a08e529a1e6",
+      "02b99d5df2fc04c450b4367e78cbe02428dc1da6"
+    ]
+  },
+  "runtime_identity": {
+    "python": "3.10.12",
+    "python_compiler": "GCC 11.4.0",
+    "numpy": "2.2.6",
+    "rebound": "4.6.0",
+    "rebound_githash": "e3b07aa88dc4b004d82c03da070a89de5b699a2c",
+    "rebound_build": "Feb 11 2026 17:34:38",
+    "reboundx": "4.6.1",
+    "platform": "Linux-5.15.167.4-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+    "libc": "glibc 2.35",
+    "compiler": "cc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+    "floating_point_rounding": "FE_TONEAREST",
+    "fegetround": 0,
+    "binary64_epsilon": 2.220446049250313e-16,
+    "numpy_longdouble_storage_bits": 128,
+    "numpy_longdouble_mantissa_bits": 64,
+    "numpy_longdouble_epsilon": "1.084202172485504434e-19",
+    "module_paths": {
+      "numpy": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/numpy/__init__.py",
+      "rebound": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/rebound/__init__.py",
+      "reboundx": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/reboundx/__init__.py",
+      "librebound": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/librebound.cpython-310-x86_64-linux-gnu.so",
+      "libreboundx": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/libreboundx.cpython-310-x86_64-linux-gnu.so",
+      "rebound_header": "/home/peacelovephysics/ephemeris/.venv/lib/python3.10/site-packages/rebound/rebound.h",
+      "compiled_callback": "/home/peacelovephysics/ephemeris/mini_ephemeris/build/gr_tangent_c/libmini_ephemeris_gr_tangent.so"
+    },
+    "hashes": {
+      "numpy_module": "6ae17b070c0f70a8e3cad89a510a256942e5a1f37ea5feb120cec167ed2a6236",
+      "rebound_module": "207b5fef09635bc408539c244f678210b9927700d3eb4bab74bfb4c8b0421db3",
+      "reboundx_module": "6dd2c54c06b1c4633bdd20825074f3a9e07d84564121728b753a7f79e64f5984",
+      "rebound_header": "4444a4b6d8f36f911d8b55bfa28790c8c005a3520c4752eed397f503b01b42c1",
+      "librebound": "6f0f6bab0800258adbcc185d419d64216d85acd722e656d2120782a87214fb04",
+      "libreboundx": "0f06a8fc47970fdd22dbc048bc31470b272147a335a2a991f5aaef45f1ffb0bb",
+      "compiled_callback": "e88ecbcc01a9557f483f8afce9a31a593247a9d54d81f5731ec2a8cde2456067",
+      "compiled_callback_build_metadata": "6ad9e3bed8f2c9a41d5a098c3ff1c5a3f9cb430db615efa8e2a208719106b917"
+    },
+    "compiled_callback_flags": [
+      "-std=c11",
+      "-O3",
+      "-fPIC",
+      "-shared",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Werror",
+      "-fno-fast-math",
+      "-ffp-contract=off"
+    ]
+  },
+  "protected_files": {
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+  },
+  "historical_documents": {
+    "ephemeris_experiment_runner/manifests/13_m0_integrator_roundoff_diagnosis_v1.json": "215bc0713aa17e2ff0986077cfadee8b40f520708d352593a6ffc04da9417240",
+    "ephemeris_experiment_runner/manifests/14_m0_reversibility_roundoff_gate_v1.json": "6d74db1a0a0a8d96a00295d0a4279d91c7d1811c194546de11f328c612f97188",
+    "ephemeris_experiment_runner/manifests/15_m0_integrator_roundoff_diagnosis_continuation_v1.json": "9fc06c7e0ae5811afc644df6f08ff75bfae52172eb5fc41d400c2bef6835aafe",
+    "ephemeris_experiment_runner/manifests/16_m0_ias15_phase_reference_v1.json": "3895ead3f3641463d320143e2fa46abb6293d3f9c0461af4cc3f6d90fb591ec6",
+    "ephemeris_experiment_runner/manifests/17_m0_step3e_whfast_0125d_convergence_v1.json": "978ab813979ea6c728e113c1f473afabb54cd553d2097dd9d26add8391f5589b",
+    "ephemeris_experiment_runner/manifests/18_m0_step3e1_offline_state_diagnosis_v1.json": "088b55fa40cf0ccb7fa50f42d41f017fcdf560d7a8f7a7dfa69678717544021d",
+    "ephemeris_experiment_runner/manifests/19_m0_step3f0_whfast_configuration_audit_v1.json": "28d8c390690be7c1b98cfea1b5e22615926dc149b6e7c88640d8db4e5074b521",
+    "ephemeris_experiment_runner/manifests/20_m0_step3f1_two_lane_architecture_screen_v1.json": "46b19b54f278f6e174f7aa10d6fa6e2ed68e25394fc7839d1acecbcde601a65c",
+    "docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_summary.json": "6c7cdf074fdd436f58ca720bec87a9acb6b25d38d168227d3196638fd97ffb81",
+    "docs/validation/m0-integrator-roundoff-diagnosis-v1/m0_integrator_roundoff_diagnosis_report.md": "6f33f93e15a8ba78ad216799926fff36221d5a9dee2b23e483485a2045a07018",
+    "docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_summary.json": "027e2970f7e72af3c9b4e339622976feeeb7db86975fcfb81d82e25beb1199ba",
+    "docs/validation/m0-reversibility-roundoff-gate-v1/m0_reversibility_roundoff_gate_report.md": "f742ad6b2e7baa36e2de68bb6f7b3c131426b4aa27b97519cd8e96d718af53b0",
+    "docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_summary.json": "0e4a39d17f6d79c4e886fda1c0be0a81174e6e190e14e260ae6ca2568c2c1481",
+    "docs/validation/m0-integrator-roundoff-diagnosis-continuation-v1/m0_integrator_roundoff_diagnosis_continuation_report.md": "ab913e127b35e12cd8778915b04366625604398568ff11105be392b0a460f7db",
+    "docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_summary.json": "8f720e6cb160f943b55cdd4be9a982a504d0f4235707080eb0db46a51f2d3071",
+    "docs/validation/m0-ias15-phase-reference-v1/m0_ias15_phase_reference_report.md": "fca2495afdb8d8ee73382546acb3ab3d9c983cedd7cf5d3aa6deeb3f9b64172a",
+    "docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_summary.json": "4e971e965d3b02f6a69e1d8ae183e7228fd27a504ce020a529d39e112b7a25f4",
+    "docs/validation/m0-step3e-whfast-0125d-convergence-v1/m0_step3e_whfast_0125d_convergence_report.md": "051b5a1c548c240581721bf82a647616ed822e6b2e4a30de402f7a15045f36b0",
+    "docs/validation/m0-step3e1-offline-state-diagnosis-v1/m0_step3e1_offline_state_diagnosis_summary.json": "9eb86ddbcff2d0cd199dcbcfa224399c9ecec2c4ce5d33fc09c91b1dee2e2c85",
+    "docs/validation/m0-step3e1-offline-state-diagnosis-v1/m0_step3e1_offline_state_diagnosis_report.md": "978b6cd20f670086d3820961a98236fefe3e8ee56dada5932b34543b2c80c006",
+    "docs/validation/m0-step3f0-whfast-configuration-audit-v1/m0_step3f0_whfast_configuration_audit_summary.json": "eadf9945e7a2a172bede58d4eba10e8b1ad3dca2f5607e9826ec43dd9079d225",
+    "docs/validation/m0-step3f0-whfast-configuration-audit-v1/m0_step3f0_whfast_configuration_audit_report.md": "982efe29c4461fc6344b98cc40f41a76ebc5267e3bc5956cb0a2f4387b6d84e7",
+    "docs/validation/m0-step3f0-whfast-configuration-audit-v1/m0_step3f0_effective_settings_matrix.csv": "06864e3d40f0b65c6dc68193fbbe02fe4420ad4974dee28d116d98c200aef3dd",
+    "docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_two_lane_architecture_screen_summary.json": "9b702b17f6ddc0cb4dea95829e8817ff555a6df9005c9b5ccd3a80b6a113d803",
+    "docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_two_lane_architecture_screen_report.md": "ce0606a468e8969600956cdb4c5a39b5dfe170a73b8acb71c55a6cf5ecf3aedf",
+    "docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_lane_configuration.csv": "6e616bc62588c91d9f873397782ff4c33ad98a52fbdf743179a27ede241dae50",
+    "docs/validation/m0-step3f1-two-lane-architecture-screen-v1/m0_step3f1_metrics.csv": "3b71c9394e484080f5d180f39a0cbfffdeb4899bd9c87401e365c388c18b9acc"
+  },
+  "frozen_archives": {
+    "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p5d_100k/simulationarchive.bin": "816bdb9af6553d9d010e7c3fb910e97fd68fe5e8cb309344065a2f037ef1af05",
+    "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_current_sync_0p25d_100k/simulationarchive.bin": "079130971f6c720090ed6247b3895429c978e23e48ba4ce1411f2ab530e02f28",
+    "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p5d_100k/simulationarchive.bin": "da6d3c965d79f771851a357ae18609d978183a6df4a10da84492a64dd59f9263",
+    "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_min_sync_0p25d_100k/simulationarchive.bin": "e78a3b50d10a18b25e08aab9d5d785d939cdbcf6d53bd623b7f44780095d6d16",
+    "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e12_10k/simulationarchive.bin": "de9eb3f9bc4513d77024388fb85972a8489aa644827cfcfb231b6cd38689c8e6",
+    "output/stability/m0_integrator_roundoff_diagnosis_continuation_v1/m0_diag_phys_ias15_eps1e13_10k/simulationarchive.bin": "a79e2957e28f25acd4b508e166c577c18e74da8162034e07babe042ac43382c2",
+    "output/stability/m0_ias15_phase_reference_v1/m0_diag_phys_ias15_default_10k/simulationarchive.bin": "e3ba4e01f330efc707c633d7f88c86125155646ab02991b2d74a057100755432",
+    "output/stability/m0_timestep_convergence_v1/m0_conv_2d_1myr_s12345/gr_tangent_archive_m0_conv_2d_1myr_s12345.bin": "cbe56d564e4df371f2ae40b5ca54de0e4d36d27a046ef04fba431acea58f4b05",
+    "output/stability/m0_timestep_convergence_v1/m0_conv_1d_1myr_s12345/gr_tangent_archive_m0_conv_1d_1myr_s12345.bin": "bbb4b3f5328f94057b0e5c16b73ec37249c8fa78dd4dd947d2f6f430de7f46bd",
+    "output/stability/m0_timestep_convergence_v1/m0_conv_0p5d_1myr_s12345/gr_tangent_archive_m0_conv_0p5d_1myr_s12345.bin": "3ee131ed27f67797ffda168ead0d1a163291610599b0f3495f9d3b4c75aeb026",
+    "output/stability/m0_timestep_convergence_v1/m0_conv_0p25d_1myr_s12345/gr_tangent_archive_m0_conv_0p25d_1myr_s12345.bin": "1aebd60e2671a4b7b1b1dbe6453e48d10fd460daa31e167f4d86b5fe9c7d6def",
+    "output/stability/m0_step3e_whfast_0125d_convergence_v1/m0_step3e_tangent_whfast_0125d_1myr/gr_tangent_archive_m0_step3e_tangent_whfast_0125d_1myr.bin": "6a3248c560491ca0d8dfd35e84ac669df15161afc7728ae57b0c94b33a68f143",
+    "output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_physical_whckl_0p25d_10k/simulationarchive.bin": "e7aa5c5b3f1b84a5055ad844f1c64ab61dd3f7c7d3676869f02a2df0491dfa5f",
+    "output/stability/m0_step3f1_two_lane_architecture_screen_v1/m0_step3f1_tangent_whfast_0p25d_10k/simulationarchive.bin": "555a0234ee652ed79795d06dff509090ece4c40b18e6b919558f7b9a62a56e89"
+  },
+  "frozen_historical_conclusions": {
+    "manifest_13": "BLOCKED",
+    "manifest_14": "REVERSIBILITY_GATE_PASSED",
+    "manifest_15": "BLOCKED",
+    "manifest_16": [
+      "IAS15_REFERENCE_QUALIFIED_AT_ROUNDOFF_PHASE_FLOOR",
+      "SYSTEMATIC_WHFAST_STEP_BIAS",
+      "STEP3_NUMERICAL_FLOOR_CHARACTERIZED"
+    ],
+    "manifest_17": "STEP3E_025_DAY_PRODUCTION_NOT_VALIDATED",
+    "manifest_18": [
+      "STEP3E1_OFFLINE_DIAGNOSIS_COMPLETE",
+      "TRUE_NONPHASE_NONCONVERGENCE"
+    ],
+    "manifest_19": [
+      "STEP3F0_CONFIGURATION_AUDIT_COMPLETE",
+      "COMBINED_LANE_CAPABILITY_CONSTRAINT_CONFIRMED"
+    ],
+    "manifest_20": {
+      "status": "STEP3F1_TWO_LANE_SCREEN_FAILED",
+      "primary_finding": "BOTH_LANES_UNQUALIFIED",
+      "lane_p_saturn_rms_observed": 3.454e-9,
+      "lane_p_saturn_rms_threshold": 2.183e-9,
+      "callback_observed": 29226432,
+      "callback_expected": 29223232,
+      "callback_difference": 3200,
+      "lane_t_final_direction_cosine": 0.997759,
+      "lane_t_final_direction_cosine_threshold": 0.9999,
+      "lane_t_direction_rms": 0.05567,
+      "lane_t_direction_rms_threshold": 0.01414,
+      "lane_t_megno_difference": 0.20375,
+      "lane_t_megno_difference_threshold": 0.001,
+      "corrected_energy_gate": "PASS",
+      "angular_momentum_gate": "PASS",
+      "restart_physical_exact": true,
+      "lane_t_restart_all_state_exact": true,
+      "plane_angle_acos_floor_above_threshold": true
+    }
+  },
+  "audit_questions": [
+    "What physical and numerical claims are supported by the exact existing M0 implementation and evidence?",
+    "Are the physical force, central reaction, and tangent Jacobian correct within independently tested limits?",
+    "Can the 3200 callback difference be reconciled exactly with the source-level event schedule, and does it affect the live map?",
+    "Which Manifest 16-20 diagnostics and thresholds are conditioned and scientifically valid for their actual use?",
+    "What derivative information is required by every primitive in the exact WHCKL map, lazy kernel, and corrector?",
+    "Does primary-source evidence support a novel implementation gap, a novel combination, close prior art, or an inconclusive novelty result?",
+    "Is the clean-slate v2 core mathematically and architecturally specified well enough for responsible implementation?"
+  ],
+  "code_review_scope": [
+    "ephemeris extraction and initial-state construction",
+    "unit and reference-frame transformations",
+    "body identity ordering masses and barycenter conventions",
+    "simulation and Newtonian-gravity construction",
+    "physical GR callback and central-body response",
+    "analytic GR Jacobian action",
+    "native variations indexing MEGNO seed and LCN",
+    "target generation synchronization diagnostic copies and telemetry",
+    "energy angular momentum elements and coordinate-free diagnostics",
+    "checkpoint restart callback accounting schemas atomic writes and fingerprints",
+    "offline comparisons and threshold logic",
+    "version-matched REBOUND and REBOUNDx implementation paths used by the historical configuration"
+  ],
+  "evidence_hierarchy": [
+    "exact protected project source and committed artifacts",
+    "exact REBOUND 4.6.0 and REBOUNDx 4.6.1 source",
+    "official tagged source for current REBOUND and REBOUNDx releases",
+    "peer-reviewed primary literature",
+    "official version-matched documentation",
+    "independent high-precision analytic oracles",
+    "conversational summaries as questions only"
+  ],
+  "source_claim_record_fields": [
+    "title",
+    "authors",
+    "year",
+    "doi_or_official_url",
+    "version_applicability",
+    "source_symbol_or_section",
+    "finding",
+    "scope_caveat"
+  ],
+  "allowed_pure_function_evaluations": [
+    "static synthetic-state force and Jacobian evaluations",
+    "stored-state coordinate and diagnostic reconstruction",
+    "read-only archive metadata and state access",
+    "high-precision analytic and finite-difference oracles",
+    "complex-step differentiation only where the invoked implementation preserves complex arithmetic",
+    "pure coordinate transforms and algebraic operator models",
+    "strict-warning sanitizer-backed static-state C harnesses",
+    "temporary test-only mutants that are never committed"
+  ],
+  "no_integration_guard": {
+    "required": true,
+    "patch_targets": [
+      "rebound.Simulation.integrate",
+      "rebound.Simulation.step",
+      "known project runner entrypoints",
+      "ctypes-exposed REBOUND stepping symbols"
+    ],
+    "behavior": "Raise immediately before any integration, timestep, or project trajectory runner call and assert zero calls.",
+    "archive_invariance": "Hash every frozen archive before and after the Step 3g0 test session and require byte identity.",
+    "forbid_zero_step_timestep": true
+  },
+  "diagnostic_recomputations": {
+    "sources": "Frozen stored physical and variation rows only.",
+    "energy": "Recompute Newtonian energy, U_GR,pot, and corrected energy from stored state rows using the frozen historical definitions.",
+    "plane_angles": [
+      "historical acos result retained unchanged",
+      "atan2(norm(cross(unit_u,unit_v)),dot(unit_u,unit_v))",
+      "2*asin(norm(unit_u-unit_v)/2)"
+    ],
+    "plane_angle_cases": [
+      "zero",
+      "below near and above sqrt(binary64 epsilon)",
+      "antiparallel",
+      "nonunit input",
+      "zero-length invalid input",
+      "rotational covariance",
+      "high-precision agreement"
+    ],
+    "thresholds": [
+      "tangent direction cosine 0.9999",
+      "tangent direction RMS 0.01414",
+      "MEGNO difference 0.001",
+      "all Manifest 16-20 LCN and physical comparison thresholds"
+    ]
+  },
+  "force_and_jacobian_test_contract": [
+    "Newtonian analytic two-body acceleration",
+    "total-force and momentum closure",
+    "GR physical acceleration against protected oracle plus an independent analytic oracle",
+    "central-body GR reaction",
+    "analytic JVP against high-precision central differences and another independent oracle where practical",
+    "JVP linearity rotation covariance and translation invariance",
+    "tangent-index and active-particle ordering",
+    "no physical backreaction from variations",
+    "finite behavior over frozen deterministic ranges",
+    "explicit singular and nonfinite input failure",
+    "Python/C equality across frozen deterministic randomized cases"
+  ],
+  "callback_accounting_contract": {
+    "required_components": [
+      "live physical map",
+      "lazy-kernel subevaluation",
+      "corrector initialization",
+      "corrector application for output",
+      "inverse corrector",
+      "diagnostic copy",
+      "checkpoint or serialization",
+      "restart",
+      "analysis-only force evaluation"
+    ],
+    "required_reconstruction": [
+      "integration steps",
+      "live evaluations per WHCKL step",
+      "output and checkpoint events",
+      "evaluations per corrector sequence",
+      "copy versus live evaluation totals"
+    ],
+    "allowed_classifications": [
+      "CALLBACK_ACCOUNTING_EXACTLY_RECONCILED",
+      "CALLBACK_ACCOUNTING_IMPLEMENTATION_DEFECT",
+      "CALLBACK_ACCOUNTING_INSTRUMENTATION_DEFECT",
+      "CALLBACK_ACCOUNTING_INCONCLUSIVE"
+    ]
+  },
+  "threshold_classifications": [
+    "VALID_FOR_CURRENT_USE",
+    "VALID_ONLY_FOR_IMPLEMENTATION_EQUIVALENCE",
+    "VALID_ONLY_FOR_SAME_MAP_REPRODUCIBILITY",
+    "ILL_CONDITIONED",
+    "PHYSICALLY_UNJUSTIFIED",
+    "PROVENANCE_INSUFFICIENT"
+  ],
+  "novelty_search_procedure": {
+    "minimum_topics": [
+      "Mikkola and Innanen Kepler variational method",
+      "Rein and Tamayo WHFast tangent map",
+      "Rein Tamayo and Brown high-order kernels",
+      "Gozdziewski symplectic MEGNO",
+      "differentiable symplectic N-body methods",
+      "current REBOUND source issues and pull requests",
+      "related SABA tangent-map implementations",
+      "WHCKL variations lazy-kernel tangents differentiated correctors and tangent-aware position-dependent potentials"
+    ],
+    "method": "Search primary literature, DOI registries, official repositories, release-tag source, issues, and pull requests; search citations and symbol-level source paths; record negative-search scope and date.",
+    "allowed_classifications": [
+      "NOVEL_IMPLEMENTATION_GAP_CONFIRMED",
+      "NOVEL_COMBINATION_OR_EXTENSION",
+      "PRIOR_ART_CLOSE_MATCH",
+      "NOVELTY_INCONCLUSIVE"
+    ],
+    "forbidden_inference": "Absence from REBOUND 4.6.0 alone is not evidence of novelty."
+  },
+  "requirements_taxonomy": [
+    "physical_equations",
+    "invariances_and_limits",
+    "force_and_jacobian",
+    "tangent_linearity",
+    "canonical_symplecticity",
+    "discrete_map_closure",
+    "coordinate_transforms",
+    "kepler_drift",
+    "interaction_kick",
+    "lazy_kernel",
+    "correctors",
+    "observer_noninterference",
+    "restart_and_checkpoint",
+    "deterministic_targeting",
+    "finite_diagnostics",
+    "threshold_validity",
+    "artifact_provenance",
+    "performance_instrumentation"
+  ],
+  "finding_schema": {
+    "required_fields": [
+      "finding_id",
+      "file",
+      "symbol",
+      "requirement_id",
+      "severity",
+      "direct_evidence",
+      "scientific_consequence",
+      "existing_test_coverage",
+      "missing_test",
+      "scope_effect",
+      "recommended_disposition"
+    ],
+    "severity_levels": [
+      "CRITICAL",
+      "HIGH",
+      "MEDIUM",
+      "LOW",
+      "INFORMATIONAL"
+    ],
+    "disposition_rules": {
+      "CRITICAL": "Known evidence invalidation or equation-level defect that defeats the verification envelope or makes v2 implementation irresponsible.",
+      "HIGH": "Material scientific or numerical interpretation risk requiring resolution before the affected claim or v2 component.",
+      "MEDIUM": "Bounded correctness, conditioning, provenance, or architecture risk requiring an explicit backlog item and acceptance test.",
+      "LOW": "Limited-scope robustness, maintainability, or reporting issue without current evidence invalidation.",
+      "INFORMATIONAL": "Confirmed behavior, limitation, or design constraint with no defect claim."
+    }
+  },
+  "whckl_mathematical_specification_contract": {
+    "physical_map": "Phi_h = C_h^-1 composed with K_WHCKL,h composed with C_h, expanded into the exact version-matched implementation order.",
+    "tangent_map": "D Phi_h is the ordered product of the derivative actions of every exact primitive.",
+    "primitive_fields": [
+      "physical input and output",
+      "tangent input and output",
+      "coordinate system",
+      "exact derivative or JVP",
+      "temporary storage",
+      "force and JVP evaluation count",
+      "floating-point ordering",
+      "synchronization state",
+      "restart state"
+    ],
+    "required_resolutions": [
+      "lazy-kernel derivative order",
+      "shifted-position differentiation",
+      "GR JVP sufficiency for position-dependent perturbations",
+      "order-17 corrector tangent action",
+      "stored versus synchronized versus diagnostic-copy corrector state",
+      "safe_mode=0 and keep_unsynchronized=1 tangent semantics",
+      "MEGNO LCN and rescaling state coupling",
+      "exact archive and fresh-process tangent restart",
+      "arbitrary position-dependent force JVP interface"
+    ],
+    "symplecticity_coordinates": "Canonical Jacobi (q,p) only; ordinary canonical Omega in unweighted Cartesian (x,v) is prohibited.",
+    "future_gates": [
+      "D Phi transpose Omega D Phi minus Omega",
+      "finite-difference discrete-map closure",
+      "tangent linearity",
+      "determinant behavior",
+      "reversibility",
+      "convergence order",
+      "restart equivalence"
+    ]
+  },
+  "v2_architecture_contract": {
+    "layers": [
+      "immutable physical model",
+      "pure force and derivative kernels",
+      "integrator and tangent-map adapters",
+      "offline observers and scientific diagnostics"
+    ],
+    "required_designs": [
+      "package and module layout",
+      "public APIs and C/Python boundary",
+      "immutable configuration and typed units",
+      "body identifiers independent of array position",
+      "force/JVP interface",
+      "live-map versus observer-copy ownership",
+      "callback evaluation contexts",
+      "deterministic integer timebase",
+      "checkpoint schema and artifact provenance",
+      "error handling testing seams and performance instrumentation"
+    ],
+    "separate_counters": [
+      "live physical steps",
+      "live force evaluations",
+      "live JVP evaluations",
+      "corrector evaluations",
+      "diagnostic-copy evaluations",
+      "offline analysis evaluations",
+      "restart reconstruction"
+    ],
+    "strategy_options": [
+      "patch or fork REBOUND 4.6.0",
+      "current REBOUND custom-integrator API",
+      "external WHCKL tangent engine using REBOUND utilities",
+      "upstream REBOUND contribution"
+    ]
+  },
+  "test_and_analysis_contract": [
+    "current source parsing and contract tests",
+    "new pure force/Jacobian deterministic tests",
+    "diagnostic conditioning tests",
+    "callback accounting model tests",
+    "read-only archive metadata and state tests",
+    "threshold provenance consistency tests",
+    "strict JSON and finite-number validation",
+    "protected and historical hash validation",
+    "strict-warning C compilation",
+    "ASan and UBSan static-state harnesses where supported",
+    "Python compilation",
+    "deterministic artifact regeneration",
+    "git diff --check and complete diff review"
+  ],
+  "expected_outputs": [
+    "strict-finite compact JSON summary",
+    "complete Markdown report",
+    "machine-readable code-review findings",
+    "requirements-to-tests traceability CSV",
+    "threshold-provenance matrix",
+    "physical-model specification",
+    "WHCKL tangent-map mathematical specification",
+    "relativistic-model hierarchy",
+    "literature and novelty matrix",
+    "v2 architecture decision record",
+    "v2 implementation and test backlog",
+    "focused nonintegrating tests"
+  ],
+  "allowed_final_statuses": [
+    "STEP3G0_VERIFICATION_ARCHITECTURE_AUDIT_COMPLETE",
+    "STEP3G0_VERIFICATION_ARCHITECTURE_AUDIT_INCONCLUSIVE",
+    "BLOCKED"
+  ],
+  "allowed_primary_findings": [
+    "V2_CORE_SPECIFICATION_READY",
+    "V2_CORE_SPECIFICATION_NOT_READY",
+    "MIXED_OR_INCONCLUSIVE",
+    "NOT_EVALUATED"
+  ],
+  "classification_rules": {
+    "STEP3G0_VERIFICATION_ARCHITECTURE_AUDIT_COMPLETE": "The required audit scope, nonintegrating tests, recomputations, source review, specifications, and artifact checks complete without an unresolved contradiction that prevents an auditable conclusion.",
+    "STEP3G0_VERIFICATION_ARCHITECTURE_AUDIT_INCONCLUSIVE": "The audit executes but evidence remains insufficient for a complete verification-envelope conclusion.",
+    "BLOCKED": "The required starting state, protected evidence, no-integration guarantee, or required source evidence cannot be established.",
+    "V2_CORE_SPECIFICATION_READY": "Integrity, review scope, physical specification, callback classification, diagnostic and threshold audits, complete WHCKL derivative graph, v2 interfaces and tests, novelty search, and all Step 3g0 checks satisfy their preregistered contracts with no implementation-blocking ambiguity.",
+    "V2_CORE_SPECIFICATION_NOT_READY": "A specific unresolved mathematical, source, or model issue prevents responsible v2 implementation.",
+    "MIXED_OR_INCONCLUSIVE": "The audit completes but evidence cannot support one clear readiness conclusion.",
+    "NOT_EVALUATED": "Permitted only with BLOCKED."
+  },
+  "verification_language": {
+    "maximum_allowed_positive_conclusion": "VERIFIED_WITHIN_DOCUMENTED_MODEL_AND_NUMERICAL_ENVELOPE",
+    "prohibited_claims": [
+      "absolute correctness",
+      "100% correctness",
+      "current M0 production qualification inferred from v2 specification readiness"
+    ]
+  },
+  "protected_artifacts": [
+    "protected Python GR tangent oracle",
+    "compiled C force and Jacobian callback",
+    "validated force equations",
+    "historical runners",
+    "Manifests 13-20",
+    "historical summaries reports figures hashes trajectories and archives",
+    "frozen IAS15 reference",
+    "gr-tangent-python-oracle-v2 tag",
+    "gr-tangent-compiled-c-v1 tag"
+  ],
+  "prohibited_operations": [
+    "Simulation.integrate",
+    "Simulation.step",
+    "any project integration entrypoint",
+    "any full REBOUND timestep",
+    "trajectory or Simulationarchive creation or modification",
+    "IAS15 execution",
+    "dependency changes or environment upgrade",
+    "production runner repair",
+    "validated physics or historical artifact modification",
+    "WHCKL tangent-map or v2 core implementation",
+    "Step 3f2",
+    "Step 3g1 implementation",
+    "0.125-day 1 Myr lane",
+    "Stage 4",
+    "10 Myr command or run",
+    "tag creation"
+  ]
+}
