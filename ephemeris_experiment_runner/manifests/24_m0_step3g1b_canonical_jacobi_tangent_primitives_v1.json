@@ -1,0 +1,429 @@
+{
+  "schema_version": 1,
+  "kind": "m0_step3g1b_canonical_jacobi_tangent_primitives_preregistration",
+  "experiment_id": "m0_step3g1b_canonical_jacobi_tangent_primitives_v1",
+  "purpose": "Preregister implementation and qualification of the isolated fixed-mass canonical Jacobi coordinate transform and its linear tangent map, without dynamics.",
+  "paths": {
+    "manifest": "ephemeris_experiment_runner/manifests/24_m0_step3g1b_canonical_jacobi_tangent_primitives_v1.json",
+    "implementation": "mini_ephemeris/src/mini_ephemeris/v2/jacobi.py",
+    "qualification_helper": "mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification.py",
+    "runner": "mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py",
+    "reporting": "mini_ephemeris/src/mini_ephemeris/m0_step3g1b_reporting.py",
+    "test": "mini_ephemeris/tests/test_v2_jacobi.py",
+    "integrity_test": "mini_ephemeris/tests/test_m0_step3g1b_integrity.py",
+    "artifact_test": "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py",
+    "documentation_root": "docs/validation/m0-step3g1b-canonical-jacobi-tangent-primitives-v1"
+  },
+  "preregistration": {
+    "created_utc": "2026-08-14T15:37:27Z",
+    "required_start_commit": "c56055e6caca104b6d4e5b59a762046d84cbb0dc",
+    "required_branch": "v2-whckl-tangent-core",
+    "conclusion_free": true,
+    "commit_message": "Preregister M0 Step 3g1b canonical Jacobi primitives",
+    "required_closeout_message": "Qualify M0 canonical Jacobi tangent primitives"
+  },
+  "required_ancestry": {
+    "step3g0_closeout": "e7b7ace3c4d348a018eeb83872c3c7f03e8ad322",
+    "step3g1a_preregistration": "d8947b3ee48250a0576ebf648b857bfa6c401200",
+    "step3g1a_historical_closeout": "ea0732d5e2e125d3e7b1fb0165c5e579ba9aa3e9",
+    "step3g1a_requalification_preregistration": "b7baa44efd8da5ae1d2c49e6f7ca4fd848d469e7",
+    "step3g1a_requalification_closeout": "c56055e6caca104b6d4e5b59a762046d84cbb0dc"
+  },
+  "controlled_baseline": {
+    "head": "c56055e6caca104b6d4e5b59a762046d84cbb0dc",
+    "branch": "v2-whckl-tangent-core",
+    "worktree_clean": true,
+    "manifest_21_sha256": "b81495b1b561ba10bddb9002912c9fdd03cb37113da29ecd479f03cb1e9614f9",
+    "manifest_22_sha256": "185948f1e95987f28aa80decbc0b423fa8455f31e43a661a60202d9abc3d4dd8",
+    "manifest_22_historical_final_status": "STEP3G1A_V2_FOUNDATION_INCOMPLETE",
+    "manifest_22_historical_primary_finding": "V2_FOUNDATION_NOT_READY",
+    "manifest_23_sha256": "c6dc3f3a42cb36d433279b0a4158a29ee3b40e2def766530ea7c151939e9004c",
+    "manifest_23_final_status": "STEP3G1A_REQUALIFICATION_COMPLETE",
+    "manifest_23_primary_finding": "V2_FOUNDATION_REQUALIFIED_READY_FOR_PRIMITIVES",
+    "baseline_integrity_items_checked": 70
+  },
+  "protected_sources": {
+    "mini_ephemeris/src/mini_ephemeris/gr_potential_tangent.py": "9ffe480140dc5f0d7075057f77584ac76d9af192021b035c6a984dc7e7f026ff",
+    "mini_ephemeris/src/mini_ephemeris/rebound_gr_tangent_cli.py": "37293b573fca143a29a25855a1d146264d40c22fdae6a3c72821b2420da0fbc5",
+    "mini_ephemeris/src/mini_ephemeris/gr_tangent_validation_matrix.py": "1ea8926cbe6519e384b95415f9813bfa2c665efc5fe0afd97c24ea6fc1fe71a9",
+    "mini_ephemeris/src/mini_ephemeris/csrc/gr_potential_tangent.c": "c764740a9561fadffc93ca337ab41b51aa67b4e7140ecbf335c0b00b89ab2e23"
+  },
+  "qualified_step3g1a_read_only_sha256": {
+    "mini_ephemeris/src/mini_ephemeris/v2/__init__.py": "412f9fd9a79b38d1d3145c5aeb0478b967c4b8bf76a8bec08ba996752e24710c",
+    "mini_ephemeris/src/mini_ephemeris/v2/accounting.py": "4acc1fcac8fa2edd9ac6d1f9d14135063a3aa2c4d089af8cc2b2e0e97708fc62",
+    "mini_ephemeris/src/mini_ephemeris/v2/canonical.py": "42a76030bad788716b3fdfc8c05d4943bf8b1832679c9d85d7a8e36cf9b5061c",
+    "mini_ephemeris/src/mini_ephemeris/v2/errors.py": "ad79b8815f5c2019f1b0de0ff2e09f8fd5bb551bc8ed7baadeee43f709b42145",
+    "mini_ephemeris/src/mini_ephemeris/v2/kernels.py": "d0efca5eef6111a3e95ca0bffae8df9ee5b6efac0c007a5c85e883ca6209dd58",
+    "mini_ephemeris/src/mini_ephemeris/v2/model.py": "9c39f91b2209528292249e8c46a44e66b122d732b1dc80abfe81fdf18529c276",
+    "mini_ephemeris/src/mini_ephemeris/v2/ownership.py": "0e269103bb84d4165b1380643dbdbbcd03d166561b5c65fde293b8e75bca030b",
+    "mini_ephemeris/src/mini_ephemeris/v2/state.py": "daf103dab0d0a40df4b00361c550d87d02532f47c019e2c72c81924f16180982",
+    "mini_ephemeris/src/mini_ephemeris/v2/thresholds.py": "10467ce838c901c801a9cd99be3035b33a401195c7cb27efeabc8aa00c66fee3",
+    "mini_ephemeris/src/mini_ephemeris/v2/timebase.py": "d4e67810f1a45d69605d1bef5a73fd92edd5fc47321da466f35e277cda35fa7c",
+    "mini_ephemeris/tests/test_v2_foundation.py": "e89c40659b2d2a89ffd8b19e8b2959277b3ac6a687731452b955ef8a4d1aa2f9"
+  },
+  "inherited_integrity": {
+    "source": "ephemeris_experiment_runner/manifests/23_m0_step3g1a_v2_foundation_requalification_v1.json",
+    "required_unchanged_sets": [
+      "protected_sources",
+      "protected_manifests",
+      "historical_step3g1a_sha256",
+      "inherited_integrity_ledger.frozen_archives",
+      "inherited_integrity_ledger.frozen_trajectories",
+      "protected_tags"
+    ],
+    "step3g1a_requalification_artifacts_sha256": {
+      "artifact_hashes.json": "20e323449195f876cef650486fe2aebab47dac9280adb1aad306e028e81293ac",
+      "import_subprocess_safety_audit.json": "41dd0cc9de8fd7547ba41c3f190ce25108d6a305ac4676e7e7546bdc8f33fad5",
+      "m0_step3g1a_v2_foundation_requalification_report.md": "3abcfeb843ed3b85e119f605c197c44de008927e0cabf9698f6ff7748dc025fa",
+      "m0_step3g1a_v2_foundation_requalification_summary.json": "7fb0ae44d0dd728e7b5ba5c98ee62c891d0c1e0fa63dd195018fb9dd9cad6921",
+      "qualifying_test_inventory.json": "ce94724adb13be53291d47c28cdc80352438e900fafebab6fe316d17ee4760db",
+      "requirements_traceability.csv": "9ec5209d0d3ac73a00126c94c79a21c1121b48279c3186137e0aac8d4ca043dc"
+    }
+  },
+  "protected_tags": {
+    "gr-tangent-compiled-c-v1": {
+      "kind": "annotated",
+      "tag_object": "e12153e5c4384e5c16795e29c33b7572392121b1",
+      "commit": "2d7778e1911c6f6ae97da24cdfe00ef45f21e73b"
+    },
+    "gr-tangent-python-oracle-v2": {
+      "kind": "annotated",
+      "tag_object": "9661c72f82c45351b6059e2c293a70addae561c3",
+      "commit": "9933bc5e3d9bfe9ec07e72929c22e4406f12b441"
+    }
+  },
+  "specification_reconciliation": {
+    "status": "NO_FORMULA_LEVEL_CONFLICT",
+    "step3g0_external_notation": "The Step 3g0 primitive graph writes the future adapter as (x,v) to (q,p).",
+    "canonical_constraint": "Step 3g0 applies ordinary symplecticity only to canonical (q,p) and prohibits treating unweighted (x,v) as canonical.",
+    "step3g1b_boundary": "This step implements only the lower-level fixed-mass canonical operator (x,p) to (q,P) and its inverse. It neither converts velocity to momentum nor claims to complete the future (x,v) adapter.",
+    "future_risk": "A later adapter must explicitly define and qualify the fixed-mass velocity-to-inertial-momentum boundary before consuming InertialCartesianState."
+  },
+  "canonical_convention": {
+    "schema": "v2.canonical_jacobi_transform_plan/1",
+    "center_of_mass_pair_retained": true,
+    "body_order": "Exactly CompiledLayout.body_ids; identity is never inferred or reordered.",
+    "central_body_rule": "CompiledLayout.central_body must equal body_ids[0].",
+    "mass_rule": "One fixed finite positive binary64 mass for every unique layout BodyId, supplied by the exact PhysicalModel; zero, negative, nonfinite, missing, duplicate, and extra masses are rejected by model or plan construction.",
+    "cumulative_mass_rule": "eta_0=m_0 and eta_i=fl(eta_(i-1)+m_i), evaluated left-to-right in layout order in binary64; every eta must remain finite and positive.",
+    "relative_coordinate_sign": "q_i is body i minus the center of mass of bodies 0 through i-1.",
+    "position_forward": "q_0=sum_j(m_j*x_j)/eta_(N-1); q_i=x_i-sum_(j<i)(m_j*x_j)/eta_(i-1) for i>=1.",
+    "momentum_forward": "P_0=sum_j p_j; P_i=(eta_(i-1)/eta_i)*p_i-(m_i/eta_i)*sum_(j<i)p_j for i>=1.",
+    "matrix_identity": "q=A*x and P=A^(-T)*p.",
+    "position_inverse": "x_0=q_0-sum_(i>=1)(m_i/eta_i)*q_i; then R_0=x_0, x_i=q_i+R_(i-1), R_i=R_(i-1)+(m_i/eta_i)*q_i.",
+    "momentum_inverse": "Set prefix_(N-1)=P_0; for i=N-1 down to 1, p_i=P_i+(m_i/eta_i)*prefix_i and prefix_(i-1)=(eta_(i-1)/eta_i)*prefix_i-P_i; finally p_0=prefix_0.",
+    "tangent_forward": "Apply the identical fixed A and A^(-T) operators to delta_x and delta_p; masses, identity, configuration, and fingerprints are not differentiated.",
+    "tangent_inverse": "Apply A^(-1) and A^T to delta_q and delta_P using the same inverse recurrences.",
+    "axis_order": "Each body row is (x,y,z); the operator is applied independently in axis order x,y,z.",
+    "flattened_phase_order": "All body-major position rows flattened first, followed by all body-major momentum rows: [x_0x,x_0y,x_0z,...,x_(N-1)z,p_0x,...,p_(N-1)z].",
+    "units": {
+      "position": "m",
+      "momentum": "kg*m/s",
+      "unit_system_id": "si_v1"
+    },
+    "general_inertial_state": true,
+    "barycenter_origin_required": false,
+    "zero_total_momentum_required": false
+  },
+  "implementation_contract": {
+    "production_complexity": "O(N) time and O(N) detached output storage; no dense matrix construction or multiplication.",
+    "immutable_plan_fields": [
+      "ordered BodyIds",
+      "layout fingerprint",
+      "model fingerprint",
+      "mass vector",
+      "cumulative masses",
+      "eta_(i-1)/eta_i ratios",
+      "m_i/eta_i ratios",
+      "schema and convention identifiers",
+      "axis and flattening conventions",
+      "plan fingerprint"
+    ],
+    "state_api": "A new semantically distinct immutable InertialCanonicalState stores (x,p) and model fingerprint; it is not InertialCartesianState (x,v). A matching immutable InertialCanonicalTangentState stores (delta_x,delta_p). Existing CanonicalJacobiState and CanonicalJacobiTangentState remain unchanged.",
+    "application_identity": "Every operation receives the exact PhysicalModel and plan; model fingerprint, layout object equality, layout fingerprint, units, state semantic type, and tangent/base compatibility are checked before arithmetic.",
+    "ownership": "Inputs are never mutated; constructors normalize to detached tuple-backed binary64 values; outputs and plans are frozen and share no writable aliases.",
+    "serialization": "Canonical UTF-8 sorted compact JSON with finite binary64 values encoded by float.hex(); SHA-256 fingerprints exact bytes.",
+    "forbidden_runtime_features": [
+      "global mutable caches",
+      "process-state-dependent import computation",
+      "extended-precision persistent storage",
+      "velocity/momentum conversion",
+      "observer or accounting callbacks",
+      "force or JVP evaluation",
+      "dense runtime transform matrices"
+    ]
+  },
+  "precision_policy": {
+    "storage_and_arithmetic": "IEEE-754 binary64 through Python float; no long double or decimal in production.",
+    "reassociation": "The documented prefix, weighted-prefix, and backward recurrence operation order is fixed; algebraically equivalent reassociation is not used in reproducibility tests.",
+    "algebraic_claim": "The forward and inverse maps are exact inverses algebraically.",
+    "representable_claim": "Strict equality is required only for separately identified dyadic fixtures whose every intermediate result is exactly representable.",
+    "general_claim": "General binary64 round trips are bounded, not described as exact."
+  },
+  "analytic_fixtures": {
+    "one_body_identity": {
+      "masses": [2.0],
+      "requirement": "State and tangent forward/inverse maps are strict identities in all axes."
+    },
+    "two_body_dyadic": {
+      "masses": [1.0, 1.0],
+      "requirement": "Direct q0, q1, P0, P1 formulas and independently derived inverse are strict for selected dyadic vectors."
+    },
+    "three_body_analytic": {
+      "masses": [1.0, 2.0, 5.0],
+      "requirement": "Hand-derived q0, q1, q2, P0, P1, P2 and inverse cover unequal masses, all axes, nonzero COM, and nonzero total momentum."
+    },
+    "three_body_dyadic": {
+      "masses": [1.0, 1.0, 2.0],
+      "requirement": "Selected exactly representable state and tangent expressions are tested separately from tolerance tests."
+    },
+    "general_deterministic": {
+      "masses": [0.125, 2.0, 32.0, 0.5, 8.0],
+      "label": "synthetic_conditioning_fixture",
+      "solar_system_data": false
+    }
+  },
+  "independent_oracles": {
+    "coefficient_source": "Tests construct A directly from fractions.Fraction masses and the frozen row formulas without calling any production plan or recurrence helper.",
+    "inverse_source": "Tests invert rational A by independent exact Gauss-Jordan elimination, transpose it for momentum, then convert final rational values to binary64.",
+    "dense_phase_matrix": "A3=kron(A,I3), S=block_diag(A3,A3^(-T)) in the exact flattened phase ordering.",
+    "symplectic_matrix": "J=[[0,I3N],[-I3N,0]].",
+    "production_reuse_forbidden": true
+  },
+  "finite_difference": {
+    "formula": "[T(z+epsilon*delta_z)-T(z)]/epsilon compared with the analytic transformed tangent.",
+    "epsilon_ladder_hex": [
+      "0x1.0000000000000p-4",
+      "0x1.0000000000000p-8",
+      "0x1.0000000000000p-12",
+      "0x1.0000000000000p-16",
+      "0x1.0000000000000p-20",
+      "0x1.0000000000000p-24",
+      "0x1.0000000000000p-28",
+      "0x1.0000000000000p-32",
+      "0x1.0000000000000p-36",
+      "0x1.0000000000000p-40"
+    ],
+    "metrics": [
+      "maximum absolute component error",
+      "relative L2 error"
+    ],
+    "acceptance": "All values must be finite; at least one of the first four ladder points must have relative error <= 512*u*max(1,cond2(S)); the minimum relative error over the ladder must satisfy the same floor bound; no monotonic-improvement requirement applies after the empirical minimum because cancellation dominates. Exact independent dense-matrix closure must also pass."
+  },
+  "numerical_tolerances": {
+    "binary64_unit_roundoff_u": 2.220446049250313e-16,
+    "state_componentwise": "max_abs_error <= 256*u*N*max(1,cond2(S))*max(1,input_inf_norm)",
+    "state_normwise": "l2_error <= 256*u*sqrt(6*N)*max(1,cond2(S))*max(1,input_l2_norm)",
+    "tangent_componentwise": "Same rule as state_componentwise with tangent input norms.",
+    "tangent_normwise": "Same rule as state_normwise with tangent input norms.",
+    "dense_oracle_componentwise": "max_abs_error <= 128*u*N*max(1,cond2(S))*max(1,reference_inf_norm)",
+    "translation_and_boost_internal": "max_abs_internal_residual <= 128*u*N*max(1,cond2(S))*max(1,transformed_inf_norm)",
+    "symplectic_max_abs": "<= 512*u*(6*N)*max(1,cond2(S)^2)",
+    "symplectic_frobenius": "<= 512*u*(6*N)*max(1,cond2(S)^2)",
+    "symplectic_norm_scaled": "frobenius_residual/(norm2(S)^2*normF(J)) <= 512*u*(6*N)",
+    "inverse_matrix_consistency": "max_abs(S_inv*S-I) <= 512*u*(6*N)*max(1,cond2(S)^2)",
+    "determinant": "Recorded as a secondary diagnostic only and never substitutes for symplectic residuals."
+  },
+  "required_metrics": [
+    "minimum and maximum mass plus max/min mass ratio",
+    "condition number of A",
+    "condition number of S",
+    "maximum state round-trip component and L2 errors in both directions",
+    "maximum tangent round-trip component and L2 errors in both directions",
+    "finite-difference absolute and relative errors for every epsilon",
+    "forward and inverse symplectic maximum, Frobenius, and norm-scaled residuals",
+    "S inverse consistency and determinant",
+    "translation and boost internal residuals"
+  ],
+  "exact_test_selection": {
+    "step3g1b_core_node_ids": [
+      "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_one_body_identity_state_and_tangent",
+      "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_two_body_direct_formulas_and_inverse",
+      "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_three_body_hand_formulas_all_axes",
+      "mini_ephemeris/tests/test_v2_jacobi.py::AnalyticOracleTests::test_dense_rational_oracle_general_fixture",
+      "mini_ephemeris/tests/test_v2_jacobi.py::RoundTripAndInvarianceTests::test_state_round_trips_both_directions_with_frozen_bounds",
+      "mini_ephemeris/tests/test_v2_jacobi.py::RoundTripAndInvarianceTests::test_tangent_round_trips_both_directions_with_frozen_bounds",
+      "mini_ephemeris/tests/test_v2_jacobi.py::RoundTripAndInvarianceTests::test_translation_and_mass_weighted_boost_invariance",
+      "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_invalid_masses_and_noncentral_first_plan_rejected",
+      "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_layout_reordering_and_model_fingerprint_mismatch_rejected",
+      "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_semantic_units_shapes_dtype_and_fingerprint_rejected",
+      "mini_ephemeris/tests/test_v2_jacobi.py::ValidationOwnershipTests::test_immutable_detached_outputs_and_deterministic_plan_serialization",
+      "mini_ephemeris/tests/test_v2_jacobi.py::TangentClosureTests::test_linearity_zero_and_base_state_independence",
+      "mini_ephemeris/tests/test_v2_jacobi.py::TangentClosureTests::test_independent_matrix_closure_and_finite_difference_ladder",
+      "mini_ephemeris/tests/test_v2_jacobi.py::SymplecticityTests::test_full_phase_space_forward_and_inverse_symplecticity",
+      "mini_ephemeris/tests/test_v2_jacobi.py::IsolationTests::test_runtime_source_is_linear_recurrence_without_dense_or_dynamics_surface",
+      "mini_ephemeris/tests/test_v2_jacobi.py::IsolationTests::test_plan_and_result_repeated_calls_are_deterministic"
+    ],
+    "step3g1b_integrity_node_ids": [
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_manifest_and_required_ancestry",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_step3g1a_sources_and_tests_are_byte_exact",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_protected_historical_archive_trajectory_and_tag_integrity",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_guard_rejects_only_harmless_sentinels",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_static_import_node_and_subprocess_closure",
+      "mini_ephemeris/tests/test_m0_step3g1b_integrity.py::Step3g1bIntegrityTests::test_guarded_fresh_process_hash_seed_determinism"
+    ],
+    "safe_step3g1a_regression_node_ids": [
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_body_identity_and_explicit_order",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_duplicate_missing_and_unknown_body_rejected",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_model_is_immutable_and_defensively_copies_inputs",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_invalid_ids_masses_constants_units_and_provenance_rejected",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_canonical_serialization_ignores_mapping_and_collection_order",
+      "mini_ephemeris/tests/test_v2_foundation.py::ModelContractTests::test_fingerprint_sensitive_to_every_material_field",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_coordinate_types_are_semantically_distinct",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_canonical_state_tangent_layout_compatibility",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_shape_nonfinite_and_unit_validation",
+      "mini_ephemeris/tests/test_v2_foundation.py::StateContractTests::test_numpy_inputs_are_detached_and_public_storage_is_immutable",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_force_is_deterministic_and_inputs_remain_bitwise_unchanged",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_jvp_linearity_and_exact_zero_direction",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_layout_and_unit_mismatches_are_rejected_before_provider",
+      "mini_ephemeris/tests/test_v2_foundation.py::KernelProtocolTests::test_wrong_output_semantics_are_rejected",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_exact_roundtrip_equality_and_hashing",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_negative_and_very_large_direct_indices",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_invalid_intervals_denominators_indices_and_bounds",
+      "mini_ephemeris/tests/test_v2_foundation.py::TimebaseTests::test_binary64_boundary_and_accumulation_drift",
+      "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_snapshot_detaches_from_mutable_source",
+      "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_observer_only_receives_immutable_snapshot",
+      "mini_ephemeris/tests/test_v2_foundation.py::OwnershipAndAccountingTests::test_accounting_domains_are_typed_and_disjoint",
+      "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_threshold_scope_rejects_mismatched_contexts",
+      "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_high_finding_angle_requirement_is_explicit",
+      "mini_ephemeris/tests/test_v2_foundation.py::HighFindingContractTests::test_both_high_findings_have_named_tests_and_requirements",
+      "mini_ephemeris/tests/test_m0_step3g1a_requalification.py::RequalificationIntegrityTests::test_canonical_layout_mismatch_is_rejected"
+    ],
+    "artifact_node_ids": [
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_required_artifacts_and_strict_json",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_summary_report_manifest_and_convention_agree",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_exact_test_inventory_and_traceability_are_complete",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_numerical_metrics_satisfy_frozen_bounds",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_fresh_process_regeneration_is_byte_identical",
+      "mini_ephemeris/tests/test_m0_step3g1b_artifacts.py::Step3g1bArtifactTests::test_artifact_hash_inventory_is_exact"
+    ],
+    "expected_counts": {
+      "step3g1b_core": 16,
+      "step3g1b_integrity": 6,
+      "safe_step3g1a_regression": 25,
+      "pre_artifact_total": 47,
+      "artifact": 6,
+      "total": 53
+    },
+    "selection_rule": "Only these literal node IDs may be passed to pytest; wildcard, directory, marker, keyword, and collection-driven selection are forbidden."
+  },
+  "safety_contract": {
+    "lineage": "Reuse the qualified Manifest 23 synthetic namespace shell, deny-first MetaPathFinder, strict import allowlist, ctypes.dlopen audit hook, /proc/self/maps checks, audited pytest 8.4.2 identity, exact-node AST verification, and registered-subprocess closure, extended only by the exact Step 3g1b files and harmless sentinel names preregistered here.",
+    "pytest_site_packages": "/home/peacelovephysics/sheet-music-generator/.venv/lib/python3.10/site-packages",
+    "pytest_version": "8.4.2",
+    "pytest_plugin_autoload_disabled": true,
+    "forbidden_modules": [
+      "step3g1b_forbidden_sentinel",
+      "rebound",
+      "reboundx",
+      "protected and historical mini_ephemeris physical modules"
+    ],
+    "forbidden_library_markers": [
+      "step3g1b_forbidden_library_sentinel",
+      "libmini_ephemeris_gr_tangent",
+      "gr_potential_tangent.so",
+      "librebound",
+      "libreboundx"
+    ],
+    "permitted_subprocesses": {
+      "fresh_transform_probe": 2,
+      "fresh_artifact_probe": 2,
+      "read_only_git_tag_and_ancestry_queries": true,
+      "all_other_child_processes_forbidden": true
+    }
+  },
+  "exact_commands": {
+    "static_safety_gate": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py --safety-audit",
+    "pre_artifact_campaign": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py --run-core",
+    "compilation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python -m py_compile mini_ephemeris/src/mini_ephemeris/v2/jacobi.py mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification.py mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py mini_ephemeris/src/mini_ephemeris/m0_step3g1b_reporting.py mini_ephemeris/tests/test_v2_jacobi.py mini_ephemeris/tests/test_m0_step3g1b_integrity.py mini_ephemeris/tests/test_m0_step3g1b_artifacts.py",
+    "artifact_generation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_reporting.py",
+    "artifact_campaign": "env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_qualification_runner.py --run-artifacts",
+    "strict_json_validation": "env PYTHONPATH=mini_ephemeris/src .venv/bin/python mini_ephemeris/src/mini_ephemeris/m0_step3g1b_reporting.py --validate",
+    "diff_check": "git diff --check"
+  },
+  "review_focus": [
+    "A versus A^(-T) correctness",
+    "velocity used where momentum is required",
+    "cumulative-mass off-by-one or reassociation",
+    "relative-coordinate or momentum sign",
+    "common defective helper shared by implementation and oracle",
+    "body-ID/index conflation or silent reordering",
+    "mutable or aliased state and plan values",
+    "flattening inconsistency",
+    "unprincipled or post-observation tolerance changes",
+    "determinant-only symplecticity claim",
+    "nondeterministic fingerprints",
+    "hidden O(N^2) runtime work",
+    "claims beyond coordinate-transform evidence"
+  ],
+  "expected_artifacts": [
+    "m0_step3g1b_canonical_jacobi_tangent_primitives_report.md",
+    "m0_step3g1b_canonical_jacobi_tangent_primitives_summary.json",
+    "canonical_convention_specification.md",
+    "requirements_traceability.csv",
+    "qualifying_test_inventory.json",
+    "numerical_metrics.json",
+    "code_review_findings.json",
+    "artifact_hashes.json"
+  ],
+  "deterministic_regeneration": {
+    "json": "UTF-8 strict finite JSON, sorted keys, two-space indentation, one trailing LF.",
+    "csv": "UTF-8 fixed columns and row order, LF line endings.",
+    "markdown": "UTF-8 fixed templates, one trailing LF.",
+    "artifact_hashes": "SHA-256 exact bytes; artifact_hashes.json excludes itself.",
+    "fresh_process": "Two guarded isolated interpreters with different PYTHONHASHSEED values must emit byte-identical plan probes; two guarded fresh interpreters must generate artifact directories matching each other and the committed destination byte for byte."
+  },
+  "result_vocabulary": {
+    "final_status": [
+      "STEP3G1B_JACOBI_TANGENT_PRIMITIVES_COMPLETE",
+      "STEP3G1B_JACOBI_TANGENT_PRIMITIVES_FAILED",
+      "STEP3G1B_BLOCKED"
+    ],
+    "primary_finding": [
+      "CANONICAL_JACOBI_TRANSFORMS_QUALIFIED_FOR_PRIMITIVE_COMPOSITION",
+      "CANONICAL_JACOBI_TRANSFORMS_NOT_QUALIFIED",
+      "CANONICAL_JACOBI_CONVENTION_CONFLICT",
+      "CANONICAL_JACOBI_TRANSFORMS_NOT_EVALUATED"
+    ],
+    "success_verification_envelope": "COORDINATE_TRANSFORM_ONLY_NO_DYNAMICS_EXECUTED"
+  },
+  "acceptance_gates": [
+    "Manifest 24 is a separate single-file commit before implementation or qualifying test execution.",
+    "All 47 preregistered core, integrity, and safe Step 3g1a regression nodes pass, followed by all 6 artifact nodes.",
+    "Analytic one-, two-, three-body, dense rational, round-trip, tangent, finite-difference, and full symplectic gates pass under frozen rules.",
+    "Ownership, semantic-type, layout, unit, fingerprint, mass, determinism, and isolation gates pass.",
+    "The qualified Step 3g1a modules/tests and every inherited protected/historical/archive/trajectory/tag hash remain exact.",
+    "Static safety, compilation, guarded import, strict JSON, deterministic regeneration, artifact hashes, git diff --check, reviewed diff, and final clean worktree pass.",
+    "No forbidden operation, force/JVP, dynamics, timestep, trajectory, or archive occurs."
+  ],
+  "classification_rules": {
+    "STEP3G1B_JACOBI_TANGENT_PRIMITIVES_COMPLETE": "Every frozen analytic, numerical, structural, safety, integrity, review, regeneration, and closeout gate passes within the coordinate-only envelope.",
+    "STEP3G1B_JACOBI_TANGENT_PRIMITIVES_FAILED": "The campaign executes but one or more transform, tangent, numerical, integrity, or artifact acceptance gates fails without invalidating the controlled baseline.",
+    "STEP3G1B_BLOCKED": "The baseline, controlling convention, preregistration ordering, inherited integrity, or no-dynamics guarantee cannot be established before qualification.",
+    "CANONICAL_JACOBI_TRANSFORMS_QUALIFIED_FOR_PRIMITIVE_COMPOSITION": "The fixed-mass canonical coordinate and tangent operators are qualified only as isolated building blocks for a separately preregistered successor primitive.",
+    "CANONICAL_JACOBI_TRANSFORMS_NOT_QUALIFIED": "A specific implementation, numerical, safety, or evidentiary defect prevents primitive composition.",
+    "CANONICAL_JACOBI_CONVENTION_CONFLICT": "The Step 3g0 specification or v2 ADR conflicts with the requested convention and implementation stopped before choosing one silently.",
+    "CANONICAL_JACOBI_TRANSFORMS_NOT_EVALUATED": "Permitted only with STEP3G1B_BLOCKED for a non-convention baseline block."
+  },
+  "strict_prohibitions": [
+    "modifying any qualified Step 3g1a implementation module or test",
+    "modifying a protected source, historical manifest, report, artifact, archive, trajectory, or tag",
+    "velocity-based Jacobi coordinate implementation or hidden velocity/momentum conversion",
+    "physical force or JVP implementation, import, load, invocation, or evaluation",
+    "REBOUND or REBOUNDx import or dependency change",
+    "Kepler drift, interaction kick, lazy kernel, corrector, WHCKL composition, synchronization, integration, or timestep",
+    "IAS15, MEGNO, LCN, tangent rescaling, restart execution, trajectory, archive, performance benchmark, Solar-System state, Stage 4, or 10 Myr command",
+    "tag creation or movement"
+  ],
+  "commit_and_closeout": {
+    "preregistration_single_file_commit": true,
+    "separate_reviewed_closeout_commit": true,
+    "amend_squash_forbidden": true,
+    "tag_creation_forbidden": true,
+    "branch_must_remain": "v2-whckl-tangent-core"
+  },
+  "successor_boundary": {
+    "allowed_only_after_success": "Propose Step 3g1c limited to an isolated two-body Kepler drift and its canonical tangent map.",
+    "execution_in_this_step": false
+  }
+}
