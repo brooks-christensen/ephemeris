@@ -1,0 +1,11 @@
+{
+  "kind": "m0_step3g1a_requalification_artifact_hashes",
+  "schema_version": 1,
+  "sha256": {
+    "import_subprocess_safety_audit.json": "41dd0cc9de8fd7547ba41c3f190ce25108d6a305ac4676e7e7546bdc8f33fad5",
+    "m0_step3g1a_v2_foundation_requalification_report.md": "3abcfeb843ed3b85e119f605c197c44de008927e0cabf9698f6ff7748dc025fa",
+    "m0_step3g1a_v2_foundation_requalification_summary.json": "7fb0ae44d0dd728e7b5ba5c98ee62c891d0c1e0fa63dd195018fb9dd9cad6921",
+    "qualifying_test_inventory.json": "ce94724adb13be53291d47c28cdc80352438e900fafebab6fe316d17ee4760db",
+    "requirements_traceability.csv": "9ec5209d0d3ac73a00126c94c79a21c1121b48279c3186137e0aac8d4ca043dc"
+  }
+}

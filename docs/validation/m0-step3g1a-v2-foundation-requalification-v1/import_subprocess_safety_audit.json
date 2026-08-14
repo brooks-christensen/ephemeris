@@ -1,0 +1,281 @@
+{
+  "active_subprocess_call_sites": [
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py:git_output:check_output",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py:run_fresh_artifact_probe:run",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py:run_fresh_v2_probe:run"
+  ],
+  "approved_dependency_roots": [
+    "_pytest",
+    "exceptiongroup",
+    "iniconfig",
+    "packaging",
+    "pluggy",
+    "pygments",
+    "pytest",
+    "tomli",
+    "typing_extensions"
+  ],
+  "artifact_node_count": 6,
+  "dormant_historical_subprocess_nodes": [
+    "mini_ephemeris/tests/test_v2_foundation.py::IsolationAndFreshProcessTests::test_fresh_process_hash_seed_and_locale_consistency",
+    "mini_ephemeris/tests/test_v2_foundation.py::IsolationAndFreshProcessTests::test_v2_imports_no_rebound_and_exposes_no_primitive_entrypoint"
+  ],
+  "forbidden_imports": [],
+  "forbidden_library_mappings": [],
+  "foundation_node_count": 26,
+  "guard": {
+    "ctypes_dlopen_audit_hook": true,
+    "deny_first_import_guard": true,
+    "proc_self_maps_checked": true,
+    "sentinel_only_guard_tests": true,
+    "strict_allowlist_after_approved_dependency_load": true
+  },
+  "import_graph": {
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py": [
+      "__future__",
+      "ast",
+      "hashlib",
+      "importlib.abc",
+      "importlib.machinery",
+      "json",
+      "os",
+      "pathlib",
+      "subprocess",
+      "sys",
+      "types",
+      "typing"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_reporting.py": [
+      "__future__",
+      "argparse",
+      "csv",
+      "hashlib",
+      "importlib.machinery",
+      "io",
+      "json",
+      "mini_ephemeris.m0_step3g1a_requalification",
+      "os",
+      "pathlib",
+      "sys",
+      "types",
+      "typing"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_runner.py": [
+      "__future__",
+      "argparse",
+      "importlib.machinery",
+      "json",
+      "mini_ephemeris.m0_step3g1a_requalification",
+      "numpy",
+      "pathlib",
+      "pytest",
+      "sys",
+      "types"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/v2/__init__.py": [
+      ".accounting",
+      ".errors",
+      ".kernels",
+      ".model",
+      ".ownership",
+      ".state",
+      ".thresholds",
+      ".timebase"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/v2/accounting.py": [
+      "__future__",
+      "dataclasses",
+      "enum"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/v2/canonical.py": [
+      ".errors",
+      "__future__",
+      "hashlib",
+      "json",
+      "math",
+      "typing"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/v2/errors.py": [],
+    "mini_ephemeris/src/mini_ephemeris/v2/kernels.py": [
+      ".accounting",
+      ".errors",
+      ".model",
+      ".state",
+      ".timebase",
+      "__future__",
+      "dataclasses",
+      "typing"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/v2/model.py": [
+      ".canonical",
+      ".errors",
+      "__future__",
+      "dataclasses",
+      "math",
+      "numbers",
+      "re",
+      "typing"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/v2/ownership.py": [
+      ".model",
+      ".state",
+      ".timebase",
+      "__future__",
+      "typing"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/v2/state.py": [
+      ".errors",
+      ".model",
+      ".timebase",
+      "__future__",
+      "dataclasses",
+      "math",
+      "numbers",
+      "typing"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/v2/thresholds.py": [
+      ".errors",
+      "__future__",
+      "dataclasses",
+      "enum",
+      "typing"
+    ],
+    "mini_ephemeris/src/mini_ephemeris/v2/timebase.py": [
+      ".canonical",
+      ".errors",
+      "__future__",
+      "dataclasses",
+      "fractions",
+      "typing"
+    ],
+    "mini_ephemeris/tests/test_m0_step3g1a_requalification.py": [
+      "__future__",
+      "ast",
+      "json",
+      "mini_ephemeris.m0_step3g1a_requalification",
+      "mini_ephemeris.v2",
+      "pathlib",
+      "sys",
+      "unittest"
+    ],
+    "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py": [
+      "__future__",
+      "csv",
+      "mini_ephemeris.m0_step3g1a_requalification",
+      "mini_ephemeris.m0_step3g1a_requalification_reporting",
+      "pathlib",
+      "tempfile",
+      "unittest"
+    ],
+    "mini_ephemeris/tests/test_v2_foundation.py": [
+      "__future__",
+      "ast",
+      "dataclasses",
+      "json",
+      "math",
+      "mini_ephemeris.v2",
+      "numpy",
+      "os",
+      "pathlib",
+      "subprocess",
+      "sys",
+      "unittest"
+    ]
+  },
+  "kind": "m0_step3g1a_requalification_import_subprocess_safety_audit",
+  "legacy_nbody_absent": true,
+  "legacy_package_init_bypassed": true,
+  "permitted_subprocesses": {
+    "all_other_child_processes_forbidden": true,
+    "fresh_artifact_probe": {
+      "argv_template": [
+        "{sys.executable}",
+        "-I",
+        "-c",
+        "{frozen_guarded_artifact_probe_source}",
+        "{repository_root}",
+        "{temporary_destination}"
+      ],
+      "count": 2,
+      "environment": {
+        "LC_ALL": "C",
+        "PYTHONHASHSEED": "0"
+      },
+      "purpose": "Generate byte-identical artifacts in two fresh temporary destinations under the same protected import/library guard."
+    },
+    "fresh_v2_probe": {
+      "argv_template": [
+        "{sys.executable}",
+        "-I",
+        "-c",
+        "{frozen_guarded_v2_probe_source}",
+        "{repository_root}"
+      ],
+      "count": 2,
+      "environments": [
+        {
+          "LC_ALL": "C",
+          "PYTHONHASHSEED": "1"
+        },
+        {
+          "LC_ALL": "C.UTF-8",
+          "PYTHONHASHSEED": "8675309"
+        }
+      ],
+      "purpose": "Guarded fresh-process model/timebase fingerprint and import/library determinism."
+    },
+    "git_tag_integrity": [
+      [
+        "git",
+        "cat-file",
+        "-t",
+        "gr-tangent-compiled-c-v1"
+      ],
+      [
+        "git",
+        "rev-parse",
+        "gr-tangent-compiled-c-v1"
+      ],
+      [
+        "git",
+        "rev-list",
+        "-n",
+        "1",
+        "gr-tangent-compiled-c-v1"
+      ],
+      [
+        "git",
+        "cat-file",
+        "-t",
+        "gr-tangent-python-oracle-v2"
+      ],
+      [
+        "git",
+        "rev-parse",
+        "gr-tangent-python-oracle-v2"
+      ],
+      [
+        "git",
+        "rev-list",
+        "-n",
+        "1",
+        "gr-tangent-python-oracle-v2"
+      ]
+    ]
+  },
+  "pytest_runtime": {
+    "qualifying_commands_plugin_autoload_disabled": true,
+    "sha256": {
+      "pytest-8.4.2.dist-info/METADATA": "93d6c5ef0a9714d53716243035037b77fa7d5f970596c48433887cf57f7f675a",
+      "pytest-8.4.2.dist-info/RECORD": "fba86b3aa6d34c9d73bc8b2ea69d6d69a65cd555c4ac84ef15a330232706f82f",
+      "pytest/__init__.py": "66993a5e3905005e0981159b4794d10b1adacf341a58a44d696ad2c4442dcdc6"
+    },
+    "site_packages": "/home/peacelovephysics/sheet-music-generator/.venv/lib/python3.10/site-packages",
+    "version": "8.4.2"
+  },
+  "requalification_node_count": 10,
+  "schema_version": 1,
+  "selected_node_count": 42,
+  "source_file_count": 16,
+  "status": "PASS"
+}

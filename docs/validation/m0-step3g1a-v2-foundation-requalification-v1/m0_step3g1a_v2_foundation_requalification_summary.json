@@ -1,0 +1,81 @@
+{
+  "branch": "v2-whckl-tangent-core",
+  "final_status": "STEP3G1A_REQUALIFICATION_COMPLETE",
+  "forbidden_operations": {
+    "dynamics_or_timestep_executed": false,
+    "ias15_executed": false,
+    "integrator_primitive_or_whckl_map_executed": false,
+    "jacobi_transform_executed": false,
+    "megno_or_lcn_executed": false,
+    "physical_force_model_executed": false,
+    "protected_compiled_kernel_loaded_or_evaluated": false,
+    "protected_python_kernel_imported_or_evaluated": false,
+    "rebound_or_reboundx_imported": false,
+    "tag_created_or_moved": false,
+    "trajectory_or_archive_created": false
+  },
+  "historical_manifest22": {
+    "final_status": "STEP3G1A_V2_FOUNDATION_INCOMPLETE",
+    "preserved_without_reinterpretation": true,
+    "primary_finding": "V2_FOUNDATION_NOT_READY"
+  },
+  "integrity": {
+    "annotated_tags_unchanged": true,
+    "frozen_archives_unchanged": true,
+    "frozen_trajectories_unchanged": true,
+    "historical_documents_unchanged": true,
+    "historical_step3g1a_unchanged": true,
+    "protected_manifests_unchanged": true,
+    "protected_sources_unchanged": true,
+    "v2_implementation_unchanged": true
+  },
+  "kind": "m0_step3g1a_v2_foundation_requalification_summary",
+  "preregistration_commit": "b7baa44efd8da5ae1d2c49e6f7ca4fd848d469e7",
+  "primary_finding": "V2_FOUNDATION_REQUALIFIED_READY_FOR_PRIMITIVES",
+  "remaining_risks": [
+    "The representation and protocol foundation does not validate any physical equation or dynamics.",
+    "Canonical transforms and canonical tangent maps remain unimplemented and unvalidated.",
+    "The immutable semantic force/JVP API is not a qualified hot-loop ABI.",
+    "Checkpoint/restart wire schemas and execution remain future gates.",
+    "G0-001 freezes an observer contract; it does not implement the future orientation observer."
+  ],
+  "required_start_commit": "ea0732d5e2e125d3e7b1fb0165c5e579ba9aa3e9",
+  "review": {
+    "claims_limited_to_foundation": true,
+    "historical_weak_assertion_supplemented_without_modification": true,
+    "unresolved_material_implementation_findings": 0
+  },
+  "safety": {
+    "exact_node_selection": true,
+    "forbidden_imports": [],
+    "forbidden_library_mappings": [],
+    "fresh_process_guarded": true,
+    "legacy_nbody_absent": true,
+    "legacy_package_init_bypassed": true,
+    "pytest_plugin_autoload_disabled": true,
+    "registered_active_subprocess_call_sites": [
+      "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py:git_output:check_output",
+      "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py:run_fresh_artifact_probe:run",
+      "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py:run_fresh_v2_probe:run"
+    ],
+    "static_gate": "PASS"
+  },
+  "schema_version": 1,
+  "source_inventory_sha256": {
+    "ephemeris_experiment_runner/manifests/23_m0_step3g1a_v2_foundation_requalification_v1.json": "c6dc3f3a42cb36d433279b0a4158a29ee3b40e2def766530ea7c151939e9004c",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification.py": "c03e0aae4e7f30aca654a17c258b6adca80f177ad59af741f2057569edcd0dc1",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_reporting.py": "8e4336a1351506bcbfcf898ec9868ca3ea916f427e4e3902d7c152c831bc2d51",
+    "mini_ephemeris/src/mini_ephemeris/m0_step3g1a_requalification_runner.py": "2d197169554be664d34c3fe5723bb459eac5ee8c0a26f9202d07c56d9f0ab344",
+    "mini_ephemeris/tests/test_m0_step3g1a_requalification.py": "b5ebe138c6ffabb3310eb5c60e9159e641ea1a468a7cf325502e0f33a48b4706",
+    "mini_ephemeris/tests/test_m0_step3g1a_requalification_artifacts.py": "e0972791b097350b19643ad4a334a6e7dd62d10af95f05ec5f7b0d5ee93a4eb5"
+  },
+  "step3g1b_justified": true,
+  "step3g1b_scope": "isolated inertial/Jacobi transforms and canonical tangent maps only",
+  "test_counts": {
+    "artifact": 6,
+    "historical_foundation": 26,
+    "requalification_integrity": 10,
+    "total": 42
+  },
+  "verification_envelope": "FOUNDATION_ONLY_REQUALIFIED_WITHOUT_DYNAMICS_OR_PROTECTED_KERNEL_EVALUATION"
+}
