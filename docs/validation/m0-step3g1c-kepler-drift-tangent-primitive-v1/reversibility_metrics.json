@@ -1,0 +1,66 @@
+{
+  "acceptance": {
+    "flow_and_rotation": true,
+    "linearity_zero_base_dependence": true,
+    "physical_tangent_matrix": true
+  },
+  "flow_and_rotation": {
+    "bound": 5.675356821259246e-08,
+    "flow_relative_l2": 4.831744486850851e-15,
+    "pass": true,
+    "rotation_relative_l2": 4.810820842841174e-16
+  },
+  "kind": "m0_step3g1c_reversibility_metrics",
+  "schema_version": 1,
+  "tangent_semantics": {
+    "base_state_difference_scaled_l2": 3.896365510948824,
+    "linearity_bound": 2.837678410629623e-08,
+    "linearity_relative_l2": 1.303397381064876e-16,
+    "pass": true,
+    "zero_maximum_absolute": 0.0
+  },
+  "values": [
+    {
+      "eccentricity": 0.1,
+      "matrix_bound": 1.645426702961173e-05,
+      "matrix_maximum_absolute": 1.7837251678751984e-13,
+      "momentum_reversal_bound": 4.092278748519269e-11,
+      "momentum_reversal_maximum_scaled": 0.0,
+      "momentum_reversal_normwise_scaled": 0.0,
+      "pass": true,
+      "physical_bound": 4.092278748519269e-11,
+      "physical_maximum_scaled": 2.2887252271175385e-14,
+      "physical_normwise_scaled": 3.637073190533322e-14,
+      "tangent_bound": 3.5530291556415855e-08,
+      "tangent_relative_l2": 8.449958338916315e-14
+    },
+    {
+      "eccentricity": 0.6,
+      "matrix_bound": 3.0190056456403514e-05,
+      "matrix_maximum_absolute": 2.8634116645564063e-13,
+      "momentum_reversal_bound": 3.013405260273279e-10,
+      "momentum_reversal_maximum_scaled": 0.0,
+      "momentum_reversal_normwise_scaled": 0.0,
+      "pass": true,
+      "physical_bound": 3.013405260273279e-10,
+      "physical_maximum_scaled": 1.3015628661377062e-14,
+      "physical_normwise_scaled": 1.8310754905486306e-14,
+      "tangent_bound": 3.5439190814998256e-07,
+      "tangent_relative_l2": 2.72438139879977e-13
+    },
+    {
+      "eccentricity": 0.9,
+      "matrix_bound": 6.382988562606703e-07,
+      "matrix_maximum_absolute": 6.383335655277064e-15,
+      "momentum_reversal_bound": 5.725469994519234e-09,
+      "momentum_reversal_maximum_scaled": 0.0,
+      "momentum_reversal_normwise_scaled": 0.0,
+      "pass": true,
+      "physical_bound": 5.725469994519234e-09,
+      "physical_maximum_scaled": 8.134767913360663e-16,
+      "physical_normwise_scaled": 1.1388547245920286e-15,
+      "tangent_bound": 9.790783979427667e-07,
+      "tangent_relative_l2": 8.917872634356129e-15
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "findings": [
+    {
+      "finding": "The first tangent draft reconstructed terminal radius instead of reusing the retained physical root radius.",
+      "id": "G1C-REVIEW-001",
+      "regression_node_ids": [
+        "mini_ephemeris/tests/test_v2_kepler.py::TangentMapTests::test_full_six_by_six_symplecticity",
+        "mini_ephemeris/tests/test_v2_kepler.py::TangentMapTests::test_physical_tangent_and_time_reversal"
+      ],
+      "resolution": "Use root.radius_m for the analytic implicit-root and coefficient derivatives.",
+      "severity": "material",
+      "status": "RESOLVED_BEFORE_QUALIFICATION"
+    },
+    {
+      "finding": "The first stable Stumpff draft stopped its fixed Horner series before Manifest 25's frozen 34! depth.",
+      "id": "G1C-REVIEW-002",
+      "regression_node_ids": [
+        "mini_ephemeris/tests/test_v2_kepler.py::SolverDomainTests::test_stumpff_small_argument_and_solver_diagnostics",
+        "mini_ephemeris/tests/test_v2_kepler.py::PhysicalOracleTests::test_independent_elliptic_reference_matrix"
+      ],
+      "resolution": "Evaluate each required Stumpff series through the largest matching parity factorial at or below 34! before source-style scaling recurrences.",
+      "severity": "material",
+      "status": "RESOLVED_BEFORE_CLOSEOUT"
+    }
+  ],
+  "kind": "m0_step3g1c_code_review_findings",
+  "residual_limit": "Only the frozen isolated bound-elliptic domain is qualified.",
+  "reviewed_risks": [
+    "momentum_velocity_and_reduced_mass",
+    "Hamiltonian_sign_and_scaling",
+    "negative_duration_and_phase_limit",
+    "Stumpff_and_root_convergence",
+    "shared_physical_tangent_root",
+    "implicit_root_derivative",
+    "canonical_variable_order_and_symplecticity",
+    "immutability_and_no_partial_failure",
+    "forbidden_dependency_and_scope_surface"
+  ],
+  "schema_version": 1,
+  "status": "PASS"
+}

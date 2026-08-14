@@ -1,0 +1,71 @@
+{
+  "acceptance": {
+    "central_floor": true,
+    "early_improvement": true,
+    "finite": true,
+    "forward_floor": true,
+    "roundoff_turn": true
+  },
+  "central_bound": 5.416298327694239e-07,
+  "condition_scale": 28.849555921538755,
+  "forward_bound": 5.502616104419471e-05,
+  "kind": "m0_step3g1c_finite_difference_metrics",
+  "minimum_forward_index": 4,
+  "schema_version": 1,
+  "values": [
+    {
+      "central_relative_l2_error": 7.890153215344466e-07,
+      "epsilon": 0.0009765625,
+      "epsilon_hex": "0x1.0000000000000p-10",
+      "forward_relative_l2_error": 0.0007634644270635018
+    },
+    {
+      "central_relative_l2_error": 3.088802998306312e-09,
+      "epsilon": 6.103515625e-05,
+      "epsilon_hex": "0x1.0000000000000p-14",
+      "forward_relative_l2_error": 4.7673850052749344e-05
+    },
+    {
+      "central_relative_l2_error": 5.092607121401355e-11,
+      "epsilon": 3.814697265625e-06,
+      "epsilon_hex": "0x1.0000000000000p-18",
+      "forward_relative_l2_error": 2.9791473157158222e-06
+    },
+    {
+      "central_relative_l2_error": 1.1568380038281988e-09,
+      "epsilon": 2.384185791015625e-07,
+      "epsilon_hex": "0x1.0000000000000p-22",
+      "forward_relative_l2_error": 1.8424041694122853e-07
+    },
+    {
+      "central_relative_l2_error": 1.4251678273293092e-08,
+      "epsilon": 1.4901161193847656e-08,
+      "epsilon_hex": "0x1.0000000000000p-26",
+      "forward_relative_l2_error": 5.2089478047808886e-08
+    },
+    {
+      "central_relative_l2_error": 1.1444593339998406e-07,
+      "epsilon": 9.313225746154785e-10,
+      "epsilon_hex": "0x1.0000000000000p-30",
+      "forward_relative_l2_error": 1.4258439465109475e-07
+    },
+    {
+      "central_relative_l2_error": 6.187428960572694e-06,
+      "epsilon": 5.820766091346741e-11,
+      "epsilon_hex": "0x1.0000000000000p-34",
+      "forward_relative_l2_error": 1.9710696111093172e-05
+    },
+    {
+      "central_relative_l2_error": 8.837410003121128e-05,
+      "epsilon": 3.637978807091713e-12,
+      "epsilon_hex": "0x1.0000000000000p-38",
+      "forward_relative_l2_error": 0.00016871893956238928
+    },
+    {
+      "central_relative_l2_error": 0.001393396020470073,
+      "epsilon": 2.2737367544323206e-13,
+      "epsilon_hex": "0x1.0000000000000p-42",
+      "forward_relative_l2_error": 0.0028360923401186547
+    }
+  ]
+}

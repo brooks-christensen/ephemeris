@@ -1,0 +1,687 @@
+{
+  "acceptance": {
+    "composition": true,
+    "independent_oracle": true
+  },
+  "composition": [
+    {
+      "bound": 2.0435161606566956e-11,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 4.0673839566803317e-16,
+      "normwise_scaled_error": 6.89116471344403e-16,
+      "pass": true
+    },
+    {
+      "bound": 1.5047709910290211e-10,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 1.862645149230957e-16,
+      "normwise_scaled_error": 2.2812650937430354e-16,
+      "pass": true
+    },
+    {
+      "bound": 2.8590648829551417e-09,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 8.134767913360663e-16,
+      "normwise_scaled_error": 1.1274756047046615e-15,
+      "pass": true
+    }
+  ],
+  "composition_maximum_scaled": 1.1274756047046615e-15,
+  "kind": "m0_step3g1c_physical_oracle_metrics",
+  "schema_version": 1,
+  "values": [
+    {
+      "bound": 1.3133746422877795e-11,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 4.190951585769653e-16,
+      "normwise_scaled_error": 5.516356952080078e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.99,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 7.533513150683199e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 2.440430374008199e-15,
+      "normwise_scaled_error": 3.903254609793326e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.5,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 3.247620340330192e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 3.725290298461914e-16,
+      "normwise_scaled_error": 4.676172824515063e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.125,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.8304184510401313e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 2.5421149729252073e-17,
+      "normwise_scaled_error": 2.5421149729252073e-17,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.001,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.8189894035458565e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 0.0,
+      "normwise_scaled_error": 0.0,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.0,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.8304184510401313e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 2.0336919783401659e-16,
+      "normwise_scaled_error": 2.0370212541653086e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.001,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 3.247620340330192e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 3.725290298461914e-16,
+      "normwise_scaled_error": 5.526319721534145e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.125,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 7.533513150683199e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 2.440430374008199e-15,
+      "normwise_scaled_error": 3.795079519969587e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.5,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.3133746422877795e-11,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 4.423782229423523e-16,
+      "normwise_scaled_error": 5.767141187810963e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.99,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.3133746422877795e-11,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 3.556488081812858e-15,
+      "normwise_scaled_error": 4.315609141142888e-15,
+      "orientation": "non_axis_aligned_rotation_B",
+      "pass": true,
+      "period_fraction": -0.99,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 7.533513150683199e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 1.4784745872020722e-15,
+      "normwise_scaled_error": 1.937586695119156e-15,
+      "orientation": "non_axis_aligned_rotation_B",
+      "pass": true,
+      "period_fraction": -0.5,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 3.247620340330192e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 1.2710574864626036e-16,
+      "normwise_scaled_error": 2.093868757959945e-16,
+      "orientation": "non_axis_aligned_rotation_B",
+      "pass": true,
+      "period_fraction": -0.125,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.8304184510401313e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 2.0336919783401659e-16,
+      "normwise_scaled_error": 2.0970896823877075e-16,
+      "orientation": "non_axis_aligned_rotation_B",
+      "pass": true,
+      "period_fraction": -0.001,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.8189894035458565e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 0.0,
+      "normwise_scaled_error": 0.0,
+      "orientation": "non_axis_aligned_rotation_B",
+      "pass": true,
+      "period_fraction": 0.0,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.8304184510401313e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 2.9103830456733702e-18,
+      "normwise_scaled_error": 2.9103830456733702e-18,
+      "orientation": "non_axis_aligned_rotation_B",
+      "pass": true,
+      "period_fraction": 0.001,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 3.247620340330192e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 1.0168459891700829e-16,
+      "normwise_scaled_error": 1.545712936252448e-16,
+      "orientation": "non_axis_aligned_rotation_B",
+      "pass": true,
+      "period_fraction": 0.125,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 7.533513150683199e-12,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 1.4319084584712983e-15,
+      "normwise_scaled_error": 2.0113155698282237e-15,
+      "orientation": "non_axis_aligned_rotation_B",
+      "pass": true,
+      "period_fraction": 0.5,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.3133746422877795e-11,
+      "eccentricity": 0.0,
+      "maximum_scaled_error": 3.5506673157215118e-15,
+      "normwise_scaled_error": 4.284268043613821e-15,
+      "orientation": "non_axis_aligned_rotation_B",
+      "pass": true,
+      "period_fraction": 0.99,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.783595193230318e-11,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 5.005858838558197e-15,
+      "normwise_scaled_error": 6.9454382078466604e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.99,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.0230696871298172e-11,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 2.9744114726781846e-15,
+      "normwise_scaled_error": 4.051894557575495e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.5,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 4.410348610324952e-12,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 4.190951585769653e-16,
+      "normwise_scaled_error": 5.692737089381777e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.125,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 2.485753452029808e-12,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 2.7939677238464354e-16,
+      "normwise_scaled_error": 4.52461402058473e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.001,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 2.4702325233338792e-12,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 3.725290298461914e-16,
+      "normwise_scaled_error": 4.601399759372949e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.0,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 2.485753452029808e-12,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 3.725290298461914e-16,
+      "normwise_scaled_error": 4.911444527365212e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.001,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 4.410348610324952e-12,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 7.117921924190581e-16,
+      "normwise_scaled_error": 8.458441550302012e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.125,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.0230696871298172e-11,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 2.3283064365386965e-15,
+      "normwise_scaled_error": 4.153748887304491e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.5,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.783595193230318e-11,
+      "eccentricity": 0.1,
+      "maximum_scaled_error": 2.167362254112959e-14,
+      "normwise_scaled_error": 2.462517884697217e-14,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.99,
+      "true_anomaly_rad": 0.37
+    },
+    {
+      "bound": 1.3133746422877794e-10,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 5.02321918650021e-14,
+      "normwise_scaled_error": 6.59057952737977e-14,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.99,
+      "true_anomaly_rad": 1.4
+    },
+    {
+      "bound": 7.533513150683197e-11,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 5.587935447692871e-15,
+      "normwise_scaled_error": 7.422758392699362e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.5,
+      "true_anomaly_rad": 1.4
+    },
+    {
+      "bound": 3.247620340330192e-11,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 2.033691978340166e-15,
+      "normwise_scaled_error": 2.8614443157731723e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.125,
+      "true_anomaly_rad": 1.4
+    },
+    {
+      "bound": 1.8304184510401308e-11,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 2.0336919783401659e-16,
+      "normwise_scaled_error": 2.586840847784452e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.001,
+      "true_anomaly_rad": 1.4
+    },
+    {
+      "bound": 1.818989403545856e-11,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 6.101075935020498e-16,
+      "normwise_scaled_error": 6.358105667221058e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.0,
+      "true_anomaly_rad": 1.4
+    },
+    {
+      "bound": 1.8304184510401308e-11,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 9.313225746154785e-17,
+      "normwise_scaled_error": 1.158747648933246e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.001,
+      "true_anomaly_rad": 1.4
+    },
+    {
+      "bound": 3.247620340330192e-11,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 3.725290298461914e-16,
+      "normwise_scaled_error": 4.703079767488409e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.125,
+      "true_anomaly_rad": 1.4
+    },
+    {
+      "bound": 7.533513150683197e-11,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 4.1909515857696534e-15,
+      "normwise_scaled_error": 4.464557132061508e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.5,
+      "true_anomaly_rad": 1.4
+    },
+    {
+      "bound": 1.3133746422877794e-10,
+      "eccentricity": 0.6,
+      "maximum_scaled_error": 4.5758069512653735e-14,
+      "normwise_scaled_error": 6.45524358602861e-14,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.99,
+      "true_anomaly_rad": 1.4
+    },
+    {
+      "bound": 2.4954118203467822e-09,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 6.239861249923706e-15,
+      "normwise_scaled_error": 8.254948700073803e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.99,
+      "true_anomaly_rad": 2.7
+    },
+    {
+      "bound": 1.4313674986298084e-09,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 4.097819328308106e-15,
+      "normwise_scaled_error": 6.221796548471685e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.5,
+      "true_anomaly_rad": 2.7
+    },
+    {
+      "bound": 6.170478646627368e-10,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 1.4235843848381163e-14,
+      "normwise_scaled_error": 2.1200401090474076e-14,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.125,
+      "true_anomaly_rad": 2.7
+    },
+    {
+      "bound": 3.4777950569762513e-10,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 3.5589609620952906e-16,
+      "normwise_scaled_error": 5.647691439961307e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.001,
+      "true_anomaly_rad": 2.7
+    },
+    {
+      "bound": 3.456079866737129e-10,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 3.5589609620952906e-16,
+      "normwise_scaled_error": 5.361367819609483e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.0,
+      "true_anomaly_rad": 2.7
+    },
+    {
+      "bound": 3.4777950569762513e-10,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 1.5252689837551245e-16,
+      "normwise_scaled_error": 2.340640761986654e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.001,
+      "true_anomaly_rad": 2.7
+    },
+    {
+      "bound": 6.170478646627368e-10,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 3.813172459387811e-16,
+      "normwise_scaled_error": 6.65417781197348e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.125,
+      "true_anomaly_rad": 2.7
+    },
+    {
+      "bound": 1.4313674986298084e-09,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 5.587935447692871e-16,
+      "normwise_scaled_error": 6.699684223188565e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.5,
+      "true_anomaly_rad": 2.7
+    },
+    {
+      "bound": 2.4954118203467822e-09,
+      "eccentricity": 0.9,
+      "maximum_scaled_error": 7.916241884231567e-15,
+      "normwise_scaled_error": 1.0187213406066958e-14,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.99,
+      "true_anomaly_rad": 2.7
+    },
+    {
+      "bound": 3.841435663085279e-09,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 5.587935447692871e-15,
+      "normwise_scaled_error": 9.261881075365108e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.99,
+      "true_anomaly_rad": 3.05
+    },
+    {
+      "bound": 2.2034463856364996e-09,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 2.4214386940002442e-15,
+      "normwise_scaled_error": 3.910524834901998e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.5,
+      "true_anomaly_rad": 3.05
+    },
+    {
+      "bound": 9.498831630991685e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 1.862645149230957e-16,
+      "normwise_scaled_error": 2.665477525454249e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.125,
+      "true_anomaly_rad": 3.05
+    },
+    {
+      "bound": 5.353715908468244e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 1.862645149230957e-16,
+      "normwise_scaled_error": 3.0056782701503555e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.001,
+      "true_anomaly_rad": 3.05
+    },
+    {
+      "bound": 5.320287555867249e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 2.7939677238464354e-16,
+      "normwise_scaled_error": 4.057807619831199e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.0,
+      "true_anomaly_rad": 3.05
+    },
+    {
+      "bound": 5.353715908468244e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 1.862645149230957e-16,
+      "normwise_scaled_error": 2.0445794899847674e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.001,
+      "true_anomaly_rad": 3.05
+    },
+    {
+      "bound": 9.498831630991685e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 2.065468415501731e-16,
+      "normwise_scaled_error": 3.1720738011897256e-16,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.125,
+      "true_anomaly_rad": 3.05
+    },
+    {
+      "bound": 2.2034463856364996e-09,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 1.1175870895385742e-15,
+      "normwise_scaled_error": 1.6522967344057395e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.5,
+      "true_anomaly_rad": 3.05
+    },
+    {
+      "bound": 3.841435663085279e-09,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 2.2351741790771483e-15,
+      "normwise_scaled_error": 3.442529537024167e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.99,
+      "true_anomaly_rad": 3.05
+    },
+    {
+      "bound": 3.841435663085279e-09,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 2.033691978340166e-13,
+      "normwise_scaled_error": 2.379487399300688e-13,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.99,
+      "true_anomaly_rad": 0.0
+    },
+    {
+      "bound": 2.2034463856364996e-09,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 5.8673322200775145e-15,
+      "normwise_scaled_error": 6.101761356435793e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.5,
+      "true_anomaly_rad": 0.0
+    },
+    {
+      "bound": 9.498831630991685e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 1.3853423297405242e-15,
+      "normwise_scaled_error": 2.2505898308073946e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.125,
+      "true_anomaly_rad": 0.0
+    },
+    {
+      "bound": 5.353715908468244e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 7.321291122024597e-15,
+      "normwise_scaled_error": 1.157362597928964e-14,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": -0.001,
+      "true_anomaly_rad": 0.0
+    },
+    {
+      "bound": 5.320287555867249e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 8.94824470469673e-15,
+      "normwise_scaled_error": 9.498690680506131e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.0,
+      "true_anomaly_rad": 0.0
+    },
+    {
+      "bound": 5.353715908468244e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 1.0575198287368862e-14,
+      "normwise_scaled_error": 1.1871677841552693e-14,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.001,
+      "true_anomaly_rad": 0.0
+    },
+    {
+      "bound": 9.498831630991685e-10,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 1.016845989170083e-15,
+      "normwise_scaled_error": 1.980418389449578e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.125,
+      "true_anomaly_rad": 0.0
+    },
+    {
+      "bound": 2.2034463856364996e-09,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 5.308538675308227e-15,
+      "normwise_scaled_error": 6.077247004075926e-15,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.5,
+      "true_anomaly_rad": 0.0
+    },
+    {
+      "bound": 3.841435663085279e-09,
+      "eccentricity": 0.919,
+      "maximum_scaled_error": 1.7225371056541205e-13,
+      "normwise_scaled_error": 2.364645115102947e-13,
+      "orientation": "non_axis_aligned_rotation_A",
+      "pass": true,
+      "period_fraction": 0.99,
+      "true_anomaly_rad": 0.0
+    }
+  ],
+  "worst_circular": {
+    "bound": 1.3133746422877795e-11,
+    "eccentricity": 0.0,
+    "maximum_scaled_error": 3.556488081812858e-15,
+    "normwise_scaled_error": 4.315609141142888e-15,
+    "observed_scaled": 4.315609141142888e-15,
+    "orientation": "non_axis_aligned_rotation_B",
+    "pass": true,
+    "period_fraction": -0.99,
+    "true_anomaly_rad": 0.37
+  },
+  "worst_elliptic": {
+    "bound": 3.841435663085279e-09,
+    "eccentricity": 0.919,
+    "maximum_scaled_error": 2.033691978340166e-13,
+    "normwise_scaled_error": 2.379487399300688e-13,
+    "observed_scaled": 2.379487399300688e-13,
+    "orientation": "non_axis_aligned_rotation_A",
+    "pass": true,
+    "period_fraction": -0.99,
+    "true_anomaly_rad": 0.0
+  },
+  "worst_observed_scaled": 2.379487399300688e-13
+}

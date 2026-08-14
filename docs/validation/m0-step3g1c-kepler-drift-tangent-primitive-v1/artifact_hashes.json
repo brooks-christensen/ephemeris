@@ -1,0 +1,19 @@
+{
+  "kind": "m0_step3g1c_artifact_hashes",
+  "schema_version": 1,
+  "sha256": {
+    "code_review_findings.json": "a35fd37ba3e4857477656749bc6c3f8d612d2d10204169d13820bf7be119b067",
+    "finite_difference_metrics.json": "94debc0b57e0eabff13c80b3a0c6eaeb79040ba321ef48531df22d74f934940e",
+    "hamiltonian_supported_domain_specification.md": "4209db3109ba0d11c03bf1bb0f11f8b881b160a8f7691452370c3b738523f0e3",
+    "invariant_metrics.json": "20cc8668aa2ec7e93db9fbd273c4dee6c5e88ca171f31f49d56a76f2294dd9d2",
+    "m0_step3g1c_kepler_drift_tangent_primitive_report.md": "8b250d29f217688609b7899104018185ea933b2514c625068eed0c0367221a23",
+    "m0_step3g1c_kepler_drift_tangent_primitive_summary.json": "854775276a73279e53ebe0069002ecddabbad404978ef97416254568907dcfeb",
+    "physical_oracle_metrics.json": "223a229b30367607fb2bff49049392a51dfd881fccb3a7c1adee083408551763",
+    "qualifying_test_inventory.json": "0a5811e977690b63186377097366d845bd3aaf9ef5822f3a68251b0d875d5cf8",
+    "requirements_traceability.csv": "509fe65189dca42d0bfbca930fcbc1f076811f51768fe4eeb20e9d9fbf9e8013",
+    "reversibility_metrics.json": "1a496a61241df89aedf649ed2800c96b8d976dd96e0a932535979434c5efba02",
+    "solver_metrics.json": "ed1785bbc627b536e127cc1d794aba86fd81457870a4dda8871288986591d9df",
+    "symplecticity_metrics.json": "3916fc284dc0fab345c5af7ca050732c7566dafbc715759f95a2ce14a628b32e",
+    "tangent_map_derivation.md": "bc78a44a54c1a29cd5199be977400645f8b3a9f483538fcafa383486167e7bf2"
+  }
+}

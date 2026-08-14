@@ -1,0 +1,650 @@
+{
+  "acceptance": {
+    "all_converged": true,
+    "finite_diagnostics": true,
+    "known_branches": true
+  },
+  "branch_counts": {
+    "elliptic_newton": 30,
+    "elliptic_quartic": 26,
+    "zero_duration": 7
+  },
+  "iterations_maximum": 6,
+  "iterations_minimum_nonzero": 1,
+  "kind": "m0_step3g1c_solver_metrics",
+  "maximum_absolute_residual_s": 1.127773430198431e-10,
+  "maximum_absolute_update_x_s_per_m": 8.586881206085195e-17,
+  "schema_version": 1,
+  "values": [
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": -0.99,
+      "phase_advance_rad": 6.220353454107789,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": -0.5,
+      "phase_advance_rad": 3.1415926535897922,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": -0.125,
+      "phase_advance_rad": 0.7853981633974481,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": -0.001,
+      "phase_advance_rad": 0.006283185307179585,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "zero_duration",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 0,
+      "period_fraction": 0.0,
+      "phase_advance_rad": 0.0,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": 0.001,
+      "phase_advance_rad": 0.006283185307179585,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": 0.125,
+      "phase_advance_rad": 0.7853981633974481,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": 0.5,
+      "phase_advance_rad": 3.1415926535897922,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 1.0842021724855044e-19
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": 0.99,
+      "phase_advance_rad": 6.220353454107789,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 4.336808689942018e-19
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": -0.99,
+      "phase_advance_rad": 6.220353454107791,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 2.168404344971009e-19
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": -0.5,
+      "phase_advance_rad": 3.1415926535897936,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": -0.125,
+      "phase_advance_rad": 0.7853981633974484,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": -0.001,
+      "phase_advance_rad": 0.006283185307179587,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "zero_duration",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 0,
+      "period_fraction": 0.0,
+      "phase_advance_rad": 0.0,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": 0.001,
+      "phase_advance_rad": 0.006283185307179587,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": 0.125,
+      "phase_advance_rad": 0.7853981633974484,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": 0.5,
+      "phase_advance_rad": 3.1415926535897936,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 1.0842021724855044e-19
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.0,
+      "iterations": 1,
+      "period_fraction": 0.99,
+      "phase_advance_rad": 6.220353454107791,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 2.168404344971009e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.1,
+      "iterations": 4,
+      "period_fraction": -0.99,
+      "phase_advance_rad": 6.220353454107794,
+      "residual_s": 3.637978807091713e-12,
+      "update_x_s_per_m": 4.336808689942018e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.1,
+      "iterations": 4,
+      "period_fraction": -0.5,
+      "phase_advance_rad": 3.141592653589795,
+      "residual_s": 3.637978807091713e-12,
+      "update_x_s_per_m": 2.168404344971009e-19
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.1,
+      "iterations": 4,
+      "period_fraction": -0.125,
+      "phase_advance_rad": 0.7853981633974487,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 2.710505431213761e-20
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.1,
+      "iterations": 2,
+      "period_fraction": -0.001,
+      "phase_advance_rad": 0.00628318530717959,
+      "residual_s": 3.552713678800501e-15,
+      "update_x_s_per_m": 6.352747104407253e-22
+    },
+    {
+      "branch": "zero_duration",
+      "converged": true,
+      "eccentricity": 0.1,
+      "iterations": 0,
+      "period_fraction": 0.0,
+      "phase_advance_rad": 0.0,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.1,
+      "iterations": 2,
+      "period_fraction": 0.001,
+      "phase_advance_rad": 0.00628318530717959,
+      "residual_s": 3.552713678800501e-15,
+      "update_x_s_per_m": 2.117582368135751e-22
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.1,
+      "iterations": 4,
+      "period_fraction": 0.125,
+      "phase_advance_rad": 0.7853981633974487,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.1,
+      "iterations": 4,
+      "period_fraction": 0.5,
+      "phase_advance_rad": 3.141592653589795,
+      "residual_s": 1.8189894035458565e-12,
+      "update_x_s_per_m": 1.0842021724855044e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.1,
+      "iterations": 4,
+      "period_fraction": 0.99,
+      "phase_advance_rad": 6.220353454107794,
+      "residual_s": 3.637978807091713e-12,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.6,
+      "iterations": 4,
+      "period_fraction": -0.99,
+      "phase_advance_rad": 6.220353454107787,
+      "residual_s": 2.9103830456733704e-11,
+      "update_x_s_per_m": 5.421010862427522e-18
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.6,
+      "iterations": 5,
+      "period_fraction": -0.5,
+      "phase_advance_rad": 3.1415926535897913,
+      "residual_s": 1.8189894035458565e-12,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.6,
+      "iterations": 6,
+      "period_fraction": -0.125,
+      "phase_advance_rad": 0.7853981633974478,
+      "residual_s": 4.547473508864641e-13,
+      "update_x_s_per_m": 1.0842021724855044e-19
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.6,
+      "iterations": 3,
+      "period_fraction": -0.001,
+      "phase_advance_rad": 0.006283185307179583,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "zero_duration",
+      "converged": true,
+      "eccentricity": 0.6,
+      "iterations": 0,
+      "period_fraction": 0.0,
+      "phase_advance_rad": 0.0,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.6,
+      "iterations": 3,
+      "period_fraction": 0.001,
+      "phase_advance_rad": 0.006283185307179583,
+      "residual_s": 3.552713678800501e-15,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.6,
+      "iterations": 5,
+      "period_fraction": 0.125,
+      "phase_advance_rad": 0.7853981633974478,
+      "residual_s": 4.547473508864641e-13,
+      "update_x_s_per_m": 5.421010862427522e-20
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.6,
+      "iterations": 5,
+      "period_fraction": 0.5,
+      "phase_advance_rad": 3.1415926535897913,
+      "residual_s": 7.275957614183426e-12,
+      "update_x_s_per_m": 4.336808689942018e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.6,
+      "iterations": 4,
+      "period_fraction": 0.99,
+      "phase_advance_rad": 6.220353454107787,
+      "residual_s": 2.1827872842550278e-11,
+      "update_x_s_per_m": 5.204170427930421e-18
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.9,
+      "iterations": 4,
+      "period_fraction": -0.99,
+      "phase_advance_rad": 6.220353454107787,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 2.168404344971009e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.9,
+      "iterations": 5,
+      "period_fraction": -0.5,
+      "phase_advance_rad": 3.1415926535897913,
+      "residual_s": 2.7284841053187847e-11,
+      "update_x_s_per_m": 7.589415207398531e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.9,
+      "iterations": 6,
+      "period_fraction": -0.125,
+      "phase_advance_rad": 0.7853981633974478,
+      "residual_s": 2.7284841053187847e-12,
+      "update_x_s_per_m": 2.8189256484623115e-18
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.9,
+      "iterations": 3,
+      "period_fraction": -0.001,
+      "phase_advance_rad": 0.006283185307179583,
+      "residual_s": 7.105427357601002e-15,
+      "update_x_s_per_m": 2.117582368135751e-22
+    },
+    {
+      "branch": "zero_duration",
+      "converged": true,
+      "eccentricity": 0.9,
+      "iterations": 0,
+      "period_fraction": 0.0,
+      "phase_advance_rad": 0.0,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.9,
+      "iterations": 3,
+      "period_fraction": 0.001,
+      "phase_advance_rad": 0.006283185307179583,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 2.117582368135751e-22
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.9,
+      "iterations": 5,
+      "period_fraction": 0.125,
+      "phase_advance_rad": 0.7853981633974478,
+      "residual_s": 4.547473508864641e-13,
+      "update_x_s_per_m": 2.710505431213761e-20
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.9,
+      "iterations": 5,
+      "period_fraction": 0.5,
+      "phase_advance_rad": 3.1415926535897913,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 1.8973538018496328e-18
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.9,
+      "iterations": 4,
+      "period_fraction": 0.99,
+      "phase_advance_rad": 6.220353454107787,
+      "residual_s": 7.275957614183426e-12,
+      "update_x_s_per_m": 4.336808689942018e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 4,
+      "period_fraction": -0.99,
+      "phase_advance_rad": 6.220353454107787,
+      "residual_s": 7.639755494892597e-11,
+      "update_x_s_per_m": 1.734723475976807e-18
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 6,
+      "period_fraction": -0.5,
+      "phase_advance_rad": 3.1415926535897913,
+      "residual_s": 2.3646862246096134e-11,
+      "update_x_s_per_m": 4.336808689942018e-19
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 4,
+      "period_fraction": -0.125,
+      "phase_advance_rad": 0.7853981633974478,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 1.3552527156068805e-20
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 2,
+      "period_fraction": -0.001,
+      "phase_advance_rad": 0.006283185307179583,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 4.235164736271502e-22
+    },
+    {
+      "branch": "zero_duration",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 0,
+      "period_fraction": 0.0,
+      "phase_advance_rad": 0.0,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 2,
+      "period_fraction": 0.001,
+      "phase_advance_rad": 0.006283185307179583,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 4.235164736271502e-22
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 3,
+      "period_fraction": 0.125,
+      "phase_advance_rad": 0.7853981633974478,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 1.0842021724855044e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 6,
+      "period_fraction": 0.5,
+      "phase_advance_rad": 3.1415926535897913,
+      "residual_s": 1.8189894035458565e-12,
+      "update_x_s_per_m": 5.421010862427522e-20
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 4,
+      "period_fraction": 0.99,
+      "phase_advance_rad": 6.220353454107787,
+      "residual_s": 2.1827872842550278e-11,
+      "update_x_s_per_m": 4.336808689942018e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 5,
+      "period_fraction": -0.99,
+      "phase_advance_rad": 6.220353454107791,
+      "residual_s": 1.127773430198431e-10,
+      "update_x_s_per_m": 8.586881206085195e-17
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 2,
+      "period_fraction": -0.5,
+      "phase_advance_rad": 3.1415926535897936,
+      "residual_s": 5.4569682106375694e-12,
+      "update_x_s_per_m": 1.0842021724855044e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 5,
+      "period_fraction": -0.125,
+      "phase_advance_rad": 0.7853981633974484,
+      "residual_s": 4.547473508864641e-13,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 4,
+      "period_fraction": -0.001,
+      "phase_advance_rad": 0.006283185307179587,
+      "residual_s": 3.552713678800501e-15,
+      "update_x_s_per_m": 3.3881317890172014e-21
+    },
+    {
+      "branch": "zero_duration",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 0,
+      "period_fraction": 0.0,
+      "phase_advance_rad": 0.0,
+      "residual_s": 0.0,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_newton",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 4,
+      "period_fraction": 0.001,
+      "phase_advance_rad": 0.006283185307179587,
+      "residual_s": 3.552713678800501e-15,
+      "update_x_s_per_m": 3.3881317890172014e-21
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 5,
+      "period_fraction": 0.125,
+      "phase_advance_rad": 0.7853981633974484,
+      "residual_s": 4.547473508864641e-13,
+      "update_x_s_per_m": 0.0
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 2,
+      "period_fraction": 0.5,
+      "phase_advance_rad": 3.1415926535897936,
+      "residual_s": 5.4569682106375694e-12,
+      "update_x_s_per_m": 1.0842021724855044e-19
+    },
+    {
+      "branch": "elliptic_quartic",
+      "converged": true,
+      "eccentricity": 0.919,
+      "iterations": 5,
+      "period_fraction": 0.99,
+      "phase_advance_rad": 6.220353454107791,
+      "residual_s": 1.127773430198431e-10,
+      "update_x_s_per_m": 8.586881206085195e-17
+    }
+  ]
+}

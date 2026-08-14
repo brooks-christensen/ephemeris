@@ -1,0 +1,69 @@
+{
+  "branch": "v2-whckl-tangent-core",
+  "claim_limit": "Only the tested bound-elliptic domain is qualified even though universal-variable functions are used.",
+  "exact_test_counts": {
+    "artifact": 6,
+    "pre_artifact_total": 73,
+    "safe_step3g1a_regression": 25,
+    "safe_step3g1b_regression": 26,
+    "step3g1c_core": 17,
+    "step3g1c_integrity": 5,
+    "total": 79
+  },
+  "final_status": "STEP3G1C_KEPLER_DRIFT_TANGENT_COMPLETE",
+  "inherited_integrity_status": "PASS",
+  "kind": "m0_step3g1c_kepler_drift_tangent_primitive_summary",
+  "model_fingerprint": "97f6001ca3e19fdc3945c9e61667e5873ee63b0d90e48a92f7f8c52887797664",
+  "numerical_acceptance": {
+    "finite_difference": {
+      "central_floor": true,
+      "early_improvement": true,
+      "finite": true,
+      "forward_floor": true,
+      "roundoff_turn": true
+    },
+    "invariant": {
+      "all_invariants": true
+    },
+    "physical": {
+      "composition": true,
+      "independent_oracle": true
+    },
+    "reversibility": {
+      "flow_and_rotation": true,
+      "linearity_zero_base_dependence": true,
+      "physical_tangent_matrix": true
+    },
+    "solver": {
+      "all_converged": true,
+      "finite_diagnostics": true,
+      "known_branches": true
+    },
+    "symplecticity": {
+      "full_6x6_canonical": true
+    }
+  },
+  "numerical_extrema": {
+    "composition_maximum_scaled": 1.1274756047046615e-15,
+    "finite_difference_central_minimum_relative_l2": 5.092607121401355e-11,
+    "finite_difference_finest_forward_relative_l2": 0.0028360923401186547,
+    "finite_difference_forward_minimum_relative_l2": 5.2089478047808886e-08,
+    "invariant_maximum": 6.021559238433838e-12,
+    "physical_oracle_maximum_scaled": 2.379487399300688e-13,
+    "physical_reversibility_maximum_scaled": 3.637073190533322e-14,
+    "solver_iterations_maximum": 6,
+    "solver_residual_maximum_s": 1.127773430198431e-10,
+    "solver_update_maximum_x_s_per_m": 8.586881206085195e-17,
+    "symplectic_forward_maximum_absolute": 6.08858627147817e-08,
+    "symplectic_reverse_maximum_absolute": 2.2096541182232447e-08,
+    "tangent_reversibility_maximum_relative_l2": 2.72438139879977e-13
+  },
+  "period_s": 28099.258924162907,
+  "plan_fingerprint": "76db4ed5663e9d9e96b0a2927c938df298c0ab45fadc65c3dd06fe4f50f1c127",
+  "preregistration_commit": "d2ffe64742734f7b1337c74faa7705073bc1c203",
+  "primary_finding": "BOUND_ELLIPTIC_KEPLER_DRIFT_TANGENT_QUALIFIED",
+  "safety_status": "PASS",
+  "schema_version": 1,
+  "successor": "Propose Step 3g1d limited to the interaction-kick map and tangent action using a synthetic analytic force/JVP provider.",
+  "verification_envelope": "ISOLATED_TWO_BODY_BOUND_ELLIPTIC_MAP_ONLY_NO_NBODY_DYNAMICS"
+}
