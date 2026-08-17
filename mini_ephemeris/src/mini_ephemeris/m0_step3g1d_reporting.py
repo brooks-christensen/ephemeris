@@ -1,4 +1,4 @@
-"""Deterministic compact artifact generation for Step 3g1d."""
+"""Deterministic artifacts for Step 3g1d corrective completion."""
 
 from __future__ import annotations
 
@@ -15,21 +15,22 @@ from .m0_step3g1d_qualification import (
     ROOT,
     compute_metrics,
     fixture,
-    manifest26,
+    manifest27,
     run_fresh_artifact_probe,
     sha256_file,
     static_safety_audit,
     strict_json,
+    verify_generated_provenance,
     verify_inherited_integrity,
 )
 
 
 DEFAULT_DESTINATION = ROOT / (
     "docs/validation/"
-    "m0-step3g1d-interaction-kick-tangent-primitive-v1"
+    "m0-step3g1d-interaction-kick-corrective-completion-v1"
 )
-EXPECTED_ARTIFACTS = set(manifest26()["expected_artifacts"])
-FINAL_STATUS = "STEP3G1D_INTERACTION_KICK_TANGENT_COMPLETE"
+EXPECTED_ARTIFACTS = set(manifest27()["expected_artifacts"])
+FINAL_STATUS = "STEP3G1D_CORRECTIVE_COMPLETION_COMPLETE"
 PRIMARY_FINDING = "SYNTHETIC_CONSERVATIVE_INTERACTION_KICK_QUALIFIED"
 ENVELOPE = (
     "ISOLATED_SYNTHETIC_POSITION_ONLY_KICK_NO_PHYSICAL_FORCE_OR_INTEGRATION"
@@ -54,7 +55,7 @@ def _write_json(path: Path, value: Any) -> None:
 
 
 def _inventory() -> Mapping[str, Any]:
-    manifest = manifest26()
+    manifest = manifest27()
     selection = manifest["exact_test_selection"]
     groups = (
         "step3g1d_core_node_ids",
@@ -82,13 +83,15 @@ def _inventory() -> Mapping[str, Any]:
                 "m0_step3g1d_qualification_runner.py --run-artifacts"
             ),
             "artifact_generation": (
-                "env PYTHONPATH=mini_ephemeris/src .venv/bin/python "
-                "mini_ephemeris/src/mini_ephemeris/"
-                "m0_step3g1d_reporting.py"
+                "env PYTHONPATH=mini_ephemeris/src "
+                "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m "
+                "mini_ephemeris.m0_step3g1d_reporting --output-root "
+                "docs/validation/"
+                "m0-step3g1d-interaction-kick-corrective-completion-v1"
             ),
             "compilation": (
                 "env PYTHONPATH=mini_ephemeris/src .venv/bin/python "
-                "-m py_compile <Manifest-26 Step-3g1d source and test paths>"
+                "-m py_compile <Manifest-27 Step-3g1d source and test paths>"
             ),
             "diff_check": "git diff --check",
             "pre_artifact_campaign": (
@@ -119,43 +122,42 @@ def _inventory() -> Mapping[str, Any]:
 
 
 def _traceability_csv() -> bytes:
-    selection = manifest26()["exact_test_selection"]
+    selection = manifest27()["exact_test_selection"]
+    core = selection["step3g1d_core_node_ids"]
     rows = [
         {
             "requirement_id": "KICK-001",
             "claim": "physical canonical kick and acceleration adapter",
-            "exact_passing_node_ids": ";".join(
-                selection["step3g1d_core_node_ids"][:8]
-            ),
+            "exact_passing_node_ids": ";".join(core[:8]),
             "result": "PASS",
         },
         {
             "requirement_id": "TAN-001",
             "claim": "analytic tangent closure and symplecticity",
-            "exact_passing_node_ids": ";".join(
-                selection["step3g1d_core_node_ids"][8:14]
-            ),
+            "exact_passing_node_ids": ";".join(core[8:14]),
             "result": "PASS",
         },
         {
             "requirement_id": "NEG-001",
             "claim": "nonsymmetric and malformed controls",
-            "exact_passing_node_ids": ";".join(
-                selection["step3g1d_core_node_ids"][14:16]
-            ),
+            "exact_passing_node_ids": ";".join(core[14:16]),
             "result": "PASS",
         },
         {
             "requirement_id": "OWN-001",
             "claim": "ownership accounting failure atomicity and isolation",
-            "exact_passing_node_ids": ";".join(
-                selection["step3g1d_core_node_ids"][16:]
-            ),
+            "exact_passing_node_ids": ";".join(core[16:20]),
+            "result": "PASS",
+        },
+        {
+            "requirement_id": "COM-001",
+            "claim": "derived COM bound and consistent physical tangent projection",
+            "exact_passing_node_ids": ";".join(core[20:]),
             "result": "PASS",
         },
         {
             "requirement_id": "INT-001",
-            "claim": "preregistration inherited integrity and guarded closure",
+            "claim": "generated provenance and guarded process closure",
             "exact_passing_node_ids": ";".join(
                 selection["step3g1d_integrity_node_ids"]
             ),
@@ -181,24 +183,22 @@ def _traceability_csv() -> bytes:
 def _provider_spec() -> str:
     return """# Canonical Interaction Kick and Provider Specification
 
-## Qualified Map
+## Qualified Projected Map
 
-The retained-COM canonical Jacobi map is:
+The retained-COM canonical Jacobi map is q'=q and
+momentum'=momentum+h F_projected(q), with
+F_projected(q)=P F(P q). The projector P replaces canonical row zero with
+exact binary64 zeros and leaves internal rows unchanged.
 
-`q' = q`
+The v2 force boundary returns inertial Cartesian acceleration. The explicit
+fixed-mass adapter applies x=A^-1 q, f_x=diag(m) a(x), and
+F_q=A^-T f_x; it never relabels acceleration as generalized force.
 
-`P' = P + h F_q(q)`
-
-The qualified v2 force boundary returns inertial Cartesian acceleration, not
-canonical generalized force. The explicit fixed-mass adapter applies
-`x=A^-1 q`, `f_x=diag(m) a(x)`, and `F_q=A^-T f_x`. The COM output row is
-exactly zero. Rows are body-major xyz; phase vectors contain all q rows followed
-by all P rows. SI units are m, kg*m/s, s, m/s^2, and kg*m/s^2.
-
-Providers must declare position-only, deterministic, JVP-available,
-fixed-mass-adapted, conservative, symmetric-Jacobian, zero-COM, no-hidden-
-accounting capabilities. Model, layout, unit, schema, Jacobi-plan, capability,
-and provider fingerprints are checked before evaluation.
+Before projection, each COM residual is checked componentwise against
+B_axis=gamma_(2n-1)*kappa_inf(A^-T)*sum_i abs(m_i*a_i_axis), where binary64
+unit roundoff is u=2^-53 and gamma_k=k*u/(1-k*u). The raw residual,
+component bounds, norms, conditioning, term count, and projection flag are
+immutable result metadata. Above-bound closure fails before a result exists.
 
 Only the synthetic dense quadratic and nonlinear radial quartic providers were
 qualified. No physical force provider or integration was evaluated.
@@ -208,22 +208,24 @@ qualified. No physical force provider or integration was evaluated.
 def _tangent_derivation() -> str:
     return """# Canonical Interaction-Kick Tangent Derivation
 
-For `K_h(q,P)=(q,P+h F_q(q))`, differentiation at fixed masses and fixed
-duration gives:
+For the projected internal map, F_projected(q)=P F(P q) and
 
-`delta_q' = delta_q`
+J_projected(q) delta_q = P J_F(P q) P delta_q.
 
-`delta_P' = delta_P + h J_F(q) delta_q`
+The kick tangent is delta_q'=delta_q and
+delta_momentum'=delta_momentum+h J_projected(q) delta_q. The provider
+direction is delta_x=A^-1 P delta_q; its acceleration JVP is mass weighted,
+transformed by A^-T, checked against the same derived closure bound, and
+projected by P. Thus a COM-only direction has no internal-force response and
+both force and JVP output COM rows are exact zero.
 
-The provider direction is `delta_x=A^-1 delta_q`; its acceleration JVP is
-mass weighted and transformed by `A^-T`. The full phase Jacobian is
-`M=[[I,0],[h J_F,I]]`. Therefore `M^T Omega M=Omega` exactly when `J_F`
-is symmetric. The nonsymmetric control is required to violate both Jacobian
-symmetry and symplecticity gates.
+The full phase Jacobian is M=[[I,0],[h J_projected,I]], so
+M^T Omega M=Omega when J_projected is symmetric. The nonsymmetric control
+must violate both symmetry and symplecticity gates.
 
 Nonzero physical calls perform force once. Nonzero tangent calls perform force
-then JVP once each on the same immutable inertial state and context. Zero
-duration performs neither call.
+then JVP once each on the same immutable state and context. Zero duration
+performs neither call.
 """
 
 
@@ -233,7 +235,8 @@ def _report(summary: Mapping[str, Any], metrics: Mapping[str, Any]) -> str:
     fd = metrics["finite_difference"]["providers"]
     symplectic = metrics["symplecticity"]["providers"]
     negative = metrics["negative_control"]
-    return f"""# M0 Step 3g1d Interaction Kick and Tangent Primitive
+    projection = metrics["com_projection"]
+    return f"""# M0 Step 3g1d Corrective Interaction Kick Completion
 
 Final status: **{summary["final_status"]}**
 
@@ -241,56 +244,67 @@ Primary finding: **{summary["primary_finding"]}**
 
 Verification envelope: **{summary["verification_envelope"]}**
 
-## Result
+## Disposition
 
-The immutable fixed-mass interaction-kick plan, explicit acceleration-to-
-canonical-force adapter, physical map, and canonical tangent action passed all
-frozen synthetic oracle, finite-difference, symmetry, symplecticity, reversal,
-composition, ownership, accounting, negative-control, safety, and integrity
-gates.
+Manifest 26 remains permanently **STEP3G1D_BLOCKED** at blocked-closeout
+commit {summary["manifest26_blocked_closeout_commit"]}. Manifest 27 is a
+separate corrective-completion campaign; the earlier 84-pass/18-failure run
+was diagnostic only and was not reused as qualifying evidence. Manifest 27
+recomputed all 13 historical hashes, confirmed Manifest 25, and detected the
+exact 12 frozen Manifest 26 substitutions.
 
-The result covers only isolated synthetic position-only conservative
-interaction kicks. No physical force provider, integration, timestep,
-trajectory, or archive was evaluated. The qualified force boundary returns
-acceleration and the kick uses an explicit mass-weighted canonical covector
-adapter.
+The immutable fixed-mass projected kick and tangent action passed all 118
+literal scientific, corrective-provenance, historical-regression, artifact,
+safety, and integrity nodes. Four serial guarded fresh subprocesses isolated
+the 112 pre-artifact nodes. This isolation belongs to the test runner, not the
+production primitive.
 
 ## Numerical Summary
 
-- Maximum physical scaled error: {physical:.17g}.
-- Maximum tangent scaled error: {tangent:.17g}.
+- Maximum physical / tangent scaled error: {physical:.17g} /
+  {tangent:.17g}.
 - Dense/nonlinear kick FD minima: {fd[0]["kick_minimum"]:.17g} /
   {fd[1]["kick_minimum"]:.17g}.
 - Dense/nonlinear force-JVP FD minima: {fd[0]["force_minimum"]:.17g} /
   {fd[1]["force_minimum"]:.17g}.
-- Worst qualified raw symplectic residual:
-  {max(value["raw_max"] for value in symplectic):.17g}.
-- Worst qualified scaled symplectic residual:
+- Maximum raw COM residual norm / derived bound norm:
+  {projection["maximum_raw_residual_norm_kg_m_per_s2"]:.17g} /
+  {projection["maximum_derived_bound_norm_kg_m_per_s2"]:.17g}.
+- Maximum COM norm ratio / component ratio:
+  {projection["maximum_norm_ratio"]:.17g} /
+  {projection["maximum_component_ratio"]:.17g}.
+- Worst raw / scaled symplectic residual:
+  {max(value["raw_max"] for value in symplectic):.17g} /
   {max(value["scaled_max"] for value in symplectic):.17g}.
-- Negative-control Jacobian asymmetry / raw symplectic residual:
+- Negative-control asymmetry / symplectic residual:
   {negative["jacobian_asymmetry_max"]:.17g} /
   {negative["symplectic_raw_max"]:.17g}.
 - Maximum reversal / composition scaled error:
   {metrics["reversibility"]["maximum_scaled"]:.17g} /
   {metrics["composition"]["maximum_scaled"]:.17g}.
 
+Every accepted physical force and JVP recorded its raw COM residual and frozen
+derived bound, then projected the output COM row to exact zero. A COM-only
+tangent direction produced no internal-force response. Above-bound nonclosing
+and nonconservative controls were rejected.
+
 ## Evidence Boundary
 
-Success does not qualify a drift-kick composition, lazy kernel, corrector,
-WHCKL map, production model, MEGNO/LCN path, restart path, or Solar-System
-trajectory. The Step 3g1c raw symplectic residual remains an inherited risk for
-later composition and is not repaired or reinterpreted here.
+The result covers only isolated synthetic position-only conservative
+interaction kicks. No physical force provider, integration, timestep,
+trajectory, archive, MEGNO, LCN, restart, or Solar-System state was evaluated.
+The Step 3g1c raw symplectic residual remains an inherited risk and is not
+repaired or reinterpreted here.
 
-The only justified successor is a separately preregistered Step 3g1e synthetic
-second-order drift-kick-drift composition using the qualified Step 3g1c and
-Step 3g1d primitives.
+A separately preregistered synthetic second-order drift-kick-drift composition
+is now justified as the next proposal, but it was not implemented or started.
 """
 
 
 def _code_review() -> Mapping[str, Any]:
     return {
         "findings": [],
-        "kind": "m0_step3g1d_code_review_findings",
+        "kind": "m0_step3g1d_corrective_code_review_findings",
         "reviewed_surfaces": [
             "acceleration versus generalized-force semantics",
             "source-order A^-1 and A^-T recurrences",
@@ -300,6 +314,9 @@ def _code_review() -> Mapping[str, Any]:
             "zero-duration no-call path",
             "immutable ownership and failure atomicity",
             "negative-control sensitivity",
+            "generated full-length provenance hashes",
+            "derived COM closure and projection diagnostics",
+            "fresh-process regression isolation",
         ],
         "schema_version": 1,
         "status": "PASS_NO_OPEN_FINDINGS",
@@ -308,13 +325,15 @@ def _code_review() -> Mapping[str, Any]:
 
 def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
     destination.mkdir(parents=True, exist_ok=True)
-    manifest = manifest26()
+    manifest = manifest27()
     metrics = compute_metrics()
     inherited = verify_inherited_integrity()
+    provenance = verify_generated_provenance()
     acceptance = {
         name: bool(metrics[name]["acceptance"])
         for name in (
             "accounting",
+            "com_projection",
             "composition",
             "finite_difference",
             "negative_control",
@@ -330,12 +349,31 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
     summary = {
         "acceptance": acceptance,
         "branch": "v2-whckl-tangent-core",
+        "corrected_provenance": provenance,
         "exact_test_counts": manifest["exact_test_selection"]["expected_counts"],
         "final_status": FINAL_STATUS,
         "inherited_integrity_status": inherited["status"],
-        "kind": "m0_step3g1d_interaction_kick_tangent_primitive_summary",
+        "kind": "m0_step3g1d_interaction_kick_corrective_completion_summary",
+        "manifest26_blocked_closeout_commit": manifest[
+            "manifest26_permanent_disposition"
+        ]["blocked_closeout_commit"],
+        "manifest26_final_status": manifest[
+            "manifest26_permanent_disposition"
+        ]["final_status"],
         "model_fingerprint": model.fingerprint,
         "numerical_extrema": {
+            "com_projection_maximum_bound_norm": metrics[
+                "com_projection"
+            ]["maximum_derived_bound_norm_kg_m_per_s2"],
+            "com_projection_maximum_component_ratio": metrics[
+                "com_projection"
+            ]["maximum_component_ratio"],
+            "com_projection_maximum_norm_ratio": metrics[
+                "com_projection"
+            ]["maximum_norm_ratio"],
+            "com_projection_maximum_raw_norm": metrics[
+                "com_projection"
+            ]["maximum_raw_residual_norm_kg_m_per_s2"],
             "composition_maximum_scaled": metrics["composition"]["maximum_scaled"],
             "physical_maximum_scaled": metrics["physical"]["maximum_scaled"],
             "reversibility_maximum_scaled": metrics["reversibility"]["maximum_scaled"],
@@ -351,20 +389,28 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
         },
         "plan_fingerprint": plan.fingerprint,
         "preregistration_commit": PREREGISTRATION_COMMIT,
+        "process_isolation": {
+            "groups": manifest["fresh_process_regression_isolation"]["groups"],
+            "pre_artifact_total": manifest["exact_test_selection"][
+                "expected_counts"
+            ]["pre_artifact_total"],
+            "runner_only_not_production": True,
+        },
+        "projection": metrics["com_projection"],
         "primary_finding": PRIMARY_FINDING,
         "safety_status": "PASS",
         "schema_version": 1,
         "successor": (
-            "Propose Step 3g1e limited to an isolated synthetic second-order "
-            "drift-kick-drift composition using qualified primitives."
+            "A separately preregistered isolated synthetic second-order "
+            "drift-kick-drift composition is justified for proposal only."
         ),
         "verification_envelope": ENVELOPE,
     }
     files: dict[str, bytes] = {
-        "m0_step3g1d_interaction_kick_tangent_primitive_report.md": (
+        "m0_step3g1d_interaction_kick_corrective_completion_report.md": (
             _report(summary, metrics).encode("utf-8")
         ),
-        "m0_step3g1d_interaction_kick_tangent_primitive_summary.json": (
+        "m0_step3g1d_interaction_kick_corrective_completion_summary.json": (
             _json_bytes(summary)
         ),
         "canonical_kick_provider_specification.md": (
@@ -376,9 +422,13 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
         "force_jvp_closure_metrics.json": _json_bytes(
             {
                 "acceptance": {
-                    value["kind"]: value["acceptance"]["force_jvp"]
-                    for value in metrics["finite_difference"]["providers"]
+                    **{
+                        value["kind"]: value["acceptance"]["force_jvp"]
+                        for value in metrics["finite_difference"]["providers"]
+                    },
+                    "com_projection": metrics["com_projection"]["acceptance"],
                 },
+                "com_projection": metrics["com_projection"],
                 "kind": "force_jvp_closure_metrics",
                 "providers": metrics["finite_difference"]["providers"],
                 "schema_version": 1,
@@ -460,7 +510,7 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
         "code_review_findings.json": _json_bytes(_code_review()),
     }
     if set(files) != EXPECTED_ARTIFACTS - {"artifact_hashes.json"}:
-        raise AssertionError("reporting file set differs from Manifest 26")
+        raise AssertionError("reporting file set differs from Manifest 27")
     for name, payload in files.items():
         (destination / name).write_bytes(payload)
     hashes = {
@@ -470,7 +520,7 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
     _write_json(
         destination / "artifact_hashes.json",
         {
-            "kind": "m0_step3g1d_artifact_hashes",
+            "kind": "m0_step3g1d_corrective_artifact_hashes",
             "schema_version": 1,
             "sha256": hashes,
         },
@@ -482,12 +532,12 @@ def validate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
         path.name for path in destination.iterdir() if path.is_file()
     }
     if observed != EXPECTED_ARTIFACTS:
-        raise AssertionError("artifact inventory differs from Manifest 26")
+        raise AssertionError("artifact inventory differs from Manifest 27")
     for path in destination.glob("*.json"):
         strict_json(path)
     summary = strict_json(
         destination
-        / "m0_step3g1d_interaction_kick_tangent_primitive_summary.json"
+        / "m0_step3g1d_interaction_kick_corrective_completion_summary.json"
     )
     if (
         summary["final_status"] != FINAL_STATUS
@@ -509,8 +559,8 @@ def compare_fresh_regeneration() -> None:
         with tempfile.TemporaryDirectory(prefix="step3g1d-b-") as second_name:
             first = Path(first_name)
             second = Path(second_name)
-            run_fresh_artifact_probe(first)
-            run_fresh_artifact_probe(second)
+            run_fresh_artifact_probe(first, 1, "C")
+            run_fresh_artifact_probe(second, 8675309, "C.UTF-8")
             first_files = {
                 path.name: path.read_bytes()
                 for path in first.iterdir()
@@ -534,7 +584,13 @@ def compare_fresh_regeneration() -> None:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--destination", type=Path, default=DEFAULT_DESTINATION)
+    parser.add_argument(
+        "--destination",
+        "--output-root",
+        dest="destination",
+        type=Path,
+        default=DEFAULT_DESTINATION,
+    )
     parser.add_argument("--validate", action="store_true")
     arguments = parser.parse_args(argv)
     if arguments.validate:

@@ -14,7 +14,7 @@ import re
 from typing import Any, Mapping, Protocol, Tuple
 
 from .accounting import AccountingDomain, AccountingEvent
-from .canonical import canonical_json_bytes, sha256_hex
+from .canonical import canonical_json_bytes, finite_binary64_hex, sha256_hex
 from .errors import InvalidModel, InvalidState, KernelContractError, LayoutMismatch
 from .jacobi import (
     AXIS_ORDER,
@@ -40,6 +40,7 @@ PLAN_SCHEMA = "v2.interaction_kick_plan/1"
 RAW_FORCE_OUTPUT = "inertial_cartesian_acceleration"
 RAW_JVP_OUTPUT = "inertial_cartesian_acceleration_jvp"
 CANONICAL_ADAPTER = "mass_weight_then_A_inverse_transpose_v1"
+COM_CLOSURE_SCHEMA = "binary64_internal_force_com_closure_v1"
 STATE_SCHEMA = "canonical_jacobi_state_v1"
 TANGENT_SCHEMA = "canonical_jacobi_tangent_v1"
 UNIT_SYSTEM = "si_v1"
@@ -189,6 +190,57 @@ class InteractionProvider(Protocol):
     def jvp(self, model: PhysicalModel, state: InertialCartesianState, direction: CartesianPositionTangent, context: ForceEvaluationContext): ...
 
 
+def _com_closure_parameters(
+    plan: JacobiTransformPlan,
+) -> tuple[float, int, float]:
+    """Return kappa_inf(A^-T), the rounded-op count, and gamma_k."""
+
+    count = len(plan.masses_kg)
+    covector_row_sums = [float(count)]
+    for index in range(1, count):
+        covector_row_sums.append(
+            math.fsum(
+                (
+                    index * abs(plan.body_mass_fractions[index]),
+                    abs(plan.inner_mass_fractions[index]),
+                )
+            )
+        )
+    norm_a_inverse_transpose = max(covector_row_sums)
+
+    total_mass = plan.cumulative_masses_kg[-1]
+    position_column_sums = []
+    for column in range(count):
+        terms = [abs(plan.masses_kg[column] / total_mass)]
+        for row in range(1, count):
+            if column < row:
+                terms.append(
+                    abs(
+                        plan.masses_kg[column]
+                        / plan.cumulative_masses_kg[row - 1]
+                    )
+                )
+            elif column == row:
+                terms.append(1.0)
+        position_column_sums.append(math.fsum(terms))
+    norm_a_transpose = max(position_column_sums)
+    condition = norm_a_inverse_transpose * norm_a_transpose
+
+    operation_count = 2 * count - 1
+    unit_roundoff = 2.0**-53
+    denominator = 1.0 - operation_count * unit_roundoff
+    gamma = operation_count * unit_roundoff / denominator
+    if (
+        not math.isfinite(condition)
+        or condition < 1.0
+        or operation_count < 1
+        or denominator <= 0.0
+        or not math.isfinite(gamma)
+    ):
+        raise InvalidModel("invalid binary64 COM-closure parameters")
+    return condition, operation_count, gamma
+
+
 @dataclass(frozen=True, init=False)
 class InteractionKickPlan:
     """Immutable identity and capability plan for one interaction provider."""
@@ -204,6 +256,10 @@ class InteractionKickPlan:
     axis_order: str
     phase_order: str
     body_count: int
+    com_closure_schema: str
+    com_transform_condition_inf: float
+    com_roundoff_operation_count: int
+    com_roundoff_gamma: float
     schema: str
     fingerprint: str
 
@@ -226,6 +282,11 @@ class InteractionKickPlan:
         object.__setattr__(self, "axis_order", AXIS_ORDER)
         object.__setattr__(self, "phase_order", PHASE_ORDER)
         object.__setattr__(self, "body_count", len(model.layout.body_ids))
+        condition, operation_count, gamma = _com_closure_parameters(jacobi_plan)
+        object.__setattr__(self, "com_closure_schema", COM_CLOSURE_SCHEMA)
+        object.__setattr__(self, "com_transform_condition_inf", condition)
+        object.__setattr__(self, "com_roundoff_operation_count", operation_count)
+        object.__setattr__(self, "com_roundoff_gamma", gamma)
         object.__setattr__(self, "schema", PLAN_SCHEMA)
         object.__setattr__(self, "fingerprint", sha256_hex(self.canonical_bytes()))
 
@@ -235,6 +296,14 @@ class InteractionKickPlan:
             "body_count": self.body_count,
             "capabilities": self.capabilities.canonical_payload(),
             "capability_fingerprint": self.capability_fingerprint,
+            "com_closure_schema": self.com_closure_schema,
+            "com_roundoff_gamma_hex": finite_binary64_hex(
+                self.com_roundoff_gamma, "COM roundoff gamma"
+            ),
+            "com_roundoff_operation_count": self.com_roundoff_operation_count,
+            "com_transform_condition_inf_hex": finite_binary64_hex(
+                self.com_transform_condition_inf, "COM transform condition"
+            ),
             "coordinate_convention": self.coordinate_convention,
             "jacobi_plan_fingerprint": self.jacobi_plan_fingerprint,
             "layout_fingerprint": self.layout_fingerprint,
@@ -250,8 +319,24 @@ class InteractionKickPlan:
 
 
 @dataclass(frozen=True)
+class ComProjectionDiagnostics:
+    """Immutable evidence for one accepted internal-force COM projection."""
+
+    raw_residual_kg_m_per_s2: Tuple[float, float, float]
+    component_bounds_kg_m_per_s2: Tuple[float, float, float]
+    componentwise_absolute_force_sums_kg_m_per_s2: Tuple[float, float, float]
+    raw_residual_norm_kg_m_per_s2: float
+    derived_bound_norm_kg_m_per_s2: float
+    transform_condition_inf: float
+    accumulated_force_terms: int
+    rounded_operation_count: int
+    gamma: float
+    projection_applied: bool
+
+
+@dataclass(frozen=True)
 class KickEvaluationMetadata:
-    """Detached immutable accounting for one completed kick call."""
+    """Detached immutable accounting and COM-projection evidence."""
 
     events: Tuple[AccountingEvent, ...]
     force_evaluations: int
@@ -260,6 +345,8 @@ class KickEvaluationMetadata:
     synchronization_evaluations: int
     request_id: str
     plan_fingerprint: str
+    force_com_projection: ComProjectionDiagnostics | None
+    jvp_com_projection: ComProjectionDiagnostics | None
 
 
 @dataclass(frozen=True)
@@ -412,6 +499,10 @@ def _forward_covector_rows(plan: JacobiTransformPlan, rows: VectorRows) -> Vecto
     return tuple(tuple(row) for row in output)  # type: ignore[return-value]
 
 
+def _project_internal_rows(rows: VectorRows) -> VectorRows:
+    return (_ZERO_ROW,) + rows[1:]
+
+
 def _inertial_state(plan: JacobiTransformPlan, model: PhysicalModel, q: VectorRows) -> InertialCartesianState:
     positions = _inverse_position_rows(plan, q)
     zeros = tuple(_ZERO_ROW for _ in positions)
@@ -424,17 +515,70 @@ def _inertial_state(plan: JacobiTransformPlan, model: PhysicalModel, q: VectorRo
 
 
 def _canonical_force(
-    plan: JacobiTransformPlan,
+    kick_plan: InteractionKickPlan,
+    jacobi_plan: JacobiTransformPlan,
     acceleration: VectorRows,
-) -> VectorRows:
+) -> tuple[VectorRows, ComProjectionDiagnostics]:
     inertial_force = tuple(
-        tuple(plan.masses_kg[index] * component for component in row)
+        tuple(jacobi_plan.masses_kg[index] * component for component in row)
         for index, row in enumerate(acceleration)
     )
-    force = _forward_covector_rows(plan, inertial_force)
-    if force[0] != _ZERO_ROW:
-        raise KernelContractError("provider violates the exact zero COM-force capability")
-    return force
+    if not all(math.isfinite(value) for row in inertial_force for value in row):
+        raise KernelContractError("mass-weighted provider force is nonfinite")
+
+    force = _forward_covector_rows(jacobi_plan, inertial_force)
+    raw_residual = force[0]
+    try:
+        component_sums = tuple(
+            math.fsum(abs(row[axis]) for row in inertial_force)
+            for axis in range(3)
+        )
+    except OverflowError as exc:
+        raise KernelContractError(
+            "mass-weighted absolute-force scale overflowed"
+        ) from exc
+    factor = (
+        kick_plan.com_roundoff_gamma
+        * kick_plan.com_transform_condition_inf
+    )
+    component_bounds = tuple(factor * scale for scale in component_sums)
+    raw_norm = math.hypot(*raw_residual)
+    bound_norm = math.hypot(*component_bounds)
+    values = (
+        *raw_residual,
+        *component_sums,
+        *component_bounds,
+        raw_norm,
+        bound_norm,
+    )
+    if not all(math.isfinite(value) for value in values):
+        raise KernelContractError("COM-closure diagnostic is nonfinite")
+    if (
+        any(
+            abs(residual) > bound
+            for residual, bound in zip(raw_residual, component_bounds)
+        )
+        or raw_norm > bound_norm
+    ):
+        raise KernelContractError(
+            "provider violates the derived binary64 COM-force closure bound"
+        )
+
+    projected = list(force)
+    projected[0] = _ZERO_ROW
+    diagnostics = ComProjectionDiagnostics(
+        raw_residual_kg_m_per_s2=raw_residual,
+        component_bounds_kg_m_per_s2=component_bounds,
+        componentwise_absolute_force_sums_kg_m_per_s2=component_sums,
+        raw_residual_norm_kg_m_per_s2=raw_norm,
+        derived_bound_norm_kg_m_per_s2=bound_norm,
+        transform_condition_inf=kick_plan.com_transform_condition_inf,
+        accumulated_force_terms=kick_plan.body_count,
+        rounded_operation_count=kick_plan.com_roundoff_operation_count,
+        gamma=kick_plan.com_roundoff_gamma,
+        projection_applied=True,
+    )
+    return tuple(projected), diagnostics
 
 
 def _metadata(
@@ -443,7 +587,14 @@ def _metadata(
     *,
     tangent: bool,
     zero: bool,
+    force_projection: ComProjectionDiagnostics | None = None,
+    jvp_projection: ComProjectionDiagnostics | None = None,
 ) -> KickEvaluationMetadata:
+    if zero:
+        if force_projection is not None or jvp_projection is not None:
+            raise KernelContractError("zero-duration metadata cannot project")
+    elif force_projection is None or (tangent != (jvp_projection is not None)):
+        raise KernelContractError("COM-projection metadata is incomplete")
     names = () if zero else (("force", "jvp") if tangent else ("force",))
     events = tuple(AccountingEvent(AccountingDomain.MAP_STAGE, name) for name in names)
     return KickEvaluationMetadata(
@@ -454,6 +605,8 @@ def _metadata(
         synchronization_evaluations=0,
         request_id=context.request_id,
         plan_fingerprint=plan.fingerprint,
+        force_com_projection=force_projection,
+        jvp_com_projection=jvp_projection,
     )
 
 
@@ -475,15 +628,28 @@ def apply_interaction_kick(
             state.layout, state.q_m, state.p_kg_m_per_s, state.unit_system_id
         )
         return InteractionKickResult(detached, tuple(_ZERO_ROW for _ in state.q_m), _metadata(plan, context, tangent=False, zero=True))
-    inertial = _inertial_state(jacobi_plan, model, state.q_m)
+    projected_q = _project_internal_rows(state.q_m)
+    inertial = _inertial_state(jacobi_plan, model, projected_q)
     acceleration = evaluate_force(provider, model, inertial, context)
-    force = _canonical_force(jacobi_plan, acceleration.values_m_per_s2)
+    force, force_projection = _canonical_force(
+        plan, jacobi_plan, acceleration.values_m_per_s2
+    )
     momenta = tuple(
         tuple(p + seconds * f for p, f in zip(p_row, f_row))
         for p_row, f_row in zip(state.p_kg_m_per_s, force)
     )
     result = CanonicalJacobiState(state.layout, state.q_m, momenta, state.unit_system_id)
-    return InteractionKickResult(result, force, _metadata(plan, context, tangent=False, zero=False))
+    return InteractionKickResult(
+        result,
+        force,
+        _metadata(
+            plan,
+            context,
+            tangent=False,
+            zero=False,
+            force_projection=force_projection,
+        ),
+    )
 
 
 def apply_interaction_kick_tangent(
@@ -521,13 +687,19 @@ def apply_interaction_kick_tangent(
             zeros,
             _metadata(plan, context, tangent=True, zero=True),
         )
-    inertial = _inertial_state(jacobi_plan, model, state.q_m)
+    projected_q = _project_internal_rows(state.q_m)
+    inertial = _inertial_state(jacobi_plan, model, projected_q)
     acceleration = evaluate_force(provider, model, inertial, context)
-    force = _canonical_force(jacobi_plan, acceleration.values_m_per_s2)
-    delta_positions = _inverse_position_rows(jacobi_plan, tangent.delta_q_m)
+    force, force_projection = _canonical_force(
+        plan, jacobi_plan, acceleration.values_m_per_s2
+    )
+    projected_delta_q = _project_internal_rows(tangent.delta_q_m)
+    delta_positions = _inverse_position_rows(jacobi_plan, projected_delta_q)
     direction = CartesianPositionTangent(model.layout, delta_positions, UNIT_SYSTEM)
     acceleration_jvp = evaluate_jvp(provider, model, inertial, direction, context)
-    force_jvp = _canonical_force(jacobi_plan, acceleration_jvp.values_m_per_s2)
+    force_jvp, jvp_projection = _canonical_force(
+        plan, jacobi_plan, acceleration_jvp.values_m_per_s2
+    )
     momenta = tuple(
         tuple(p + seconds * f for p, f in zip(p_row, f_row))
         for p_row, f_row in zip(state.p_kg_m_per_s, force)
@@ -545,13 +717,22 @@ def apply_interaction_kick_tangent(
         result_tangent,
         force,
         force_jvp,
-        _metadata(plan, context, tangent=True, zero=False),
+        _metadata(
+            plan,
+            context,
+            tangent=True,
+            zero=False,
+            force_projection=force_projection,
+            jvp_projection=jvp_projection,
+        ),
     )
 
 
 __all__ = [
     "CANONICAL_ADAPTER",
     "CAPABILITY_SCHEMA",
+    "COM_CLOSURE_SCHEMA",
+    "ComProjectionDiagnostics",
     "InteractionKickPlan",
     "InteractionKickResult",
     "InteractionKickTangentResult",

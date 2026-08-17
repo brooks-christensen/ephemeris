@@ -5,6 +5,7 @@ from __future__ import annotations
 import ast
 from dataclasses import FrozenInstanceError, replace
 from pathlib import Path
+import math
 import unittest
 from unittest import mock
 
@@ -87,7 +88,16 @@ class ProviderProxy:
                 [(0.0, 0.0, 0.0) for _ in layout.body_ids],
                 "si_v1",
             )
-        return self.delegate.evaluate(model, state, context)
+        result = self.delegate.evaluate(model, state, context)
+        if self.variant in {"roundoff_offset", "above_bound"}:
+            rows = [list(row) for row in result.values_m_per_s2]
+            if self.variant == "roundoff_offset":
+                for _ in range(32):
+                    rows[0][0] = math.nextafter(rows[0][0], math.inf)
+            else:
+                rows[0][0] += 0.5
+            return CartesianAcceleration(model.layout, rows, "si_v1")
+        return result
 
     def jvp(self, model, state, direction, context):
         if self.variant == "wrong_jvp_type":
@@ -168,6 +178,45 @@ class PlanSemanticsTests(unittest.TestCase):
         )
         with self.assertRaises(LayoutMismatch):
             build_interaction_kick_plan(model, jacobi, mismatched)
+
+    def test_below_bound_roundoff_residual_is_recorded_and_projected(self) -> None:
+        model, jacobi, provider, plan, state, _, context = fixture("dense")
+        result = apply_interaction_kick(
+            plan,
+            jacobi,
+            model,
+            ProviderProxy(provider, "roundoff_offset"),
+            state,
+            ExactSeconds(1),
+            context,
+        )
+        diagnostics = result.metadata.force_com_projection
+        self.assertIsNotNone(diagnostics)
+        self.assertGreater(diagnostics.raw_residual_norm_kg_m_per_s2, 0.0)
+        self.assertLessEqual(
+            diagnostics.raw_residual_norm_kg_m_per_s2,
+            diagnostics.derived_bound_norm_kg_m_per_s2,
+        )
+        for residual, bound in zip(
+            diagnostics.raw_residual_kg_m_per_s2,
+            diagnostics.component_bounds_kg_m_per_s2,
+        ):
+            self.assertLessEqual(abs(residual), bound)
+        self.assertTrue(diagnostics.projection_applied)
+
+    def test_exact_projected_com_force(self) -> None:
+        for kind in ("dense", "nonlinear"):
+            values = _apply(kind)
+            physical = values[7]
+            self.assertEqual(
+                physical.canonical_force_kg_m_per_s2[0],
+                (0.0, 0.0, 0.0),
+            )
+            diagnostics = physical.metadata.force_com_projection
+            self.assertIsNotNone(diagnostics)
+            self.assertTrue(diagnostics.projection_applied)
+            self.assertEqual(diagnostics.accumulated_force_terms, 4)
+            self.assertEqual(diagnostics.rounded_operation_count, 7)
 
 
 class PhysicalKickTests(unittest.TestCase):
@@ -322,6 +371,86 @@ class TangentKickTests(unittest.TestCase):
             )
         )
 
+    def test_exact_projected_com_jvp_output(self) -> None:
+        for kind in ("dense", "nonlinear"):
+            varied = _apply(kind)[8]
+            self.assertEqual(
+                varied.canonical_force_jvp_kg_m_per_s2[0],
+                (0.0, 0.0, 0.0),
+            )
+            diagnostics = varied.metadata.jvp_com_projection
+            self.assertIsNotNone(diagnostics)
+            self.assertTrue(diagnostics.projection_applied)
+            self.assertLessEqual(
+                diagnostics.raw_residual_norm_kg_m_per_s2,
+                diagnostics.derived_bound_norm_kg_m_per_s2,
+            )
+
+    def test_com_only_tangent_has_no_internal_force_effect(self) -> None:
+        model, jacobi, provider, plan, state, _, context = fixture("nonlinear")
+        tangent = CanonicalJacobiTangentState(
+            model.layout,
+            ((0.25, -0.5, 1.0), (0.0, 0.0, 0.0),
+             (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)),
+            ((0.0, 0.0, 0.0),) * 4,
+            "si_v1",
+        )
+        result = apply_interaction_kick_tangent(
+            plan,
+            jacobi,
+            model,
+            provider,
+            state,
+            tangent,
+            ExactSeconds(7, 4),
+            context,
+        )
+        self.assertEqual(
+            result.canonical_force_jvp_kg_m_per_s2,
+            ((0.0, 0.0, 0.0),) * 4,
+        )
+        self.assertEqual(result.tangent, tangent)
+
+    def test_projected_force_jvp_finite_difference_closure(self) -> None:
+        for kind in ("dense", "nonlinear"):
+            metrics = finite_difference_series(kind)
+            self.assertTrue(metrics["acceptance"]["force_jvp"])
+            self.assertLessEqual(metrics["force_minimum"], FD_CAP)
+
+    def test_projected_jacobian_symmetry(self) -> None:
+        for kind in ("dense", "nonlinear"):
+            matrix = runtime_tangent_matrix(kind, ExactSeconds(7, 4))
+            projected_jacobian = matrix[12:, :12] / 1.75
+            self.assertLessEqual(
+                np.max(
+                    np.abs(
+                        projected_jacobian - projected_jacobian.T
+                    )
+                ),
+                SYMMETRY_CAP,
+            )
+            self.assertTrue(
+                np.array_equal(
+                    projected_jacobian[0:3],
+                    np.zeros((3, 12)),
+                )
+            )
+
+    def test_projected_kick_symplecticity(self) -> None:
+        for kind in ("dense", "nonlinear"):
+            matrix = runtime_tangent_matrix(kind, ExactSeconds(7, 4))
+            self.assertLessEqual(
+                symplectic_residual(matrix)[0],
+                SYMPLECTIC_CAP,
+            )
+            scale = np.diag(np.asarray([4.0] * 12 + [0.25] * 12))
+            self.assertLessEqual(
+                symplectic_residual(
+                    np.linalg.inv(scale) @ matrix @ scale
+                )[0],
+                SYMPLECTIC_CAP,
+            )
+
     def test_complete_kick_finite_difference_ladder(self) -> None:
         for kind in ("dense", "nonlinear"):
             metrics = finite_difference_series(kind)
@@ -387,6 +516,44 @@ class TangentKickTests(unittest.TestCase):
 
 
 class NegativeControlTests(unittest.TestCase):
+    def test_above_bound_com_residual_is_rejected(self) -> None:
+        model, jacobi, provider, plan, state, _, context = fixture("dense")
+        with self.assertRaisesRegex(
+            KernelContractError,
+            "derived binary64 COM-force closure bound",
+        ):
+            apply_interaction_kick(
+                plan,
+                jacobi,
+                model,
+                ProviderProxy(provider, "above_bound"),
+                state,
+                ExactSeconds(1),
+                context,
+            )
+
+    def test_projection_does_not_hide_nonconservative_or_nonclosing_provider(self) -> None:
+        model, jacobi, provider, plan, state, _, context = fixture("dense")
+        with self.assertRaises(KernelContractError):
+            apply_interaction_kick(
+                plan,
+                jacobi,
+                model,
+                ProviderProxy(provider, "above_bound"),
+                state,
+                ExactSeconds(1),
+                context,
+            )
+        nonconservative = replace(
+            provider.capabilities,
+            provider_id="step3g1d_nonconservative_projection_control",
+            provider_fingerprint="3" * 64,
+            conservative_canonical_force=False,
+            symmetric_canonical_jacobian=False,
+        )
+        with self.assertRaises(KernelContractError):
+            build_interaction_kick_plan(model, jacobi, nonconservative)
+
     def test_nonsymmetric_control_is_detected_and_fails_symplecticity(self) -> None:
         model, jacobi, provider, _, state, *_ = fixture("dense")
         _, jacobian, _ = canonical_force_and_jacobian(
@@ -467,6 +634,8 @@ class OwnershipAccountingTests(unittest.TestCase):
             values[3].body_count = 7
         with self.assertRaises(FrozenInstanceError):
             physical.metadata.force_evaluations = 2
+        with self.assertRaises(FrozenInstanceError):
+            physical.metadata.force_com_projection.projection_applied = False
 
     def test_exact_call_order_counts_and_disjoint_events(self) -> None:
         model, jacobi, provider, plan, state, tangent, context = fixture("dense")

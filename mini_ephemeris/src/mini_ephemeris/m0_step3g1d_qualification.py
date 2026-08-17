@@ -44,7 +44,11 @@ MANIFEST26 = ROOT / (
     "ephemeris_experiment_runner/manifests/"
     "26_m0_step3g1d_interaction_kick_tangent_primitive_v1.json"
 )
-PREREGISTRATION_COMMIT = "0e646f0dbc79f0c04b68514025b1a480e7a8d773"
+MANIFEST27 = ROOT / (
+    "ephemeris_experiment_runner/manifests/"
+    "27_m0_step3g1d_interaction_kick_corrective_completion_v1.json"
+)
+PREREGISTRATION_COMMIT = "068695ace38a68ff83238668b5630867f8572a9b"
 PYTEST_SITE_PACKAGES = Path(
     "/home/peacelovephysics/sheet-music-generator/.venv/lib/python3.10/site-packages"
 )
@@ -106,6 +110,13 @@ def manifest26() -> Mapping[str, Any]:
     value = strict_json(MANIFEST26)
     if not isinstance(value, dict):
         raise TypeError("Manifest 26 must be a JSON object")
+    return value
+
+
+def manifest27() -> Mapping[str, Any]:
+    value = strict_json(MANIFEST27)
+    if not isinstance(value, dict):
+        raise TypeError("Manifest 27 must be a JSON object")
     return value
 
 
@@ -567,10 +578,61 @@ def _accounting_payload(metadata) -> Mapping[str, Any]:
     }
 
 
+def _projection_payload(diagnostics) -> Mapping[str, Any]:
+    component_ratios = []
+    for residual, bound in zip(
+        diagnostics.raw_residual_kg_m_per_s2,
+        diagnostics.component_bounds_kg_m_per_s2,
+    ):
+        component_ratios.append(
+            abs(residual) / bound
+            if bound > 0.0
+            else (0.0 if residual == 0.0 else math.inf)
+        )
+    norm_ratio = (
+        diagnostics.raw_residual_norm_kg_m_per_s2
+        / diagnostics.derived_bound_norm_kg_m_per_s2
+        if diagnostics.derived_bound_norm_kg_m_per_s2 > 0.0
+        else (
+            0.0
+            if diagnostics.raw_residual_norm_kg_m_per_s2 == 0.0
+            else math.inf
+        )
+    )
+    return {
+        "accumulated_force_terms": diagnostics.accumulated_force_terms,
+        "component_bounds_kg_m_per_s2": list(
+            diagnostics.component_bounds_kg_m_per_s2
+        ),
+        "component_ratio_max": max(component_ratios),
+        "componentwise_absolute_force_sums_kg_m_per_s2": list(
+            diagnostics.componentwise_absolute_force_sums_kg_m_per_s2
+        ),
+        "derived_bound_norm_kg_m_per_s2": (
+            diagnostics.derived_bound_norm_kg_m_per_s2
+        ),
+        "gamma": diagnostics.gamma,
+        "norm_ratio": norm_ratio,
+        "projection_applied": diagnostics.projection_applied,
+        "raw_residual_kg_m_per_s2": list(
+            diagnostics.raw_residual_kg_m_per_s2
+        ),
+        "raw_residual_norm_kg_m_per_s2": (
+            diagnostics.raw_residual_norm_kg_m_per_s2
+        ),
+        "rounded_operation_count": diagnostics.rounded_operation_count,
+        "transform_condition_inf": diagnostics.transform_condition_inf,
+        "within_bound": (
+            max(component_ratios) <= 1.0 and norm_ratio <= 1.0
+        ),
+    }
+
+
 def compute_metrics() -> Mapping[str, Any]:
     physical_cases = []
     tangent_cases = []
     accounting_cases = []
+    projection_cases = []
     symplectic_cases = []
     reversibility_cases = []
     composition_cases = []
@@ -645,6 +707,37 @@ def compute_metrics() -> Mapping[str, Any]:
                     "tangent": _accounting_payload(varied.metadata),
                 }
             )
+            for channel, diagnostics, force_rows in (
+                (
+                    "physical_force",
+                    physical.metadata.force_com_projection,
+                    physical.canonical_force_kg_m_per_s2,
+                ),
+                (
+                    "tangent_force",
+                    varied.metadata.force_com_projection,
+                    varied.canonical_force_kg_m_per_s2,
+                ),
+                (
+                    "tangent_jvp",
+                    varied.metadata.jvp_com_projection,
+                    varied.canonical_force_jvp_kg_m_per_s2,
+                ),
+            ):
+                if diagnostics is None:
+                    raise AssertionError("nonzero kick omitted projection evidence")
+                payload = dict(_projection_payload(diagnostics))
+                payload.update(
+                    {
+                        "channel": channel,
+                        "duration_s": seconds,
+                        "exact_zero_com_output": (
+                            force_rows[0] == (0.0, 0.0, 0.0)
+                        ),
+                        "kind": kind,
+                    }
+                )
+                projection_cases.append(payload)
         matrix = runtime_tangent_matrix(kind, ExactSeconds(7, 4))
         raw = symplectic_residual(matrix)
         scale = np.diag(np.asarray([4.0] * 12 + [0.25] * 12))
@@ -771,12 +864,39 @@ def compute_metrics() -> Mapping[str, Any]:
                 and _accounting_payload(zero_tangent.metadata)
                 == {"events": [], "force": 0, "jvp": 0, "observer": 0,
                     "synchronization": 0}
+                and zero_physical.metadata.force_com_projection is None
+                and zero_physical.metadata.jvp_com_projection is None
+                and zero_tangent.metadata.force_com_projection is None
+                and zero_tangent.metadata.jvp_com_projection is None
             ),
             "cases": accounting_cases,
             "zero_duration": {
                 "physical": _accounting_payload(zero_physical.metadata),
                 "tangent": _accounting_payload(zero_tangent.metadata),
             },
+        },
+        "com_projection": {
+            "acceptance": all(
+                value["within_bound"]
+                and value["projection_applied"]
+                and value["exact_zero_com_output"]
+                for value in projection_cases
+            ),
+            "cases": projection_cases,
+            "maximum_component_ratio": max(
+                value["component_ratio_max"] for value in projection_cases
+            ),
+            "maximum_derived_bound_norm_kg_m_per_s2": max(
+                value["derived_bound_norm_kg_m_per_s2"]
+                for value in projection_cases
+            ),
+            "maximum_norm_ratio": max(
+                value["norm_ratio"] for value in projection_cases
+            ),
+            "maximum_raw_residual_norm_kg_m_per_s2": max(
+                value["raw_residual_norm_kg_m_per_s2"]
+                for value in projection_cases
+            ),
         },
         "composition": {
             "acceptance": maximum_composition <= COMPOSITION_CAP,
@@ -785,6 +905,9 @@ def compute_metrics() -> Mapping[str, Any]:
         },
         "conditioning": {
             "canonical_scale_cond2": 16.0,
+            "com_transform_condition_inf": zero_fixture[
+                3
+            ].com_transform_condition_inf,
             "dense_k_cond2": float(np.linalg.cond(K_DENSE)),
             "jacobi_cond2": float(
                 np.linalg.cond(
@@ -979,7 +1102,7 @@ class Step3g1dImportGuard(importlib.abc.MetaPathFinder):
     ) -> None:
         del path, target
         if _is_forbidden_module(fullname):
-            raise ImportError(f"Manifest 26 forbids importing {fullname!r}")
+            raise ImportError(f"Manifest 27 forbids importing {fullname!r}")
         if not self.strict:
             return None
         root = fullname.split(".", 1)[0]
@@ -993,7 +1116,7 @@ class Step3g1dImportGuard(importlib.abc.MetaPathFinder):
         )
         if not allowed:
             raise ImportError(
-                f"Manifest 26 import root is not allowlisted: {fullname!r}"
+                f"Manifest 27 import root is not allowlisted: {fullname!r}"
             )
         return None
 
@@ -1116,7 +1239,7 @@ def pytest_runtime_audit() -> Mapping[str, Any]:
 
 
 def static_safety_audit() -> Mapping[str, Any]:
-    manifest = manifest26()
+    manifest = manifest27()
     for relative, expected in manifest["qualified_read_only_sha256"].items():
         if sha256_file(ROOT / relative) != expected:
             raise AssertionError(f"qualified prior file changed: {relative}")
@@ -1132,7 +1255,8 @@ def static_safety_audit() -> Mapping[str, Any]:
         if path.is_file() and path.suffix == ".py"
     }
     if actual_v2 != expected_v2:
-        raise AssertionError("v2 source inventory differs from Manifest 26")
+        raise AssertionError("v2 source inventory differs from Manifest 27")
+
     source_paths = [
         ROOT / manifest["paths"][key]
         for key in (
@@ -1160,6 +1284,7 @@ def static_safety_audit() -> Mapping[str, Any]:
     )
     if prohibited:
         raise AssertionError(f"static import graph is unsafe: {prohibited}")
+
     selection = manifest["exact_test_selection"]
     keys = (
         "step3g1d_core_node_ids",
@@ -1170,17 +1295,37 @@ def static_safety_audit() -> Mapping[str, Any]:
         "artifact_node_ids",
     )
     all_nodes = [node for key in keys for node in selection[key]]
+    if len(all_nodes) != 118 or len(set(all_nodes)) != 118:
+        raise AssertionError("Manifest 27 literal-node inventory changed")
     _verify_node_ids(all_nodes)
-    subprocesses = _subprocess_inventory(
-        ROOT / manifest["paths"]["qualification_helper"]
+
+    helper_path = ROOT / manifest["paths"]["qualification_helper"]
+    runner_path = ROOT / manifest["paths"]["runner"]
+    subprocesses = tuple(
+        sorted(
+            _subprocess_inventory(helper_path)
+            + _subprocess_inventory(runner_path)
+        )
     )
-    owners = {":".join(value.split(":")[-2:]) for value in subprocesses}
-    expected_owners = {
-        "git_output:check_output",
-        "run_fresh_artifact_probe:run",
-        "run_fresh_kick_probe:run",
+    expected_subprocesses = {
+        (
+            "mini_ephemeris/src/mini_ephemeris/"
+            "m0_step3g1d_qualification.py:git_output:check_output"
+        ),
+        (
+            "mini_ephemeris/src/mini_ephemeris/"
+            "m0_step3g1d_qualification.py:run_fresh_artifact_probe:run"
+        ),
+        (
+            "mini_ephemeris/src/mini_ephemeris/"
+            "m0_step3g1d_qualification.py:run_fresh_kick_probe:run"
+        ),
+        (
+            "mini_ephemeris/src/mini_ephemeris/"
+            "m0_step3g1d_qualification_runner.py:_run_group_worker:run"
+        ),
     }
-    if owners != expected_owners:
+    if set(subprocesses) != expected_subprocesses:
         raise AssertionError(f"subprocess closure changed: {subprocesses}")
     assert_protected_runtime_absent()
     return {
@@ -1227,6 +1372,12 @@ print(json.dumps({
     "events": [event.operation for event in result.metadata.events],
     "legacy_nbody": "mini_ephemeris.nbody" in sys.modules,
     "plan": plan.fingerprint,
+    "projection": {
+        "force_bound": result.metadata.force_com_projection.derived_bound_norm_kg_m_per_s2,
+        "force_raw": result.metadata.force_com_projection.raw_residual_norm_kg_m_per_s2,
+        "jvp_bound": result.metadata.jvp_com_projection.derived_bound_norm_kg_m_per_s2,
+        "jvp_raw": result.metadata.jvp_com_projection.raw_residual_norm_kg_m_per_s2,
+    },
     "state": phase(result.state).tolist(),
     "tangent": tangent_phase(result.tangent).tolist(),
 }, sort_keys=True, separators=(",", ":"), allow_nan=False))
@@ -1263,6 +1414,7 @@ def run_fresh_kick_probe(hash_seed: int, locale_name: str) -> str:
     environment = os.environ.copy()
     environment["PYTHONHASHSEED"] = str(hash_seed)
     environment["LC_ALL"] = locale_name
+    environment["LANG"] = locale_name
     result = subprocess.run(
         [
             sys.executable,
@@ -1280,10 +1432,15 @@ def run_fresh_kick_probe(hash_seed: int, locale_name: str) -> str:
     return result.stdout
 
 
-def run_fresh_artifact_probe(destination: Path) -> None:
+def run_fresh_artifact_probe(
+    destination: Path,
+    hash_seed: int,
+    locale_name: str,
+) -> None:
     environment = os.environ.copy()
-    environment["PYTHONHASHSEED"] = "0"
-    environment["LC_ALL"] = "C"
+    environment["PYTHONHASHSEED"] = str(hash_seed)
+    environment["LC_ALL"] = locale_name
+    environment["LANG"] = locale_name
     subprocess.run(
         [
             sys.executable,
@@ -1310,13 +1467,75 @@ def git_output(arguments: Sequence[str]) -> str:
     ).strip()
 
 
+def verify_generated_provenance() -> Mapping[str, Any]:
+    manifest = manifest27()
+    generated = manifest["generated_provenance"]
+    frozen = generated["manifests_13_through_25_sha256"]
+    manifest_root = ROOT / "ephemeris_experiment_runner/manifests"
+    actual = {
+        name: sha256_file(manifest_root / name)
+        for name in frozen
+    }
+    if set(actual) != set(frozen) or any(
+        len(digest) != 64
+        or any(character not in "0123456789abcdef" for character in digest)
+        for digest in frozen.values()
+    ):
+        raise AssertionError("historical hash table is malformed or incomplete")
+    if actual != frozen:
+        raise AssertionError("generated historical hashes changed")
+
+    manifest25 = strict_json(
+        manifest_root
+        / "25_m0_step3g1c_kepler_drift_tangent_primitive_v1.json"
+    )
+    manifest25_values = manifest25["controlled_baseline"][
+        "manifest_sha256_13_through_24"
+    ]
+    for number in range(13, 25):
+        matches = [
+            name for name in actual if name.startswith(f"{number:02d}_")
+        ]
+        if len(matches) != 1 or actual[matches[0]] != manifest25_values[str(number)]:
+            raise AssertionError(
+                f"Manifest 25 provenance mismatch for Manifest {number}"
+            )
+
+    copied = manifest26()["inherited_integrity"][
+        "manifests_13_through_25_sha256"
+    ]
+    observed_errors = [
+        {
+            "actual_sha256": actual[name],
+            "file": name,
+            "manifest26_sha256": copied[name],
+        }
+        for name in sorted(actual)
+        if copied.get(name) != actual[name]
+    ]
+    if observed_errors != generated["manifest26_errors"]:
+        raise AssertionError("Manifest 26 error inventory changed")
+    if len(observed_errors) != 12 or {
+        int(value["file"].split("_", 1)[0])
+        for value in observed_errors
+    } != set(range(13, 25)):
+        raise AssertionError("Manifest 26 error set is not exactly 13 through 24")
+    return {
+        "historical_manifests": len(actual),
+        "manifest25_matches": True,
+        "manifest26_error_count": len(observed_errors),
+        "status": "PASS",
+    }
+
+
 def verify_inherited_integrity() -> Mapping[str, Any]:
     from mini_ephemeris.m0_step3g1c_qualification import (
         verify_inherited_integrity as verify_step3g1c,
     )
 
     prior = verify_step3g1c()
-    manifest = manifest26()
+    manifest = manifest27()
+    provenance = verify_generated_provenance()
     expected = dict(manifest["protected_sources"])
     expected.update(manifest["qualified_read_only_sha256"])
     mismatches = {
@@ -1334,13 +1553,19 @@ def verify_inherited_integrity() -> Mapping[str, Any]:
     }
     if mismatches:
         raise AssertionError(f"inherited hash mismatch: {mismatches}")
-    manifest_root = ROOT / "ephemeris_experiment_runner/manifests"
-    manifest_hashes = manifest["inherited_integrity"][
-        "manifests_13_through_25_sha256"
-    ]
-    for name, digest in manifest_hashes.items():
-        if sha256_file(manifest_root / name) != digest:
-            raise AssertionError(f"historical manifest changed: {name}")
+
+    for relative, digest in manifest["corrective_start_sha256"].items():
+        if not relative.startswith(
+            "docs/validation/m0-step3g1d-interaction-kick-tangent-primitive-v1/"
+        ):
+            continue
+        if sha256_file(ROOT / relative) != digest:
+            raise AssertionError(f"Manifest 26 blocked evidence changed: {relative}")
+    if sha256_file(MANIFEST26) != manifest[
+        "manifest26_permanent_disposition"
+    ]["manifest_sha256"]:
+        raise AssertionError("Manifest 26 changed")
+
     artifact_root = ROOT / (
         "docs/validation/"
         "m0-step3g1c-kepler-drift-tangent-primitive-v1"
@@ -1357,16 +1582,18 @@ def verify_inherited_integrity() -> Mapping[str, Any]:
             or git_output(["rev-parse", tag]) != identity["tag_object"]
         ):
             raise AssertionError(f"protected tag changed: {tag}")
-    if prior["status"] != "PASS":
-        raise AssertionError("Step 3g1c inherited integrity did not pass")
+    if prior["status"] != "PASS" or provenance["status"] != "PASS":
+        raise AssertionError("inherited integrity did not pass")
     return {
         "checked_hashes": (
             prior["checked_hashes"]
             + len(expected)
-            + len(manifest_hashes)
+            + provenance["historical_manifests"]
             + len(artifact_hashes)
+            + 3
         ),
-        "historical_manifests": 13,
+        "historical_manifests": provenance["historical_manifests"],
+        "manifest26_error_count": provenance["manifest26_error_count"],
         "protected_tags": 2,
         "status": "PASS",
     }

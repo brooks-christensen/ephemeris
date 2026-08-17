@@ -1,4 +1,4 @@
-"""Deterministic artifact gates for Step 3g1d."""
+"""Artifact gates for Step 3g1d corrective completion."""
 
 from __future__ import annotations
 
@@ -6,7 +6,7 @@ import csv
 import unittest
 
 from mini_ephemeris.m0_step3g1d_qualification import (
-    manifest26,
+    manifest27,
     sha256_file,
     strict_json,
 )
@@ -15,6 +15,14 @@ from mini_ephemeris.m0_step3g1d_reporting import (
     EXPECTED_ARTIFACTS,
     compare_fresh_regeneration,
     validate_artifacts,
+)
+
+
+SUMMARY_NAME = (
+    "m0_step3g1d_interaction_kick_corrective_completion_summary.json"
+)
+REPORT_NAME = (
+    "m0_step3g1d_interaction_kick_corrective_completion_report.md"
 )
 
 
@@ -29,15 +37,11 @@ class Step3g1dArtifactTests(unittest.TestCase):
         validate_artifacts()
 
     def test_summary_report_manifest_and_specs_agree(self) -> None:
-        manifest = manifest26()
-        summary = strict_json(
-            DEFAULT_DESTINATION
-            / "m0_step3g1d_interaction_kick_tangent_primitive_summary.json"
+        manifest = manifest27()
+        summary = strict_json(DEFAULT_DESTINATION / SUMMARY_NAME)
+        report = (DEFAULT_DESTINATION / REPORT_NAME).read_text(
+            encoding="utf-8"
         )
-        report = (
-            DEFAULT_DESTINATION
-            / "m0_step3g1d_interaction_kick_tangent_primitive_report.md"
-        ).read_text(encoding="utf-8")
         provider_spec = (
             DEFAULT_DESTINATION
             / "canonical_kick_provider_specification.md"
@@ -47,7 +51,31 @@ class Step3g1dArtifactTests(unittest.TestCase):
         ).read_text(encoding="utf-8")
         self.assertEqual(
             summary["verification_envelope"],
-            manifest["result_vocabulary"]["verification_envelope"],
+            manifest["result_vocabulary"][
+                "successful_verification_envelope"
+            ],
+        )
+        self.assertEqual(
+            summary["manifest26_final_status"],
+            "STEP3G1D_BLOCKED",
+        )
+        self.assertEqual(
+            summary["manifest26_blocked_closeout_commit"],
+            manifest["manifest26_permanent_disposition"][
+                "blocked_closeout_commit"
+            ],
+        )
+        self.assertEqual(
+            summary["preregistration_commit"],
+            "068695ace38a68ff83238668b5630867f8572a9b",
+        )
+        self.assertEqual(
+            summary["exact_test_counts"]["total"],
+            118,
+        )
+        self.assertEqual(
+            len(summary["process_isolation"]["groups"]),
+            4,
         )
         for value in (
             summary["final_status"],
@@ -56,15 +84,17 @@ class Step3g1dArtifactTests(unittest.TestCase):
         ):
             self.assertIn(value, report)
         self.assertIn("F_q=A^-T f_x", provider_spec)
-        self.assertIn("M=[[I,0],[h J_F,I]]", tangent)
+        self.assertIn("M=[[I,0],[h J_projected,I]]", tangent)
         self.assertIn("No physical force provider", report)
+        self.assertIn("Manifest 26 remains permanently", report)
+        self.assertIn("test runner, not the", report)
         self.assertIn(
             "Step 3g1c raw symplectic residual remains an inherited risk",
             report,
         )
 
     def test_exact_test_inventory_and_traceability_are_complete(self) -> None:
-        manifest = manifest26()
+        manifest = manifest27()
         inventory = strict_json(
             DEFAULT_DESTINATION / "qualifying_test_inventory.json"
         )
@@ -106,6 +136,19 @@ class Step3g1dArtifactTests(unittest.TestCase):
             self.assertTrue(
                 all(metrics["acceptance"].values()), msg=name
             )
+        closure = strict_json(
+            DEFAULT_DESTINATION / "force_jvp_closure_metrics.json"
+        )["com_projection"]
+        self.assertTrue(closure["acceptance"])
+        self.assertLessEqual(closure["maximum_norm_ratio"], 1.0)
+        self.assertLessEqual(closure["maximum_component_ratio"], 1.0)
+        self.assertTrue(
+            all(
+                case["projection_applied"]
+                and case["exact_zero_com_output"]
+                for case in closure["cases"]
+            )
+        )
 
     def test_fresh_process_regeneration_is_byte_identical(self) -> None:
         compare_fresh_regeneration()

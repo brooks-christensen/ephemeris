@@ -1,0 +1,42 @@
+{
+  "campaign": "m0_step3g1d_interaction_kick_corrective_completion_v1",
+  "final_status": "STEP3G1D_CORRECTIVE_COMPLETION_FAILED",
+  "forbidden_operations_occurred": false,
+  "full_qualification_artifacts_generated": false,
+  "kind": "m0_step3g1d_corrective_completion_failure_summary",
+  "manifest26_status": "STEP3G1D_BLOCKED",
+  "manifest27_preregistration_commit": "068695ace38a68ff83238668b5630867f8572a9b",
+  "manifest27_sha256": "2c41f8d869041f9728cf411c04949d8ca34cebd16ace1b7d119b6cf530cfa1dd",
+  "numerical_evidence": {
+    "accounting": {"acceptance": true, "zero_duration_force_evaluations": 0, "zero_duration_jvp_evaluations": 0},
+    "com_projection": {"acceptance": true, "exact_zero_force_and_jvp_rows": true, "maximum_component_ratio": 0.008993624384129427, "maximum_derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14, "maximum_norm_ratio": 0.006832372041440279, "maximum_raw_residual_norm_kg_m_per_s2": 2.7194799110210365e-16, "worst_raw_case_derived_bound_norm_kg_m_per_s2": 3.980286633290192e-14},
+    "composition": {"acceptance": true, "cap": 4e-12, "maximum_scaled": 1.3377282781857505e-16},
+    "finite_difference": {
+      "cap": 2e-7,
+      "dense": {"acceptance": false, "force_early_improvements": 0, "force_minimum_index": 0, "force_minimum_relative_l2": 2.137694166068828e-15, "kick_early_improvements": 0, "kick_minimum_index": 0, "kick_minimum_relative_l2": 1.6216182874045567e-15},
+      "nonlinear": {"acceptance": true, "force_minimum_index": 3, "force_minimum_relative_l2": 7.472261461386999e-12, "kick_minimum_index": 6, "kick_minimum_relative_l2": 0.0}
+    },
+    "negative_control": {"acceptance": true, "jacobian_asymmetry_max": 0.5, "symplectic_raw_max": 0.5},
+    "physical_oracle": {"acceptance": true, "cap": 2e-12, "maximum_scaled": 1.4035195471874325e-16},
+    "reversibility": {"acceptance": true, "cap": 4e-12, "maximum_scaled": 1.1842378929335003e-16},
+    "symplecticity": {"acceptance": true, "cap": 5e-12, "dense_raw_max": 4.510281037539698e-16, "dense_scaled_max": 7.216449660063518e-15, "nonlinear_raw_max": 1.3877787807814457e-17, "nonlinear_scaled_max": 2.220446049250313e-16},
+    "tangent_oracle": {"acceptance": true, "cap": 4e-12, "maximum_scaled": 1.8078709969148304e-16}
+  },
+  "primary_finding": "SYNTHETIC_CONSERVATIVE_INTERACTION_KICK_NOT_QUALIFIED",
+  "schema_version": 1,
+  "test_results": {
+    "failed_node_ids": [
+      "mini_ephemeris/tests/test_v2_kick.py::TangentKickTests::test_complete_kick_finite_difference_ladder",
+      "mini_ephemeris/tests/test_v2_kick.py::TangentKickTests::test_force_and_jvp_finite_difference_closure",
+      "mini_ephemeris/tests/test_v2_kick.py::TangentKickTests::test_projected_force_jvp_finite_difference_closure"
+    ],
+    "pre_artifact_failed": 3,
+    "pre_artifact_passed": 109,
+    "safe_step3g1a": {"failed": 0, "passed": 25},
+    "safe_step3g1b": {"failed": 0, "passed": 26},
+    "safe_step3g1c": {"failed": 0, "passed": 26},
+    "step3g1d_corrective": {"failed": 3, "passed": 32}
+  },
+  "validation": {"compilation": "PASS", "git_diff_check": "PASS", "inherited_hashes_checked": 165, "integrity": "PASS", "static_literal_nodes": 118, "static_subprocess_sites": 4, "static_safety": "PASS", "strict_json_manifests": 27},
+  "verification_envelope": "NOT_ESTABLISHED"
+}
