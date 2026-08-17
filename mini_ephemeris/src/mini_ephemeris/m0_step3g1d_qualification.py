@@ -72,6 +72,214 @@ SYMMETRY_CAP = 5.0e-12
 SYMPLECTIC_CAP = 5.0e-12
 REVERSIBILITY_CAP = 4.0e-12
 COMPOSITION_CAP = 4.0e-12
+AFFINE_EXACT = "AFFINE_EXACT"
+NONLINEAR_SMOOTH = "NONLINEAR_SMOOTH"
+FD_GATE_SCHEMA = "step3g1d.finite_difference_gate/2"
+BINARY64_UNIT_ROUNDOFF = 2.0**-53
+# A scalar path uses at most 98 rounded operations: inverse Jacobi (15),
+# three dense dot products (23, 17, 23), and adapter/kick/difference
+# arithmetic (20). The next power of two is the conservative gamma_k envelope.
+AFFINE_ROUNDOFF_OPERATION_COUNT = 128
+AFFINE_ROUNDOFF_MODEL = (
+    "gamma_128*max(1,evaluation_scale_ratio)/epsilon; "
+    "128 is the next power-of-two envelope above 98 scalar operations"
+)
+
+
+@dataclass(frozen=True)
+class FiniteDifferenceGateSpec:
+    """Immutable method selection derived from the fixture definition."""
+
+    fixture_kind: str
+    derivative_class: str
+    epsilon_exponents_base2: tuple[int, ...]
+    absolute_cap: float
+    oracle_cap: float
+    minimum_early_improvements: int | None
+    require_roundoff_turn: bool
+    affine_roundoff_operation_count: int | None
+    unit_roundoff: float = BINARY64_UNIT_ROUNDOFF
+    schema: str = FD_GATE_SCHEMA
+
+    def canonical_payload(self) -> Mapping[str, Any]:
+        return {
+            "absolute_cap_hex": finite_binary64_hex(
+                self.absolute_cap, "finite-difference cap"
+            ),
+            "affine_roundoff_operation_count": (
+                self.affine_roundoff_operation_count
+            ),
+            "affine_roundoff_operation_model": (
+                AFFINE_ROUNDOFF_MODEL
+                if self.affine_roundoff_operation_count is not None
+                else None
+            ),
+            "derivative_class": self.derivative_class,
+            "epsilon_exponents_base2": list(
+                self.epsilon_exponents_base2
+            ),
+            "fixture_kind": self.fixture_kind,
+            "minimum_early_improvements": (
+                self.minimum_early_improvements
+            ),
+            "oracle_cap_hex": finite_binary64_hex(
+                self.oracle_cap, "finite-difference oracle cap"
+            ),
+            "require_roundoff_turn": self.require_roundoff_turn,
+            "schema": self.schema,
+            "unit_roundoff_hex": finite_binary64_hex(
+                self.unit_roundoff, "binary64 unit roundoff"
+            ),
+        }
+
+    def canonical_bytes(self) -> bytes:
+        return canonical_json_bytes(self.canonical_payload())
+
+    @property
+    def fingerprint(self) -> str:
+        return sha256_hex(self.canonical_bytes())
+
+
+def finite_difference_gate_spec(kind: str) -> FiniteDifferenceGateSpec:
+    """Classify a fixture analytically, before any ladder is evaluated."""
+
+    if kind == "dense":
+        return FiniteDifferenceGateSpec(
+            fixture_kind=kind,
+            derivative_class=AFFINE_EXACT,
+            epsilon_exponents_base2=EPSILON_EXPONENTS,
+            absolute_cap=FD_CAP,
+            oracle_cap=TANGENT_CAP,
+            minimum_early_improvements=None,
+            require_roundoff_turn=False,
+            affine_roundoff_operation_count=(
+                AFFINE_ROUNDOFF_OPERATION_COUNT
+            ),
+        )
+    if kind == "nonlinear":
+        return FiniteDifferenceGateSpec(
+            fixture_kind=kind,
+            derivative_class=NONLINEAR_SMOOTH,
+            epsilon_exponents_base2=EPSILON_EXPONENTS,
+            absolute_cap=FD_CAP,
+            oracle_cap=TANGENT_CAP,
+            minimum_early_improvements=3,
+            require_roundoff_turn=True,
+            affine_roundoff_operation_count=None,
+        )
+    raise ValueError(f"unknown finite-difference fixture {kind!r}")
+
+
+def _require_frozen_gate_spec(spec: FiniteDifferenceGateSpec) -> None:
+    if (
+        not isinstance(spec, FiniteDifferenceGateSpec)
+        or spec != finite_difference_gate_spec(spec.fixture_kind)
+    ):
+        raise ValueError(
+            "finite-difference derivative classification changed"
+        )
+
+
+def assess_finite_difference_ladder(
+    spec: FiniteDifferenceGateSpec,
+    values: Sequence[float],
+    evaluation_scale_ratios: Sequence[float],
+    oracle_error: float,
+) -> Mapping[str, Any]:
+    """Apply the frozen derivative-class-specific ladder method."""
+
+    _require_frozen_gate_spec(spec)
+    if (
+        len(values) != len(spec.epsilon_exponents_base2)
+        or len(evaluation_scale_ratios) != len(values)
+        or not values
+    ):
+        raise ValueError("finite-difference ladder shape changed")
+    ladder_finite = all(math.isfinite(value) for value in values)
+    diagnostic_inputs_finite = all(
+        math.isfinite(value)
+        for value in (*evaluation_scale_ratios, oracle_error)
+    )
+    if any(value < 0.0 for value in values) or any(
+        value < 0.0 for value in evaluation_scale_ratios
+    ):
+        raise ValueError("finite-difference diagnostics must be nonnegative")
+    minimum = min(values)
+    minimum_index = int(np.argmin(values))
+    early_improvements = sum(
+        values[index + 1] < values[index]
+        for index in range(min(4, len(values) - 1))
+    )
+    oracle_pass = math.isfinite(oracle_error) and (
+        oracle_error <= spec.oracle_cap
+    )
+
+    roundoff_bounds: list[float] = []
+    roundoff_consistent: bool | None = None
+    if spec.derivative_class == AFFINE_EXACT:
+        operation_count = spec.affine_roundoff_operation_count
+        if operation_count is None:
+            raise ValueError("affine roundoff operation count is missing")
+        denominator = 1.0 - operation_count * spec.unit_roundoff
+        gamma = operation_count * spec.unit_roundoff / denominator
+        for exponent, scale_ratio in zip(
+            spec.epsilon_exponents_base2, evaluation_scale_ratios
+        ):
+            epsilon = 2.0**exponent
+            roundoff_bounds.append(
+                gamma * max(1.0, scale_ratio) / epsilon
+            )
+        roundoff_consistent = (
+            ladder_finite
+            and diagnostic_inputs_finite
+            and all(
+                value <= bound
+                for value, bound in zip(values, roundoff_bounds)
+            )
+        )
+        acceptance = (
+            ladder_finite
+            and oracle_pass
+            and values[0] <= spec.absolute_cap
+            and minimum <= spec.absolute_cap
+            and roundoff_consistent
+        )
+    elif spec.derivative_class == NONLINEAR_SMOOTH:
+        acceptance = (
+            ladder_finite
+            and minimum <= spec.absolute_cap
+            and early_improvements
+            >= int(spec.minimum_early_improvements or 0)
+            and minimum_index < len(values) - 1
+            and values[-1] > minimum
+        )
+    else:
+        raise ValueError("unknown finite-difference derivative class")
+
+    return {
+        "acceptance": acceptance,
+        "derivative_class": spec.derivative_class,
+        "diagnostic_inputs_finite": diagnostic_inputs_finite,
+        "early_improvements": early_improvements,
+        "finite": ladder_finite,
+        "largest_epsilon_error": values[0],
+        "minimum": minimum,
+        "minimum_index": minimum_index,
+        "oracle_error": oracle_error,
+        "oracle_pass": oracle_pass,
+        "roundoff_model": {
+            "applied": spec.derivative_class == AFFINE_EXACT,
+            "bounds": roundoff_bounds,
+            "consistent": roundoff_consistent,
+            "formula": (
+                "gamma_k*max(1,evaluation_scale_ratio)/epsilon"
+                if spec.derivative_class == AFFINE_EXACT
+                else "NONLINEAR_SMOOTH convergence then roundoff turn"
+            ),
+            "operation_count": spec.affine_roundoff_operation_count,
+        },
+    }
+
 
 K_DENSE = np.array(
     [
@@ -450,22 +658,8 @@ def runtime_tangent_matrix(kind: str, duration: ExactSeconds) -> np.ndarray:
     return np.column_stack(columns)
 
 
-def _ladder_acceptance(values: Sequence[float]) -> bool:
-    minimum_index = int(np.argmin(values))
-    early_improvements = sum(
-        values[index + 1] < values[index]
-        for index in range(min(4, len(values) - 1))
-    )
-    return (
-        all(math.isfinite(value) for value in values)
-        and min(values) <= FD_CAP
-        and early_improvements >= 3
-        and minimum_index < len(values) - 1
-        and values[-1] > min(values)
-    )
-
-
 def finite_difference_series(kind: str) -> Mapping[str, Any]:
+    gate_spec = finite_difference_gate_spec(kind)
     (
         model,
         jacobi_plan,
@@ -475,6 +669,8 @@ def finite_difference_series(kind: str) -> Mapping[str, Any]:
         tangent,
         context,
     ) = fixture(kind)
+    if provider.kind != gate_spec.fixture_kind:
+        raise ValueError("fixture derivative classification mismatch")
     base = phase(state)
     direction = tangent_phase(tangent)
     duration = ExactSeconds(7, 4)
@@ -492,10 +688,27 @@ def finite_difference_series(kind: str) -> Mapping[str, Any]:
     analytic_force = np.asarray(
         analytic.canonical_force_jvp_kg_m_per_s2
     ).reshape(-1)
+    _, expected_jacobian, _ = canonical_force_and_jacobian(
+        kind, state.q_m
+    )
+    expected_force_jvp = expected_jacobian @ direction[:12]
+    force_oracle_error = float(
+        np.linalg.norm(analytic_force - expected_force_jvp)
+        / max(np.linalg.norm(expected_force_jvp), 1.0)
+    )
+    expected_kick = expected_tangent(
+        state, tangent, kind, duration.to_binary64()
+    )
+    kick_oracle_error = scaled_error(
+        analytic_kick, tangent_phase(expected_kick)
+    )[0]
+
     kick_errors = []
     force_errors = []
+    kick_scale_ratios = []
+    force_scale_ratios = []
     rows = []
-    for exponent in EPSILON_EXPONENTS:
+    for exponent in gate_spec.epsilon_exponents_base2:
         epsilon = 2.0**exponent
         plus = base + epsilon * direction
         minus = base - epsilon * direction
@@ -529,40 +742,91 @@ def finite_difference_series(kind: str) -> Mapping[str, Any]:
             duration,
             context,
         )
+        plus_phase = phase(plus_result.state)
+        minus_phase = phase(minus_result.state)
+        plus_force = np.asarray(
+            plus_result.canonical_force_kg_m_per_s2
+        ).reshape(-1)
+        minus_force = np.asarray(
+            minus_result.canonical_force_kg_m_per_s2
+        ).reshape(-1)
         numerical_kick = (
-            phase(plus_result.state) - phase(minus_result.state)
+            plus_phase - minus_phase
         ) / (2.0 * epsilon)
         numerical_force = (
-            np.asarray(plus_result.canonical_force_kg_m_per_s2).reshape(-1)
-            - np.asarray(minus_result.canonical_force_kg_m_per_s2).reshape(-1)
+            plus_force - minus_force
         ) / (2.0 * epsilon)
+        kick_denominator = max(np.linalg.norm(analytic_kick), 1.0)
+        force_denominator = max(np.linalg.norm(analytic_force), 1.0)
         kick_error = float(
             np.linalg.norm(numerical_kick - analytic_kick)
-            / max(np.linalg.norm(analytic_kick), 1.0)
+            / kick_denominator
         )
         force_error = float(
             np.linalg.norm(numerical_force - analytic_force)
-            / max(np.linalg.norm(analytic_force), 1.0)
+            / force_denominator
+        )
+        kick_scale_ratio = float(
+            (np.linalg.norm(plus_phase) + np.linalg.norm(minus_phase))
+            / (2.0 * kick_denominator)
+        )
+        force_scale_ratio = float(
+            (np.linalg.norm(plus_force) + np.linalg.norm(minus_force))
+            / (2.0 * force_denominator)
         )
         kick_errors.append(kick_error)
         force_errors.append(force_error)
+        kick_scale_ratios.append(kick_scale_ratio)
+        force_scale_ratios.append(force_scale_ratio)
         rows.append(
             {
                 "epsilon": epsilon,
                 "exponent_base2": exponent,
+                "force_evaluation_scale_ratio": force_scale_ratio,
                 "force_jvp_relative_l2": force_error,
+                "kick_evaluation_scale_ratio": kick_scale_ratio,
                 "kick_relative_l2": kick_error,
             }
         )
+
+    _require_frozen_gate_spec(gate_spec)
+    if provider.kind != gate_spec.fixture_kind:
+        raise ValueError("fixture derivative class changed after evaluation")
+    force_gate = assess_finite_difference_ladder(
+        gate_spec,
+        force_errors,
+        force_scale_ratios,
+        force_oracle_error,
+    )
+    kick_gate = assess_finite_difference_ladder(
+        gate_spec,
+        kick_errors,
+        kick_scale_ratios,
+        kick_oracle_error,
+    )
+    for index, row in enumerate(rows):
+        force_bounds = force_gate["roundoff_model"]["bounds"]
+        kick_bounds = kick_gate["roundoff_model"]["bounds"]
+        row["force_affine_roundoff_bound"] = (
+            force_bounds[index] if force_bounds else None
+        )
+        row["kick_affine_roundoff_bound"] = (
+            kick_bounds[index] if kick_bounds else None
+        )
     return {
         "acceptance": {
-            "force_jvp": _ladder_acceptance(force_errors),
-            "kick_tangent": _ladder_acceptance(kick_errors),
+            "force_jvp": force_gate["acceptance"],
+            "kick_tangent": kick_gate["acceptance"],
         },
-        "force_minimum": min(force_errors),
-        "force_minimum_index": int(np.argmin(force_errors)),
-        "kick_minimum": min(kick_errors),
-        "kick_minimum_index": int(np.argmin(kick_errors)),
+        "derivative_class": gate_spec.derivative_class,
+        "force_gate": force_gate,
+        "force_minimum": force_gate["minimum"],
+        "force_minimum_index": force_gate["minimum_index"],
+        "gate_spec": gate_spec.canonical_payload(),
+        "gate_spec_fingerprint": gate_spec.fingerprint,
+        "kick_gate": kick_gate,
+        "kick_minimum": kick_gate["minimum"],
+        "kick_minimum_index": kick_gate["minimum_index"],
         "kind": kind,
         "rows": rows,
     }

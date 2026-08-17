@@ -12,6 +12,8 @@ from unittest import mock
 import numpy as np
 
 from mini_ephemeris.m0_step3g1d_qualification import (
+    AFFINE_EXACT,
+    NONLINEAR_SMOOTH,
     COMPOSITION_CAP,
     FD_CAP,
     PHYSICAL_CAP,
@@ -22,7 +24,9 @@ from mini_ephemeris.m0_step3g1d_qualification import (
     analytic_tangent_matrix,
     canonical_force_and_jacobian,
     expected_physical,
+    assess_finite_difference_ladder,
     expected_tangent,
+    finite_difference_gate_spec,
     finite_difference_series,
     fixture,
     phase,
@@ -128,6 +132,101 @@ def _apply(kind="dense", duration=ExactSeconds(7, 4)):
         physical,
         varied,
     )
+
+
+class FiniteDifferenceGateTests(unittest.TestCase):
+    def test_affine_exact_zero_improvements_passes(self) -> None:
+        spec = finite_difference_gate_spec("dense")
+        values = [1.0e-15 * (index + 1) for index in range(10)]
+        result = assess_finite_difference_ladder(
+            spec, values, [1.0] * 10, 0.0
+        )
+        self.assertEqual(spec.derivative_class, AFFINE_EXACT)
+        self.assertEqual(result["early_improvements"], 0)
+        self.assertTrue(result["oracle_pass"])
+        self.assertTrue(result["roundoff_model"]["consistent"])
+        self.assertTrue(result["acceptance"])
+
+    def test_incorrect_affine_derivative_fails_oracle_and_cap(self) -> None:
+        spec = finite_difference_gate_spec("dense")
+        result = assess_finite_difference_ladder(
+            spec,
+            [2.0 * FD_CAP] * 10,
+            [1.0] * 10,
+            2.0 * TANGENT_CAP,
+        )
+        self.assertFalse(result["oracle_pass"])
+        self.assertFalse(result["acceptance"])
+
+    def test_nonlinear_smooth_required_pattern_passes(self) -> None:
+        spec = finite_difference_gate_spec("nonlinear")
+        values = [
+            1.0e-4,
+            1.0e-6,
+            1.0e-8,
+            1.0e-10,
+            2.0e-10,
+            4.0e-10,
+            8.0e-10,
+            1.6e-9,
+            3.2e-9,
+            6.4e-9,
+        ]
+        result = assess_finite_difference_ladder(
+            spec, values, [math.nan] * 10, math.nan
+        )
+        self.assertEqual(spec.derivative_class, NONLINEAR_SMOOTH)
+        self.assertEqual(result["early_improvements"], 3)
+        self.assertFalse(result["diagnostic_inputs_finite"])
+        self.assertTrue(result["acceptance"])
+
+    def test_nonlinear_smooth_missing_pattern_fails(self) -> None:
+        spec = finite_difference_gate_spec("nonlinear")
+        values = [1.0e-10 * (index + 1) for index in range(10)]
+        result = assess_finite_difference_ladder(
+            spec, values, [1.0] * 10, 0.0
+        )
+        self.assertEqual(result["early_improvements"], 0)
+        self.assertFalse(result["acceptance"])
+
+    def test_derivative_class_is_immutable_across_evaluation(self) -> None:
+        spec = finite_difference_gate_spec("dense")
+        first = assess_finite_difference_ladder(
+            spec,
+            [1.0e-15 * (index + 1) for index in range(10)],
+            [1.0] * 10,
+            0.0,
+        )
+        self.assertTrue(first["acceptance"])
+        with self.assertRaises(FrozenInstanceError):
+            spec.derivative_class = NONLINEAR_SMOOTH
+        tampered = replace(spec, derivative_class=NONLINEAR_SMOOTH)
+        with self.assertRaisesRegex(
+            ValueError, "derivative classification changed"
+        ):
+            assess_finite_difference_ladder(
+                tampered,
+                [1.0e-15] * 10,
+                [1.0] * 10,
+                0.0,
+            )
+
+    def test_gate_classification_and_threshold_serialization_is_deterministic(
+        self,
+    ) -> None:
+        first = finite_difference_gate_spec("dense")
+        second = finite_difference_gate_spec("dense")
+        nonlinear = finite_difference_gate_spec("nonlinear")
+        self.assertEqual(first.canonical_bytes(), second.canonical_bytes())
+        self.assertEqual(first.fingerprint, second.fingerprint)
+        self.assertEqual(
+            first.canonical_payload()["absolute_cap_hex"],
+            FD_CAP.hex(),
+        )
+        self.assertIsNone(first.minimum_early_improvements)
+        self.assertEqual(nonlinear.minimum_early_improvements, 3)
+        self.assertTrue(nonlinear.require_roundoff_turn)
+        self.assertNotEqual(first.fingerprint, nonlinear.fingerprint)
 
 
 class PlanSemanticsTests(unittest.TestCase):

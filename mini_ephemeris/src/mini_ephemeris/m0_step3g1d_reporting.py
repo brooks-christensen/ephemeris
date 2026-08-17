@@ -219,6 +219,18 @@ transformed by A^-T, checked against the same derived closure bound, and
 projected by P. Thus a COM-only direction has no internal-force response and
 both force and JVP output COM rows are exact zero.
 
+Finite-difference applicability is selected from the analytic fixture before
+any ladder value is observed. The dense quadratic force, complete kick, and
+fixed linear projection are AFFINE_EXACT: exact arithmetic has no Taylor
+truncation term. Their gate requires independent analytic-oracle acceptance,
+the unchanged 2e-7 cap at the largest epsilon and at the ladder minimum, finite
+values, and consistency with
+gamma_128*max(1,evaluation_scale_ratio)/epsilon, where
+gamma_k=k*u/(1-k*u) and u=2^-53. No improvement count or U-shaped curve is
+required. The nonlinear radial quartic is NONLINEAR_SMOOTH and retains the
+unchanged Manifest 27 ladder, three-early-improvement, cap, and roundoff-turn
+requirements.
+
 The full phase Jacobian is M=[[I,0],[h J_projected,I]], so
 M^T Omega M=Omega when J_projected is symmetric. The nonsymmetric control
 must violate both symmetry and symplecticity gates.
@@ -263,10 +275,22 @@ production primitive.
 
 - Maximum physical / tangent scaled error: {physical:.17g} /
   {tangent:.17g}.
-- Dense/nonlinear kick FD minima: {fd[0]["kick_minimum"]:.17g} /
-  {fd[1]["kick_minimum"]:.17g}.
-- Dense/nonlinear force-JVP FD minima: {fd[0]["force_minimum"]:.17g} /
-  {fd[1]["force_minimum"]:.17g}.
+- Dense finite-difference class: {fd[0]["derivative_class"]}; kick
+  largest-epsilon/minimum errors {fd[0]["kick_gate"]["largest_epsilon_error"]:.17g} /
+  {fd[0]["kick_minimum"]:.17g}, with
+  {fd[0]["kick_gate"]["early_improvements"]} early improvements.
+- Dense force-JVP largest-epsilon/minimum errors:
+  {fd[0]["force_gate"]["largest_epsilon_error"]:.17g} /
+  {fd[0]["force_minimum"]:.17g}, with
+  {fd[0]["force_gate"]["early_improvements"]} early improvements. Affine
+  kick/force roundoff-model consistency:
+  {fd[0]["kick_gate"]["roundoff_model"]["consistent"]} /
+  {fd[0]["force_gate"]["roundoff_model"]["consistent"]}.
+- Nonlinear finite-difference class: {fd[1]["derivative_class"]}; kick
+  minimum {fd[1]["kick_minimum"]:.17g} with
+  {fd[1]["kick_gate"]["early_improvements"]} early improvements.
+- Nonlinear force-JVP minimum: {fd[1]["force_minimum"]:.17g}, with
+  {fd[1]["force_gate"]["early_improvements"]} early improvements.
 - Maximum raw COM residual norm / derived bound norm:
   {projection["maximum_raw_residual_norm_kg_m_per_s2"]:.17g} /
   {projection["maximum_derived_bound_norm_kg_m_per_s2"]:.17g}.
