@@ -1728,7 +1728,7 @@ def git_output(arguments: Sequence[str]) -> str:
         cwd=ROOT,
         text=True,
         stderr=subprocess.STDOUT,
-    ).strip()
+    ).rstrip("\n")
 
 
 def verify_generated_provenance() -> Mapping[str, Any]:
