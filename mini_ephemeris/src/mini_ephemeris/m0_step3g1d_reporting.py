@@ -1,4 +1,4 @@
-"""Deterministic artifacts for Step 3g1d corrective completion."""
+"""Deterministic artifacts for Step 3g1d requalification."""
 
 from __future__ import annotations
 
@@ -11,26 +11,26 @@ import tempfile
 from typing import Any, Mapping
 
 from .m0_step3g1d_qualification import (
-    PREREGISTRATION_COMMIT,
     ROOT,
     compute_metrics,
     fixture,
-    manifest27,
+    manifest28,
+    manifest28_preregistration_commit,
     run_fresh_artifact_probe,
     sha256_file,
     static_safety_audit,
     strict_json,
-    verify_generated_provenance,
-    verify_inherited_integrity,
+    verify_manifest28_provenance,
+    verify_requalification_integrity,
 )
 
 
 DEFAULT_DESTINATION = ROOT / (
     "docs/validation/"
-    "m0-step3g1d-interaction-kick-corrective-completion-v1"
+    "m0-step3g1d-interaction-kick-requalification-v1"
 )
-EXPECTED_ARTIFACTS = set(manifest27()["expected_artifacts"])
-FINAL_STATUS = "STEP3G1D_CORRECTIVE_COMPLETION_COMPLETE"
+EXPECTED_ARTIFACTS = set(manifest28()["expected_artifacts"])
+FINAL_STATUS = "STEP3G1D_REQUALIFICATION_COMPLETE"
 PRIMARY_FINDING = "SYNTHETIC_CONSERVATIVE_INTERACTION_KICK_QUALIFIED"
 ENVELOPE = (
     "ISOLATED_SYNTHETIC_POSITION_ONLY_KICK_NO_PHYSICAL_FORCE_OR_INTEGRATION"
@@ -55,7 +55,7 @@ def _write_json(path: Path, value: Any) -> None:
 
 
 def _inventory() -> Mapping[str, Any]:
-    manifest = manifest27()
+    manifest = manifest28()
     selection = manifest["exact_test_selection"]
     groups = (
         "step3g1d_core_node_ids",
@@ -75,45 +75,9 @@ def _inventory() -> Mapping[str, Any]:
         for node in selection[group]
     ]
     return {
-        "commands": {
-            "artifact_campaign": (
-                "env PYTHONPATH=mini_ephemeris/src "
-                "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python "
-                "mini_ephemeris/src/mini_ephemeris/"
-                "m0_step3g1d_qualification_runner.py --run-artifacts"
-            ),
-            "artifact_generation": (
-                "env PYTHONPATH=mini_ephemeris/src "
-                "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -m "
-                "mini_ephemeris.m0_step3g1d_reporting --output-root "
-                "docs/validation/"
-                "m0-step3g1d-interaction-kick-corrective-completion-v1"
-            ),
-            "compilation": (
-                "env PYTHONPATH=mini_ephemeris/src .venv/bin/python "
-                "-m py_compile <Manifest-27 Step-3g1d source and test paths>"
-            ),
-            "diff_check": "git diff --check",
-            "pre_artifact_campaign": (
-                "env PYTHONPATH=mini_ephemeris/src "
-                "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python "
-                "mini_ephemeris/src/mini_ephemeris/"
-                "m0_step3g1d_qualification_runner.py --run-core"
-            ),
-            "static_safety_gate": (
-                "env PYTHONPATH=mini_ephemeris/src "
-                "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python "
-                "mini_ephemeris/src/mini_ephemeris/"
-                "m0_step3g1d_qualification_runner.py --safety-audit"
-            ),
-            "strict_json_validation": (
-                "env PYTHONPATH=mini_ephemeris/src .venv/bin/python "
-                "mini_ephemeris/src/mini_ephemeris/"
-                "m0_step3g1d_reporting.py --validate"
-            ),
-        },
+        "commands": manifest["qualification_commands"],
         "counts": selection["expected_counts"],
-        "kind": "m0_step3g1d_qualifying_test_inventory",
+        "kind": "m0_step3g1d_requalification_test_inventory",
         "pytest_plugin_autoload_disabled": True,
         "schema_version": 1,
         "selection": "exact_pytest_node_ids_only",
@@ -122,7 +86,7 @@ def _inventory() -> Mapping[str, Any]:
 
 
 def _traceability_csv() -> bytes:
-    selection = manifest27()["exact_test_selection"]
+    selection = manifest28()["exact_test_selection"]
     core = selection["step3g1d_core_node_ids"]
     rows = [
         {
@@ -152,7 +116,13 @@ def _traceability_csv() -> bytes:
         {
             "requirement_id": "COM-001",
             "claim": "derived COM bound and consistent physical tangent projection",
-            "exact_passing_node_ids": ";".join(core[20:]),
+            "exact_passing_node_ids": ";".join(core[20:29]),
+            "result": "PASS",
+        },
+        {
+            "requirement_id": "FD-APP-001",
+            "claim": "analytic affine versus nonlinear finite-difference applicability",
+            "exact_passing_node_ids": ";".join(core[29:]),
             "result": "PASS",
         },
         {
@@ -248,7 +218,7 @@ def _report(summary: Mapping[str, Any], metrics: Mapping[str, Any]) -> str:
     symplectic = metrics["symplecticity"]["providers"]
     negative = metrics["negative_control"]
     projection = metrics["com_projection"]
-    return f"""# M0 Step 3g1d Corrective Interaction Kick Completion
+    return f"""# M0 Step 3g1d Interaction Kick Requalification
 
 Final status: **{summary["final_status"]}**
 
@@ -258,39 +228,59 @@ Verification envelope: **{summary["verification_envelope"]}**
 
 ## Disposition
 
-Manifest 26 remains permanently **STEP3G1D_BLOCKED** at blocked-closeout
-commit {summary["manifest26_blocked_closeout_commit"]}. Manifest 27 is a
-separate corrective-completion campaign; the earlier 84-pass/18-failure run
-was diagnostic only and was not reused as qualifying evidence. Manifest 27
-recomputed all 13 historical hashes, confirmed Manifest 25, and detected the
-exact 12 frozen Manifest 26 substitutions.
+Manifest 26 remains permanently **STEP3G1D_BLOCKED** at commit
+{summary["manifest26_blocked_closeout_commit"]}. Manifest 27 remains
+permanently **STEP3G1D_CORRECTIVE_COMPLETION_FAILED** at commit
+{summary["manifest27_failed_campaign_commit"]}, with 109 passes and three
+affine finite-difference shape failures. Manifest 28 is a separate compact
+delta requalification at commit {summary["manifest28_preregistration_commit"]};
+it uses the method correction committed at
+{summary["method_correction_commit"]}.
 
-The immutable fixed-mass projected kick and tangent action passed all 118
-literal scientific, corrective-provenance, historical-regression, artifact,
-safety, and integrity nodes. Four serial guarded fresh subprocesses isolated
-the 112 pre-artifact nodes. This isolation belongs to the test runner, not the
-production primitive.
+The isolated projected kick passed all
+{summary["exact_test_counts"]["total"]} literal scientific, provenance,
+historical-regression, artifact, safety, and integrity nodes. Four guarded
+fresh subprocesses isolated the
+{summary["exact_test_counts"]["pre_artifact_total"]} pre-artifact nodes. This
+is test-runner isolation, not production runtime behavior. Production kick.py
+remained byte-identical to the failed-campaign snapshot during method correction
+and qualification.
+
+## Finite-Difference Method
+
+Classification was fixed analytically before any ladder value was examined.
+Dense quadratic force/JVP, complete kick tangent, and fixed linear projection
+are **{fd[0]["derivative_class"]}**. Their exact derivative is constant, so
+they require independent oracle acceptance, the unchanged cap at the largest
+epsilon and minimum, finite values, and the frozen binary64 roundoff envelope;
+they do not require early improvements or a U-shaped curve.
+
+The radial quartic fixture is **{fd[1]["derivative_class"]}** and retains
+Manifest 27 requirements unchanged: the same epsilon ladder, 2e-7 cap, at
+least three early improvements, a resolved minimum, and a later
+roundoff-dominated region.
+
+- Dense kick largest/minimum errors:
+  {fd[0]["kick_gate"]["largest_epsilon_error"]:.17g} /
+  {fd[0]["kick_minimum"]:.17g}; early improvements
+  {fd[0]["kick_gate"]["early_improvements"]}; roundoff consistent
+  {fd[0]["kick_gate"]["roundoff_model"]["consistent"]}.
+- Dense force-JVP largest/minimum errors:
+  {fd[0]["force_gate"]["largest_epsilon_error"]:.17g} /
+  {fd[0]["force_minimum"]:.17g}; early improvements
+  {fd[0]["force_gate"]["early_improvements"]}; roundoff consistent
+  {fd[0]["force_gate"]["roundoff_model"]["consistent"]}.
+- Nonlinear kick minimum {fd[1]["kick_minimum"]:.17g} at index
+  {fd[1]["kick_minimum_index"]}; early improvements
+  {fd[1]["kick_gate"]["early_improvements"]}.
+- Nonlinear force-JVP minimum {fd[1]["force_minimum"]:.17g} at index
+  {fd[1]["force_minimum_index"]}; early improvements
+  {fd[1]["force_gate"]["early_improvements"]}.
 
 ## Numerical Summary
 
 - Maximum physical / tangent scaled error: {physical:.17g} /
   {tangent:.17g}.
-- Dense finite-difference class: {fd[0]["derivative_class"]}; kick
-  largest-epsilon/minimum errors {fd[0]["kick_gate"]["largest_epsilon_error"]:.17g} /
-  {fd[0]["kick_minimum"]:.17g}, with
-  {fd[0]["kick_gate"]["early_improvements"]} early improvements.
-- Dense force-JVP largest-epsilon/minimum errors:
-  {fd[0]["force_gate"]["largest_epsilon_error"]:.17g} /
-  {fd[0]["force_minimum"]:.17g}, with
-  {fd[0]["force_gate"]["early_improvements"]} early improvements. Affine
-  kick/force roundoff-model consistency:
-  {fd[0]["kick_gate"]["roundoff_model"]["consistent"]} /
-  {fd[0]["force_gate"]["roundoff_model"]["consistent"]}.
-- Nonlinear finite-difference class: {fd[1]["derivative_class"]}; kick
-  minimum {fd[1]["kick_minimum"]:.17g} with
-  {fd[1]["kick_gate"]["early_improvements"]} early improvements.
-- Nonlinear force-JVP minimum: {fd[1]["force_minimum"]:.17g}, with
-  {fd[1]["force_gate"]["early_improvements"]} early improvements.
 - Maximum raw COM residual norm / derived bound norm:
   {projection["maximum_raw_residual_norm_kg_m_per_s2"]:.17g} /
   {projection["maximum_derived_bound_norm_kg_m_per_s2"]:.17g}.
@@ -320,15 +310,18 @@ trajectory, archive, MEGNO, LCN, restart, or Solar-System state was evaluated.
 The Step 3g1c raw symplectic residual remains an inherited risk and is not
 repaired or reinterpreted here.
 
-A separately preregistered synthetic second-order drift-kick-drift composition
-is now justified as the next proposal, but it was not implemented or started.
+Success does not itself qualify drift-kick composition or production
+models.
+
+A separately preregistered Step 3g1e synthetic composition study is justified
+as the next proposal only; it was not implemented or started.
 """
 
 
 def _code_review() -> Mapping[str, Any]:
     return {
         "findings": [],
-        "kind": "m0_step3g1d_corrective_code_review_findings",
+        "kind": "m0_step3g1d_requalification_code_review_findings",
         "reviewed_surfaces": [
             "acceleration versus generalized-force semantics",
             "source-order A^-1 and A^-T recurrences",
@@ -340,6 +333,8 @@ def _code_review() -> Mapping[str, Any]:
             "negative-control sensitivity",
             "generated full-length provenance hashes",
             "derived COM closure and projection diagnostics",
+            "analytic finite-difference applicability classification",
+            "unchanged nonlinear ladder requirements",
             "fresh-process regression isolation",
         ],
         "schema_version": 1,
@@ -349,10 +344,10 @@ def _code_review() -> Mapping[str, Any]:
 
 def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
     destination.mkdir(parents=True, exist_ok=True)
-    manifest = manifest27()
+    manifest = manifest28()
     metrics = compute_metrics()
-    inherited = verify_inherited_integrity()
-    provenance = verify_generated_provenance()
+    inherited = verify_requalification_integrity()
+    provenance = verify_manifest28_provenance()
     acceptance = {
         name: bool(metrics[name]["acceptance"])
         for name in (
@@ -370,20 +365,29 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
     if not all(acceptance.values()):
         raise RuntimeError(f"frozen numerical gate failed: {acceptance}")
     model, _, _, plan, *_ = fixture("dense")
+    baseline = manifest["baseline"]
     summary = {
         "acceptance": acceptance,
         "branch": "v2-whckl-tangent-core",
         "corrected_provenance": provenance,
-        "exact_test_counts": manifest["exact_test_selection"]["expected_counts"],
+        "exact_test_counts": manifest["exact_test_selection"][
+            "expected_counts"
+        ],
         "final_status": FINAL_STATUS,
         "inherited_integrity_status": inherited["status"],
-        "kind": "m0_step3g1d_interaction_kick_corrective_completion_summary",
-        "manifest26_blocked_closeout_commit": manifest[
-            "manifest26_permanent_disposition"
-        ]["blocked_closeout_commit"],
-        "manifest26_final_status": manifest[
-            "manifest26_permanent_disposition"
-        ]["final_status"],
+        "kind": "m0_step3g1d_interaction_kick_requalification_summary",
+        "manifest26_blocked_closeout_commit": baseline["manifest26"][
+            "blocked_closeout_commit"
+        ],
+        "manifest26_final_status": baseline["manifest26"]["final_status"],
+        "manifest27_failed_campaign_commit": baseline["manifest27"][
+            "failed_campaign_commit"
+        ],
+        "manifest27_final_status": baseline["manifest27"]["final_status"],
+        "manifest28_preregistration_commit": (
+            manifest28_preregistration_commit()
+        ),
+        "method_correction_commit": baseline["method_correction"]["commit"],
         "model_fingerprint": model.fingerprint,
         "numerical_extrema": {
             "com_projection_maximum_bound_norm": metrics[
@@ -398,10 +402,30 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
             "com_projection_maximum_raw_norm": metrics[
                 "com_projection"
             ]["maximum_raw_residual_norm_kg_m_per_s2"],
-            "composition_maximum_scaled": metrics["composition"]["maximum_scaled"],
-            "physical_maximum_scaled": metrics["physical"]["maximum_scaled"],
-            "reversibility_maximum_scaled": metrics["reversibility"]["maximum_scaled"],
-            "tangent_maximum_scaled": metrics["tangent"]["maximum_scaled"],
+            "composition_maximum_scaled": metrics["composition"][
+                "maximum_scaled"
+            ],
+            "dense_force_minimum": metrics["finite_difference"][
+                "providers"
+            ][0]["force_minimum"],
+            "dense_kick_minimum": metrics["finite_difference"][
+                "providers"
+            ][0]["kick_minimum"],
+            "nonlinear_force_minimum": metrics["finite_difference"][
+                "providers"
+            ][1]["force_minimum"],
+            "nonlinear_kick_minimum": metrics["finite_difference"][
+                "providers"
+            ][1]["kick_minimum"],
+            "physical_maximum_scaled": metrics["physical"][
+                "maximum_scaled"
+            ],
+            "reversibility_maximum_scaled": metrics["reversibility"][
+                "maximum_scaled"
+            ],
+            "tangent_maximum_scaled": metrics["tangent"][
+                "maximum_scaled"
+            ],
             "worst_raw_symplectic_max": max(
                 value["raw_max"]
                 for value in metrics["symplecticity"]["providers"]
@@ -412,29 +436,31 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
             ),
         },
         "plan_fingerprint": plan.fingerprint,
-        "preregistration_commit": PREREGISTRATION_COMMIT,
         "process_isolation": {
-            "groups": manifest["fresh_process_regression_isolation"]["groups"],
+            "groups": manifest[
+                "fresh_process_regression_isolation"
+            ]["groups"],
             "pre_artifact_total": manifest["exact_test_selection"][
                 "expected_counts"
             ]["pre_artifact_total"],
             "runner_only_not_production": True,
         },
+        "production_kick_sha256": baseline["production_kick_sha256"],
         "projection": metrics["com_projection"],
         "primary_finding": PRIMARY_FINDING,
         "safety_status": "PASS",
         "schema_version": 1,
         "successor": (
-            "A separately preregistered isolated synthetic second-order "
-            "drift-kick-drift composition is justified for proposal only."
+            "Step 3g1e may be proposed as a separately preregistered "
+            "synthetic composition study; it was not started."
         ),
         "verification_envelope": ENVELOPE,
     }
     files: dict[str, bytes] = {
-        "m0_step3g1d_interaction_kick_corrective_completion_report.md": (
+        "m0_step3g1d_interaction_kick_requalification_report.md": (
             _report(summary, metrics).encode("utf-8")
         ),
-        "m0_step3g1d_interaction_kick_corrective_completion_summary.json": (
+        "m0_step3g1d_interaction_kick_requalification_summary.json": (
             _json_bytes(summary)
         ),
         "canonical_kick_provider_specification.md": (
@@ -450,7 +476,9 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
                         value["kind"]: value["acceptance"]["force_jvp"]
                         for value in metrics["finite_difference"]["providers"]
                     },
-                    "com_projection": metrics["com_projection"]["acceptance"],
+                    "com_projection": metrics["com_projection"][
+                        "acceptance"
+                    ],
                 },
                 "com_projection": metrics["com_projection"],
                 "kind": "force_jvp_closure_metrics",
@@ -476,9 +504,9 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
                     value["kind"]: all(value["acceptance"].values())
                     for value in metrics["finite_difference"]["providers"]
                 },
-                "kind": "finite_difference_metrics",
+                "kind": "finite_difference_applicability_metrics",
                 "providers": metrics["finite_difference"]["providers"],
-                "schema_version": 1,
+                "schema_version": 2,
             }
         ),
         "symplecticity_jacobian_symmetry_metrics.json": _json_bytes(
@@ -512,7 +540,9 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
         "evaluation_accounting.json": _json_bytes(
             {
                 "acceptance": {
-                    "exact_events_and_counts": metrics["accounting"]["acceptance"]
+                    "exact_events_and_counts": metrics["accounting"][
+                        "acceptance"
+                    ]
                 },
                 "kind": "evaluation_accounting",
                 "metrics": metrics["accounting"],
@@ -534,7 +564,7 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
         "code_review_findings.json": _json_bytes(_code_review()),
     }
     if set(files) != EXPECTED_ARTIFACTS - {"artifact_hashes.json"}:
-        raise AssertionError("reporting file set differs from Manifest 27")
+        raise AssertionError("reporting file set differs from Manifest 28")
     for name, payload in files.items():
         (destination / name).write_bytes(payload)
     hashes = {
@@ -544,7 +574,7 @@ def generate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
     _write_json(
         destination / "artifact_hashes.json",
         {
-            "kind": "m0_step3g1d_corrective_artifact_hashes",
+            "kind": "m0_step3g1d_requalification_artifact_hashes",
             "schema_version": 1,
             "sha256": hashes,
         },
@@ -556,18 +586,20 @@ def validate_artifacts(destination: Path = DEFAULT_DESTINATION) -> None:
         path.name for path in destination.iterdir() if path.is_file()
     }
     if observed != EXPECTED_ARTIFACTS:
-        raise AssertionError("artifact inventory differs from Manifest 27")
+        raise AssertionError("artifact inventory differs from Manifest 28")
     for path in destination.glob("*.json"):
         strict_json(path)
     summary = strict_json(
         destination
-        / "m0_step3g1d_interaction_kick_corrective_completion_summary.json"
+        / "m0_step3g1d_interaction_kick_requalification_summary.json"
     )
     if (
         summary["final_status"] != FINAL_STATUS
         or summary["primary_finding"] != PRIMARY_FINDING
         or summary["verification_envelope"] != ENVELOPE
         or not all(summary["acceptance"].values())
+        or summary["production_kick_sha256"]
+        != manifest28()["baseline"]["production_kick_sha256"]
     ):
         raise AssertionError("summary status or acceptance is incompatible")
     hashes = strict_json(destination / "artifact_hashes.json")["sha256"]
