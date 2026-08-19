@@ -1,0 +1,304 @@
+{
+  "acceptance": {
+    "exact_events_and_counts": true
+  },
+  "kind": "evaluation_accounting",
+  "metrics": {
+    "acceptance": true,
+    "cases": [
+      {
+        "duration_s": 1.0,
+        "kind": "dense",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": -1.0,
+        "kind": "dense",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": 0.0009765625,
+        "kind": "dense",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": -0.0009765625,
+        "kind": "dense",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": 1.75,
+        "kind": "dense",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": -1.75,
+        "kind": "dense",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": 1.0,
+        "kind": "nonlinear",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": -1.0,
+        "kind": "nonlinear",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": 0.0009765625,
+        "kind": "nonlinear",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": -0.0009765625,
+        "kind": "nonlinear",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": 1.75,
+        "kind": "nonlinear",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      },
+      {
+        "duration_s": -1.75,
+        "kind": "nonlinear",
+        "physical": {
+          "events": [
+            "force"
+          ],
+          "force": 1,
+          "jvp": 0,
+          "observer": 0,
+          "synchronization": 0
+        },
+        "tangent": {
+          "events": [
+            "force",
+            "jvp"
+          ],
+          "force": 1,
+          "jvp": 1,
+          "observer": 0,
+          "synchronization": 0
+        }
+      }
+    ],
+    "zero_duration": {
+      "physical": {
+        "events": [],
+        "force": 0,
+        "jvp": 0,
+        "observer": 0,
+        "synchronization": 0
+      },
+      "tangent": {
+        "events": [],
+        "force": 0,
+        "jvp": 0,
+        "observer": 0,
+        "synchronization": 0
+      }
+    }
+  },
+  "schema_version": 1
+}

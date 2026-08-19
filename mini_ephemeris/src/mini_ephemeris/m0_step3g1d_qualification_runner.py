@@ -1,4 +1,4 @@
-"""Fresh-process exact-node runner for Step 3g1d corrective completion."""
+"""Fresh-process exact-node runner for Step 3g1d requalification."""
 
 from __future__ import annotations
 
@@ -15,34 +15,34 @@ from typing import Any, Mapping
 
 
 ROOT = Path(__file__).resolve().parents[3]
-MANIFEST27 = ROOT / (
+MANIFEST28 = ROOT / (
     "ephemeris_experiment_runner/manifests/"
-    "27_m0_step3g1d_interaction_kick_corrective_completion_v1.json"
+    "28_m0_step3g1d_interaction_kick_requalification_v1.json"
 )
 GROUPS: Mapping[str, Mapping[str, Any]] = {
-    "step3g1d_corrective": {
+    "step3g1d_requalification": {
+        "expected_count_key": "step3g1d_fresh_process_group",
+        "hash_seed": "28101",
         "helper": "mini_ephemeris.m0_step3g1d_qualification",
         "keys": ("step3g1d_core_node_ids", "step3g1d_integrity_node_ids"),
-        "hash_seed": "27101",
-        "expected_passes": 35,
     },
     "safe_step3g1a": {
+        "expected_count_key": "safe_step3g1a_regression",
+        "hash_seed": "28102",
         "helper": "mini_ephemeris.m0_step3g1a_requalification",
         "keys": ("safe_step3g1a_regression_node_ids",),
-        "hash_seed": "27102",
-        "expected_passes": 25,
     },
     "safe_step3g1b": {
+        "expected_count_key": "safe_step3g1b_regression",
+        "hash_seed": "28103",
         "helper": "mini_ephemeris.m0_step3g1b_qualification",
         "keys": ("safe_step3g1b_regression_node_ids",),
-        "hash_seed": "27103",
-        "expected_passes": 26,
     },
     "safe_step3g1c": {
+        "expected_count_key": "safe_step3g1c_regression",
+        "hash_seed": "28104",
         "helper": "mini_ephemeris.m0_step3g1c_qualification",
         "keys": ("safe_step3g1c_regression_node_ids",),
-        "hash_seed": "27104",
-        "expected_passes": 26,
     },
 }
 
@@ -61,13 +61,13 @@ def _bootstrap_namespace() -> None:
     sys.modules["mini_ephemeris"] = package
 
 
-def _manifest27() -> Mapping[str, Any]:
+def _manifest28() -> Mapping[str, Any]:
     value = json.loads(
-        MANIFEST27.read_text(encoding="utf-8"),
+        MANIFEST28.read_text(encoding="utf-8"),
         parse_constant=lambda item: (_ for _ in ()).throw(ValueError(item)),
     )
     if not isinstance(value, dict):
-        raise TypeError("Manifest 27 must be a JSON object")
+        raise TypeError("Manifest 28 must be a JSON object")
     return value
 
 
@@ -87,24 +87,31 @@ def _audited_pytest(helper):
     return pytest
 
 
+def _expected_passes(group_name: str) -> int:
+    config = GROUPS[group_name]
+    return int(
+        _manifest28()["exact_test_selection"]["expected_counts"][
+            config["expected_count_key"]
+        ]
+    )
+
+
 def _group_nodes(group_name: str) -> list[str]:
     config = GROUPS[group_name]
-    selection = _manifest27()["exact_test_selection"]
+    selection = _manifest28()["exact_test_selection"]
     nodes = [
         node
         for key in config["keys"]
         for node in selection[key]
     ]
-    if (
-        len(nodes) != config["expected_passes"]
-        or len(nodes) != len(set(nodes))
-    ):
+    expected = _expected_passes(group_name)
+    if len(nodes) != expected or len(nodes) != len(set(nodes)):
         raise RuntimeError(f"{group_name} literal-node count changed")
     return nodes
 
 
 def _verify_frozen_groups() -> None:
-    groups = _manifest27()["fresh_process_regression_isolation"]["groups"]
+    groups = _manifest28()["fresh_process_regression_isolation"]["groups"]
     observed = {
         value["name"]: {
             "hash_seed": value["hash_seed"],
@@ -115,7 +122,7 @@ def _verify_frozen_groups() -> None:
     expected = {
         name: {
             "hash_seed": config["hash_seed"],
-            "expected_passes": config["expected_passes"],
+            "expected_passes": _expected_passes(name),
         }
         for name, config in GROUPS.items()
     }
@@ -143,7 +150,7 @@ def _run_worker(group_name: str) -> int:
     _bootstrap_namespace()
     helper = importlib.import_module(config["helper"])
     pytest = _audited_pytest(helper)
-    if group_name == "step3g1d_corrective":
+    if group_name == "step3g1d_requalification":
         helper.static_safety_audit()
     nodes = _group_nodes(group_name)
     result = int(pytest.main(["-q", *nodes]))
@@ -151,7 +158,7 @@ def _run_worker(group_name: str) -> int:
     print(
         json.dumps(
             {
-                "expected_passes": config["expected_passes"],
+                "expected_passes": _expected_passes(group_name),
                 "group": group_name,
                 "pytest_exit_code": result,
             },
@@ -215,9 +222,12 @@ def run_artifacts() -> int:
     )
     pytest = _audited_pytest(helper)
     nodes = list(
-        _manifest27()["exact_test_selection"]["artifact_node_ids"]
+        _manifest28()["exact_test_selection"]["artifact_node_ids"]
     )
-    if len(nodes) != 6 or len(nodes) != len(set(nodes)):
+    expected = int(
+        _manifest28()["exact_test_selection"]["expected_counts"]["artifact"]
+    )
+    if len(nodes) != expected or len(nodes) != len(set(nodes)):
         raise RuntimeError("artifact literal-node count changed")
     result = int(pytest.main(["-q", *nodes]))
     helper.assert_protected_runtime_absent()

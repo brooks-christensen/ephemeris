@@ -48,6 +48,10 @@ MANIFEST27 = ROOT / (
     "ephemeris_experiment_runner/manifests/"
     "27_m0_step3g1d_interaction_kick_corrective_completion_v1.json"
 )
+MANIFEST28 = ROOT / (
+    "ephemeris_experiment_runner/manifests/"
+    "28_m0_step3g1d_interaction_kick_requalification_v1.json"
+)
 PREREGISTRATION_COMMIT = "068695ace38a68ff83238668b5630867f8572a9b"
 PYTEST_SITE_PACKAGES = Path(
     "/home/peacelovephysics/sheet-music-generator/.venv/lib/python3.10/site-packages"
@@ -325,6 +329,13 @@ def manifest27() -> Mapping[str, Any]:
     value = strict_json(MANIFEST27)
     if not isinstance(value, dict):
         raise TypeError("Manifest 27 must be a JSON object")
+    return value
+
+
+def manifest28() -> Mapping[str, Any]:
+    value = strict_json(MANIFEST28)
+    if not isinstance(value, dict):
+        raise TypeError("Manifest 28 must be a JSON object")
     return value
 
 
@@ -1503,13 +1514,26 @@ def pytest_runtime_audit() -> Mapping[str, Any]:
 
 
 def static_safety_audit() -> Mapping[str, Any]:
-    manifest = manifest27()
-    for relative, expected in manifest["qualified_read_only_sha256"].items():
+    manifest = manifest28()
+    baseline = manifest27()
+    for relative, expected in baseline[
+        "qualified_read_only_sha256"
+    ].items():
         if sha256_file(ROOT / relative) != expected:
             raise AssertionError(f"qualified prior file changed: {relative}")
+    for relative, expected in manifest["generated_integrity"][
+        "protected_sources_sha256"
+    ].items():
+        if sha256_file(ROOT / relative) != expected:
+            raise AssertionError(f"protected source changed: {relative}")
+    if sha256_file(ROOT / manifest["paths"]["implementation"]) != manifest[
+        "baseline"
+    ]["production_kick_sha256"]:
+        raise AssertionError("production kick changed after failed snapshot")
+
     expected_v2 = {
         path
-        for path in manifest["qualified_read_only_sha256"]
+        for path in baseline["qualified_read_only_sha256"]
         if path.startswith("mini_ephemeris/src/mini_ephemeris/v2/")
     }
     expected_v2.add(manifest["paths"]["implementation"])
@@ -1519,7 +1543,7 @@ def static_safety_audit() -> Mapping[str, Any]:
         if path.is_file() and path.suffix == ".py"
     }
     if actual_v2 != expected_v2:
-        raise AssertionError("v2 source inventory differs from Manifest 27")
+        raise AssertionError("v2 source inventory differs from Manifest 28")
 
     source_paths = [
         ROOT / manifest["paths"][key]
@@ -1559,8 +1583,13 @@ def static_safety_audit() -> Mapping[str, Any]:
         "artifact_node_ids",
     )
     all_nodes = [node for key in keys for node in selection[key]]
-    if len(all_nodes) != 118 or len(set(all_nodes)) != 118:
-        raise AssertionError("Manifest 27 literal-node inventory changed")
+    expected_total = selection["expected_counts"]["total"]
+    if (
+        len(all_nodes) != expected_total
+        or len(set(all_nodes)) != expected_total
+        or expected_total != 124
+    ):
+        raise AssertionError("Manifest 28 literal-node inventory changed")
     _verify_node_ids(all_nodes)
 
     helper_path = ROOT / manifest["paths"]["qualification_helper"]
@@ -1571,25 +1600,7 @@ def static_safety_audit() -> Mapping[str, Any]:
             + _subprocess_inventory(runner_path)
         )
     )
-    expected_subprocesses = {
-        (
-            "mini_ephemeris/src/mini_ephemeris/"
-            "m0_step3g1d_qualification.py:git_output:check_output"
-        ),
-        (
-            "mini_ephemeris/src/mini_ephemeris/"
-            "m0_step3g1d_qualification.py:run_fresh_artifact_probe:run"
-        ),
-        (
-            "mini_ephemeris/src/mini_ephemeris/"
-            "m0_step3g1d_qualification.py:run_fresh_kick_probe:run"
-        ),
-        (
-            "mini_ephemeris/src/mini_ephemeris/"
-            "m0_step3g1d_qualification_runner.py:_run_group_worker:run"
-        ),
-    }
-    if set(subprocesses) != expected_subprocesses:
+    if set(subprocesses) != set(manifest["permitted_subprocesses"]):
         raise AssertionError(f"subprocess closure changed: {subprocesses}")
     assert_protected_runtime_absent()
     return {
@@ -1599,6 +1610,9 @@ def static_safety_audit() -> Mapping[str, Any]:
         "import_graph": import_graph,
         "legacy_nbody_absent": "mini_ephemeris.nbody" not in sys.modules,
         "legacy_package_init_bypassed": True,
+        "production_kick_sha256": sha256_file(
+            ROOT / manifest["paths"]["implementation"]
+        ),
         "pytest_runtime": pytest_runtime_audit(),
         "selected_node_count": len(all_nodes),
         "source_file_count": len(source_paths),
@@ -1722,13 +1736,20 @@ def run_fresh_artifact_probe(
     )
 
 
-def git_output(arguments: Sequence[str]) -> str:
-    return subprocess.check_output(
+def git_output(
+    arguments: Sequence[str],
+    *,
+    binary: bool = False,
+) -> str | bytes:
+    result = subprocess.check_output(
         ["git", *arguments],
         cwd=ROOT,
-        text=True,
+        text=not binary,
         stderr=subprocess.STDOUT,
-    ).strip()
+    )
+    if binary:
+        return result
+    return result.rstrip("\n")
 
 
 def verify_generated_provenance() -> Mapping[str, Any]:
@@ -1859,5 +1880,208 @@ def verify_inherited_integrity() -> Mapping[str, Any]:
         "historical_manifests": provenance["historical_manifests"],
         "manifest26_error_count": provenance["manifest26_error_count"],
         "protected_tags": 2,
+        "status": "PASS",
+    }
+
+
+def manifest28_preregistration_commit() -> str:
+    relative = manifest28()["paths"]["manifest"]
+    value = git_output(["log", "-1", "--format=%H", "--", relative])
+    if not isinstance(value, str) or len(value) != 40:
+        raise AssertionError("Manifest 28 commit identity is unavailable")
+    return value
+
+
+def verify_manifest28_provenance() -> Mapping[str, Any]:
+    manifest = manifest28()
+    generated = manifest["generated_integrity"]
+    frozen = generated[
+        "historical_manifests_13_through_27_sha256"
+    ]
+    manifest_root = ROOT / "ephemeris_experiment_runner/manifests"
+    actual = {
+        name: sha256_file(manifest_root / name)
+        for name in frozen
+    }
+    if (
+        len(actual) != 15
+        or actual != frozen
+        or any(
+            len(digest) != 64
+            or any(
+                character not in "0123456789abcdef"
+                for character in digest
+            )
+            for digest in frozen.values()
+        )
+    ):
+        raise AssertionError("Manifest 28 historical hashes changed")
+
+    protected = generated["protected_sources_sha256"]
+    if {
+        relative: sha256_file(ROOT / relative)
+        for relative in protected
+    } != protected:
+        raise AssertionError("Manifest 28 protected sources changed")
+    for tag, identity in generated["protected_tags"].items():
+        if (
+            git_output(["cat-file", "-t", tag]) != "tag"
+            or git_output(["rev-parse", f"{tag}^{{commit}}"])
+            != identity["commit"]
+            or git_output(["rev-parse", tag]) != identity["tag_object"]
+        ):
+            raise AssertionError(f"protected tag changed: {tag}")
+
+    baseline = manifest["baseline"]
+    if (
+        sha256_file(MANIFEST26)
+        != baseline["manifest26"]["manifest_sha256"]
+        or sha256_file(MANIFEST27)
+        != baseline["manifest27"]["manifest_sha256"]
+    ):
+        raise AssertionError("Manifest 26 or Manifest 27 changed")
+    failed_root = ROOT / manifest["paths"][
+        "failed_manifest27_documentation_root"
+    ]
+    failed_report = failed_root / (
+        "m0_step3g1d_interaction_kick_corrective_completion_report.md"
+    )
+    failed_summary_path = failed_root / (
+        "m0_step3g1d_interaction_kick_corrective_completion_summary.json"
+    )
+    if (
+        sha256_file(failed_report)
+        != baseline["manifest27"]["report_sha256"]
+        or sha256_file(failed_summary_path)
+        != baseline["manifest27"]["summary_sha256"]
+    ):
+        raise AssertionError("Manifest 27 failed closeout changed")
+    failed_summary = strict_json(failed_summary_path)
+    if (
+        failed_summary["final_status"]
+        != "STEP3G1D_CORRECTIVE_COMPLETION_FAILED"
+        or failed_summary["test_results"]["pre_artifact_passed"] != 109
+        or failed_summary["test_results"]["pre_artifact_failed"] != 3
+    ):
+        raise AssertionError("Manifest 27 failed result changed")
+
+    kick_path = ROOT / manifest["paths"]["implementation"]
+    if sha256_file(kick_path) != baseline["production_kick_sha256"]:
+        raise AssertionError("production kick changed after failed snapshot")
+
+    method = baseline["method_correction"]
+    for relative, expected in method["source_sha256_at_commit"].items():
+        payload = git_output(
+            ["show", f"{method['commit']}:{relative}"],
+            binary=True,
+        )
+        if not isinstance(payload, bytes):
+            raise AssertionError("method-correction blob read was not binary")
+        if hashlib.sha256(payload).hexdigest() != expected:
+            raise AssertionError(
+                f"method-correction commit bytes changed: {relative}"
+            )
+
+    manifest_commit = manifest28_preregistration_commit()
+    manifest_path = manifest["paths"]["manifest"]
+    if (
+        git_output(["rev-parse", f"{manifest_commit}^"])
+        != manifest["preregistration"]["parent_commit"]
+        or git_output(
+            [
+                "diff-tree",
+                "--no-commit-id",
+                "--name-only",
+                "-r",
+                manifest_commit,
+            ]
+        )
+        != manifest_path
+    ):
+        raise AssertionError("Manifest 28 was not committed alone")
+    for commit in (
+        baseline["manifest27"]["failed_campaign_commit"],
+        method["commit"],
+        manifest_commit,
+    ):
+        if git_output(
+            ["merge-base", "--is-ancestor", commit, "HEAD"]
+        ) != "":
+            raise AssertionError(f"required commit is not an ancestor: {commit}")
+
+    gate_fingerprints = {
+        kind: finite_difference_gate_spec(kind).fingerprint
+        for kind in ("dense", "nonlinear")
+    }
+    expected_gate_fingerprints = {
+        "dense": manifest["analytic_derivative_classification"][
+            "dense_quadratic"
+        ]["gate_spec_fingerprint"],
+        "nonlinear": manifest["analytic_derivative_classification"][
+            "nonlinear_radial_quartic"
+        ]["gate_spec_fingerprint"],
+    }
+    if gate_fingerprints != expected_gate_fingerprints:
+        raise AssertionError("finite-difference gate identity changed")
+
+    allowed = set(manifest["post_manifest_allowlist"][:-1])
+    documentation_prefix = manifest["paths"]["documentation_root"] + "/"
+    status = git_output(
+        ["status", "--porcelain=v1", "--untracked-files=all"]
+    )
+    if not isinstance(status, str):
+        raise AssertionError("git status was not text")
+    changed = [
+        line[3:]
+        for line in status.splitlines()
+        if len(line) >= 4
+    ]
+    unexpected = [
+        path
+        for path in changed
+        if path not in allowed
+        and not path.startswith(documentation_prefix)
+    ]
+    if unexpected:
+        raise AssertionError(
+            f"post-Manifest-28 path is not allowlisted: {unexpected}"
+        )
+
+    manifest27_provenance = verify_generated_provenance()
+    if manifest27_provenance["status"] != "PASS":
+        raise AssertionError("Manifest 27 provenance no longer passes")
+    return {
+        "historical_manifests": len(actual),
+        "manifest26_error_count": manifest27_provenance[
+            "manifest26_error_count"
+        ],
+        "manifest27_failed_result": True,
+        "manifest28_commit": manifest_commit,
+        "method_commit": method["commit"],
+        "protected_sources": len(protected),
+        "protected_tags": len(generated["protected_tags"]),
+        "status": "PASS",
+    }
+
+
+def verify_requalification_integrity() -> Mapping[str, Any]:
+    prior = verify_inherited_integrity()
+    provenance = verify_manifest28_provenance()
+    if prior["status"] != "PASS" or provenance["status"] != "PASS":
+        raise AssertionError("requalification integrity did not pass")
+    return {
+        "checked_hashes": (
+            prior["checked_hashes"]
+            + provenance["historical_manifests"]
+            + provenance["protected_sources"]
+            + provenance["protected_tags"]
+            + 7
+        ),
+        "historical_manifests": provenance["historical_manifests"],
+        "manifest26_error_count": provenance["manifest26_error_count"],
+        "manifest27_failed_result": True,
+        "manifest28_commit": provenance["manifest28_commit"],
+        "method_commit": provenance["method_commit"],
+        "protected_tags": provenance["protected_tags"],
         "status": "PASS",
     }
