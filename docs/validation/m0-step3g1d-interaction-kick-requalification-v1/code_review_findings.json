@@ -1,0 +1,21 @@
+{
+  "findings": [],
+  "kind": "m0_step3g1d_requalification_code_review_findings",
+  "reviewed_surfaces": [
+    "acceleration versus generalized-force semantics",
+    "source-order A^-1 and A^-T recurrences",
+    "retained COM behavior",
+    "capability and fingerprint preflight",
+    "force then JVP call order",
+    "zero-duration no-call path",
+    "immutable ownership and failure atomicity",
+    "negative-control sensitivity",
+    "generated full-length provenance hashes",
+    "derived COM closure and projection diagnostics",
+    "analytic finite-difference applicability classification",
+    "unchanged nonlinear ladder requirements",
+    "fresh-process regression isolation"
+  ],
+  "schema_version": 1,
+  "status": "PASS_NO_OPEN_FINDINGS"
+}

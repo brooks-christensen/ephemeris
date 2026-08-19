@@ -1,0 +1,40 @@
+{
+  "acceptance": {
+    "composition": true,
+    "reversibility": true
+  },
+  "composition": {
+    "acceptance": true,
+    "maximum_scaled": 1.3377282781857505e-16,
+    "providers": [
+      {
+        "kind": "dense",
+        "physical_max_scaled": 1.3377282781857505e-16,
+        "tangent_max_scaled": 1.2804915057272982e-16
+      },
+      {
+        "kind": "nonlinear",
+        "physical_max_scaled": 0.0,
+        "tangent_max_scaled": 0.0
+      }
+    ]
+  },
+  "kind": "reversibility_composition_metrics",
+  "reversibility": {
+    "acceptance": true,
+    "maximum_scaled": 1.1842378929335003e-16,
+    "providers": [
+      {
+        "kind": "dense",
+        "physical_max_scaled": 0.0,
+        "tangent_max_scaled": 1.1842378929335003e-16
+      },
+      {
+        "kind": "nonlinear",
+        "physical_max_scaled": 0.0,
+        "tangent_max_scaled": 0.0
+      }
+    ]
+  },
+  "schema_version": 1
+}

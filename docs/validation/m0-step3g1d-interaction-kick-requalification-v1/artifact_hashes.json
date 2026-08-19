@@ -1,0 +1,20 @@
+{
+  "kind": "m0_step3g1d_requalification_artifact_hashes",
+  "schema_version": 1,
+  "sha256": {
+    "canonical_kick_provider_specification.md": "786f80efccd150ad8bb92e69c8f083dc7c2f493f1f63bf3ee522daac21d19af4",
+    "code_review_findings.json": "cd1514377ab9561618f5b2b5450d26b49429ffc5092c7d4206ab271b2abbe40c",
+    "evaluation_accounting.json": "6958cd6890ff08703724ca35235a8546040bd38f8a2f1027ad6bc17af5a9912f",
+    "finite_difference_metrics.json": "0697e6c7e7381ea13ed2c765737b8fdde49b9de4e132d3eb8a08937589bba3bd",
+    "force_jvp_closure_metrics.json": "77d806746d953e77f8cb1312b2c8c0dfc7e00d2b785049b8f9412ca0a8c51573",
+    "m0_step3g1d_interaction_kick_requalification_report.md": "98384231b69c18bf1b62dcf5d869409e6676a8ef65a1356d818e91e667cd13ef",
+    "m0_step3g1d_interaction_kick_requalification_summary.json": "79b49c28847a5fd345c7b319032cb87e3aa7a94c03b2147ba17f94941079ed54",
+    "negative_control_metrics.json": "944c4df1d85e7c9468bb8ffe3965754612beda44db1d0abb394521cf0202fa5c",
+    "physical_tangent_oracle_metrics.json": "1855c98ee60a22e9c9faf8b48a2f1cdc85b1dbba7cc1511f712f686e17dffe57",
+    "qualifying_test_inventory.json": "1e4c04ba47baddca57e418652e66eea9b2bea6d177d99106b9a11c4bbd6e771f",
+    "requirements_traceability.csv": "b07a62cd9fd4f9caade6687200a27d76af0af13ec35e9e4c099448ab563dbd2e",
+    "reversibility_composition_metrics.json": "e197798c4f12a449a4c0a4d855155b74532ec8aedc8f9ea05b28981f0315da25",
+    "symplecticity_jacobian_symmetry_metrics.json": "1ef1ab8c5994d2f54396fe28956d9f744bfce5add1e1c980db8907f5779d8b91",
+    "tangent_map_derivation.md": "d4eaac32f1f7feee4b4098a794d2ee82c8cd5ec5ce83abc06959d50b1ec37e94"
+  }
+}

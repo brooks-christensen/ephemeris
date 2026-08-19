@@ -1,0 +1,13 @@
+{
+  "acceptance": {
+    "nonsymmetric_control_detected": true
+  },
+  "kind": "negative_control_metrics",
+  "metrics": {
+    "acceptance": true,
+    "jacobian_asymmetry_max": 0.5,
+    "symplectic_raw_frobenius": 0.7071067811865476,
+    "symplectic_raw_max": 0.5
+  },
+  "schema_version": 1
+}

@@ -1,0 +1,164 @@
+{
+  "acceptance": {
+    "physical": true,
+    "tangent": true
+  },
+  "kind": "physical_tangent_oracle_metrics",
+  "physical": {
+    "acceptance": true,
+    "cases": [
+      {
+        "duration_s": 1.0,
+        "kind": "dense",
+        "max_scaled": 1.042711526383711e-16,
+        "relative_l2": 1.042711526383711e-16
+      },
+      {
+        "duration_s": -1.0,
+        "kind": "dense",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": 0.0009765625,
+        "kind": "dense",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": -0.0009765625,
+        "kind": "dense",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": 1.75,
+        "kind": "dense",
+        "max_scaled": 1.4035195471874325e-16,
+        "relative_l2": 1.4035195471874325e-16
+      },
+      {
+        "duration_s": -1.75,
+        "kind": "dense",
+        "max_scaled": 7.840403977318542e-17,
+        "relative_l2": 7.840403977318542e-17
+      },
+      {
+        "duration_s": 1.0,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": -1.0,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": 0.0009765625,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": -0.0009765625,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": 1.75,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": -1.75,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      }
+    ],
+    "maximum_scaled": 1.4035195471874325e-16
+  },
+  "schema_version": 1,
+  "tangent": {
+    "acceptance": true,
+    "cases": [
+      {
+        "duration_s": 1.0,
+        "kind": "dense",
+        "max_scaled": 9.979094818662807e-17,
+        "relative_l2": 1.2671152341125195e-16
+      },
+      {
+        "duration_s": -1.0,
+        "kind": "dense",
+        "max_scaled": 1.2871422329081916e-16,
+        "relative_l2": 1.8688942290521603e-16
+      },
+      {
+        "duration_s": 0.0009765625,
+        "kind": "dense",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": -0.0009765625,
+        "kind": "dense",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": 1.75,
+        "kind": "dense",
+        "max_scaled": 1.5021176791327935e-16,
+        "relative_l2": 1.996611044979454e-16
+      },
+      {
+        "duration_s": -1.75,
+        "kind": "dense",
+        "max_scaled": 1.8078709969148304e-16,
+        "relative_l2": 2.330263542707603e-16
+      },
+      {
+        "duration_s": 1.0,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": -1.0,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": 0.0009765625,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": -0.0009765625,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": 1.75,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      },
+      {
+        "duration_s": -1.75,
+        "kind": "nonlinear",
+        "max_scaled": 0.0,
+        "relative_l2": 0.0
+      }
+    ],
+    "maximum_scaled": 1.8078709969148304e-16
+  }
+}

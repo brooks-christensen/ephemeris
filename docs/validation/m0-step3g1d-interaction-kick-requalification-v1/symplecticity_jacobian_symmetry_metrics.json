@@ -1,0 +1,34 @@
+{
+  "acceptance": {
+    "dense": true,
+    "nonlinear": true
+  },
+  "conditioning": {
+    "canonical_scale_cond2": 16.0,
+    "com_transform_condition_inf": 10.033613445378151,
+    "dense_k_cond2": 2.0870814069276173,
+    "jacobi_cond2": 3.155706697246543
+  },
+  "kind": "symplecticity_jacobian_symmetry_metrics",
+  "providers": [
+    {
+      "analytic_matrix_max_error": 4.440892098500626e-16,
+      "jacobian_symmetry_max": 0.0,
+      "kind": "dense",
+      "raw_frobenius": 7.796914382928111e-16,
+      "raw_max": 4.510281037539698e-16,
+      "scaled_frobenius": 1.2475063012684978e-14,
+      "scaled_max": 7.216449660063518e-15
+    },
+    {
+      "analytic_matrix_max_error": 2.7755575615628914e-17,
+      "jacobian_symmetry_max": 0.0,
+      "kind": "nonlinear",
+      "raw_frobenius": 2.7325336441521028e-17,
+      "raw_max": 1.3877787807814457e-17,
+      "scaled_frobenius": 4.3720538306433645e-16,
+      "scaled_max": 2.220446049250313e-16
+    }
+  ],
+  "schema_version": 1
+}

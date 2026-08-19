@@ -1,0 +1,1219 @@
+{
+  "acceptance": {
+    "accounting": true,
+    "com_projection": true,
+    "composition": true,
+    "finite_difference": true,
+    "negative_control": true,
+    "physical": true,
+    "reversibility": true,
+    "symplecticity": true,
+    "tangent": true
+  },
+  "branch": "v2-whckl-tangent-core",
+  "corrected_provenance": {
+    "historical_manifests": 15,
+    "manifest26_error_count": 12,
+    "manifest27_failed_result": true,
+    "manifest28_commit": "1713a2e7327bc292ca7358df3b90e76721acef7b",
+    "method_commit": "e979c0007edf0d8ddd57dd6efdbd1d7c24825485",
+    "protected_sources": 4,
+    "protected_tags": 2,
+    "status": "PASS"
+  },
+  "exact_test_counts": {
+    "artifact": 6,
+    "pre_artifact_total": 118,
+    "safe_step3g1a_regression": 25,
+    "safe_step3g1b_regression": 26,
+    "safe_step3g1c_regression": 26,
+    "step3g1d_core": 35,
+    "step3g1d_fresh_process_group": 41,
+    "step3g1d_integrity": 6,
+    "total": 124
+  },
+  "final_status": "STEP3G1D_REQUALIFICATION_COMPLETE",
+  "inherited_integrity_status": "PASS",
+  "kind": "m0_step3g1d_interaction_kick_requalification_summary",
+  "manifest26_blocked_closeout_commit": "368cbac97940c093c261b374a9890d74c42c7666",
+  "manifest26_final_status": "STEP3G1D_BLOCKED",
+  "manifest27_failed_campaign_commit": "ffe6475afb94f980d61253ff32c35141f1465053",
+  "manifest27_final_status": "STEP3G1D_CORRECTIVE_COMPLETION_FAILED",
+  "manifest28_preregistration_commit": "1713a2e7327bc292ca7358df3b90e76721acef7b",
+  "method_correction_commit": "e979c0007edf0d8ddd57dd6efdbd1d7c24825485",
+  "model_fingerprint": "0ab67ec212c52424462e27c202d6b01a2e1e63a7021c00b4ce2769539f8f7397",
+  "numerical_extrema": {
+    "com_projection_maximum_bound_norm": 6.136039544858897e-14,
+    "com_projection_maximum_component_ratio": 0.008993624384129427,
+    "com_projection_maximum_norm_ratio": 0.006832372041440279,
+    "com_projection_maximum_raw_norm": 2.7194799110210365e-16,
+    "composition_maximum_scaled": 1.3377282781857505e-16,
+    "dense_force_minimum": 2.137694166068828e-15,
+    "dense_kick_minimum": 1.6216182874045567e-15,
+    "nonlinear_force_minimum": 7.472261461386999e-12,
+    "nonlinear_kick_minimum": 0.0,
+    "physical_maximum_scaled": 1.4035195471874325e-16,
+    "reversibility_maximum_scaled": 1.1842378929335003e-16,
+    "tangent_maximum_scaled": 1.8078709969148304e-16,
+    "worst_raw_symplectic_max": 4.510281037539698e-16,
+    "worst_scaled_symplectic_max": 7.216449660063518e-15
+  },
+  "plan_fingerprint": "7d256298bd2bb43a8c5ab859be0f731eaa639db008a581b61f9e9556f4b08346",
+  "primary_finding": "SYNTHETIC_CONSERVATIVE_INTERACTION_KICK_QUALIFIED",
+  "process_isolation": {
+    "groups": [
+      {
+        "expected_passes": 41,
+        "hash_seed": "28101",
+        "name": "step3g1d_requalification"
+      },
+      {
+        "expected_passes": 25,
+        "hash_seed": "28102",
+        "name": "safe_step3g1a"
+      },
+      {
+        "expected_passes": 26,
+        "hash_seed": "28103",
+        "name": "safe_step3g1b"
+      },
+      {
+        "expected_passes": 26,
+        "hash_seed": "28104",
+        "name": "safe_step3g1c"
+      }
+    ],
+    "pre_artifact_total": 118,
+    "runner_only_not_production": true
+  },
+  "production_kick_sha256": "49ac8e5e9d15090e44b0d2b66c232df9b813606ea1d5f7b608ca27cb7c799275",
+  "projection": {
+    "acceptance": true,
+    "cases": [
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": 1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": 1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.027880861307017e-14,
+          2.468911258033654e-14,
+          2.3737856043560384e-14
+        ],
+        "component_ratio_max": 0.008993624384129427,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          2.6006194196428574,
+          3.1662109375000003,
+          3.0442187499999998
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.980286633290192e-14,
+        "duration_s": 1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.006832372041440279,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          1.1102230246251565e-16,
+          -2.220446049250313e-16,
+          -1.1102230246251565e-16
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.7194799110210365e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": -1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": -1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.027880861307017e-14,
+          2.468911258033654e-14,
+          2.3737856043560384e-14
+        ],
+        "component_ratio_max": 0.008993624384129427,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          2.6006194196428574,
+          3.1662109375000003,
+          3.0442187499999998
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.980286633290192e-14,
+        "duration_s": -1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.006832372041440279,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          1.1102230246251565e-16,
+          -2.220446049250313e-16,
+          -1.1102230246251565e-16
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.7194799110210365e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": 0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": 0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.027880861307017e-14,
+          2.468911258033654e-14,
+          2.3737856043560384e-14
+        ],
+        "component_ratio_max": 0.008993624384129427,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          2.6006194196428574,
+          3.1662109375000003,
+          3.0442187499999998
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.980286633290192e-14,
+        "duration_s": 0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.006832372041440279,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          1.1102230246251565e-16,
+          -2.220446049250313e-16,
+          -1.1102230246251565e-16
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.7194799110210365e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": -0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": -0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.027880861307017e-14,
+          2.468911258033654e-14,
+          2.3737856043560384e-14
+        ],
+        "component_ratio_max": 0.008993624384129427,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          2.6006194196428574,
+          3.1662109375000003,
+          3.0442187499999998
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.980286633290192e-14,
+        "duration_s": -0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.006832372041440279,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          1.1102230246251565e-16,
+          -2.220446049250313e-16,
+          -1.1102230246251565e-16
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.7194799110210365e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": 1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": 1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.027880861307017e-14,
+          2.468911258033654e-14,
+          2.3737856043560384e-14
+        ],
+        "component_ratio_max": 0.008993624384129427,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          2.6006194196428574,
+          3.1662109375000003,
+          3.0442187499999998
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.980286633290192e-14,
+        "duration_s": 1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.006832372041440279,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          1.1102230246251565e-16,
+          -2.220446049250313e-16,
+          -1.1102230246251565e-16
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.7194799110210365e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": -1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          3.339466986379037e-14,
+          3.679349410929828e-14,
+          3.6001846418270025e-14
+        ],
+        "component_ratio_max": 0.00664910316019602,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          4.282639508928572,
+          4.718515625,
+          4.6169921875
+        ],
+        "derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+        "duration_s": -1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.0036186957939518525,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -2.220446049250313e-16,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.220446049250313e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.027880861307017e-14,
+          2.468911258033654e-14,
+          2.3737856043560384e-14
+        ],
+        "component_ratio_max": 0.008993624384129427,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          2.6006194196428574,
+          3.1662109375000003,
+          3.0442187499999998
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.980286633290192e-14,
+        "duration_s": -1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "dense",
+        "norm_ratio": 0.006832372041440279,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          1.1102230246251565e-16,
+          -2.220446049250313e-16,
+          -1.1102230246251565e-16
+        ],
+        "raw_residual_norm_kg_m_per_s2": 2.7194799110210365e-16,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": 1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": 1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.4692824856686828e-15,
+          2.2132068074284047e-15,
+          2.1206854583903784e-15
+        ],
+        "component_ratio_max": 0.006544010453274781,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.316668701171875,
+          0.2838287353515625,
+          0.2719635009765625
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.936108126043535e-15,
+        "duration_s": 1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.003525763867102914,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          0.0,
+          0.0,
+          1.3877787807814457e-17
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": -1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": -1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.4692824856686828e-15,
+          2.2132068074284047e-15,
+          2.1206854583903784e-15
+        ],
+        "component_ratio_max": 0.006544010453274781,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.316668701171875,
+          0.2838287353515625,
+          0.2719635009765625
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.936108126043535e-15,
+        "duration_s": -1.0,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.003525763867102914,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          0.0,
+          0.0,
+          1.3877787807814457e-17
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": 0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": 0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.4692824856686828e-15,
+          2.2132068074284047e-15,
+          2.1206854583903784e-15
+        ],
+        "component_ratio_max": 0.006544010453274781,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.316668701171875,
+          0.2838287353515625,
+          0.2719635009765625
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.936108126043535e-15,
+        "duration_s": 0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.003525763867102914,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          0.0,
+          0.0,
+          1.3877787807814457e-17
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": -0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": -0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.4692824856686828e-15,
+          2.2132068074284047e-15,
+          2.1206854583903784e-15
+        ],
+        "component_ratio_max": 0.006544010453274781,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.316668701171875,
+          0.2838287353515625,
+          0.2719635009765625
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.936108126043535e-15,
+        "duration_s": -0.0009765625,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.003525763867102914,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          0.0,
+          0.0,
+          1.3877787807814457e-17
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": 1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": 1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.4692824856686828e-15,
+          2.2132068074284047e-15,
+          2.1206854583903784e-15
+        ],
+        "component_ratio_max": 0.006544010453274781,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.316668701171875,
+          0.2838287353515625,
+          0.2719635009765625
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.936108126043535e-15,
+        "duration_s": 1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.003525763867102914,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          0.0,
+          0.0,
+          1.3877787807814457e-17
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "physical_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": -1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_force",
+        "component_bounds_kg_m_per_s2": [
+          2.0471640292440898e-15,
+          1.879363698978181e-15,
+          1.6884908233007092e-15
+        ],
+        "component_ratio_max": 0.006779030702751648,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.26253487723214286,
+          0.241015625,
+          0.2165374755859375
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.2517517949619948e-15,
+        "duration_s": -1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.004267788159390147,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          -1.3877787807814457e-17,
+          0.0,
+          0.0
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      },
+      {
+        "accumulated_force_terms": 4,
+        "channel": "tangent_jvp",
+        "component_bounds_kg_m_per_s2": [
+          2.4692824856686828e-15,
+          2.2132068074284047e-15,
+          2.1206854583903784e-15
+        ],
+        "component_ratio_max": 0.006544010453274781,
+        "componentwise_absolute_force_sums_kg_m_per_s2": [
+          0.316668701171875,
+          0.2838287353515625,
+          0.2719635009765625
+        ],
+        "derived_bound_norm_kg_m_per_s2": 3.936108126043535e-15,
+        "duration_s": -1.75,
+        "exact_zero_com_output": true,
+        "gamma": 7.771561172376102e-16,
+        "kind": "nonlinear",
+        "norm_ratio": 0.003525763867102914,
+        "projection_applied": true,
+        "raw_residual_kg_m_per_s2": [
+          0.0,
+          0.0,
+          1.3877787807814457e-17
+        ],
+        "raw_residual_norm_kg_m_per_s2": 1.3877787807814457e-17,
+        "rounded_operation_count": 7,
+        "transform_condition_inf": 10.033613445378151,
+        "within_bound": true
+      }
+    ],
+    "maximum_component_ratio": 0.008993624384129427,
+    "maximum_derived_bound_norm_kg_m_per_s2": 6.136039544858897e-14,
+    "maximum_norm_ratio": 0.006832372041440279,
+    "maximum_raw_residual_norm_kg_m_per_s2": 2.7194799110210365e-16
+  },
+  "safety_status": "PASS",
+  "schema_version": 1,
+  "successor": "Step 3g1e may be proposed as a separately preregistered synthetic composition study; it was not started.",
+  "verification_envelope": "ISOLATED_SYNTHETIC_POSITION_ONLY_KICK_NO_PHYSICAL_FORCE_OR_INTEGRATION"
+}
