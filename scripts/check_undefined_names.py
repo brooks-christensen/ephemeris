@@ -38,11 +38,21 @@ def _module_bindings(table: symtable.SymbolTable) -> set[str]:
     }
 
 
+# Module-level names CPython injects into every module namespace. symtable
+# classifies a reference to one of these inside a function as an implicit
+# global, which is exactly the signature of a real NameError, so they have to
+# be named explicitly rather than inferred.
+MODULE_DUNDERS = frozenset({
+    "__file__", "__name__", "__doc__", "__package__", "__spec__",
+    "__loader__", "__builtins__", "__debug__",
+})
+
+
 def check(path: str) -> list[tuple[str, str, int]]:
     source = Path(path).read_text(encoding="utf-8")
     top = symtable.symtable(source, path, "exec")
     bound = _module_bindings(top)
-    known_builtins = set(dir(builtins))
+    known_builtins = set(dir(builtins)) | MODULE_DUNDERS
     problems: list[tuple[str, str, int]] = []
 
     def walk(table: symtable.SymbolTable, enclosing: set[str]) -> None:
