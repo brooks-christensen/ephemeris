@@ -25,11 +25,23 @@ def load_json(path: Path) -> dict[str, Any]:
 
 
 def classification_from_lcn(lcn: float, duration_years: float) -> str:
+    """Fallback classification when a run summary carries no stored verdict.
+
+    The previous criterion here was ``lcn * duration_years > 1.0``, which is
+    algebraically just "the tangent grew by one e-fold" and is satisfied by
+    regular linear growth after about three renormalization intervals. It had no
+    discriminating power and reported ``chaotic_candidate`` for regular motion.
+
+    A single (lcn, duration) pair genuinely carries no information about whether
+    the running estimate has converged -- that requires its history. Rather than
+    guess, report ``ambiguous`` and let the caller obtain a real verdict from
+    ``chaos_estimator_diagnostics.analyze_running_lambda`` where the history is
+    available, or from the ``growth_diagnostics`` block of a run summary.
+    """
+
     if not math.isfinite(lcn):
         return "ambiguous"
-    if lcn > 0.0 and math.isfinite(duration_years) and lcn * duration_years > 1.0:
-        return "chaotic_candidate"
-    return "regular_likely"
+    return "ambiguous"
 
 
 def key_from_config(config: dict[str, Any], duration: float, seed: Any) -> tuple[str, float, int | None]:

@@ -43,6 +43,10 @@ from .ephem import (
     initial_state_solar_system_barycentric,
     solar_system_body_list,
 )
+from .chaos_estimator_diagnostics import (
+    analyze_growth,
+    diagnostics_payload,
+)
 from .nbody import G_SI, NBodyState
 from .orbital_elements import (
     ARCSEC_PER_RAD,
@@ -2964,6 +2968,24 @@ def plot_frequency_drift(
     return paths
 
 
+def _growth_diagnostics_payload(
+    samples: list[LyapunovSample],
+    max_relative_energy_drift: float | None = None,
+) -> dict | None:
+    """Growth-shape diagnostics for the run summary, or None if unavailable."""
+
+    try:
+        return diagnostics_payload(
+            analyze_growth(
+                [sample.time_years for sample in samples],
+                [sample.cumulative_log_growth for sample in samples],
+                max_relative_energy_drift=max_relative_energy_drift,
+            )
+        )
+    except (ValueError, ZeroDivisionError):
+        return None
+
+
 def lyapunov_warnings(
     *,
     duration_years: float,
@@ -2985,6 +3007,43 @@ def lyapunov_warnings(
             "interpreting the value."
         )
     ]
+
+    # Growth-shape diagnostic. A straight-line fit to the cumulative log growth
+    # returns a positive slope for regular motion too, because that growth is
+    # logarithmic rather than linear; the resulting "Lyapunov time" is a fixed
+    # fraction of the run duration regardless of the dynamics. Detect it rather
+    # than reporting it silently.
+    try:
+        growth_diagnostics = analyze_growth(
+            [sample.time_years for sample in samples],
+            [sample.cumulative_log_growth for sample in samples],
+            max_relative_energy_drift=invariant_extrema.get(
+                "max_abs_energy_rel_drift"
+            ),
+        )
+    except (ValueError, ZeroDivisionError):
+        growth_diagnostics = None
+    if growth_diagnostics is not None:
+        if growth_diagnostics.artifact_suspected:
+            warnings.append(
+                "ARTIFACT SUSPECTED: the growth curve is consistent with "
+                "regular (quasi-periodic) motion, for which the straight-line "
+                "fit measures ln(t) rather than a Lyapunov exponent. Report "
+                "final_running_estimate, not fit.lambda_1_per_year. See "
+                "growth_diagnostics in the summary."
+            )
+        if growth_diagnostics.classification == "regular_likely":
+            warnings.append(
+                "Growth classification is 'regular_likely' (halving ratio "
+                f"{growth_diagnostics.halving_ratio:.3f}): the running estimate "
+                "is still decaying, so no positive exponent is established."
+            )
+        elif growth_diagnostics.classification == "ambiguous":
+            warnings.append(
+                "Growth classification is 'ambiguous' (halving ratio "
+                f"{growth_diagnostics.halving_ratio:.3f}): run longer before "
+                "interpreting the exponent."
+            )
 
     step_years = step_days / 365.25
     if duration_years < 100_000.0:
@@ -3155,6 +3214,7 @@ def lyapunov_summary_dict(
     result: LyapunovResult,
     outputs: LyapunovOutputs,
     runtime_s: float,
+    invariant_extrema: dict[str, float] | None = None,
 ) -> dict:
     fit = {
         key: _finite_or_none(value)
@@ -3262,6 +3322,10 @@ def lyapunov_summary_dict(
                 else None
             ),
         },
+        "growth_diagnostics": _growth_diagnostics_payload(
+            result.samples,
+            (invariant_extrema or {}).get("max_abs_energy_rel_drift"),
+        ),
         "sample_count": len(result.samples),
         "renormalization_diagnostics": {
             "max_abs_log_growth_increment": _finite_or_none(max_log_increment),
@@ -5099,6 +5163,7 @@ def main(argv: list[str] | None = None) -> None:
             result=result.lyapunov_result,
             outputs=lyapunov_outputs,
             runtime_s=runtime_s,
+            invariant_extrema=result.extrema,
         )
         write_summary(lyapunov_outputs.summary_path, lyapunov_summary)
 

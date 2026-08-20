@@ -16,6 +16,8 @@ from typing import Any
 
 import numpy as np
 
+from .chaos_estimator_diagnostics import analyze_running_lambda
+
 from .ephem import EphemerisConfig, initial_state_solar_system_barycentric
 from .long_term_stability_cli import (
     build_rebound_simulation,
@@ -598,14 +600,39 @@ def latest_checkpoint(checkpoint_dir: Path, tag: str) -> Path | None:
     return dirs[-1] if dirs else None
 
 
-def classify_lcn(lcn: float, elapsed_years: float, model_scope: str) -> str:
-    if model_scope.startswith("two_body"):
-        if math.isfinite(lcn) and lcn > 0.0 and lcn * elapsed_years > 1.0:
-            return "ambiguous"
-        return "regular_likely"
-    if math.isfinite(lcn) and lcn > 0.0 and lcn * elapsed_years > 1.0:
-        return "chaotic_candidate"
-    return "regular_likely" if math.isfinite(lcn) else "ambiguous"
+def classify_lcn(
+    lcn_history: list[tuple[float, float]],
+    model_scope: str,
+) -> str:
+    """Classify from the running-LCN history.
+
+    The previous criterion was ``lcn * elapsed_years > 1.0``. Since
+    ``lcn = fit_log / fit_elapsed``, that product is algebraically just
+    ``fit_log`` -- "has the tangent grown by one e-fold". Regular linear tangent
+    growth passes it after about three renormalization intervals, so every
+    full-scope run was classified ``chaotic_candidate`` regardless of the
+    dynamics. Measured on an integrable two-body system the statistic was
+    already 5.19 at the first sample.
+
+    The replacement compares the running estimate at the end of the run against
+    its value at the half-way point: ~1 for a genuine exponent, ~0.5 while the
+    estimate is still decaying as ln(t)/t.
+    """
+
+    if len(lcn_history) < 4:
+        return "ambiguous"
+    try:
+        result = analyze_running_lambda(
+            [entry[0] for entry in lcn_history],
+            [entry[1] for entry in lcn_history],
+        )
+    except (ValueError, ZeroDivisionError):
+        return "ambiguous"
+    if model_scope.startswith("two_body") and result.classification == "chaotic_candidate":
+        # Integrable by construction: a chaotic verdict here indicates an
+        # estimator defect, not a physical finding.
+        return "ambiguous"
+    return result.classification
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -916,7 +943,7 @@ def main(argv: list[str] | None = None) -> None:
     finally:
         progress_handle.close()
 
-    classification = classify_lcn(latest_lcn, fit_elapsed_years, args.model_scope)
+    classification = classify_lcn(lcn_history, args.model_scope)
     late_values = [value for time_years, value in lcn_history if time_years >= 0.5 * args.duration_years]
     late_median_lcn = float(np.median(late_values)) if late_values else math.nan
     stable_positive_late_time_plateau = bool(
