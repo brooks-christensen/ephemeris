@@ -27,10 +27,14 @@ from mini_ephemeris.chaos_estimator_diagnostics import (
     CHAOTIC_RATIO_MIN,
     REGULAR_RATIO_MAX,
     ENERGY_DRIFT_CHAOS_GATE,
+    MEGNO_INSTANTANEOUS_TO_LYAPUNOV,
+    MEGNO_MEAN_TO_LYAPUNOV,
     analyze_growth,
     analyze_running_lambda,
+    calibrate_megno_factor,
     classify_growth,
     diagnostics_payload,
+    find_saturation_onset,
 )
 
 
@@ -236,6 +240,39 @@ class UnderResolvedIntegrationMustNotReadAsChaotic(unittest.TestCase):
         )
 
 
+class NegativeExponentsAreNeverChaotic(unittest.TestCase):
+    """DEFECT (in the discriminator itself, found by running a legacy
+    two-trajectory estimator on an integrable system): two negative running
+    estimates produce a POSITIVE halving ratio, which sailed through the
+    chaotic band. Observed: running lambda -1.455e-04 with ratio 2.174,
+    classified chaotic_candidate on a system with lambda = 0.
+    """
+
+    @staticmethod
+    def _negative_with_chaotic_looking_ratio(duration_years: float, n: int = 400):
+        """S(t) = -c t^1.5, so lambda_running = -c sqrt(t) and the halving
+        ratio is sqrt(2) ~ 1.414 -- inside the chaotic band, from two negative
+        values. This is the shape the legacy estimator actually produced:
+        running lambda -1.455e-04 with ratio 2.174.
+        """
+        times = np.linspace(duration_years / n, duration_years, n)
+        return times, -1.0e-9 * times**1.5
+
+    def test_negative_running_estimate_is_not_chaotic(self) -> None:
+        times, growth = self._negative_with_chaotic_looking_ratio(1.0e6)
+        result = analyze_growth(times, growth)
+        self.assertLess(result.lambda_running_final, 0.0)
+        self.assertGreater(result.halving_ratio, CHAOTIC_RATIO_MIN)  # ratio alone would pass
+        self.assertEqual(result.classification, "ambiguous")
+        self.assertTrue(any("unphysical" in note for note in result.notes))
+
+    def test_positive_exponents_are_unaffected(self) -> None:
+        times, growth = chaotic_growth(1.0e8, 2.0e-7)
+        self.assertEqual(
+            analyze_growth(times, growth).classification, "chaotic_candidate"
+        )
+
+
 class RunningLambdaEntryPoint(unittest.TestCase):
     """Call sites that carry lambda_running(t) rather than S(t) must get the
     same verdict."""
@@ -258,6 +295,91 @@ class RunningLambdaEntryPoint(unittest.TestCase):
         self.assertEqual(payload["classification"], "regular_likely")
         self.assertTrue(payload["artifact_suspected"])
         self.assertIsNotNone(payload["lambda_running_final_1_per_year"])
+
+
+class SaturatedShadowRunsMustNotBiasLambdaLow(unittest.TestCase):
+    """DEFECT: the shadow-particle fit selected samples by time window only.
+    Once the shadow separation saturates, ln|separation| flattens; including
+    that plateau biases lambda low, and the bias grows with duration so it is
+    worst on the longest runs. The old code warned about it in a string but
+    excluded nothing.
+    """
+
+    @staticmethod
+    def _saturating_record(true_lyapunov_years=2.0e6, saturate_at=5.1e7):
+        lam = 1.0 / true_lyapunov_years
+        times = np.linspace(1.0e5, 1.0e8, 500)
+        clean = math.log(1e-9) + lam * times
+        return times, np.minimum(clean, math.log(1.0)) + 0.01 * np.sin(times / 3e6)
+
+    def test_untrimmed_fit_is_biased_low(self) -> None:
+        """Documents the defect quantitatively."""
+        times, y = self._saturating_record()
+        biased = float(np.polyfit(times, y, 1)[0])
+        self.assertGreater(1.0 / biased, 2.0 * 2.0e6 * 0.5)   # materially too long
+
+    def test_excluding_saturation_recovers_lambda(self) -> None:
+        times, y = self._saturating_record()
+        window = find_saturation_onset(times, y)
+        self.assertTrue(window.saturated)
+        self.assertIsNotNone(window.onset_index)
+        trimmed = float(
+            np.polyfit(times[: window.onset_index], y[: window.onset_index], 1)[0]
+        )
+        self.assertLess(abs(1.0 / trimmed - 2.0e6) / 2.0e6, 0.02)
+
+    def test_unsaturated_record_is_left_alone(self) -> None:
+        times = np.linspace(1.0e5, 1.0e8, 500)
+        y = math.log(1e-9) + times / 2.0e6
+        window = find_saturation_onset(times, y)
+        self.assertFalse(window.saturated)
+        self.assertEqual(window.n_excluded, 0)
+
+    def test_noise_does_not_trigger_spurious_exclusion(self) -> None:
+        """Without an established exponential phase there is nothing to protect,
+        so the detector must decline rather than discard most of the record."""
+        rng = np.random.default_rng(3)
+        times = np.linspace(1.0e5, 1.0e8, 500)
+        window = find_saturation_onset(times, rng.normal(size=times.size))
+        self.assertFalse(window.saturated)
+        self.assertIn("not convincingly exponential", window.note)
+
+    def test_rejects_mismatched_input(self) -> None:
+        with self.assertRaises(ValueError):
+            find_saturation_onset([1.0, 2.0, 3.0], [1.0, 2.0])
+
+
+class MegnoConventionMustBeMeasuredNotAssumed(unittest.TestCase):
+    """DEFECT: the MEGNO-to-Lyapunov conversion used a factor of 0.5, which is
+    wrong under both conventions -- 2.0 for time-averaged <Y>, 1.0 for
+    instantaneous Y. REBOUND returns <Y>; this repository's own MEGNO-lite
+    produces Y.
+    """
+
+    def test_old_factor_is_not_either_convention(self) -> None:
+        self.assertNotEqual(0.5, MEGNO_MEAN_TO_LYAPUNOV)
+        self.assertNotEqual(0.5, MEGNO_INSTANTANEOUS_TO_LYAPUNOV)
+
+    def test_calibration_identifies_mean_convention(self) -> None:
+        lam = 2.0e-7
+        result = calibrate_megno_factor(lam / 2.0, lam)   # <Y> slope is lambda/2
+        self.assertEqual(result["convention"], "mean_Y")
+        self.assertAlmostEqual(result["implied_factor"], 2.0, places=6)
+
+    def test_calibration_identifies_instantaneous_convention(self) -> None:
+        lam = 2.0e-7
+        result = calibrate_megno_factor(lam, lam)         # Y slope is lambda
+        self.assertEqual(result["convention"], "instantaneous_Y")
+        self.assertAlmostEqual(result["implied_factor"], 1.0, places=6)
+
+    def test_calibration_flags_an_unrecognized_factor(self) -> None:
+        result = calibrate_megno_factor(1.0e-7, 9.0e-7)
+        self.assertEqual(result["convention"], "unrecognized")
+
+    def test_calibration_declines_on_bad_input(self) -> None:
+        for slope, lam in ((0.0, 1.0e-7), (float("nan"), 1.0e-7), (1.0e-7, float("inf"))):
+            with self.subTest(slope=slope, lam=lam):
+                self.assertIsNone(calibrate_megno_factor(slope, lam)["implied_factor"])
 
 
 class InputHandling(unittest.TestCase):

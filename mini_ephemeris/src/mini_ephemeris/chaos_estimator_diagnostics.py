@@ -66,6 +66,12 @@ __all__ = [
     "analyze_running_lambda",
     "classify_growth",
     "diagnostics_payload",
+    "SATURATION_SLOPE_FRACTION",
+    "SaturationWindow",
+    "find_saturation_onset",
+    "MEGNO_MEAN_TO_LYAPUNOV",
+    "MEGNO_INSTANTANEOUS_TO_LYAPUNOV",
+    "calibrate_megno_factor",
 ]
 
 # Halving-ratio decision boundaries.
@@ -230,7 +236,20 @@ def analyze_growth(
     )
 
     # Classification from the halving ratio.
-    if not math.isfinite(ratio):
+    #
+    # Guard first on the sign. lambda_max >= 0 for a Hamiltonian flow, so a
+    # negative running estimate is never physical -- and two negative values
+    # produce a POSITIVE halving ratio, which would otherwise sail through the
+    # chaotic band. Found by running a legacy two-trajectory estimator on an
+    # integrable system: running lambda -1.455e-04 with ratio 2.174.
+    if math.isfinite(lambda_final) and lambda_final < 0.0:
+        classification = "ambiguous"
+        notes.append(
+            f"running Lyapunov estimate is negative ({lambda_final:.3e}), which "
+            "is unphysical for a Hamiltonian flow: the estimate has not "
+            "converged and no classification is possible"
+        )
+    elif not math.isfinite(ratio):
         classification = "ambiguous"
         notes.append(
             "running Lyapunov estimate at the half-way point is zero or "
@@ -379,4 +398,170 @@ def diagnostics_payload(result: GrowthDiagnostics) -> dict:
         "regular_ratio_max": REGULAR_RATIO_MAX,
         "chaotic_ratio_min": CHAOTIC_RATIO_MIN,
         "energy_drift_chaos_gate": ENERGY_DRIFT_CHAOS_GATE,
+    }
+
+
+# ---------------------------------------------------------------- saturation --
+#
+# A shadow-particle run measures ln|separation|, which grows linearly with slope
+# lambda only while the separation is small. Once the shadow has wandered a
+# significant fraction of the system size the growth stops and the curve
+# flattens. Including that plateau in a straight-line fit biases lambda LOW --
+# and the bias grows with run duration, so it is worst on the longest runs.
+#
+# Measured on a synthetic 100 Myr shadow run with a true Lyapunov time of 2 Myr
+# saturating at 51 Myr, fitting the whole record gave 3.837 Myr (1.92x too long)
+# with R^2 = 0.813 -- above the 0.8 "not strongly linear" warning threshold, so
+# nothing fired.
+
+# Saturation is declared where the local slope has fallen below this fraction of
+# the slope measured over the early, unambiguously exponential part of the run.
+SATURATION_SLOPE_FRACTION = 0.25
+
+# Fraction of the record used to establish the reference (pre-saturation) slope.
+_EARLY_FRACTION = 0.25
+
+# The early window must itself be convincingly exponential before its slope is
+# trusted as a reference. Without this, a record with no growth at all -- noise
+# with a randomly positive early trend -- would have "saturation" declared
+# partway through and most of its samples discarded.
+_EARLY_LINEARITY_MIN_R2 = 0.90
+
+
+@dataclass(frozen=True)
+class SaturationWindow:
+    """Where a separation record stops growing exponentially."""
+
+    onset_index: int | None
+    onset_time: float | None
+    reference_slope: float
+    n_excluded: int
+    saturated: bool
+    note: str
+
+
+def find_saturation_onset(
+    times: Sequence[float],
+    log_separation: Sequence[float],
+    *,
+    slope_fraction: float = SATURATION_SLOPE_FRACTION,
+) -> SaturationWindow:
+    """Locate the point where exponential separation growth stops.
+
+    Returns the index of the first sample judged saturated, or ``None`` if the
+    record never saturates. Callers should fit only up to ``onset_index``.
+    """
+
+    t = np.asarray(times, dtype=float)
+    y = np.asarray(log_separation, dtype=float)
+    if t.shape != y.shape or t.ndim != 1:
+        raise ValueError("times and log separation must be 1-D arrays of equal length")
+    finite = np.isfinite(t) & np.isfinite(y)
+    t, y = t[finite], y[finite]
+    n = t.size
+    if n < 8:
+        return SaturationWindow(None, None, math.nan, 0, False, "too few samples to test")
+
+    early = max(4, int(n * _EARLY_FRACTION))
+    early_slope, early_intercept = np.polyfit(t[:early], y[:early], 1)
+    reference_slope = float(early_slope)
+    if not math.isfinite(reference_slope) or reference_slope <= 0.0:
+        return SaturationWindow(
+            None, None, reference_slope, 0, False,
+            "early slope is not positive; no exponential phase to protect",
+        )
+    early_r2 = _r_squared(y[:early], early_slope * t[:early] + early_intercept)
+    if not math.isfinite(early_r2) or early_r2 < _EARLY_LINEARITY_MIN_R2:
+        return SaturationWindow(
+            None, None, reference_slope, 0, False,
+            (
+                f"early window is not convincingly exponential (R^2 "
+                f"{early_r2:.4f} < {_EARLY_LINEARITY_MIN_R2}); no reference "
+                "slope established, so nothing is excluded"
+            ),
+        )
+
+    # Rolling local slope over a window of ~1/10 of the record.
+    span = max(3, n // 10)
+    threshold = slope_fraction * reference_slope
+    onset = None
+    for i in range(early, n - span):
+        local = float(np.polyfit(t[i : i + span], y[i : i + span], 1)[0])
+        if local < threshold:
+            onset = i
+            break
+
+    if onset is None:
+        return SaturationWindow(
+            None, None, reference_slope, 0, False,
+            "no saturation detected; the whole record is usable",
+        )
+    return SaturationWindow(
+        onset_index=int(onset),
+        onset_time=float(t[onset]),
+        reference_slope=reference_slope,
+        n_excluded=int(n - onset),
+        saturated=True,
+        note=(
+            f"local slope fell below {slope_fraction:.2f} x the early slope at "
+            f"t = {t[onset]:.6g}; {n - onset} of {n} samples excluded from the fit"
+        ),
+    )
+
+
+# --------------------------------------------------------------------- MEGNO --
+#
+# CONVENTION HAZARD. Two different quantities are called "MEGNO":
+#
+#   Y(t)     the instantaneous MEGNO, which grows as lambda * t
+#   <Y>(t)   the time-averaged MEGNO, which grows as lambda * t / 2
+#            and tends to 2 for regular orbits
+#
+# REBOUND's Simulation.megno() returns the time-averaged <Y>; this repository's
+# own build_fli_megno_samples produces the instantaneous Y (verified: its slope
+# recovers lambda to five significant figures on a synthetic with known lambda).
+# The two are plotted against the same Y = 2 reference line and cross-compared,
+# so their slopes differ by a factor of two before any conversion is applied.
+#
+# The previous conversion here was 0.5, which is wrong under BOTH conventions.
+MEGNO_MEAN_TO_LYAPUNOV = 2.0
+MEGNO_INSTANTANEOUS_TO_LYAPUNOV = 1.0
+
+
+def calibrate_megno_factor(
+    megno_slope_per_year: float,
+    independent_lambda_1_per_year: float,
+) -> dict:
+    """Determine empirically which MEGNO convention a series follows.
+
+    Run a MEGNO integration and an independent Benettin estimate on the same
+    chaotic system, then pass the MEGNO slope and the Benettin lambda here. The
+    implied factor identifies the convention, settling it by measurement rather
+    than by reading library documentation.
+    """
+
+    if not (
+        math.isfinite(megno_slope_per_year)
+        and math.isfinite(independent_lambda_1_per_year)
+        and megno_slope_per_year > 0.0
+    ):
+        return {"implied_factor": None, "convention": "undetermined",
+                "note": "need a positive finite MEGNO slope and a finite lambda"}
+    implied = independent_lambda_1_per_year / megno_slope_per_year
+    if abs(implied - MEGNO_MEAN_TO_LYAPUNOV) < 0.25:
+        convention = "mean_Y"
+    elif abs(implied - MEGNO_INSTANTANEOUS_TO_LYAPUNOV) < 0.25:
+        convention = "instantaneous_Y"
+    else:
+        convention = "unrecognized"
+    return {
+        "implied_factor": implied,
+        "convention": convention,
+        "mean_Y_factor": MEGNO_MEAN_TO_LYAPUNOV,
+        "instantaneous_Y_factor": MEGNO_INSTANTANEOUS_TO_LYAPUNOV,
+        "note": (
+            f"implied factor {implied:.4f}; expected "
+            f"{MEGNO_MEAN_TO_LYAPUNOV} for mean MEGNO or "
+            f"{MEGNO_INSTANTANEOUS_TO_LYAPUNOV} for instantaneous"
+        ),
     }

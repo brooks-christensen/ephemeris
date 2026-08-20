@@ -44,6 +44,7 @@ from .ephem import (
     solar_system_body_list,
 )
 from .chaos_estimator_diagnostics import (
+    MEGNO_MEAN_TO_LYAPUNOV,
     analyze_growth,
     diagnostics_payload,
 )
@@ -2425,13 +2426,24 @@ def megno_slope_window_estimates(
                 "megno_intercept": _finite_or_none(intercept),
                 "r_squared": _finite_or_none(r_squared),
                 "delta_megno": _finite_or_none(ys[-1] - ys[0]),
+                # REBOUND's Simulation.megno() returns the time-averaged
+                # <Y>, which grows as lambda*t/2, so lambda = 2 * slope. The
+                # previous factor here was 0.5, which is wrong under BOTH
+                # conventions (it would be 1.0 for instantaneous Y). Settle
+                # the convention by measurement with
+                # chaos_estimator_diagnostics.calibrate_megno_factor before
+                # relying on this number.
                 "lyapunov_proxy_1_per_year": (
-                    _finite_or_none(max(0.0, slope) * 0.5)
+                    _finite_or_none(max(0.0, slope) * MEGNO_MEAN_TO_LYAPUNOV)
                     if math.isfinite(slope)
                     else None
                 ),
+                "megno_convention_assumed": "mean_Y",
+                "megno_to_lyapunov_factor": MEGNO_MEAN_TO_LYAPUNOV,
                 "warning": (
-                    "MEGNO slope fallback; not a direct Simulation.lyapunov() accessor value"
+                    "MEGNO slope fallback; not a direct Simulation.lyapunov() "
+                    "accessor value. The <Y> vs Y convention is ASSUMED, not "
+                    "measured -- calibrate before use."
                     if math.isfinite(slope)
                     else "fit failed"
                 ),
@@ -2453,7 +2465,11 @@ def best_megno_slope_fallback(
             finite.append(value_f)
     if not finite:
         return None
-    return max(finite)
+    # The windows are nested and end at the same time, so their estimates are
+    # strongly correlated. Taking max() over them is a one-sided selection that
+    # biases lambda upward and voids the reported R^2. The median is robust and
+    # unbiased; callers wanting the spread can inspect the individual rows.
+    return float(np.median(np.asarray(finite, dtype=float)))
 
 
 def write_rebound_megno_sample(

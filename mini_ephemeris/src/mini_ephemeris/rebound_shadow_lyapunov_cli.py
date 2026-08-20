@@ -14,6 +14,8 @@ import time
 
 import numpy as np
 
+from .chaos_estimator_diagnostics import find_saturation_onset
+
 from .ephem import EphemerisConfig, initial_state_solar_system_barycentric
 from .long_term_stability_cli import (
     add_reboundx_gr_force,
@@ -664,6 +666,21 @@ def linear_fit(rows: list[dict[str, float | str]], fit_start: float, fit_end: fl
         return {"lambda_1_per_year": math.nan, "r_squared": math.nan, "warning": "fewer than two fit samples"}
     xs = np.array([item[0] for item in points], dtype=float)
     ys = np.array([item[1] for item in points], dtype=float)
+
+    # Exclude the saturated tail. Once the shadow has wandered a significant
+    # fraction of the system size, ln|separation| stops growing and flattens;
+    # including that plateau biases lambda LOW, and the bias grows with run
+    # duration so it is worst on the longest runs. Previously this was only
+    # warned about, never excluded.
+    saturation = find_saturation_onset(xs, ys)
+    saturation_note = saturation.note
+    if saturation.saturated and saturation.onset_index is not None:
+        if saturation.onset_index >= 4:
+            xs = xs[: saturation.onset_index]
+            ys = ys[: saturation.onset_index]
+        else:
+            saturation_note += " (too few pre-saturation samples to trim; fit unchanged)"
+
     coeff = np.polyfit(xs, ys, 1)
     slope = float(coeff[0])
     pred = coeff[0] * xs + coeff[1]
@@ -675,9 +692,16 @@ def linear_fit(rows: list[dict[str, float | str]], fit_start: float, fit_end: fl
         warnings.append("log-separation fit is not strongly linear; window may be non-exponential")
     if max(float(row["raw_position_separation_au"]) for row in rows) > 0.1:
         warnings.append("separation exceeded 0.1 AU; late samples may be saturated")
+    if saturation.saturated:
+        warnings.append(saturation_note)
     return {
         "lambda_1_per_year": slope,
         "r_squared": r2,
+        "n_fit_samples": int(xs.size),
+        "saturation_detected": bool(saturation.saturated),
+        "saturation_onset_years": saturation.onset_time,
+        "saturation_excluded_samples": int(saturation.n_excluded),
+        "separation_metric": "position_only_au",
         "warning": " | ".join(warnings),
     }
 
