@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep *)",
+      "Bash(ls *)",
+      "Bash(python3 *)",
+      "Bash(env PYTHONPATH=mini_ephemeris/src PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 .venv/bin/python -c ' *)",
+      "Bash(git status *)",
+      "Bash(git worktree *)",
+      "Bash(git check-ignore *)",
+      "Bash(cd *)",
+      "Bash(rm *)"
+    ]
+  }
+}
