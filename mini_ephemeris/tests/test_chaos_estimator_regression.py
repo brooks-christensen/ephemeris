@@ -362,24 +362,34 @@ class MegnoConventionMustBeMeasuredNotAssumed(unittest.TestCase):
 
     def test_calibration_identifies_mean_convention(self) -> None:
         lam = 2.0e-7
-        result = calibrate_megno_factor(lam / 2.0, lam)   # <Y> slope is lambda/2
+        result = calibrate_megno_factor(
+            lam / 2.0, lam, lambda_source="tangent_vector"
+        )   # <Y> slope is lambda/2
         self.assertEqual(result["convention"], "mean_Y")
         self.assertAlmostEqual(result["implied_factor"], 2.0, places=6)
 
     def test_calibration_identifies_instantaneous_convention(self) -> None:
         lam = 2.0e-7
-        result = calibrate_megno_factor(lam, lam)         # Y slope is lambda
+        result = calibrate_megno_factor(
+            lam, lam, lambda_source="tangent_vector"
+        )   # Y slope is lambda
         self.assertEqual(result["convention"], "instantaneous_Y")
         self.assertAlmostEqual(result["implied_factor"], 1.0, places=6)
 
     def test_calibration_flags_an_unrecognized_factor(self) -> None:
-        result = calibrate_megno_factor(1.0e-7, 9.0e-7)
+        result = calibrate_megno_factor(
+            1.0e-7, 9.0e-7, lambda_source="tangent_vector"
+        )
         self.assertEqual(result["convention"], "unrecognized")
 
     def test_calibration_declines_on_bad_input(self) -> None:
         for slope, lam in ((0.0, 1.0e-7), (float("nan"), 1.0e-7), (1.0e-7, float("inf"))):
             with self.subTest(slope=slope, lam=lam):
-                self.assertIsNone(calibrate_megno_factor(slope, lam)["implied_factor"])
+                self.assertIsNone(
+                    calibrate_megno_factor(
+                        slope, lam, lambda_source="tangent_vector"
+                    )["implied_factor"]
+                )
 
 
 class InputHandling(unittest.TestCase):

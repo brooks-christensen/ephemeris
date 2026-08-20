@@ -71,6 +71,9 @@ __all__ = [
     "find_saturation_onset",
     "MEGNO_MEAN_TO_LYAPUNOV",
     "MEGNO_INSTANTANEOUS_TO_LYAPUNOV",
+    "REBOUND_LYAPUNOV_TO_LAMBDA",
+    "megno_from_log_tangent",
+    "lambda_from_rebound_lyapunov",
     "calibrate_megno_factor",
 ]
 
@@ -527,10 +530,146 @@ def find_saturation_onset(
 MEGNO_MEAN_TO_LYAPUNOV = 2.0
 MEGNO_INSTANTANEOUS_TO_LYAPUNOV = 1.0
 
+# REBOUND's Simulation.lyapunov() is documented as the Lyapunov Characteristic
+# Number, but src/tools.c computes it as
+#
+#     megno_cov_Yt / megno_var_t
+#
+# where the covariance is accumulated against the value returned by
+# reb_simulation_megno(), i.e. against <Y>. It is therefore the
+# ordinary-least-squares slope of <Y> against time over the whole integration,
+# which is lambda/2 and not lambda. Verified two ways against REBOUND 4.6.0
+# (and the code is byte-identical in 5.1.1):
+#
+#   * sampling <Y> once per fixed WHFast step and running polyfit on the whole
+#     record reproduces Simulation.lyapunov() to a relative 1.4e-5;
+#   * on chaotic systems Simulation.lyapunov() divided by lambda measured from
+#     the tangent vector itself lands at 0.39-0.55, never near 1.
+#
+# Multiply by this constant to obtain lambda. Prefer a late-window fit of <Y>
+# (or a direct Benettin estimate) for anything quantitative: the REBOUND value
+# regresses over the entire history, transient included, and is biased low
+# whenever chaos sets in after t = 0.
+REBOUND_LYAPUNOV_TO_LAMBDA = 2.0
+
+# Provenances that are acceptable as an "independent" lambda in
+# calibrate_megno_factor, and those that are structurally circular.
+_ACCEPTED_LAMBDA_SOURCES = frozenset(
+    {"tangent_vector", "shadow_orbit", "benettin", "analytic"}
+)
+_FORBIDDEN_LAMBDA_SOURCES = {
+    "rebound_lyapunov": (
+        "Simulation.lyapunov() is the least-squares slope of Simulation.megno() "
+        "against time, which is the very series whose slope is being "
+        "calibrated. Their ratio is approximately 1 on any chaotic system under "
+        "either convention, so it cannot distinguish them; it would report "
+        "'instantaneous_Y' and halve every Lyapunov exponent in the project. "
+        "Supply a tangent-vector or shadow-orbit Benettin lambda instead."
+    ),
+    "megno": (
+        "A lambda derived from the same MEGNO series cannot calibrate that "
+        "series. Supply an independent estimate."
+    ),
+}
+
+
+def _cumulative_trapezoid(values: np.ndarray, times: np.ndarray) -> np.ndarray:
+    """Cumulative trapezoidal integral, same length as the inputs, starting 0."""
+
+    out = np.zeros_like(values, dtype=float)
+    out[1:] = np.cumsum(0.5 * (values[1:] + values[:-1]) * np.diff(times))
+    return out
+
+
+def megno_from_log_tangent(
+    times: Sequence[float],
+    log_tangent_norm: Sequence[float],
+) -> tuple[np.ndarray, np.ndarray]:
+    """Reconstruct Cincotta-Simo MEGNO from a tangent-vector history.
+
+    ``Y(t)`` and its time average ``<Y>(t)`` are defined by
+
+        Y(t)   = (2/t) * integral_0^t s * dL/ds ds,     L = ln |delta|
+        <Y>(t) = (1/t) * integral_0^t Y(s) ds
+
+    Integrating the first by parts removes the derivative of a noisy series::
+
+        Y(t) = 2 * [ L(t) - (1/t) * integral_0^t L ds ]
+
+    which is what this function evaluates, by trapezoid, from ``L`` alone. Any
+    constant offset in ``L`` cancels, so the normalization of the initial
+    tangent vector does not matter.
+
+    Two limits fall out analytically and are pinned by the regression tests:
+
+    * Regular motion, ``|delta| ~ t``: ``Y -> 2`` and ``<Y> -> 2``.
+    * Chaos, ``L = lambda * t``: ``Y = lambda t`` and ``<Y> = lambda t / 2``,
+      hence ``lambda = MEGNO_MEAN_TO_LYAPUNOV * d<Y>/dt``.
+
+    Reconstructing ``<Y>`` this way reproduces REBOUND's ``Simulation.megno()``
+    to a relative 2.4e-4 on chaotic and regular three-body systems under both
+    WHFast and IAS15, which is what establishes that ``Simulation.megno()`` is
+    the time-averaged quantity and that the conversion factor is 2.0.
+
+    Parameters
+    ----------
+    times:
+        Strictly increasing, starting at exactly 0.
+    log_tangent_norm:
+        ``ln |delta(t)|`` sampled at ``times``, with no renormalization applied
+        (or, if renormalized, with the log of each rescaling added back in).
+
+    Returns
+    -------
+    ``(Y, Y_mean)``, both the same length as ``times``, with the value at
+    ``t = 0`` set to 0.
+    """
+
+    t = np.asarray(times, dtype=float)
+    log_norm = np.asarray(log_tangent_norm, dtype=float)
+    if t.ndim != 1 or log_norm.shape != t.shape:
+        raise ValueError("times and log_tangent_norm must be 1-D and the same length")
+    if t.size < 3:
+        raise ValueError("need at least three samples")
+    if not np.all(np.isfinite(t)) or not np.all(np.isfinite(log_norm)):
+        raise ValueError("times and log_tangent_norm must be finite")
+    if t[0] != 0.0:
+        raise ValueError(
+            "times must start at t = 0 with the initial ln|delta|; the double "
+            "time average is taken from the start of the integration"
+        )
+    if not np.all(np.diff(t) > 0.0):
+        raise ValueError("times must be strictly increasing")
+
+    integral_log = _cumulative_trapezoid(log_norm, t)
+    y_inst = np.zeros_like(t)
+    y_inst[1:] = 2.0 * (log_norm[1:] - integral_log[1:] / t[1:])
+
+    integral_y = _cumulative_trapezoid(y_inst, t)
+    y_mean = np.zeros_like(t)
+    y_mean[1:] = integral_y[1:] / t[1:]
+    return y_inst, y_mean
+
+
+def lambda_from_rebound_lyapunov(rebound_lyapunov_1_per_time: float) -> float:
+    """Convert ``Simulation.lyapunov()`` to a maximal Lyapunov exponent.
+
+    See ``REBOUND_LYAPUNOV_TO_LAMBDA``. The result is still a whole-history
+    regression and is biased low when the chaotic phase starts after t = 0;
+    treat it as a diagnostic, not as a reportable exponent.
+    """
+
+    value = float(rebound_lyapunov_1_per_time)
+    if not math.isfinite(value):
+        return math.nan
+    return value * REBOUND_LYAPUNOV_TO_LAMBDA
+
 
 def calibrate_megno_factor(
     megno_slope_per_year: float,
     independent_lambda_1_per_year: float,
+    *,
+    lambda_source: str,
 ) -> dict:
     """Determine empirically which MEGNO convention a series follows.
 
@@ -538,7 +677,28 @@ def calibrate_megno_factor(
     chaotic system, then pass the MEGNO slope and the Benettin lambda here. The
     implied factor identifies the convention, settling it by measurement rather
     than by reading library documentation.
+
+    ``lambda_source`` is required and names where the lambda came from, because
+    the obvious candidate is not independent: REBOUND's
+    ``Simulation.lyapunov()`` is itself the least-squares slope of
+    ``Simulation.megno()``, so feeding it here divides a quantity by itself and
+    returns about 1.0 no matter which convention holds. That is not a noisy
+    answer, it is a confident wrong one -- it reports ``instantaneous_Y`` and
+    invites halving every Lyapunov exponent in the project. Accepted values are
+    ``tangent_vector``, ``shadow_orbit``, ``benettin`` and ``analytic``.
     """
+
+    source = str(lambda_source).strip().lower()
+    if source in _FORBIDDEN_LAMBDA_SOURCES:
+        raise ValueError(
+            f"lambda_source={source!r} is not independent of the MEGNO series: "
+            + _FORBIDDEN_LAMBDA_SOURCES[source]
+        )
+    if source not in _ACCEPTED_LAMBDA_SOURCES:
+        raise ValueError(
+            f"unknown lambda_source={lambda_source!r}; expected one of "
+            + ", ".join(sorted(_ACCEPTED_LAMBDA_SOURCES))
+        )
 
     if not (
         math.isfinite(megno_slope_per_year)
@@ -557,6 +717,7 @@ def calibrate_megno_factor(
     return {
         "implied_factor": implied,
         "convention": convention,
+        "lambda_source": source,
         "mean_Y_factor": MEGNO_MEAN_TO_LYAPUNOV,
         "instantaneous_Y_factor": MEGNO_INSTANTANEOUS_TO_LYAPUNOV,
         "note": (

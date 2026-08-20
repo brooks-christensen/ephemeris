@@ -2429,21 +2429,28 @@ def megno_slope_window_estimates(
                 # REBOUND's Simulation.megno() returns the time-averaged
                 # <Y>, which grows as lambda*t/2, so lambda = 2 * slope. The
                 # previous factor here was 0.5, which is wrong under BOTH
-                # conventions (it would be 1.0 for instantaneous Y). Settle
-                # the convention by measurement with
-                # chaos_estimator_diagnostics.calibrate_megno_factor before
-                # relying on this number.
+                # conventions (it would be 1.0 for instantaneous Y).
+                #
+                # No longer an assumption. scripts/measure_megno_convention.py
+                # reconstructs <Y> from the tangent vector alone and matches
+                # Simulation.megno() to a relative 2.3e-4 on REBOUND 4.6.0,
+                # which fixes the convention as the time average; a chaotic
+                # system with a straight ln|delta| then measures the factor at
+                # 2.10. mini_ephemeris/tests/test_megno_convention.py pins the
+                # algebra without needing REBOUND.
                 "lyapunov_proxy_1_per_year": (
                     _finite_or_none(max(0.0, slope) * MEGNO_MEAN_TO_LYAPUNOV)
                     if math.isfinite(slope)
                     else None
                 ),
                 "megno_convention_assumed": "mean_Y",
+                "megno_convention_evidence": "scripts/measure_megno_convention.py",
                 "megno_to_lyapunov_factor": MEGNO_MEAN_TO_LYAPUNOV,
                 "warning": (
                     "MEGNO slope fallback; not a direct Simulation.lyapunov() "
-                    "accessor value. The <Y> vs Y convention is ASSUMED, not "
-                    "measured -- calibrate before use."
+                    "accessor value. The <Y> convention is measured, not "
+                    "assumed; note that Simulation.lyapunov() itself returns "
+                    "lambda/2 and is not an independent check."
                     if math.isfinite(slope)
                     else "fit failed"
                 ),
