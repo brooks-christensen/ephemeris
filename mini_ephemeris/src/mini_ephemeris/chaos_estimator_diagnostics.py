@@ -77,6 +77,11 @@ __all__ = [
     "analyze_window_slopes",
     "TransientFit",
     "fit_transient_and_exponent",
+    "ESTIMATOR_DISCARD_FRACTION",
+    "WINDOW_CONSISTENCY_TOLERANCE",
+    "MEGNO_AGREEMENT_TOLERANCE",
+    "LyapunovEstimate",
+    "estimate_lyapunov_exponent",
     "megno_from_log_tangent",
     "lambda_from_rebound_lyapunov",
     "calibrate_megno_factor",
@@ -932,6 +937,190 @@ def fit_transient_and_exponent(
         residual_sigma=sigma,
         trend_to_scatter=ratio,
         n_samples=int(times.size),
+        notes=tuple(notes),
+    )
+
+
+# --------------------------------------------------------------------------
+# The two estimators, over the same data, with a stated consistency criterion
+# --------------------------------------------------------------------------
+#
+# Codex refused to launch an 800 Myr run against a specification that asked for
+# "the two estimators to agree" without saying agree to what, and pointed out
+# that their defaults did not even look at the same data: the windowed slope
+# discarded the first 25% of the record and the two-term fit the first 5%. An
+# agreement criterion between estimators reading different spans is not a
+# criterion. That was a real defect, and this is the repair.
+#
+# One discard fraction, used by both.
+ESTIMATOR_DISCARD_FRACTION = 0.25
+
+# The two estimators must NOT agree exactly, and demanding that they do would be
+# wrong. The windowed slope over [t1, t2] of S = A ln t + lambda t is
+#
+#     lambda + A * (least-squares slope of ln t over that window)
+#
+# so it sits above the two-term fit's lambda by an amount that is *predictable
+# once A is known*. The test is therefore not "are they close" but "does the
+# windowed slope sit where the fitted transient says it should", which is a
+# statement about whether the two-term model describes the record at all. A
+# record whose tangent growth is not A ln t + lambda t will fail it even if both
+# estimators happen to return similar numbers.
+WINDOW_CONSISTENCY_TOLERANCE = 0.15
+
+# MEGNO is a third, structurally independent estimator: a different accumulator
+# on the same variational particles. It carries its own double-time-average
+# transient, so exact agreement is not expected here either.
+MEGNO_AGREEMENT_TOLERANCE = 0.20
+
+
+@dataclass(frozen=True)
+class LyapunovEstimate:
+    """Both tangent estimators over one record, plus MEGNO, plus the verdict.
+
+    ``lambda_1_per_year`` comes from the two-term fit, which removes the
+    logarithmic transient rather than tolerating it. The windowed slope is
+    reported alongside as a cross-check, not as the answer.
+    """
+
+    lambda_1_per_year: float
+    lyapunov_time_years: float
+    transient_amplitude: float
+    r_squared: float
+    residual_sigma: float
+    trend_to_scatter: float
+    window_slopes_1_per_year: tuple[float, ...]
+    predicted_window_slopes_1_per_year: tuple[float, ...]
+    window_consistency: float
+    split_half_disagreement: float
+    megno_lambda_1_per_year: float | None
+    megno_disagreement: float | None
+    discard_fraction: float
+    consistent: bool
+    notes: tuple[str, ...]
+
+
+def estimate_lyapunov_exponent(
+    times_years: Sequence[float],
+    cumulative_log_growth: Sequence[float],
+    *,
+    mean_megno: Sequence[float] | None = None,
+    n_windows: int = 3,
+    discard_fraction: float = ESTIMATOR_DISCARD_FRACTION,
+) -> LyapunovEstimate:
+    """Run both tangent estimators over the same window and check consistency."""
+
+    times = np.asarray(times_years, dtype=float)
+    growth = np.asarray(cumulative_log_growth, dtype=float)
+    fit = fit_transient_and_exponent(
+        times, growth, discard_fraction=discard_fraction
+    )
+    windows = analyze_window_slopes(
+        times, growth, n_windows=n_windows, discard_fraction=discard_fraction
+    )
+
+    # Where each window slope should sit, given the fitted transient.
+    predicted: list[float] = []
+    edges = windows.window_edges_years
+    for lo, hi in zip(edges[:-1], edges[1:]):
+        mask = (times >= lo) & (times <= hi)
+        span = times[mask]
+        log_slope = float(np.polyfit(span, np.log(span), 1)[0])
+        predicted.append(fit.lambda_1_per_time + fit.transient_amplitude * log_slope)
+
+    notes = list(fit.notes) + list(windows.notes)
+    scale = abs(fit.lambda_1_per_time)
+
+    # Split-half stability of the FIT, which is what catches a record the
+    # two-term form does not describe.
+    #
+    # The window-versus-prediction check below is necessary but not sufficient,
+    # and a test caught that: on stretched-exponential growth S ~ t^0.75 the
+    # two-term model is a good enough local approximation that the window slopes
+    # land exactly where it predicts, and the check passes a record it should
+    # reject. Fitting the early and late halves separately does catch it,
+    # because a genuine exponent is the same in both halves and a spurious one
+    # is not -- for t^0.75 the local rate falls as t^-0.25.
+    start = times[0] + discard_fraction * (times[-1] - times[0])
+    analysed = times[times >= start]
+    midpoint = analysed[0] + 0.5 * (analysed[-1] - analysed[0])
+    early_mask = (times >= start) & (times <= midpoint)
+    late_mask = times >= midpoint
+    split = math.inf
+    if int(np.count_nonzero(early_mask)) >= 10 and int(np.count_nonzero(late_mask)) >= 10:
+        early = fit_transient_and_exponent(
+            times[early_mask], growth[early_mask], discard_fraction=0.0
+        )
+        late = fit_transient_and_exponent(
+            times[late_mask], growth[late_mask], discard_fraction=0.0
+        )
+        if scale > 0.0 and math.isfinite(scale):
+            split = abs(late.lambda_1_per_time - early.lambda_1_per_time) / scale
+    if split > WINDOW_CONSISTENCY_TOLERANCE:
+        notes.append(
+            f"lambda fitted on the early and late halves of the analysed span "
+            f"differ by {split:.1%} (limit {WINDOW_CONSISTENCY_TOLERANCE:.0%}): "
+            "the exponent is not stable across the record, so the two-term form "
+            "is not describing it"
+        )
+    if scale > 0.0 and math.isfinite(scale):
+        deviations = [
+            abs(measured - expected) / scale
+            for measured, expected in zip(windows.slopes_1_per_year, predicted)
+        ]
+        consistency = max(deviations)
+    else:
+        consistency = math.inf
+    if consistency > WINDOW_CONSISTENCY_TOLERANCE:
+        notes.append(
+            f"window slopes sit {consistency:.1%} away from where the fitted "
+            f"transient puts them (limit {WINDOW_CONSISTENCY_TOLERANCE:.0%}): "
+            "the two-term model is not describing this record, so neither "
+            "estimator's lambda should be reported"
+        )
+
+    megno_lambda: float | None = None
+    megno_gap: float | None = None
+    if mean_megno is not None:
+        series = np.asarray(mean_megno, dtype=float)
+        if series.shape != times.shape:
+            raise ValueError("mean_megno must be the same length as times")
+        start = times[0] + discard_fraction * (times[-1] - times[0])
+        mask = (times >= start) & np.isfinite(series)
+        if int(np.count_nonzero(mask)) >= 10:
+            slope = float(np.polyfit(times[mask], series[mask], 1)[0])
+            megno_lambda = slope * MEGNO_MEAN_TO_LYAPUNOV
+            if scale > 0.0:
+                megno_gap = abs(megno_lambda - fit.lambda_1_per_time) / scale
+                if megno_gap > MEGNO_AGREEMENT_TOLERANCE:
+                    notes.append(
+                        f"MEGNO differs from the tangent fit by {megno_gap:.1%} "
+                        f"(limit {MEGNO_AGREEMENT_TOLERANCE:.0%})"
+                    )
+
+    consistent = (
+        fit.lambda_1_per_time > 0.0
+        and consistency <= WINDOW_CONSISTENCY_TOLERANCE
+        and split <= WINDOW_CONSISTENCY_TOLERANCE
+        and fit.trend_to_scatter >= 10.0
+        and (megno_gap is None or megno_gap <= MEGNO_AGREEMENT_TOLERANCE)
+    )
+    lam = fit.lambda_1_per_time
+    return LyapunovEstimate(
+        lambda_1_per_year=lam if consistent else math.nan,
+        lyapunov_time_years=(1.0 / lam) if (consistent and lam > 0.0) else math.nan,
+        transient_amplitude=fit.transient_amplitude,
+        r_squared=fit.r_squared,
+        residual_sigma=fit.residual_sigma,
+        trend_to_scatter=fit.trend_to_scatter,
+        window_slopes_1_per_year=windows.slopes_1_per_year,
+        predicted_window_slopes_1_per_year=tuple(predicted),
+        window_consistency=consistency,
+        split_half_disagreement=split,
+        megno_lambda_1_per_year=megno_lambda,
+        megno_disagreement=megno_gap,
+        discard_fraction=discard_fraction,
+        consistent=consistent,
         notes=tuple(notes),
     )
 

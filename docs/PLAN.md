@@ -109,12 +109,38 @@ window would be a claim about precision nobody has earned, and it would tempt tu
 No λ is reportable unless all of the following hold. This is code that can return FAIL,
 not a paragraph in a document.
 
-1. **Timestep.** λ changes by less than 10 % when dt is halved.
-2. **Two estimators agree.** Benettin and MEGNO within 20 %, using the now-measured
-   factor of 2.0.
-3. **The halving ratio is chaotic.** λ_running(T)/λ_running(T/2) ∈ [0.85, 1.15].
-   A value near 0.5 means the estimate is still decaying as ln(t)/t — regular motion,
-   not a small exponent.
+1. **Timestep.** λ changes by less than 10 % when dt is halved, **at matched
+   duration**. (Amended 2026-08-21: the first attempt compared dt = 0.4 at
+   400 Myr against dt = 0.2 at 200 Myr, which confounds the two.)
+2. **Estimator consistency.** Amended 2026-08-21, *before* the second attempt,
+   after Codex refused to launch against a specification that said "the
+   estimators must agree" without saying agree to what — and whose two
+   estimators did not read the same span. The numbers now live in
+   `chaos_estimator_diagnostics` and are what `estimate_lyapunov_exponent`
+   enforces:
+
+   - `ESTIMATOR_DISCARD_FRACTION = 0.25` — one analysis window, both estimators.
+   - `WINDOW_CONSISTENCY_TOLERANCE = 0.15` — each window slope must sit where
+     the fitted transient predicts, within 15 % of λ. Note the estimators must
+     **not** agree exactly: the windowed slope exceeds the fitted λ by
+     A × (slope of ln t over the window), and that offset is the test.
+   - The same 0.15 bounds **split-half stability**: λ fitted on the early and
+     late halves of the analysed span must agree. This is the check that
+     catches a record the two-term form does not describe; the
+     window-versus-prediction check alone does not.
+   - `MEGNO_AGREEMENT_TOLERANCE = 0.20` — MEGNO, as 2 × d⟨Y⟩/dt over the same
+     window, against the tangent fit.
+   - `trend_to_scatter ≥ 10` — λ·T against the residual scatter of S about the
+     model. Measured scatter on the real system is ≈ 1.0 in S, which is what
+     puts the minimum useful duration near 800 Myr.
+3. **The halving ratio is a reported diagnostic, not a gate.** λ_running(T)/
+   λ_running(T/2) ∈ [0.85, 1.15] tests convergence *of S(T)/T*, which is no
+   longer the reported statistic. It correctly said "not converged" on the
+   first attempt and should keep being recorded.
+4. **λ is reported from the two-term fit**, which removes the logarithmic
+   transient rather than tolerating it. The windowed slope is reported
+   alongside as a cross-check and is biased **high**, so it bounds λ from above
+   and the Lyapunov time from below.
 4. **Energy is conserved.** Relative drift below 10⁻⁷, measured without aliasing to the
    orbital period.
 5. **Tangent-vector independence.** At least 5 random initial tangent vectors; report
