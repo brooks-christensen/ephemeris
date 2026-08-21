@@ -1,181 +1,194 @@
 # Project state
 
-**Update this file when you finish a unit of work.** It is the source of truth
-for where the project is. Both agents read it first.
+**Read this file first and update it when a unit of work closes.**
 
-Last updated: 2026-08-20
+Last updated: 2026-08-21
 
 ---
 
 ## Where things stand
 
-| | |
+| Item | State |
 |---|---|
 | Main line | `v2-whckl-tangent-core` @ `2af28a0` |
-| Active work | `repair/chaos-estimators` @ `2cc0c24` (3 commits, pushed, 43 tests green) |
+| Chaos-estimator series | `repair/chaos-estimators` @ `0edb9ea`, pushed |
+| Active Codex work | `codex/rung3-real-ephemeris`, based on `0edb9ea` |
 | Restore point | tag `review-baseline-2026-08-19` |
-| Step 3g1d | **not closed.** Manifest 28 campaign passed 124/124 but disposition is undecided — see below |
+| Controlling plan | `docs/PLAN.md`; manifests 23-28 are superseded |
+| Validation ladder | rungs 0, 1, 2a, and 2b PASS |
+| Rung 3 | **FAIL; not scientifically converged or qualified** |
+| Rungs 4-5 | not run |
 
-Throwaway branches `wip/manifest28-review` and `wip/manifest28-rerun` are review
-snapshots, not results. Delete after the Manifest 28 closeout.
-
----
-
-## Open items, highest value first
-
-### 1. MEGNO convention — one measurement away
-
-**Owner: Codex** (needs REBOUND). The conversion from MEGNO slope to Lyapunov
-exponent used **0.5**, wrong under both conventions (2.0 for time-averaged ⟨Y⟩,
-1.0 for instantaneous Y). Now uses 2.0, flagged `megno_convention_assumed:
-"mean_Y"` in the output.
-
-`calibrate_megno.py` settles it. First run failed usefully: final MEGNO = 1.9988,
-i.e. ⟨Y⟩ → 2, i.e. the test system was **regular**, so the slope was residual
-approach-to-2 and the implied factor (10.99) was noise over noise. The a₂ = 1.35
-setup sits at 3.41 mutual Hill radii, just inside the 2√3 ≈ 3.46 threshold —
-marginally chaotic with a Lyapunov time far longer than the run. Revised script
-scans a₂ ∈ {1.25, 1.20, 1.15} and refuses to calibrate unless final ⟨Y⟩ ≥ 5.
-
-**Action:** re-run, record the factor and the REBOUND version.
-
-### 2. Manifest 28 disposition — needs Brooks's decision
-
-The campaign passed 124/124 clean. Two reasons not to close it COMPLETE:
-
-**(a) The preregistered command is unsatisfiable.** `generate_artifacts` runs
-`python -m mini_ephemeris.m0_step3g1d_reporting`, which fails with
-`RuntimeError: forbidden modules are loaded: ['mini_ephemeris.nbody']` —
-`__init__.py` eagerly imports `nbody`, and `__init__.py` is frozen under
-Manifest 23. Manifest 28 requires an action it also forbids. Artifacts were
-generated through a `sys.modules` shim.
-
-**(b) The gate that failed was rewritten 16 minutes later.**
-
-```
-11:28:08  ffe6475  Record failed Step 3g1d corrective campaign
-11:44:15  e979c00  Correct affine finite-difference gate applicability
-11:48:09  1713a2e  Preregister Step 3g1d requalification
-```
-
-Manifest 27 recorded one failure: `finite_difference.dense.acceptance = false`.
-`e979c00` removed `_ladder_acceptance()` and added `AFFINE_EXACT`, which exempts
-that fixture. Manifest 28's `parent_commit` is `e979c00`. Recomputing today gives
-values **bit-identical to the ones that failed**, now passing. Manifest 28 states
-the classification came from "the fixture mathematical definition… never
-observed ladder values."
-
-The mathematics is correct — for an affine map the central difference is exact,
-so there is no U-curve to demand. The provenance claim is not.
-
-**Manifest 26 precedent** for the same species of problem:
-
-```
-Final status:          STEP3G1D_BLOCKED
-Verification envelope: NOT_ESTABLISHED
-Blocking condition:    MANIFEST26_PROVENANCE_HASH_TABLE_INVALID
-```
-
-with its passing tests recorded as "nonqualifying diagnostic evidence only".
-
-**Recommendation:** close BLOCKED the same way, disclose (b), record 124/124 as
-diagnostic evidence for a successor.
-
-### 3. Test artifacts stamp PASS without running tests
-
-`m0_step3g1d_reporting.py:68-75` builds the 124-node inventory by transcribing
-the manifest and stamping a literal `"result": "PASS"`. `_traceability_csv` does
-the same. `generate_artifacts()` invokes no pytest. **The artifact would look
-identical if every test failed.** Either run the tests and record real results,
-or delete the artifact.
-
-### 4. No qualification module can emit a failure
-
-`FINAL_STATUS` and `PRIMARY_FINDING` are constants set to the COMPLETE values.
-`STEP3G1D_REQUALIFICATION_FAILED`, `..._BLOCKED`, `..._NOT_EVALUATED`,
-`SYNTHETIC_..._NOT_QUALIFIED` appear in **zero** `.py` files. An apparatus that
-can only emit success is not a gate.
-
-### 5. EIH 1PN acceleration is sign-flipped
-
-`advanced_integrators.py:846-863`. Every sign in the β=γ=1 bracket is reversed;
-Mercury precesses backwards (−4298 vs +4301 arcsec/century). Reached only via
-`experiments.py:266,528`. **Decide whether `experiments.py` is live** before
-investing in a fix. Two further EIH terms are also missing.
-
-### 6. Structural re-baseline
-
-The freeze is a byte hash over files with three roles — scientific subject (v2
-kernels), verification apparatus (harness, reporting), packaging plumbing
-(`__init__.py`). Any defect in any of them needs a whole new manifest to fix.
-Four of the last seven manifests are repairs; 3g1d alone has consumed 26, 27, 28.
-
-`__init__.py` is the clean case: one unused re-export with **zero consumers
-anywhere in the repo**, forcing a forbidden module into `sys.modules` on every
-import, frozen so Manifest 28 cannot fix what makes Manifest 28 impossible.
-
-Proposal: tier the freeze. Subject byte-frozen; apparatus repairable under a
-declared procedure that forces a re-run from clean; plumbing governed by a
-machine-checkable rule. Acceptance criteria stay frozen either way.
-
-### 7. Smaller, confirmed
-
-- **Velocity-Verlet is not symplectic with velocity-dependent GR.**
-  `acceleration_newtonian_gr_sun` is velocity-dependent; the step evaluates the
-  new acceleration at `v_half`. Max energy error over 200/800/3200 orbits:
-  Newtonian **1.00, 1.00** (bounded); with GR **1.12, 1.42** (growing).
-  Magnitude at 100 Myr is *not* established — do not extrapolate.
-- **λ needs a timestep-convergence ladder.** Under-resolution manufactures a
-  positive exponent that no post-processing can detect: at 1,000 steps/orbit on
-  an integrable system the growth curve fits a line with R² = 0.997.
-  `ENERGY_DRIFT_CHAOS_GATE = 1e-7` is a backstop, not a substitute.
-- **Unreachable bugfix.** The mismatch comprehension in `verify_inherited_integrity`
-  was fixed in `3g1d` but not `3g1b`/`3g1c`; since `1d` delegates to `1c` → `1b`,
-  the fix never runs. One line.
-- **`acceptance_gates` blocks are never read** by any code; all entries `true`,
-  including in Manifest 26 (BLOCKED) and 27 (FAILED).
-- **Determinism gates in 3g1b/3g1c** run seed 0 twice where the manifests require
-  1/C and 8675309/C.UTF-8.
-- **20 of 23 shared function names** across the four qualification modules have
-  diverged.
+The superseded Manifest 28 campaign and its provenance dispute are historical
+context, not an open qualification path. Do not restore its pass status or use
+it to certify the current pipeline.
 
 ---
 
-## Verified correct — do not re-litigate
+## Rung 3 result
 
-- **v2 core**: Kepler tangent symplectic to 9.84e-12, cross-checked against an
-  independent f&g propagator to 9.85e-15; Jacobi round-trip 9.08e-17; kick
-  reversibility **bitwise exact**; 1,056 randomized/boundary cases, zero failures.
-- **GR potential path** (`gr_potential_tangent.py` + C port): Mercury at
-  **42.9808 vs 42.98** arcsec/century; Jacobian verified; C port agrees with
-  Python to **5.6e-16** across 8 orders of magnitude in separation.
-- **Newtonian integrators**: velocity-Verlet exactly 2nd order, RK4 exactly 4th,
-  energy bounded to the digit over 3200 orbits.
-- **Benettin core**: cadence, log accumulation, time normalization correct;
-  variational equations momentum-conserving.
-- **MEGNO-lite**: recovers λ to five significant figures.
-- **Hash ledger**: 669 pins audited; 380 verified equal; the 12 wrong values are
-  all Manifest 26 and **did not propagate**.
+### Fixed configuration
+
+- System: GM-weighted composite of Sun, Mercury, Venus, Earth-Moon barycenter,
+  and Mars; Jupiter, Saturn, Uranus, Neptune, and Pluto barycenters.
+- Epoch/frame: J2000 TT JD 2451545.0, Skyfield ICRF barycentric.
+- State kernel: `data/de440s.bsp`.
+- Kernel SHA-256:
+  `c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2`.
+- Masses: `mini_ephemeris.ephem` DE431 GM constants, explicitly recorded.
+- Physical fingerprint:
+  `7a06fd788272a0b9f430340b4a75e42627c153cd7970b0d54d37b0ddbd6fb1f3`.
+- REBOUND: 4.6.0, WHFast.
+- Tangent seeds: 12345, 23456, 34567, 45678, 56789.
+- Coarse lane: 400 Myr, dt 0.4 yr, with an exact 200 Myr comparison anchor.
+- Fine lane: 200 Myr, dt 0.2 yr.
+- Samples: 2,000 per seed at deterministic golden-ratio-dithered times.
+- Acceptance window: 10-40 Myr, unchanged.
+- Existing energy limit: 1e-9, retained without weakening. The 1e-7 limit in
+  `docs/PLAN.md` also fails at dt 0.2.
+
+### Resonance precondition
+
+The original linear wrap falsely measured libration centered near 180 degrees
+as a nearly 360-degree circulation. The corrected minimum circular covering arc
+gives:
+
+| Lane | Span | Center | Minimum Pluto-Neptune separation |
+|---|---:|---:|---:|
+| dt 0.4 yr | 167.005892 deg | 185.333139 deg | 17.270780 AU |
+| dt 0.2 yr | 167.063943 deg | 185.363300 deg | 17.268909 AU |
+
+Both 300 kyr preflights pass. No Lyapunov result comes from an unprotected
+Pluto.
+
+### Artifacts
+
+| File | SHA-256 | Status |
+|---|---|---|
+| `rung3-dt0.4.json` | `b067a5883173634b639d2bcb98e3c7fd21f5c338769f2b126210c66a32b8b934` | FAIL |
+| `rung3-dt0.2.json` | `14d9d864bd3ef6ee689e31c6ed2f2f805bc8f61c43a60aef1fe950aca36aee46` | FAIL |
+
+Both parse as strict JSON. The fine artifact records and verifies the coarse
+artifact hash, physical fingerprint, seeds, 2:1 timestep ratio, and equal
+200 Myr comparison duration.
+
+### Measurements
+
+| Seed | Coarse 400 Myr T_L | Coarse 200 Myr T_L | Fine 200 Myr T_L | Fine halving | Fine estimator disagreement | Benettin dt change | MEGNO dt change |
+|---:|---:|---:|---:|---:|---:|---:|---:|
+| 12345 | 8.85850 Myr | 6.49779 Myr | 5.52071 Myr | 0.69353 | 40.06% | 15.04% | 30.94% |
+| 23456 | 9.62697 Myr | 7.35950 Myr | 5.59665 Myr | 0.69798 | 37.20% | 23.95% | 61.11% |
+| 34567 | 8.66071 Myr | 6.28714 Myr | 5.42052 Myr | 0.68858 | 42.12% | 13.78% | 28.03% |
+| 45678 | 8.86490 Myr | 6.50467 Myr | 5.58029 Myr | 0.69654 | 38.65% | 14.21% | 30.73% |
+| 56789 | 8.78411 Myr | 6.41804 Myr | 5.46510 Myr | 0.69118 | 40.87% | 14.85% | 29.19% |
+
+Aggregate coarse 400 Myr:
+
+- Median T_L: 8.85850 Myr.
+- Tangent lambda range: 1.038749e-7 to 1.154640e-7 /yr.
+- Halving range: 0.72594 to 0.76447.
+- Energy drift: 1.038011e-6.
+- All five classifications: `ambiguous`.
+
+Aggregate fine 200 Myr:
+
+- Median T_L: 5.52071 Myr.
+- Tangent lambda range: 1.786783e-7 to 1.844842e-7 /yr.
+- Halving range: 0.68858 to 0.69798.
+- Energy drift: 2.596967e-7.
+- All five classifications: `regular_likely`.
+
+The fine energy error is 3.997 times smaller than coarse, consistent with an
+approximately second-order timestep response, but it remains above both 1e-9
+and 1e-7. Every seed fails the 10% timestep condition for both diagnostics.
+Every seed also fails the halving and Benettin/MEGNO agreement conditions.
+No tangent saturation was observed; maximum absolute log norm was 49.09 coarse
+and 38.54 fine against the fixed limit of 300.
+
+**Disposition: rung 3 FAIL.** The apparent 5-10 Myr times are not reportable
+Lyapunov times because the running estimates are not duration-converged, the two
+diagnostics disagree, timestep convergence fails, and the energy gate fails.
+Do not compare them to the published approximately 20 Myr value as measurements
+of the same quantity.
+
+### Runtime
+
+- Coarse five-seed wall time: 130.75 minutes.
+- Fine five-seed wall time: 126.61 minutes.
+- Available disk before launch: 777 GiB.
+- No nonfinite or process failures occurred.
 
 ---
 
-## Fixed this cycle (branch `repair/chaos-estimators`)
+## Required next work
 
-Four defects that were producing wrong scientific results:
+1. **Independent review before merge.** The author of the rung-3 harness does
+   not certify it. Review the DE440s frame/mass folding, circular preflight,
+   exact-time sampling, five-seed aggregation, same-duration dt formula, and
+   all result consumers.
+2. **Persist compact sampled histories before another long campaign.** The two
+   JSON artifacts preserve per-seed summaries but not the sampled tangent,
+   MEGNO, and energy series. Therefore the completed FAIL is auditable at the
+   gate-output level but its slopes and halving values cannot be independently
+   recomputed offline. Also move all JSON/progress collision checks before
+   integration and add restart-safe checkpoints; the current JSON writer rejects
+   overwrite only at final write and progress sidecars can overwrite. This run
+   was manually verified collision-free. Do not reinterpret the current result;
+   repair the apparatus first and rerun from clean only under a new campaign.
+3. **Diagnose non-asymptotic growth before requesting more duration.** Use a
+   bounded known-answer outer-system control and stored histories to separate
+   finite transients from genuine exponential growth. Do not read S(T)/T alone.
+4. **Resolve the energy ladder separately.** The observed factor-of-four
+   improvement suggests a bounded dt ladder can determine the timestep needed
+   for the 1e-7 screen. Do not weaken the inherited 1e-9 gate after observation.
+5. **Do not run rungs 4 or 5.** Rung 3 has not passed.
 
-1. **Lyapunov line-fit measured ln(t).** Reported T_lyap was 0.35 × run length
-   regardless of dynamics — a 100 Myr run would report ~35 Myr from regular
-   motion. Replaced with the running estimate plus a halving-ratio discriminator.
-2. **LCN classifier had no power.** `lcn * elapsed > 1.0` reduces to "grew by one
-   e-fold"; the statistic was 5.19 at the first sample on an integrable system.
-3. **Shadow fit included the saturated tail.** 5.372 Myr → 2.001 Myr against a
-   true 2.000 once saturation is excluded.
-4. **MEGNO factor 0.5** → named constant + calibration hook (see item 1).
+---
 
-Plus: `best_megno_slope_fallback` max() → median; `analysis_tools.lyapunov_max`
-barycenter and norm fixed, with a warning on negative returns; a sign guard in
-the discriminator (two negative estimates gave a positive halving ratio and read
-as chaotic).
+## Estimator foundation
 
-New: `chaos_estimator_diagnostics.py`, 43 regression tests, ~2 seconds, no
-REBOUND needed.
+The installed REBOUND 4.6.0 convention was measured, not assumed:
+
+- `sim.megno()` is the time-averaged mean MEGNO.
+- `sim.lyapunov()` equals the OLS slope of mean MEGNO and is lambda/2.
+- The conversion `lambda = 2 * d<Y>/dt` is correct for this runtime.
+- `sim.lyapunov()` is not used as an independent estimator.
+
+Rungs 0-2 currently pass:
+
+- Rung 0: 93 tests, zero failures/errors.
+- Rung 1: integrable two-body classified regular, halving 0.534082.
+- Rung 2a: cat map relative lambda error 8.40e-6.
+- Rung 2b: standard map relative lambda error 7.16e-4.
+
+---
+
+## Known issues outside the current rung
+
+- `advanced_integrators.py` still contains a sign-flipped EIH 1PN path and
+  missing EIH terms. This path is not part of rung 3.
+- Velocity Verlet remains unsuitable for velocity-dependent 1PN acceleration.
+- The old Manifest 23-28 qualification/reporting machinery contains inferred
+  pass statuses and duplicated apparatus. It is superseded by `docs/PLAN.md`.
+- Rungs 4 and 5 remain unimplemented and unrun.
+
+---
+
+## Verification commands for this unit
+
+- `python3 scripts/check_undefined_names.py --self-test`
+- `python3 scripts/check_undefined_names.py scripts/ladder_rung3_pluto.py mini_ephemeris/tests/test_ladder_rung3_pluto.py`
+- `python3 scripts/run_validation_ladder.py --self-test`
+- `python3 scripts/run_validation_ladder.py`
+- `env PYTHONPATH=mini_ephemeris/src .venv/bin/python scripts/measure_megno_convention.py`
+- `env PYTHONPATH=mini_ephemeris/src .venv/bin/python mini_ephemeris/tests/test_ladder_rung3_pluto.py -v`
+- `env PYTHONPATH=mini_ephemeris/src .venv/bin/python -m py_compile scripts/ladder_rung3_pluto.py`
+- `python3 -m json.tool rung3-dt0.4.json`
+- `python3 -m json.tool rung3-dt0.2.json`
+- `env PYTHONPATH=mini_ephemeris/src .venv/bin/python -m unittest discover -s mini_ephemeris/tests -p test_*.py`
+
+The repository virtualenv does not include pytest; no dependency was installed.
+Full unittest discovery ran 402 tests and is not green: 22 failures and 15 errors
+come from superseded Manifest 23-28 branch/hash/artifact assumptions and
+pre-existing v2 public-docstring checks. The rung-3 focused suite is 14/14 and
+rung 0's enrolled suite is 93/93.

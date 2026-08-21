@@ -1,0 +1,610 @@
+{
+  "acceptance": [
+    10000000.0,
+    40000000.0
+  ],
+  "conditions": [
+    {
+      "condition": "duration is at least 200 Myr",
+      "met": true
+    },
+    {
+      "condition": "at least 5 independent tangent seeds",
+      "met": true
+    },
+    {
+      "condition": "every seed is classified chaotic",
+      "met": false
+    },
+    {
+      "condition": "every seed has halving ratio in [0.85, 1.15]",
+      "met": false
+    },
+    {
+      "condition": "every seed has energy drift < 1e-09",
+      "met": false
+    },
+    {
+      "condition": "every seed has Benettin/MEGNO disagreement < 0.2",
+      "met": false
+    },
+    {
+      "condition": "linear variational saturation is excluded for every seed",
+      "met": true
+    },
+    {
+      "condition": "Pluto is protected by the 3:2 resonance",
+      "met": true
+    },
+    {
+      "condition": "same-duration dt-halving changes both estimators by < 10% per seed",
+      "met": false
+    }
+  ],
+  "duration_seconds": 7844.754,
+  "evidence": {
+    "convergence_checkpoint_summary": {
+      "all_classified_chaotic": false,
+      "all_saturation_excluded": true,
+      "dt_years": 0.4,
+      "duration_years": 200000000.29083547,
+      "estimator_relative_disagreement_max": 0.6788159971451272,
+      "halving_ratio_max": 0.6723054130099916,
+      "halving_ratio_min": 0.6441277624554013,
+      "lambda_benettin_max_1_per_year": 1.5905472596870166e-07,
+      "lambda_benettin_median_1_per_year": 1.5389852379408376e-07,
+      "lambda_benettin_min_1_per_year": 1.358787463279802e-07,
+      "lambda_benettin_relative_range": 0.15059260523987164,
+      "lambda_megno_median_1_per_year": 7.615747735916773e-08,
+      "lyapunov_time_myr": 6.497788122633327,
+      "lyapunov_time_years": 6497788.122633328,
+      "max_relative_energy_drift": 1.0360881077212908e-06,
+      "seed_count": 5,
+      "seed_summaries": [
+        {
+          "classification": "regular_likely",
+          "dt_years": 0.4,
+          "duration_years": 200000000.29083547,
+          "estimator_relative_disagreement": 0.5127884965693922,
+          "final_cumulative_log_growth": 30.779704803575903,
+          "final_mean_megno": 7.210116142586098,
+          "halving_ratio": 0.6503952465136376,
+          "lambda_benettin_1_per_year": 1.5389852379408376e-07,
+          "lambda_megno_1_per_year": 7.498113115346673e-08,
+          "lyapunov_time_myr": 6.497788122633327,
+          "lyapunov_time_years": 6497788.122633328,
+          "max_abs_log_tangent_norm": 32.72419098543423,
+          "max_relative_energy_drift": 1.0360881077212908e-06,
+          "megno_slope_per_year": 3.7490565576733363e-08,
+          "sample_count": 1000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 12345,
+          "wall_minutes": 26.05414939324061
+        },
+        {
+          "classification": "regular_likely",
+          "dt_years": 0.4,
+          "duration_years": 200000000.29083547,
+          "estimator_relative_disagreement": 0.6788159971451272,
+          "final_cumulative_log_growth": 27.1757493051144,
+          "final_mean_megno": 4.382367135912197,
+          "halving_ratio": 0.6723054130099916,
+          "lambda_benettin_1_per_year": 1.358787463279802e-07,
+          "lambda_megno_1_per_year": 4.364207964852253e-08,
+          "lyapunov_time_myr": 7.3595026965161185,
+          "lyapunov_time_years": 7359502.696516119,
+          "max_abs_log_tangent_norm": 29.119900413430347,
+          "max_relative_energy_drift": 1.0360881077212908e-06,
+          "megno_slope_per_year": 2.1821039824261264e-08,
+          "sample_count": 1000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 23456,
+          "wall_minutes": 26.06006385087967
+        },
+        {
+          "classification": "regular_likely",
+          "dt_years": 0.4,
+          "duration_years": 200000000.29083547,
+          "estimator_relative_disagreement": 0.5168716394593746,
+          "final_cumulative_log_growth": 31.810945239999086,
+          "final_mean_megno": 7.726728971649863,
+          "halving_ratio": 0.6441277624554013,
+          "lambda_benettin_1_per_year": 1.5905472596870166e-07,
+          "lambda_megno_1_per_year": 7.684384899349725e-08,
+          "lyapunov_time_myr": 6.287144213475161,
+          "lyapunov_time_years": 6287144.21347516,
+          "max_abs_log_tangent_norm": 33.75542138268385,
+          "max_relative_energy_drift": 1.0360881077212908e-06,
+          "megno_slope_per_year": 3.8421924496748627e-08,
+          "sample_count": 1000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 34567,
+          "wall_minutes": 26.0297572016716
+        },
+        {
+          "classification": "regular_likely",
+          "dt_years": 0.4,
+          "duration_years": 200000000.29083547,
+          "estimator_relative_disagreement": 0.504621062839193,
+          "final_cumulative_log_growth": 30.747160105918034,
+          "final_mean_megno": 7.27023410353758,
+          "halving_ratio": 0.6504757272767392,
+          "lambda_benettin_1_per_year": 1.5373580030603106e-07,
+          "lambda_megno_1_per_year": 7.615747735916773e-08,
+          "lyapunov_time_myr": 6.5046657838276465,
+          "lyapunov_time_years": 6504665.783827647,
+          "max_abs_log_tangent_norm": 32.69162895741098,
+          "max_relative_energy_drift": 1.0360881077212908e-06,
+          "megno_slope_per_year": 3.8078738679583866e-08,
+          "sample_count": 1000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 45678,
+          "wall_minutes": 26.372468276818594
+        },
+        {
+          "classification": "regular_likely",
+          "dt_years": 0.4,
+          "duration_years": 200000000.29083547,
+          "estimator_relative_disagreement": 0.5082472664657556,
+          "final_cumulative_log_growth": 31.162146497789678,
+          "final_mean_megno": 7.3995307771066345,
+          "halving_ratio": 0.6478788983341839,
+          "lambda_benettin_1_per_year": 1.5581073226237195e-07,
+          "lambda_megno_1_per_year": 7.662035350399369e-08,
+          "lyapunov_time_myr": 6.418043131432599,
+          "lyapunov_time_years": 6418043.131432599,
+          "max_abs_log_tangent_norm": 33.106615578587004,
+          "max_relative_energy_drift": 1.0360881077212908e-06,
+          "megno_slope_per_year": 3.831017675199684e-08,
+          "sample_count": 1000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 56789,
+          "wall_minutes": 26.229453814029693
+        }
+      ],
+      "seeds": [
+        12345,
+        23456,
+        34567,
+        45678,
+        56789
+      ],
+      "wall_minutes_total": 130.74589253664016
+    },
+    "ensemble_summary": {
+      "all_classified_chaotic": false,
+      "all_saturation_excluded": true,
+      "dt_years": 0.4,
+      "duration_years": 400000000.3699058,
+      "estimator_relative_disagreement_max": 0.32144921415890265,
+      "halving_ratio_max": 0.7644674706521395,
+      "halving_ratio_min": 0.7259386755385145,
+      "lambda_benettin_max_1_per_year": 1.1546397710786065e-07,
+      "lambda_benettin_median_1_per_year": 1.128859068163986e-07,
+      "lambda_benettin_min_1_per_year": 1.0387488152073472e-07,
+      "lambda_benettin_relative_range": 0.10266202322292384,
+      "lambda_megno_median_1_per_year": 7.938230306585183e-08,
+      "lyapunov_time_myr": 8.858501722685661,
+      "lyapunov_time_years": 8858501.722685661,
+      "max_relative_energy_drift": 1.0380105469842017e-06,
+      "seed_count": 5,
+      "seed_summaries": [
+        {
+          "classification": "ambiguous",
+          "dt_years": 0.4,
+          "duration_years": 400000000.3699058,
+          "estimator_relative_disagreement": 0.2967657588301267,
+          "final_cumulative_log_growth": 45.154362768316595,
+          "final_mean_megno": 15.39029155339746,
+          "halving_ratio": 0.7335087045242874,
+          "lambda_benettin_1_per_year": 1.128859068163986e-07,
+          "lambda_megno_1_per_year": 7.93852350188031e-08,
+          "lyapunov_time_myr": 8.858501722685661,
+          "lyapunov_time_years": 8858501.722685661,
+          "max_abs_log_tangent_norm": 48.05421499383566,
+          "max_relative_energy_drift": 1.0380105469842017e-06,
+          "megno_slope_per_year": 3.969261750940155e-08,
+          "sample_count": 2000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 12345,
+          "wall_minutes": 26.05414939324061
+        },
+        {
+          "classification": "ambiguous",
+          "dt_years": 0.4,
+          "duration_years": 400000000.3699058,
+          "estimator_relative_disagreement": 0.2117606508006761,
+          "final_cumulative_log_growth": 41.54995264671781,
+          "final_mean_megno": 12.753528954743693,
+          "halving_ratio": 0.7644674706521395,
+          "lambda_benettin_1_per_year": 1.0387488152073472e-07,
+          "lambda_megno_1_per_year": 8.187826900806081e-08,
+          "lyapunov_time_myr": 9.626966455796993,
+          "lyapunov_time_years": 9626966.455796992,
+          "max_abs_log_tangent_norm": 44.44980500422467,
+          "max_relative_energy_drift": 1.0380105469842017e-06,
+          "megno_slope_per_year": 4.0939134504030406e-08,
+          "sample_count": 2000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 23456,
+          "wall_minutes": 26.06006385087967
+        },
+        {
+          "classification": "ambiguous",
+          "dt_years": 0.4,
+          "duration_years": 400000000.3699058,
+          "estimator_relative_disagreement": 0.32144921415890265,
+          "final_cumulative_log_growth": 46.185590885855056,
+          "final_mean_megno": 15.807215659771003,
+          "halving_ratio": 0.7259386755385145,
+          "lambda_benettin_1_per_year": 1.1546397710786065e-07,
+          "lambda_megno_1_per_year": 7.834817240287732e-08,
+          "lyapunov_time_myr": 8.66070981658505,
+          "lyapunov_time_years": 8660709.816585049,
+          "max_abs_log_tangent_norm": 49.08544343381028,
+          "max_relative_energy_drift": 1.0380105469842017e-06,
+          "megno_slope_per_year": 3.917408620143866e-08,
+          "sample_count": 2000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 34567,
+          "wall_minutes": 26.0297572016716
+        },
+        {
+          "classification": "ambiguous",
+          "dt_years": 0.4,
+          "duration_years": 400000000.3699058,
+          "estimator_relative_disagreement": 0.2962841989129982,
+          "final_cumulative_log_growth": 45.12179662110362,
+          "final_mean_megno": 15.451929433508582,
+          "halving_ratio": 0.7337555157867555,
+          "lambda_benettin_1_per_year": 1.1280449144844145e-07,
+          "lambda_megno_1_per_year": 7.938230306585183e-08,
+          "lyapunov_time_myr": 8.86489524627715,
+          "lyapunov_time_years": 8864895.24627715,
+          "max_abs_log_tangent_norm": 48.02164877232182,
+          "max_relative_energy_drift": 1.0380105469842017e-06,
+          "megno_slope_per_year": 3.969115153292591e-08,
+          "sample_count": 2000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 45678,
+          "wall_minutes": 26.372468276818594
+        },
+        {
+          "classification": "ambiguous",
+          "dt_years": 0.4,
+          "duration_years": 400000000.3699058,
+          "estimator_relative_disagreement": 0.30498410087756544,
+          "final_cumulative_log_growth": 45.53678429162133,
+          "final_mean_megno": 15.556189418224887,
+          "halving_ratio": 0.7306426134502481,
+          "lambda_benettin_1_per_year": 1.1384196062377631e-07,
+          "lambda_megno_1_per_year": 7.912197262079469e-08,
+          "lyapunov_time_myr": 8.78410732317576,
+          "lyapunov_time_years": 8784107.32317576,
+          "max_abs_log_tangent_norm": 48.436636517237716,
+          "max_relative_energy_drift": 1.0380105469842017e-06,
+          "megno_slope_per_year": 3.956098631039734e-08,
+          "sample_count": 2000,
+          "saturation_definition": "linear variational tangent remains finite with |log(norm)| < 300",
+          "saturation_excluded": true,
+          "seed": 56789,
+          "wall_minutes": 26.229453814029693
+        }
+      ],
+      "seeds": [
+        12345,
+        23456,
+        34567,
+        45678,
+        56789
+      ],
+      "wall_minutes_total": 130.74589253664016
+    },
+    "initial_condition_provenance": {
+      "central_folding": "GM-weighted barycenter of Sun through Mars barycenters",
+      "epoch_tt_jd": 2451545.0,
+      "frame": "Skyfield ICRF barycentric",
+      "gravitational_constant_au3_per_solar_mass_year2": 39.47692642137302,
+      "kernel_bytes": 32726016,
+      "kernel_path": "/home/peacelovephysics/ephemeris/data/de440s.bsp",
+      "kernel_sha256": "c1c7feeab882263fc493a9d5a5b2ddd71b54826cdf65d8d17a76126b260a49f2",
+      "mass_source": "mini_ephemeris.ephem DE431 GM constants",
+      "mass_unit": "GM/GM_sun",
+      "physical_configuration_fingerprint": "7a06fd788272a0b9f430340b4a75e42627c153cd7970b0d54d37b0ddbd6fb1f3",
+      "position_unit": "AU",
+      "simulation_particles_before_com_shift": [
+        {
+          "components": [
+            "sun",
+            "mercury barycenter",
+            "venus barycenter",
+            "earth barycenter",
+            "mars barycenter"
+          ],
+          "gm_km3_s2": 132713233263.92212,
+          "mass_solar": 1.0000059769979548,
+          "name": "sun plus terrestrial barycenters",
+          "position_au": [
+            -0.007139048868948302,
+            -0.002644819617908492,
+            -0.0009217238887553996
+          ],
+          "velocity_au_per_year": [
+            0.0019474666699410784,
+            -0.0024868542005327936,
+            -0.0011161820455313038
+          ]
+        },
+        {
+          "gm_km3_s2": 126712764.8,
+          "mass_solar": 0.0009547919152112386,
+          "name": "jupiter barycenter",
+          "position_au": [
+            3.994039981969506,
+            2.733931385634252,
+            1.07458937206841
+          ],
+          "velocity_au_per_year": [
+            -1.6666120330034702,
+            2.145735615799821,
+            0.9603409244479695
+          ]
+        },
+        {
+          "gm_km3_s2": 37940585.2,
+          "mass_solar": 0.0002858856727222416,
+          "name": "saturn barycenter",
+          "position_au": [
+            6.399271680375953,
+            6.172010454266496,
+            2.273847874950693
+          ],
+          "velocity_au_per_year": [
+            -1.5658170392812074,
+            1.2862594255441775,
+            0.5986077352630864
+          ]
+        },
+        {
+          "gm_km3_s2": 5794548.6,
+          "mass_solar": 4.366243735831263e-05,
+          "name": "uranus barycenter",
+          "position_au": [
+            14.4247194352172,
+            -12.508913597390968,
+            -5.682612968043096
+          ],
+          "velocity_au_per_year": [
+            0.9801425499054744,
+            0.8967786443720658,
+            0.37890179880414643
+          ]
+        },
+        {
+          "gm_km3_s2": 6836527.10058,
+          "mass_solar": 5.151383772628655e-05,
+          "name": "neptune barycenter",
+          "position_au": [
+            16.80490978888841,
+            -22.982747844131794,
+            -9.825350562366403
+          ],
+          "velocity_au_per_year": [
+            0.9440444057563054,
+            0.6069239071880866,
+            0.22491450085967532
+          ]
+        },
+        {
+          "gm_km3_s2": 977.0,
+          "mass_solar": 7.361781606089461e-09,
+          "name": "pluto barycenter",
+          "position_au": [
+            -9.882489409088551,
+            -27.981515457543086,
+            -5.754614330514002
+          ],
+          "velocity_au_per_year": [
+            1.1082157291457133,
+            -0.4143218723095013,
+            -0.46319625256800423
+          ]
+        }
+      ],
+      "source_states": [
+        {
+          "gm_km3_s2": 132712440041.9394,
+          "name": "sun",
+          "position_au": [
+            -0.007137179161613864,
+            -0.0026473383808318187,
+            -0.0009229087529143426
+          ],
+          "velocity_au_per_year": [
+            0.0019644826390423633,
+            -0.002468427177894558,
+            -0.0011077521198796997
+          ]
+        },
+        {
+          "gm_km3_s2": 22031.78,
+          "name": "mercury barycenter",
+          "position_au": [
+            -0.13723078456074653,
+            -0.40324106001769744,
+            -0.20141221076426788
+          ],
+          "velocity_au_per_year": [
+            7.8060405002284154,
+            -1.801799390473405,
+            -1.7716326840130263
+          ]
+        },
+        {
+          "gm_km3_s2": 324858.592,
+          "name": "venus barycenter",
+          "position_au": [
+            -0.7254394755078873,
+            -0.04892158506245054,
+            0.023717729711790498
+          ],
+          "velocity_au_per_year": [
+            0.2934769050456555,
+            -6.756612067150778,
+            -3.058153584323829
+          ]
+        },
+        {
+          "gm_km3_s2": 403503.235502,
+          "name": "earth barycenter",
+          "position_au": [
+            -0.18429596332645315,
+            0.8847595207692485,
+            0.38381380916786173
+          ],
+          "velocity_au_per_year": [
+            -6.281471099804893,
+            -1.0627314752320733,
+            -0.4607783908821184
+          ]
+        },
+        {
+          "gm_km3_s2": 42828.375214,
+          "name": "mars barycenter",
+          "position_au": [
+            1.383578742583929,
+            -0.0012461207693274343,
+            -0.03788307595592793
+          ],
+          "velocity_au_per_year": [
+            0.24722968275842705,
+            5.043108775400312,
+            2.306505381145262
+          ]
+        },
+        {
+          "gm_km3_s2": 126712764.8,
+          "name": "jupiter barycenter",
+          "position_au": [
+            3.994039981969506,
+            2.733931385634252,
+            1.07458937206841
+          ],
+          "velocity_au_per_year": [
+            -1.6666120330034702,
+            2.145735615799821,
+            0.9603409244479695
+          ]
+        },
+        {
+          "gm_km3_s2": 37940585.2,
+          "name": "saturn barycenter",
+          "position_au": [
+            6.399271680375953,
+            6.172010454266496,
+            2.273847874950693
+          ],
+          "velocity_au_per_year": [
+            -1.5658170392812074,
+            1.2862594255441775,
+            0.5986077352630864
+          ]
+        },
+        {
+          "gm_km3_s2": 5794548.6,
+          "name": "uranus barycenter",
+          "position_au": [
+            14.4247194352172,
+            -12.508913597390968,
+            -5.682612968043096
+          ],
+          "velocity_au_per_year": [
+            0.9801425499054744,
+            0.8967786443720658,
+            0.37890179880414643
+          ]
+        },
+        {
+          "gm_km3_s2": 6836527.10058,
+          "name": "neptune barycenter",
+          "position_au": [
+            16.80490978888841,
+            -22.982747844131794,
+            -9.825350562366403
+          ],
+          "velocity_au_per_year": [
+            0.9440444057563054,
+            0.6069239071880866,
+            0.22491450085967532
+          ]
+        },
+        {
+          "gm_km3_s2": 977.0,
+          "name": "pluto barycenter",
+          "position_au": [
+            -9.882489409088551,
+            -27.981515457543086,
+            -5.754614330514002
+          ],
+          "velocity_au_per_year": [
+            1.1082157291457133,
+            -0.4143218723095013,
+            -0.46319625256800423
+          ]
+        }
+      ],
+      "velocity_unit": "AU/Julian-year"
+    },
+    "rebound_version": "4.6.0",
+    "resonance_precondition": {
+      "checked_years": 300000.0,
+      "librating": true,
+      "libration_amplitude_deg": 167.00589229977624,
+      "libration_center_deg": 185.33313888715074,
+      "min_pluto_neptune_separation_au": 17.270779951222995,
+      "pluto_a_range_au": [
+        39.005879011483366,
+        39.933042308210204
+      ],
+      "sample_count": 3000
+    },
+    "sampling_strategy": "golden-ratio-dithered targets; exact sim.t recorded; 200 Myr and final targets anchored",
+    "thresholds": {
+      "energy_drift_max": 1e-09,
+      "estimator_relative_disagreement_max": 0.2,
+      "halving_ratio": [
+        0.85,
+        1.15
+      ],
+      "lyapunov_time_years": [
+        10000000.0,
+        40000000.0
+      ],
+      "minimum_tangent_seeds": 5,
+      "saturation_log_norm_limit": 300.0,
+      "timestep_relative_change_max": 0.1
+    },
+    "timestep_comparison": {
+      "available": false,
+      "passed": false,
+      "reason": "no coarse-lane JSON supplied with --compare-to",
+      "relative_limit": 0.1
+    }
+  },
+  "measured": 8858501.722685661,
+  "name": "Pluto Lyapunov time",
+  "notes": [],
+  "rung": "3",
+  "status": "FAIL",
+  "target": 20000000.0,
+  "unit": "years"
+}
