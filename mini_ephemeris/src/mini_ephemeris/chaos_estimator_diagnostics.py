@@ -75,6 +75,8 @@ __all__ = [
     "SLOPE_WINDOW_MAX_SPREAD",
     "WindowedSlopeAnalysis",
     "analyze_window_slopes",
+    "SegmentScatter",
+    "segment_scatter",
     "TransientFit",
     "fit_transient_and_exponent",
     "ESTIMATOR_DISCARD_FRACTION",
@@ -1147,6 +1149,114 @@ def estimate_lyapunov_exponent(
         megno_disagreement=megno_gap,
         discard_fraction=discard_fraction,
         consistent=consistent,
+        notes=tuple(notes),
+    )
+
+
+@dataclass(frozen=True)
+class SegmentScatter:
+    """Empirical uncertainty on lambda, from the record itself.
+
+    You do not need a known answer to get an error bar. Cut the record into
+    non-overlapping segments, estimate lambda independently in each, and the
+    spread across segments is the uncertainty of a measurement of that length.
+    The tangent direction decorrelates within a few Lyapunov times, so segments
+    many Lyapunov times long are effectively independent samples.
+
+    This was validated against a case where the answer IS known -- a massless
+    body in Jupiter's resonance-overlap zone, integrated for 417 Lyapunov times
+    (scripts/calibrate_record_length.py). Segment spread there tracked the true
+    error closely:
+
+        segment length     14 T_lyap   29 T_lyap   57 T_lyap   100 T_lyap
+        segment spread          33%         16%         17%           9%
+        true mean error         26%         15%         14%          10%
+
+    Note what that table says about buying precision with runtime: 29 and 57
+    Lyapunov times give the same answer to the same accuracy. Doubling an
+    integration in that range does not tighten the result, because the limit is
+    how far the tangent norm wanders, not how long the record is.
+
+    Attributes
+    ----------
+    segment_lambdas_1_per_year:
+        One independent estimate per segment.
+    relative_spread:
+        Standard deviation across segments, divided by the full-record estimate.
+        This is the 1-sigma uncertainty to quote.
+    full_record_lambda_1_per_year:
+        The estimate from the whole record, which is the value to report.
+    """
+
+    n_segments: int
+    segment_length_years: float
+    segment_lambdas_1_per_year: tuple[float, ...]
+    full_record_lambda_1_per_year: float
+    relative_spread: float
+    notes: tuple[str, ...]
+
+
+def segment_scatter(
+    times_years: Sequence[float],
+    cumulative_log_growth: Sequence[float],
+    *,
+    n_segments: int = 4,
+    n_windows: int = 3,
+) -> SegmentScatter:
+    """Uncertainty on lambda from the spread across independent sub-records."""
+
+    times = np.asarray(times_years, dtype=float)
+    growth = np.asarray(cumulative_log_growth, dtype=float)
+    if times.ndim != 1 or growth.shape != times.shape:
+        raise ValueError("times and growth must be 1-D and the same length")
+    if n_segments < 2:
+        raise ValueError("need at least two segments to measure a spread")
+    if not np.all(np.diff(times) > 0.0):
+        raise ValueError("times must be strictly increasing")
+
+    full = analyze_window_slopes(times, growth, n_windows=n_windows)
+    full_lambda = float(np.median(full.slopes_1_per_year))
+
+    span = (times[-1] - times[0]) / n_segments
+    estimates: list[float] = []
+    notes: list[str] = []
+    for index in range(n_segments):
+        lo = times[0] + index * span
+        hi = lo + span
+        mask = (times >= lo) & (times <= hi)
+        if int(np.count_nonzero(mask)) < 4 * n_windows:
+            notes.append(f"segment {index} has too few samples; skipped")
+            continue
+        segment_times = times[mask] - times[mask][0] + times[0]
+        try:
+            windows = analyze_window_slopes(
+                segment_times, growth[mask], n_windows=n_windows
+            )
+        except ValueError as error:  # pragma: no cover - defensive
+            notes.append(f"segment {index} could not be fitted: {error}")
+            continue
+        estimates.append(float(np.median(windows.slopes_1_per_year)))
+
+    if len(estimates) < 2:
+        raise ValueError("fewer than two usable segments; lengthen the record")
+
+    array = np.asarray(estimates, dtype=float)
+    spread = (
+        float(np.std(array) / abs(full_lambda))
+        if full_lambda != 0.0 and math.isfinite(full_lambda)
+        else math.inf
+    )
+    notes.append(
+        f"lambda = {full_lambda:.4e} per year with a 1-sigma uncertainty of "
+        f"{spread:.1%}, from {len(estimates)} independent segments of "
+        f"{span:.3e} years"
+    )
+    return SegmentScatter(
+        n_segments=len(estimates),
+        segment_length_years=float(span),
+        segment_lambdas_1_per_year=tuple(estimates),
+        full_record_lambda_1_per_year=full_lambda,
+        relative_spread=spread,
         notes=tuple(notes),
     )
 

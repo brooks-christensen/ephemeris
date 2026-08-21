@@ -67,6 +67,7 @@ DEPENDENCY_FREE_TEST_MODULES = (
     "test_window_slopes",
     "test_angle_statistics",
     "test_estimator_consistency",
+    "test_segment_scatter",
 )
 
 # Arnold's cat map: the tangent map is the constant matrix [[2,1],[1,1]], whose
