@@ -77,6 +77,9 @@ __all__ = [
     "analyze_window_slopes",
     "SegmentScatter",
     "segment_scatter",
+    "block_bootstrap_uncertainty",
+    "CALIBRATED_SCATTER",
+    "calibrated_uncertainty",
     "TransientFit",
     "fit_transient_and_exponent",
     "ESTIMATOR_DISCARD_FRACTION",
@@ -1177,6 +1180,13 @@ class SegmentScatter:
     integration in that range does not tighten the result, because the limit is
     how far the tangent norm wanders, not how long the record is.
 
+    CAUTION: this OVERESTIMATES the uncertainty of the full-record estimate,
+    because a segment is shorter than the record and is itself subdivided into
+    windows. Measured against a known answer it reported 51% where the truth was
+    16%. Use :func:`calibrated_uncertainty` for the number to quote; this stays
+    useful as a conservative upper bound and for spotting a record whose
+    segments disagree wildly.
+
     Attributes
     ----------
     segment_lambdas_1_per_year:
@@ -1259,6 +1269,150 @@ def segment_scatter(
         relative_spread=spread,
         notes=tuple(notes),
     )
+
+
+def block_bootstrap_uncertainty(
+    times_years: Sequence[float],
+    cumulative_log_growth: Sequence[float],
+    *,
+    n_resamples: int = 200,
+    block_fraction: float = 0.1,
+    n_windows: int = 3,
+    seed: int = 20260821,
+) -> dict:
+    """1-sigma uncertainty on lambda at the record's OWN length.
+
+    Why not :func:`segment_scatter`. Cutting a record into segments measures the
+    scatter of a *segment-length* measurement, and a segment is by construction
+    shorter than the record. Worse, the segment estimator subdivides again into
+    windows, so four segments of a 29-Lyapunov-time record are estimated from
+    windows under two Lyapunov times long. Measured on synthetic records with a
+    known exponent, that route reported 80% uncertainty where the true scatter
+    of the full-record estimate is 16%. It answers a different question.
+
+    The moving-block bootstrap answers the right one. Detrend, resample blocks
+    of the residual with replacement to build a synthetic record of the SAME
+    length -- blocks preserve the autocorrelation that makes naive resampling
+    wrong -- add the trend back, and re-estimate. The spread across resamples is
+    the uncertainty of a measurement of this length.
+
+    Recommended by Codex during its review, which named the moving-block
+    bootstrap and HAC as the sound options.
+    """
+
+    times = np.asarray(times_years, dtype=float)
+    growth = np.asarray(cumulative_log_growth, dtype=float)
+    if times.ndim != 1 or growth.shape != times.shape:
+        raise ValueError("times and growth must be 1-D and the same length")
+    if times.size < 50:
+        raise ValueError("need at least fifty samples to bootstrap")
+    if not 0.0 < block_fraction < 1.0:
+        raise ValueError("block_fraction must be in (0, 1)")
+    if n_resamples < 20:
+        raise ValueError("need at least twenty resamples")
+
+    def estimate(series: np.ndarray) -> float:
+        windows = analyze_window_slopes(times, series, n_windows=n_windows)
+        return float(np.median(windows.slopes_1_per_year))
+
+    point = estimate(growth)
+    design = np.column_stack([times, np.ones_like(times)])
+    coefficients, *_ = np.linalg.lstsq(design, growth, rcond=None)
+    trend = design @ coefficients
+    residual = growth - trend
+
+    n = times.size
+    block = max(5, int(block_fraction * n))
+    starts_available = n - block + 1
+    rng = np.random.default_rng(seed)
+    estimates: list[float] = []
+    for _ in range(n_resamples):
+        pieces = []
+        while sum(piece.size for piece in pieces) < n:
+            start = int(rng.integers(0, starts_available))
+            pieces.append(residual[start:start + block])
+        synthetic = trend + np.concatenate(pieces)[:n]
+        try:
+            estimates.append(estimate(synthetic))
+        except ValueError:  # pragma: no cover - defensive
+            continue
+
+    array = np.asarray(estimates, dtype=float)
+    array = array[np.isfinite(array)]
+    if array.size < 10:
+        raise ValueError("bootstrap produced too few usable resamples")
+    spread = float(np.std(array) / abs(point)) if point != 0.0 else math.inf
+    low, high = (float(x) for x in np.percentile(array, [16.0, 84.0]))
+    return {
+        "lambda_1_per_year": point,
+        "relative_uncertainty": spread,
+        "band_1_per_year": (low, high),
+        "n_resamples": int(array.size),
+        "block_samples": block,
+        "note": (
+            f"lambda = {point:.4e} per year, 1-sigma {spread:.1%}, from a "
+            f"moving-block bootstrap with blocks of {block} samples"
+        ),
+    }
+
+
+# --------------------------------------------------------------------------
+# Where the uncertainty on lambda actually comes from
+# --------------------------------------------------------------------------
+#
+# Two within-record methods were tried and neither works, for the same reason.
+#
+#   record length      true scatter   moving-block bootstrap   segment_scatter
+#   29 Lyapunov times          16%                       7%               51%
+#   57 Lyapunov times          17%                       5%               20%
+#   100 Lyapunov times          9%                       6%                8%
+#
+# segment_scatter overestimates because a segment is shorter than the record and
+# is itself subdivided into windows. The bootstrap underestimates, at every
+# block size from 10% to 60% of the record, because the error is dominated by
+# the tangent norm wandering on periods comparable to the record -- and no
+# resampling within a record can manufacture structure longer than the record.
+#
+# So the uncertainty has to be calibrated externally, on an ensemble of
+# independent records of the target length. That needs a system you can afford
+# to integrate for many multiples of the target, which Pluto is not. The
+# standard move applies: calibrate the instrument on a known standard.
+#
+# The standard here is a massless body in Jupiter's resonance-overlap zone --
+# the same dynamical class, Lyapunov time 7,201 years instead of millions --
+# integrated for 417 Lyapunov times and cut into non-overlapping records of each
+# length (scripts/calibrate_record_length.py). Table is (record length in
+# Lyapunov times, 1-sigma relative scatter of the windowed-slope estimate).
+CALIBRATED_SCATTER = (
+    (14.0, 0.33),
+    (29.0, 0.16),
+    (57.0, 0.17),
+    (100.0, 0.09),
+)
+
+
+def calibrated_uncertainty(record_lyapunov_times: float) -> float:
+    """1-sigma relative uncertainty on lambda for a record of this length.
+
+    Log-linear interpolation of :data:`CALIBRATED_SCATTER`, clamped at both
+    ends. Below the shortest calibrated length the value is not extrapolated
+    down -- short records are at least as noisy as the shortest one measured.
+
+    Note the flatness between 29 and 57: doubling an integration in that range
+    does not tighten the answer, because the limit is how far the tangent norm
+    wanders rather than how long the record is.
+    """
+
+    length = float(record_lyapunov_times)
+    if not math.isfinite(length) or length <= 0.0:
+        return math.inf
+    lengths = np.array([point[0] for point in CALIBRATED_SCATTER], dtype=float)
+    scatters = np.array([point[1] for point in CALIBRATED_SCATTER], dtype=float)
+    if length <= lengths[0]:
+        return float(scatters[0])
+    if length >= lengths[-1]:
+        return float(scatters[-1])
+    return float(np.interp(math.log(length), np.log(lengths), scatters))
 
 def calibrate_megno_factor(
     megno_slope_per_year: float,

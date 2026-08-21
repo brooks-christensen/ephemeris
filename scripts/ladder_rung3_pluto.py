@@ -333,6 +333,14 @@ def observation_targets(years: float, samples: int) -> np.ndarray:
     return targets
 
 
+def history_path_for_seed(path: Path | None, seed: int) -> Path | None:
+    """Per-seed history file, so concurrent seeds cannot collide."""
+
+    if path is None:
+        return None
+    return path.with_name(f"{path.stem}-seed{seed}{path.suffix or '.csv'}")
+
+
 def run(
     years: float,
     dt: float,
@@ -340,6 +348,7 @@ def run(
     progress: Path | None,
     seed: int,
     ephemeris: Path = DEFAULT_EPHEMERIS,
+    history: Path | None = None,
 ) -> dict:
     sim, provenance = build(dt, ephemeris, megno_seed=seed)
     energy0 = sim.energy()
@@ -354,6 +363,18 @@ def run(
     started = time.time()
     progress_interval = max(1, samples // 100)
 
+    # Persist the sampled history as it is produced. The first attempt at this
+    # rung saved only summary statistics, so every reanalysis since has had to
+    # reconstruct S(t) from halving ratios, and two reproduction runs that died
+    # mid-flight left nothing usable. A killed run should still leave data.
+    history_file = None
+    if history is not None:
+        history.parent.mkdir(parents=True, exist_ok=True)
+        history_file = history.open("w", encoding="utf-8")
+        history_file.write(
+            "time_years,cumulative_log_growth,mean_megno,relative_energy_error\n"
+        )
+
     for i, target in enumerate(requested_times):
         sim.integrate(target, exact_finish_time=0)
         times[i] = sim.t
@@ -361,6 +382,13 @@ def run(
         growth[i] = log_norms[i] - log0
         mean_megno[i] = sim.megno()
         energy_drifts[i] = abs((sim.energy() - energy0) / energy0)
+        if history_file is not None:
+            history_file.write(
+                f"{times[i]:.10e},{growth[i]:.10e},"
+                f"{mean_megno[i]:.10e},{energy_drifts[i]:.6e}\n"
+            )
+            if i % progress_interval == 0:
+                history_file.flush()
         if progress is not None and i % progress_interval == 0:
             elapsed = time.time() - started
             progress.write_text(
@@ -369,6 +397,9 @@ def run(
                 f"dE/E={energy_drifts[:i + 1].max():.2e}  "
                 f"elapsed={elapsed / 60:.1f} min\n"
             )
+
+    if history_file is not None:
+        history_file.close()
 
     return {
         "requested_times": requested_times,
@@ -688,6 +719,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--compare-to", type=Path, default=None)
     parser.add_argument("--json", type=Path, default=None)
     parser.add_argument("--progress", type=Path, default=None)
+    parser.add_argument(
+        "--history",
+        type=Path,
+        default=None,
+        help="write the per-sample history here; one file per seed",
+    )
     parser.add_argument("--preflight-only", action="store_true")
     parser.add_argument(
         "--skip-resonance-check",
@@ -756,6 +793,7 @@ def main(argv: list[str] | None = None) -> int:
             progress_path_for_seed(args.progress, seed),
             seed,
             args.ephemeris,
+            history_path_for_seed(args.history, seed),
         )
         if (
             data["initial_condition_provenance"]["physical_configuration_fingerprint"]
