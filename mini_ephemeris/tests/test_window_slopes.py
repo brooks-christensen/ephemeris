@@ -110,12 +110,19 @@ class TransientPlusExponential(unittest.TestCase):
         self.assertTrue(result.converged)
         edges = result.window_edges_years
         lo, hi = edges[1], edges[2]                      # the median window
-        predicted_bias = math.log(hi / lo) / (hi - lo)   # A = 1 in this fixture
+
+        # Least squares is linear, so for S = A ln t + lambda t the window slope
+        # is exactly A * slope(ln t) + lambda. Regress ln t on its own over the
+        # same window and the bias is known exactly, with no approximation.
+        window = self.times[(self.times >= lo) & (self.times <= hi)]
+        predicted_bias = float(np.polyfit(window, np.log(window), 1)[0])
+
         recovered = result.lambda_estimate_1_per_year
         self.assertAlmostEqual(
-            (recovered - self.lam) / predicted_bias, 1.0, places=6
+            (recovered - self.lam) / predicted_bias, 1.0, places=9
         )
-        self.assertGreater(recovered, self.lam)          # always an upper bound
+        self.assertGreater(predicted_bias, 0.0)          # A > 0 for any flow
+        self.assertGreater(recovered, self.lam)          # so always an upper bound
 
     def test_recovers_lambda_within_ten_percent(self) -> None:
         result = analyze_window_slopes(self.times, self.growth)
