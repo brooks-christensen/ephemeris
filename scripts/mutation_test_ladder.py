@@ -90,32 +90,41 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--keep", action="store_true")
     args = parser.parse_args(argv)
 
+    total = len(MUTATIONS)
     print()
-    print("MUTATION TESTS -- the ladder must go red for every one")
+    print("MUTATION TESTS")
+    print(f"{total} defects injected on purpose. Every one must be DETECTED.")
+    print("DETECTED is the good outcome: it means the ladder noticed the damage.")
     print()
     survivors: list[str] = []
-    for mutation in MUTATIONS:
+    for index, mutation in enumerate(MUTATIONS, start=1):
         ident, description = mutation[0], mutation[1]
         status, red, where = run_one(mutation, args.keep)
         caught = status in ("FAIL", "ERROR")
-        marker = "caught " if caught else "SURVIVED"
-        print(f"  {marker}  {ident}  {description}")
-        print(f"            overall={status}   red rungs: {red}")
+        verdict = "DETECTED" if caught else "MISSED  "
+        print(f"  {index}/{total}  {verdict}  {ident}  {description}")
+        if caught:
+            print(f"                      ladder went red at: {red}")
+        else:
+            print(f"                      ladder stayed green -- the damage was invisible")
         if where:
-            print(f"            tree: {where}")
+            print(f"                      tree kept at: {where}")
         if not caught:
             survivors.append(f"{ident}: {description}")
 
+    detected = total - len(survivors)
     print()
     if survivors:
-        print(f"  {len(survivors)} mutation(s) SURVIVED. Each is a hole in the ladder:")
+        print(f"  RESULT: {detected} of {total} detected. "
+              f"{len(survivors)} defect(s) went undetected:")
         for line in survivors:
             print(f"    - {line}")
         print()
-        print("  A green ladder does not certify an estimator it cannot break.")
+        print("  Each undetected defect is a hole in the ladder. A ladder that")
+        print("  cannot be broken by these has not been shown to work.")
         print()
         return 1
-    print(f"  All {len(MUTATIONS)} mutations were caught.")
+    print(f"  RESULT: {detected} of {total} detected. The ladder is not blind.")
     print()
     return 0
 
