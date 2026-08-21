@@ -246,3 +246,67 @@ class InputValidation(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TwoTermFit(unittest.TestCase):
+    """The joint fit, and the conditions under which it must refuse."""
+
+    def test_recovers_both_coefficients_exactly_on_clean_data(self) -> None:
+        from mini_ephemeris.chaos_estimator_diagnostics import fit_transient_and_exponent
+        lam, amplitude = 7.19e-8, 1.4
+        times = np.linspace(1.0e6, 8.0e8, 4000)
+        growth = amplitude * np.log(times) + lam * times + 12.0
+        fit = fit_transient_and_exponent(times, growth)
+        self.assertAlmostEqual(fit.lambda_1_per_time / lam, 1.0, places=8)
+        self.assertAlmostEqual(fit.transient_amplitude / amplitude, 1.0, places=6)
+        self.assertGreater(fit.r_squared, 0.9999)
+        self.assertEqual(fit.notes, ())
+
+    def test_unbiased_where_the_windowed_slope_is_biased(self) -> None:
+        """The joint fit removes the logarithmic term instead of tolerating it."""
+        from mini_ephemeris.chaos_estimator_diagnostics import fit_transient_and_exponent
+        lam = 7.19e-8
+        times = np.linspace(1.0e6, 4.0e8, 4000)
+        growth = np.log(times) + lam * times
+        windowed = analyze_window_slopes(times, growth).lambda_estimate_1_per_year
+        joint = fit_transient_and_exponent(times, growth).lambda_1_per_time
+        self.assertGreater(windowed, lam)                       # biased high
+        self.assertLess(abs(joint - lam) / lam, 1.0e-6)         # not biased
+
+    def test_refuses_when_oscillation_swamps_the_trend(self) -> None:
+        """The 100 Myr Pluto case: lambda*T comparable to the residual scatter."""
+        from mini_ephemeris.chaos_estimator_diagnostics import fit_transient_and_exponent
+        rng = np.random.default_rng(3)
+        lam = 7.19e-8
+        times = np.linspace(1.0e6, 1.0e8, 200)
+        growth = (np.log(times) + lam * times + 14.0
+                  + 1.3 * np.sin(2 * np.pi * times / 3.0e7)
+                  + 0.5 * rng.standard_normal(times.size))
+        fit = fit_transient_and_exponent(times, growth)
+
+        # The fixture is calibrated against the real record rather than chosen
+        # to fail a threshold: the measured dt = 0.4 Pluto history over
+        # 0-100 Myr has residual scatter 1.006 about this model, with dominant
+        # residual periods of 25-34 Myr, comparable to the Lyapunov time.
+        self.assertGreater(fit.residual_sigma, 0.8)
+        self.assertLess(fit.residual_sigma, 1.3)
+
+        # The claims that matter do not depend on where a threshold sits: the
+        # two-term form does not describe this record, the diagnostics say so,
+        # and the exponent that comes out is badly wrong.
+        self.assertLess(fit.r_squared, 0.95)
+        self.assertNotEqual(fit.notes, ())
+        self.assertGreater(abs(fit.lambda_1_per_time - lam) / lam, 0.20)
+
+    def test_says_so_when_lambda_comes_out_negative(self) -> None:
+        from mini_ephemeris.chaos_estimator_diagnostics import fit_transient_and_exponent
+        times = np.linspace(1.0e6, 1.0e8, 200)
+        growth = 2.0 * np.log(times) - 1.0e-8 * times
+        fit = fit_transient_and_exponent(times, growth)
+        self.assertLess(fit.lambda_1_per_time, 0.0)
+        self.assertTrue(any("not positive" in note for note in fit.notes))
+
+    def test_rejects_short_records(self) -> None:
+        from mini_ephemeris.chaos_estimator_diagnostics import fit_transient_and_exponent
+        with self.assertRaises(ValueError):
+            fit_transient_and_exponent(np.linspace(1.0, 9.0, 9), np.zeros(9))

@@ -75,6 +75,8 @@ __all__ = [
     "SLOPE_WINDOW_MAX_SPREAD",
     "WindowedSlopeAnalysis",
     "analyze_window_slopes",
+    "TransientFit",
+    "fit_transient_and_exponent",
     "megno_from_log_tangent",
     "lambda_from_rebound_lyapunov",
     "calibrate_megno_factor",
@@ -817,6 +819,119 @@ def analyze_window_slopes(
         lyapunov_time_years=(1.0 / median) if (converged and median > 0) else math.nan,
         relative_spread=spread,
         converged=converged,
+        notes=tuple(notes),
+    )
+
+
+@dataclass(frozen=True)
+class TransientFit:
+    """Least squares of S(t) = A ln(t) + lambda*t + c, the asymptotic form itself.
+
+    The windowed slope is assumption-light but throws away most of the record:
+    it sees only the trend within each window and still carries a residual
+    logarithmic bias. When the run is long enough that the two-term form
+    actually describes the data, fitting it directly uses every sample and
+    separates the transient from the exponent instead of tolerating it.
+
+    The price is model dependence, and ``r_squared`` and ``residual_sigma`` are
+    how you check whether you are paying it. Measured on a 100 Myr Pluto record,
+    R^2 was 0.78 and the residual scatter about the model was 1.0 in S -- the
+    tangent norm swinging by a factor of e -- with dominant residual periods of
+    25 to 34 Myr, comparable to the Lyapunov time. Over that span the fit is
+    meaningless and returns a negative lambda. It becomes usable only once
+    lambda*T is large against that scatter.
+
+    Attributes
+    ----------
+    transient_amplitude:
+        ``A``, the coefficient of ln(t). Positive for a tangent vector that
+        also grows polynomially, which is the generic case.
+    lambda_1_per_time:
+        The exponent, with the logarithmic term removed rather than absorbed.
+    residual_sigma:
+        Scatter of S about the fitted model, in the same units as S. Compare it
+        against ``lambda*T``: if they are comparable, the run is too short.
+    trend_to_scatter:
+        ``lambda*T / residual_sigma``. A rough signal-to-noise for the exponent.
+    """
+
+    transient_amplitude: float
+    lambda_1_per_time: float
+    intercept: float
+    r_squared: float
+    residual_sigma: float
+    trend_to_scatter: float
+    n_samples: int
+    notes: tuple[str, ...]
+
+
+def fit_transient_and_exponent(
+    times_years: Sequence[float],
+    cumulative_log_growth: Sequence[float],
+    *,
+    discard_fraction: float = 0.05,
+) -> TransientFit:
+    """Fit S = A ln(t) + lambda*t + c by least squares and report the diagnostics."""
+
+    times = np.asarray(times_years, dtype=float)
+    growth = np.asarray(cumulative_log_growth, dtype=float)
+    if times.ndim != 1 or growth.shape != times.shape:
+        raise ValueError("times and growth must be 1-D and the same length")
+    if times.size < 10:
+        raise ValueError("need at least ten samples")
+    if not np.all(np.isfinite(times)) or not np.all(np.isfinite(growth)):
+        raise ValueError("times and growth must be finite")
+    if not np.all(np.diff(times) > 0.0):
+        raise ValueError("times must be strictly increasing")
+    if not 0.0 <= discard_fraction < 1.0:
+        raise ValueError("discard_fraction must be in [0, 1)")
+
+    start = times[0] + discard_fraction * (times[-1] - times[0])
+    keep = times >= start
+    times = times[keep]
+    growth = growth[keep]
+    if np.any(times <= 0.0):
+        raise ValueError("times must be positive to fit a logarithmic term")
+
+    design = np.column_stack([np.log(times), times, np.ones_like(times)])
+    coefficients, *_ = np.linalg.lstsq(design, growth, rcond=None)
+    residual = growth - design @ coefficients
+    ss_res = float(residual @ residual)
+    centred = growth - float(growth.mean())
+    ss_tot = float(centred @ centred)
+    r_squared = (1.0 - ss_res / ss_tot) if ss_tot > 0.0 else math.nan
+    sigma = float(np.std(residual))
+
+    amplitude, lam, intercept = (float(c) for c in coefficients)
+    trend = lam * float(times[-1])
+    ratio = trend / sigma if sigma > 0.0 else math.inf
+
+    notes: list[str] = []
+    if lam <= 0.0:
+        notes.append(
+            f"fitted lambda is not positive ({lam:.3e}): over this span the "
+            "two-term model does not describe the record, and no exponent "
+            "should be taken from it"
+        )
+    if ratio < 10.0:
+        notes.append(
+            f"lambda*T = {trend:.2f} against residual scatter {sigma:.2f} "
+            f"(ratio {ratio:.1f}): the exponential trend does not yet dominate "
+            "the secular oscillation in the tangent norm. Integrate longer."
+        )
+    if math.isfinite(r_squared) and r_squared < 0.95:
+        notes.append(
+            f"R^2 = {r_squared:.3f}: the two-term form is not describing this "
+            "record well, so its separation of A from lambda is not meaningful"
+        )
+    return TransientFit(
+        transient_amplitude=amplitude,
+        lambda_1_per_time=lam,
+        intercept=intercept,
+        r_squared=r_squared,
+        residual_sigma=sigma,
+        trend_to_scatter=ratio,
+        n_samples=int(times.size),
         notes=tuple(notes),
     )
 
