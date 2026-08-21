@@ -58,6 +58,7 @@ DEPENDENCY_FREE_TEST_MODULES = (
     "test_megno_convention",
     "test_gr_physics_regression",
     "test_validation_ladder",
+    "test_window_slopes",
 )
 
 # Arnold's cat map: the tangent map is the constant matrix [[2,1],[1,1]], whose

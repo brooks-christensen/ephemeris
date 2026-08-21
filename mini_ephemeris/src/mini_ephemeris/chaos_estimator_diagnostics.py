@@ -72,6 +72,9 @@ __all__ = [
     "MEGNO_MEAN_TO_LYAPUNOV",
     "MEGNO_INSTANTANEOUS_TO_LYAPUNOV",
     "REBOUND_LYAPUNOV_TO_LAMBDA",
+    "SLOPE_WINDOW_MAX_SPREAD",
+    "WindowedSlopeAnalysis",
+    "analyze_window_slopes",
     "megno_from_log_tangent",
     "lambda_from_rebound_lyapunov",
     "calibrate_megno_factor",
@@ -664,6 +667,146 @@ def lambda_from_rebound_lyapunov(rebound_lyapunov_1_per_time: float) -> float:
         return math.nan
     return value * REBOUND_LYAPUNOV_TO_LAMBDA
 
+
+
+# --------------------------------------------------------------------------
+# Windowed slope: the estimator for slow chaos
+# --------------------------------------------------------------------------
+#
+# lambda_running(T) = S(T)/T is the right statistic when S is dominated by the
+# exponential term, and the wrong one when it is not. Real tangent growth is
+#
+#     S(t) = A ln(t) + lambda t + c
+#
+# and S(T)/T carries the whole transient as a 1/T tail. For Pluto, lambda is
+# about 7e-8 per year and A ln T is about 20 at T = 4e8 yr, so at 400 Myr the
+# logarithmic term is still a third of the signal: S(T)/T overestimates lambda
+# by roughly that much, and it keeps changing as the run lengthens. Measured on
+# the Pluto rung, the reported Lyapunov time moved from 6.50 Myr at 200 Myr to
+# 8.86 Myr at 400 Myr -- same seeds, same timestep, only the duration changed.
+#
+# A slope over a late window removes the additive transient entirely, and the
+# same data gave 13.91 Myr from every one of five tangent seeds, agreeing with
+# the independent MEGNO estimate (12.60 Myr) to 10%.
+#
+# This is NOT a return to the line fit that started all of this. That fit ran
+# from t = 0 and reported the slope of A ln(t) as an exponent. The guard here is
+# cross-window agreement: for S = A ln t the window slopes fall off as
+# 1/t and disagree by order 100% across consecutive windows, while for genuine
+# exponential growth they agree. Convergence has to be demonstrated by the
+# windows, not assumed -- and `converged` is False unless it is.
+SLOPE_WINDOW_MAX_SPREAD = 0.10
+
+
+@dataclass(frozen=True)
+class WindowedSlopeAnalysis:
+    """Lambda from consecutive late-window slopes of S(t), plus its convergence.
+
+    Attributes
+    ----------
+    window_edges_years:
+        The ``n_windows + 1`` boundaries used, starting after the discarded
+        first quarter of the record.
+    slopes_1_per_year:
+        dS/dt within each window.
+    lambda_estimate_1_per_year:
+        Median window slope. Report this, not ``S(T)/T``, once ``converged``.
+    relative_spread:
+        ``(max - min) / |median|`` across the windows. This is the convergence
+        statistic: it is near zero for exponential growth and of order 1 for
+        logarithmic growth.
+    converged:
+        ``relative_spread <= SLOPE_WINDOW_MAX_SPREAD`` and every slope positive.
+        A False here means the number is not yet a Lyapunov exponent.
+    """
+
+    n_windows: int
+    window_edges_years: tuple[float, ...]
+    slopes_1_per_year: tuple[float, ...]
+    lambda_estimate_1_per_year: float
+    lyapunov_time_years: float
+    relative_spread: float
+    converged: bool
+    notes: tuple[str, ...]
+
+
+def analyze_window_slopes(
+    times_years: Sequence[float],
+    cumulative_log_growth: Sequence[float],
+    *,
+    n_windows: int = 3,
+    discard_fraction: float = 0.25,
+) -> WindowedSlopeAnalysis:
+    """Estimate lambda from consecutive equal-duration late windows of S(t).
+
+    The first ``discard_fraction`` of the record is dropped, and the remainder
+    is split into ``n_windows`` equal spans of time. Each window contributes
+    ``(S(end) - S(start)) / (end - start)``.
+    """
+
+    times = np.asarray(times_years, dtype=float)
+    growth = np.asarray(cumulative_log_growth, dtype=float)
+    if times.ndim != 1 or growth.shape != times.shape:
+        raise ValueError("times and growth must be 1-D and the same length")
+    if n_windows < 2:
+        raise ValueError("need at least two windows to test convergence")
+    if times.size < 4 * n_windows:
+        raise ValueError("not enough samples for the requested number of windows")
+    if not np.all(np.isfinite(times)) or not np.all(np.isfinite(growth)):
+        raise ValueError("times and growth must be finite")
+    if not np.all(np.diff(times) > 0.0):
+        raise ValueError("times must be strictly increasing")
+    if not 0.0 <= discard_fraction < 1.0:
+        raise ValueError("discard_fraction must be in [0, 1)")
+
+    start = times[0] + discard_fraction * (times[-1] - times[0])
+    edges = np.linspace(start, times[-1], n_windows + 1)
+    slopes: list[float] = []
+    notes: list[str] = []
+    for lo, hi in zip(edges[:-1], edges[1:]):
+        s_lo = float(np.interp(lo, times, growth))
+        s_hi = float(np.interp(hi, times, growth))
+        slopes.append((s_hi - s_lo) / (hi - lo))
+
+    array = np.asarray(slopes, dtype=float)
+    median = float(np.median(array))
+    if median > 0.0 and np.all(array > 0.0):
+        spread = float((array.max() - array.min()) / median)
+    else:
+        spread = math.inf
+        notes.append(
+            "at least one window slope is not positive: the tangent vector is "
+            "not growing steadily, so no exponent can be reported"
+        )
+    converged = spread <= SLOPE_WINDOW_MAX_SPREAD
+    if not converged and math.isfinite(spread):
+        notes.append(
+            f"window slopes disagree by {spread:.1%} (limit "
+            f"{SLOPE_WINDOW_MAX_SPREAD:.0%}): lambda has not converged in time. "
+            "Falling slopes across consecutive windows are the signature of "
+            "logarithmic growth, i.e. regular motion."
+        )
+    if converged:
+        notes.append(
+            f"window slopes agree to {spread:.2%}; lambda = {median:.4e} per "
+            f"year, Lyapunov time {1.0 / median / 1.0e6:.3f} Myr"
+        )
+        notes.append(
+            "this lambda is an UPPER bound and the Lyapunov time a LOWER "
+            "bound: the residual logarithmic term contributes "
+            "A*ln(t2/t1)/(t2-t1) > 0 to every window slope, and it shrinks as "
+            "the windows move later. Report the bound as a bound."
+        )
+    return WindowedSlopeAnalysis(
+        n_windows=n_windows,
+        window_edges_years=tuple(float(e) for e in edges),
+        slopes_1_per_year=tuple(slopes),
+        lambda_estimate_1_per_year=median if converged else math.nan,
+        lyapunov_time_years=(1.0 / median) if (converged and median > 0) else math.nan,
+        relative_spread=spread,
+        converged=converged,
+        notes=tuple(notes),
+    )
 
 def calibrate_megno_factor(
     megno_slope_per_year: float,
