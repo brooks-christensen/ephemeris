@@ -266,13 +266,22 @@ def rung1_integrable_two_body(
         "integrable two-body reads as regular",
         measured=long_result.halving_ratio,
         target=0.5,
-        acceptance=(0.0, 0.70),
+        # Two-sided, and the lower bound matters. For logarithmic tangent growth
+        # the halving ratio is ln(T)/(2(ln T - ln 2)), which approaches 0.5 from
+        # ABOVE and cannot sit near zero. A one-sided (0, 0.70) window let a
+        # mutation swap in the line-fit slope (4.8e-4) and still pass, because
+        # any small number satisfied it. A headline measurement that accepts
+        # almost anything is decorative, which is the failure mode this whole
+        # ladder exists to remove.
+        acceptance=(0.40, 0.70),
         unit="halving ratio",
         conditions=(
-            ("short run not classified chaotic",
-             short_result.classification != "chaotic_candidate"),
-            ("long run not classified chaotic",
-             long_result.classification != "chaotic_candidate"),
+            # "regular_likely", not merely "not chaotic". lambda is zero here by
+            # theorem, so "ambiguous" is a failure to measure, not a pass.
+            ("short run classified regular",
+             short_result.classification == "regular_likely"),
+            ("long run classified regular",
+             long_result.classification == "regular_likely"),
             ("integration resolved (energy excursion < 1e-9)", resolved),
             ("logarithmic model preferred over linear", long_result.log_model_preferred),
         ),
