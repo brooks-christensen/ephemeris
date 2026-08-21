@@ -27,11 +27,17 @@ from typing import Sequence
 
 import numpy as np
 
-from .chaos_estimator_diagnostics import analyze_growth
+from .chaos_estimator_diagnostics import (
+    MEGNO_MEAN_TO_LYAPUNOV,
+    analyze_growth,
+    analyze_window_slopes,
+)
 from .validation_ladder import RungResult, RungStatus, evaluate_rung
 
 __all__ = [
     "PENDING_RUNGS",
+    "FAST_CHAOS_LAMBDA",
+    "rung2c_known_nbody_exponent",
     "rung0_unit_tests",
     "rung1_integrable_two_body",
     "rung2a_cat_map",
@@ -67,6 +73,29 @@ DEPENDENCY_FREE_TEST_MODULES = (
 # larger eigenvalue is the golden ratio squared. lambda is exact, identical for
 # every trajectory, with no asymptotics and no finite-size correction.
 CAT_MAP_LAMBDA = math.log((3.0 + math.sqrt(5.0)) / 2.0)
+
+# Rung 2c's answer. A massless body at a = 2.95 AU in Jupiter's
+# resonance-overlap zone -- the same dynamical class as Pluto, but with a
+# Lyapunov time of 7201 years rather than millions, so 417 Lyapunov times fit
+# in 1.1 minutes of integration and lambda is known by convergence rather than
+# by assumption. The record is committed as a fixture so the rung is
+# deterministic, fast, and needs no REBOUND.
+#
+# Truth is the least-squares slope of the second half of the full record.
+FAST_CHAOS_LAMBDA = 1.389149e-04
+FAST_CHAOS_RECORD = Path(__file__).resolve().parents[2] / "tests" / "data" / "fast_chaos_record.csv"
+
+# What the windowed estimator actually delivers, measured against that truth by
+# truncating the record (scripts/calibrate_record_length.py):
+#
+#     record (Lyapunov times)    29     57    120    200    400
+#     windowed slope error     18.5%  18.2%   1.9%   5.2%   6.6%
+#
+# Pluto at 400 Myr is 29 Lyapunov times and at 800 Myr is 57. So roughly 20% is
+# the honest precision of this method at the durations rung 3 can afford -- which
+# is why a 10% convergence gate there was never reachable, and why the
+# factor-of-two acceptance window (10-40 Myr) is.
+FAST_CHAOS_TOLERANCE = 0.10
 
 
 # --------------------------------------------------------------------------
@@ -346,6 +375,58 @@ def _map_benettin(step_fn, tangent_fn, state, tangent, n_steps: int) -> dict:
             times.append(float(step))
             growth.append(cumulative)
     return {"times": times, "growth": growth, "final_state": state}
+
+
+def rung2c_known_nbody_exponent(record: Path | None = None) -> RungResult:
+    """Recover a known Lyapunov exponent from a real N-body tangent record.
+
+    Rungs 2a and 2b test the Benettin machinery on maps. This tests it on
+    gravitational dynamics of the same kind rung 3 measures, against an answer
+    established by integrating far past convergence.
+    """
+
+    started = time.monotonic()
+    path = record or FAST_CHAOS_RECORD
+    if not path.is_file():
+        raise FileNotFoundError(f"known-answer record missing: {path}")
+    table = np.loadtxt(path, delimiter=",", skiprows=1)
+    times, growth, mean_megno = table[:, 0], table[:, 1], table[:, 2]
+
+    windows = analyze_window_slopes(times, growth, n_windows=3)
+    estimate = float(np.median(windows.slopes_1_per_year))
+    error = abs(estimate - FAST_CHAOS_LAMBDA) / FAST_CHAOS_LAMBDA
+    megno_lambda = float(
+        np.polyfit(times[len(times) // 4:], mean_megno[len(times) // 4:], 1)[0]
+    ) * MEGNO_MEAN_TO_LYAPUNOV
+    megno_error = abs(megno_lambda - FAST_CHAOS_LAMBDA) / FAST_CHAOS_LAMBDA
+    legacy = analyze_growth(times, growth)
+    legacy_error = abs(legacy.lambda_running_final - FAST_CHAOS_LAMBDA) / FAST_CHAOS_LAMBDA
+
+    return evaluate_rung(
+        "2c",
+        "known N-body exponent recovered from a tangent record",
+        measured=error,
+        target=0.0,
+        acceptance=(0.0, FAST_CHAOS_TOLERANCE),
+        unit="relative error",
+        conditions=(
+            ("classified chaotic", legacy.classification == "chaotic_candidate"),
+            ("MEGNO within 10% of the same truth", megno_error < 0.10),
+            ("the retired S(T)/T statistic is worse", legacy_error > error),
+        ),
+        duration_seconds=time.monotonic() - started,
+        evidence={
+            "known_lambda_1_per_year": FAST_CHAOS_LAMBDA,
+            "lyapunov_time_years": 1.0 / FAST_CHAOS_LAMBDA,
+            "record_lyapunov_times": times[-1] * FAST_CHAOS_LAMBDA,
+            "windowed_slope_estimate": estimate,
+            "windowed_slope_error": error,
+            "megno_estimate": megno_lambda,
+            "megno_error": megno_error,
+            "retired_ratio_statistic_error": legacy_error,
+            "window_slopes": [float(x) for x in windows.slopes_1_per_year],
+        },
+    )
 
 
 def rung2a_cat_map(n_steps: int = 20_000) -> RungResult:

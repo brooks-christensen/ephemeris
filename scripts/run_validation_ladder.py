@@ -28,6 +28,7 @@ from mini_ephemeris.ladder_rungs import (  # noqa: E402
     rung1_integrable_two_body,
     rung2a_cat_map,
     rung2b_standard_map,
+    rung2c_known_nbody_exponent,
 )
 from mini_ephemeris.validation_ladder import (  # noqa: E402
     RungResult,
@@ -41,6 +42,7 @@ RUNGS = (
     ("1", "integrable two-body reads as regular", rung1_integrable_two_body),
     ("2a", "cat map recovers its exact Lyapunov exponent", rung2a_cat_map),
     ("2b", "standard map recovers ln(K/2)", rung2b_standard_map),
+    ("2c", "known N-body exponent recovered", rung2c_known_nbody_exponent),
 )
 
 

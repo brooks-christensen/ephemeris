@@ -830,7 +830,33 @@ def analyze_window_slopes(
 
 @dataclass(frozen=True)
 class TransientFit:
-    """Least squares of S(t) = A ln(t) + lambda*t + c, the asymptotic form itself.
+    """EXPLORATORY ONLY. Least squares of S(t) = A ln(t) + lambda*t + c.
+
+    Do not report lambda from this. Measured against a known answer -- a
+    massless body in Jupiter's resonance-overlap zone, integrated for 417
+    Lyapunov times so lambda is known by convergence -- the fitted A does not
+    behave like a transient amplitude at all:
+
+        record (Lyapunov times)     5     20     60    100     200      400
+        fitted A                 0.06   0.52   6.34  12.09  124.72  -487.78
+        lambda error              0.6%   8.7%   5.9%  11.5%  120.8%   115.0%
+        R^2                                  0.991  0.996   0.562    0.272
+
+    A should sit near 1 for a tangent vector that also grows linearly. Instead
+    it absorbs low-frequency structure in the record and drags lambda with it,
+    and the failure gets WORSE with more data. Codex found this analytically on
+    a constructed counterexample before the numbers above confirmed it: the
+    A ln(t) term is not a justified model of the finite-time transient. Oseledets
+    gives the asymptotic limit and Benettin a method of approaching it; neither
+    prescribes this correction.
+
+    Kept because the diagnostics are informative -- residual_sigma in particular
+    measures how much the tangent norm swings, which is what sets the required
+    record length -- but the lambda it returns is not evidence.
+
+    Original description follows.
+
+    Least squares of S(t) = A ln(t) + lambda*t + c, the asymptotic form itself.
 
     The windowed slope is assumption-light but throws away most of the record:
     it sees only the trend within each window and still carries a residual
